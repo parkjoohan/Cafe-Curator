@@ -25,3 +25,8 @@
   ![0111_JIRA_제작](/uploads/0b1c98431d74ce1f3b9e13ba8656376f/0111_JIRA_제작.JPG)
 * React 공부<br/>
   ![0111_React](/uploads/e5cef43bf94826aba74db8d2eb66ebcf/0111_React.JPG)
+
+# 1.12.() 진행 사항
+* JIRA 변경 (프론트)<br/>
+  ![Jira2](/uploads/1c21d8c6d232ee7fc34e9eac2bed3f2c/Jira2.JPG)
+  ![Jira](/uploads/69e02b6054f287ee3439eac0338aae0d/Jira.JPG)
