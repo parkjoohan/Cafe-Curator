@@ -17,6 +17,10 @@
   ![0110_와이어프레임_제작](/uploads/7ec2197427b2a274e862818c6a080b11/0110_와이어프레임_제작.JPG)
 
 * React 공부<br/>
+  * 리액트 기본 사용법 공부
+  * JSX, Javascript 이용한 리액트 활용
+  * useState, useEffect를 활용한 웹 상 기능들 구현 연습
+  * Props를 통한 컴포넌트 간 데이터 교환방법 공부
   ![0110_React_1](/uploads/9223b7b89471f2f2a3726011675c18e8/0110_React_1.JPG)
   ![0110_React_2](/uploads/9e587181d23e8d7466c95e833ddb4653/0110_React_2.JPG)
 
@@ -24,6 +28,12 @@
 * JIRA 완성 (프론트)<br/>
   ![0111_JIRA_제작](/uploads/0b1c98431d74ce1f3b9e13ba8656376f/0111_JIRA_제작.JPG)
 * React 공부<br/>
+  * API를 활용한 영화 평점 사이트 제작하여 리액트 연습
+  * useState를 통한 데이터 변경 인식 후 변경 사항 적용
+  * useEffect 또는 async await를 통해 API에서 필요한 정보를 가져옴
+  * props를 통한 컴포넌트 간 데이터 교환
+  * router를 사용하여 기능별로 나누어 영화 평점 사이트 제작
+  * parameters를 사용하여 디테일 페이징 
   ![0111_React](/uploads/e5cef43bf94826aba74db8d2eb66ebcf/0111_React.JPG)
 
 # 1.12.() 진행 사항
