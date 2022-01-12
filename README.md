@@ -48,7 +48,13 @@
 <!-- 자유 양식 -->
 
 ## 프로젝트 상세 설명
-* 와이어프레임
+* 기획 <br>
+  ![기획1](/uploads/c1dea1e2906a14f854c1bffc4737ac63/기획1.JPG)
+  ![기획2](/uploads/e2178312f1b8a09b85c138d85b102187/기획2.JPG)
+  ![기획3](/uploads/b038c9fb3c8e38acf0c6499754254146/기획3.JPG)
+  ![기획4](/uploads/7197da9226c76e0710552708318a5c47/기획4.JPG)
+
+* 와이어프레임 <br>
   ![와이어1](/uploads/808232cc248a1f22b7c50fded277ad9a/와이어1.JPG) 
   ![와이어2](/uploads/a168143446bf5ca3a7efdf52f799b072/와이어2.JPG)
   ![와이어3](/uploads/83b9d1a5bd97a7d04a261ff896c121fc/와이어3.JPG)
