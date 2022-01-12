@@ -8,7 +8,7 @@
 
 
 
-![image-20220110172716919](README.assets/image-20220110172716919-1641804938767.png)
+![image-20220110172716919](README.assets/image-20220110172716919-1641804938767-1642003901021.png)
 
 
 
@@ -76,13 +76,13 @@ export default App;
 
 
 
-![image-20220110173645297](README.assets/image-20220110173645297-1641804942855.png)
+![image-20220110173645297](README.assets/image-20220110173645297-1641804942855-1642003898705.png)
 
 ##### client 에서 사진을 업로드하면,
 
 
 
-![image-20220110173735673](README.assets/image-20220110173735673-1641804949237.png)
+![image-20220110173735673](README.assets/image-20220110173735673-1641804949237-1642003897618.png)
 
 ##### media/uploads(hamster) 로 사진이 저장.
 
@@ -123,7 +123,7 @@ import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 
 ## 3. 좋아요 기능 구현.
 
-![image-20220110174539543](README.assets/image-20220110174539543-1641804951758.png)
+![image-20220110174539543](README.assets/image-20220110174539543-1641804951758-1642003895748.png)
 
 
 
@@ -216,11 +216,11 @@ export default Hamster;
 
 
 
-![image-20220110183334124](README.assets/image-20220110183334124.png)
+![image-20220110183334124](README.assets/image-20220110183334124-1642003893430.png)
 
 
 
-![image-20220110183401610](README.assets/image-20220110183401610.png)
+![image-20220110183401610](README.assets/image-20220110183401610-1642003892295.png)
 
 
 
@@ -232,15 +232,15 @@ export default Hamster;
 
 
 
-> # 01.11 React-hook 공부
+> # 01.11 React-customhook 공부
 >
-> nomad-coding 강의를 보며 리액트 훅에 대해 자세히 공부했다.
+> nomad-coding 강의를 보며 리액트 훅에 대해 자세히 공부하며 라이프사이클을 연구했다.
 
 
 
 # 1. useEffect 복습
 
-![image-20220112003846030](README.assets/image-20220112003846030-1641915806247.png)
+![image-20220112003846030](README.assets/image-20220112003846030-1641915806247-1642003891012.png)
 
 ```jsx
 import React from 'react'
@@ -279,7 +279,7 @@ export default function UseEffectPractice() {
 
 # 2.useTitle (document의 title 이름을 첫 렌더링 후 3초 후 바꿔봄.)
 
-![image-20220112004053902](README.assets/image-20220112004053902-1641915808419.png)
+![image-20220112004053902](README.assets/image-20220112004053902-1641915808419-1642003888364.png)
 
 ```jsx
 import React from 'react'
@@ -323,7 +323,7 @@ export default function UseTitle() {
 
 # 3. useClick(아직은 잘 모르겠다.)
 
-![image-20220112004411365](README.assets/image-20220112004411365.png)
+![image-20220112004411365](README.assets/image-20220112004411365-1642003885332.png)
 
 ```jsx
 import React from 'react'
@@ -387,4 +387,403 @@ export default function UseClick() {
 ### componentwillunmount속성에 대해 알고싶었으나, 콘솔로 동작 순서를 찍어봐도 잘 이해가 되지 않았다. 사실 주석 순서도 예측이여서 정확하지 않다.
 
 ### 내일 다시 공부할 예정!
+
+
+
+> # 01.11 React-customhook 공부(2)
+>
+> nomad-coding 강의를 보며 리액트 훅에 대해 자세히 공부하며 라이프사이클을 연구했다.
+
+
+
+# 1.UseConfirm( confirm 확인창 띄우는 훅.)
+
+![image-20220113002408274](README.assets/image-20220113002408274-1642003883247.png)
+
+### 버튼을 누르면 confirm 확인창이 나온다.
+
+![image-20220113002510832](README.assets/image-20220113002510832.png)
+
+### 확인 버튼을 누르면 console.log("Deleting the world") 출력
+
+```jsx
+import React from 'react'
+
+
+const useConfirm = (message="",callback,rejection) => {
+    
+  // 추후 npm 훅을 배포할 시를 위한 리턴조건(인자 잘못 입력했을시,)
+  if (callback && typeof callback !== "function") {
+    return;
+  }
+  if (rejection && typeof callback !== "function") {
+    return;
+  }
+    
+  const confirmAction = () => {
+    if(window.confirm(message)){
+      //confirm창 확인버튼 누를 시,
+      callback();
+    } else {
+      //confirm창 취소버튼 누를 시,
+      rejection();
+    }
+  }
+  return confirmAction;
+}
+export default function Useconfirm() {
+  //확인 버튼 눌렀을시 callback함수
+  const deleteWorld = () => console.log("Deleting the world...");
+  //취소 버튼 눌렀을시 callback함수
+  const abort = () => console.log("Aborted")
+  
+  //useConfirm훅의 인자는 1.message, 2.확인버튼 눌렸을시 callback함수, 3.취소버튼 눌렀을시 callback함수
+  const confirmDelete = useConfirm("Are you sure", deleteWorld,abort)
+  
+  return (
+    <div>
+      <div>Useconfirm</div>
+      <button onClick={confirmDelete}>Delete the world</button>
+    </div>
+  )
+}
+```
+
+
+
+# 2. UsePreventLeave (사이트에서 나가시겠습니까?창 나오는 훅.)
+
+
+
+![image-20220113002933867](README.assets/image-20220113002933867-1642003881672.png)
+
+### Protect버튼을 클릭한 뒤 나가면 확인창이 나오고, Unprotect버튼을 클릭한 뒤 나가면 확인창이 안나오고 바로 나가짐
+
+```jsx
+import React from 'react'
+
+const usePreventLeave = (onLeaving) => {
+  const listener = (event) => {
+    event.preventDefault();
+    event.returnValue = "";
+  }
+  //enablePrevent함수는 윈도우에 "beforeunload" 이벤트를 추가시킨다. 이후 사이트를 나가면 창이 나온다.
+  const enablePrevent = () => window.addEventListener("beforeunload",listener);
+  //disablePrevent함수는 윈도우에 "beforeunload" 이벤트를 제거시킨다.
+  const disablePrevent = () => window.removeEventListener("beforeunload",listener);
+  return {enablePrevent,disablePrevent}
+}
+
+export default function UseprevnetLeave() {
+  //object의 객체구조분해할당 {a,b} = {a:x,b:y}꼴
+  const {enablePrevent,disablePrevent} = usePreventLeave();
+  return (
+    <div>
+      <div>UseprevnetLeave</div>
+      <button onClick={enablePrevent}>Protect</button>
+      <button onClick={disablePrevent}>Unprotect</button>
+    </div>
+  )
+}
+```
+
+### 게시판에서 글을 입력 후, 제출하지 않고 나갈때 나오는 알람창용도로 사용하면 매우 좋을것같았다. ㅎ
+
+
+
+# 3. UseBeforeleave(마우스 커서가 html이탈했을 시 => ~~) 
+
+![image-20220113003519749](README.assets/image-20220113003519749-1642003878793.png)
+
+### 마우스가 이탈했을시 console.log("plz dont leave") 출력
+
+```jsx
+import React,{useState, useEffect} from 'react'
+
+const useBeforeLeave = (onBefore) => {
+  useEffect(() => {
+    //componentdidmount시, "mouseleave"이벤트 추가
+    document.addEventListener("mouseleave",handle)
+    return () => {
+      //componentwillunmount시, "mouseleave"이벤트 제거
+      document.removeEventListener("mouseleave",handle)
+    }
+  },[]);
+
+  if(typeof onBefore !== "function"){
+    return;
+  }
+  const handle = (event) => {
+    const {clientY} = event;
+    //clientY 는 커서event의 속성인데 0보다 작으면 html위로 마우스가 이탈함을 뜻함. 그때, 콜백함수 실행
+    if (clientY<=0){onBefore();}
+  }
+}
+
+export default function Usebeforeleave() {
+  const begForLife = () => console.log("plz dont leave");
+  //(begForLife)라는 콜백함수를 인자로 가지고 훅 실행.
+  useBeforeLeave(begForLife);
+  return (
+    <div>
+      <div>usebeforeleave</div>
+      <h1>Hello</h1>
+    </div>
+  )
+}
+
+```
+
+
+
+# 4. UseFadein (fadein css 적용)
+
+```jsx
+import React,{useState,useEffect,useRef} from 'react'
+
+const useFadeIn = (duration = 1,delay = 0) => {
+  const element = useRef();
+  useEffect(() => {
+    if(element.current){
+      const { current } = element;
+      current.style.transition = `opacity ${duration}s ease-in-out ${delay}s`
+      current.style.opacity=1;
+    }
+  },[])
+  return {ref:element,style:{opacity:0}};
+}
+
+export default function Usefadein() {
+  const fadeInH1 = useFadeIn(1,3);
+  return (
+    <div>
+      <div>Usefadein</div>
+      {/* h1태그에 ref지정. */}
+      <h1 {...fadeInH1}>Hello</h1>
+    </div>
+  )
+}
+
+```
+
+
+
+# 5. Usenetwork (network가 online인지 offline인지 판단.)
+
+![image-20220113004148330](README.assets/image-20220113004148330-1642003876643.png)
+
+### online이였는데 네트워크창에서 offline으로 바뀌면 offline으로 바뀜
+
+```jsx
+import React,{useState,useEffect,useRef} from 'react'
+
+const useNetwork = onChange => {
+    
+  //1. state 초기값은 현재 online, offline 여부
+  const [status,setStatus] = useState(navigator.onLine);
+    
+  console.log(status)
+  const handleChange = () => {
+    //3. setstate가 online->offline or offline->online일때 실행
+    setStatus(navigator.onLine);
+  }
+  
+  useEffect(()=>{
+    //2. online일때 콜백함수, offline일때 콜백함수 여기서 콜백함수는 state바꾸는 setstate함수
+    window.addEventListener("online",handleChange);
+    window.addEventListener("offline",handleChange);
+    return () => {
+      window.removeEventListener("online",handleChange);
+      window.removeEventListener("offline",handleChange);
+    };
+  },[])
+    
+  return status;
+}
+
+export default function Usenetwork() {
+  const onLine = useNetwork();
+  return (
+    <div>
+      <div>usenetwork</div>
+      {/* 4. 따라서 조건부 텍스트 랜더링 */}
+      <h1>{onLine? "Online":"Offline"}</h1>
+    </div>
+  )
+}
+```
+
+
+
+# 6. Usescroll(scroll의 위치에 따라 조건부 스타일링)
+
+```jsx
+import React,{useState,useEffect,useRef} from 'react'
+
+const useScroll = () => {
+  //초기 state값은 x좌표0,y좌표0으로 한다. (뭐로 하든 상관은 없을듯!)
+  const [state,setState] = useState({
+    x:0,
+    y:0
+  });
+  const onScroll = () => {
+    //콜백함수는 state값을 현재 스크롤 위치로 setstate
+    setState({y:window.scrollY,x:window.scrollX});
+  }
+  useEffect(()=>{
+    //스크롤이 움직이면 onScroll이라는 콜백함수 실행
+    window.addEventListener("scroll",onScroll)
+    return () => window.removeEventListener("scroll",onScroll);
+  },[])
+  return state;
+}
+
+export default function Usescroll() {
+  const {y} = useScroll();
+  return (
+    <div style={{height:"50vh"}}>
+      <div> Usescroll</div>
+      {/* 4. 따라서 조건부 스타일링 */}
+      <h1 style={{color:y>100? "red":"blue"}}>Hi</h1>
+    </div>
+  )
+}
+```
+
+
+
+# 7. Usefullscreen(특정 요소를 전체화면으로 보기.)
+
+![image-20220113005056259](README.assets/image-20220113005056259-1642003874336.png)
+
+```jsx
+import React,{useState,useEffect,useRef} from 'react'
+
+const useFullscreen = (callback) => {
+  const element = useRef();
+  // full버튼을 눌렀을시, requestFullscreen메서드 호출
+  const triggerFull = () => {
+    if (element.current) {
+      element.current.requestFullscreen();
+    }
+  };
+  // exit버튼을 눌렀을시, exitFullscreen메서드 호출
+  const exitFull = () => {
+    document.exitFullscreen();
+  }
+  return {element, triggerFull, exitFull};
+}
+...
+```
+
+
+
+# 8. UseNotification (notification API 를 활용해 window 알림을 생성.)
+
+![image-20220113005758991](README.assets/image-20220113005758991-1642003872954.png)
+
+```JSX
+import React,{useState,useEffect,useRef} from 'react'
+
+const useNotification = (title, options) => {
+
+  const fireNotif = () => {
+    //Notification API활용. permission이 granted라는 말은 유저가 알람을 허용했다는 말이다.
+    if(Notification.permission !== "granted"){
+      Notification.requestPermission().then(permission => {
+        if(permission==="granted"){
+         // granted일경우 알람창 띄움
+          new Notification(title,options)
+        } else{
+          //아닐경우 리턴
+          return;
+        }
+      })
+    } else {
+      new Notification(title,options)
+    }
+  };
+  return fireNotif;
+}
+
+export default function Usenotification() {
+  //인자를 가지고 훅 실행
+  const triggerNotif = useNotification("알림이다.",{body:"알림 처음보냐"});
+  return (
+    <div>
+      <div>usenotification</div>
+      <button onClick={triggerNotif}>hello</button>
+    </div>
+  )
+}
+```
+
+
+
+# 9. UseAxios(defaultaxios를 활용해 axios response의 data, error 그리고 promise(then)를 활용해 loading중인지 여부를 앎.)
+
+![image-20220113010421082](README.assets/image-20220113010421082-1642003867634.png)
+
+### axios로딩중일때, loading이라고 뜨고 refetch 버튼 활성화
+
+
+
+```jsx
+import defaultAxios from "axios";
+import { useEffect,useState } from "react";
+
+export default function Useaxios(opts, axiosInstance = defaultAxios) {
+    
+    // 초기 state값은 loading true, error와data는 null
+    const [state,setState] = useState({
+      loading:true,
+      error:null,
+      data:null,
+    });
+    
+    //state로 trigger를 선언한 이유는 refetch를 하기 위해!(state값으로 date.now()항시 변하는 값을 입력해서)
+    //useEffect의 componentwillupdate 라이프사이클을 활용해 refetch 활성화
+    const [trigger,setTrigger] = useState(0);
+    const refetch = () => {
+      setState({
+        ...state,
+        loading:true,
+      });
+      setTrigger(Date.now());
+    }
+    
+    useEffect(()=>{
+      if(!opts.url){return;}
+      axiosInstance(opts)
+        //axios 요청이 받아지면 (data받음) => loading은 false로 바뀜. 그리고 data를 전달하기 위해 state값에 data넣음.
+        .then(data=>{
+          setState({
+            ...state,
+            loading:false,
+            data,
+          })
+          //에러시에도 요청은 받은거니까 loading false, err를 state에 넣음.
+        }).catch(err=>{
+          setState({...state,loading:false,err})
+        })
+    },[trigger])
+    if (!opts.url){
+      return;
+    }
+    // 이후 리턴
+    return {...state, refetch};
+}
+```
+
+
+
+
+
+## 느낀점
+
+### 1. 물론 이런 작업들은 위 훅을 사용하지 않아도 좋다.
+
+### 2. 하지만 코딩을 함수형으로 작성하다보니, callback, lifecycle, 조건, return등 을 고려하게 되고 리액트 실력이 정말로 는거같은 기분이다.
+
+### 3. 그리고 일부 공부한 훅(ex. notification, axios)은 곧 구현해야할 큐레이팅sns에서 아주 잘 사용할 수 잇을것 같아서 의미있는 공부였다.
 
