@@ -36,7 +36,7 @@
   * parameters를 사용하여 디테일 페이징 
   ![0111_React](/uploads/e5cef43bf94826aba74db8d2eb66ebcf/0111_React.JPG)
 
-# 1.12.() 진행 사항
+# 1.12.(수) 진행 사항
 * JIRA 변경 (프론트)<br/>
   ![Jira2](/uploads/1c21d8c6d232ee7fc34e9eac2bed3f2c/Jira2.JPG)
   ![Jira](/uploads/69e02b6054f287ee3439eac0338aae0d/Jira.JPG)
@@ -46,3 +46,8 @@
   ![Loginform](/uploads/0a77b1035e5a293fb70c55965dbbc41d/Loginform.png)
   ![Login창](/uploads/82d19cb0676c96fe535f6c4d168a879a/Login창.JPG)
   ![로그인_성공창](/uploads/8e0329e9fdd3d834c67682335a2fb9c4/로그인_성공창.JPG)
+
+# 1.13.(목) 진행 사항+
+* React 공부<br/>
+  ![연습](/uploads/8b1dce4826cbb788a9d6042957588acb/연습.JPG)
+  ![연습2](/uploads/d8b9fbd3f0baf39ec33a58a6b8d32b91/연습2.JPG)
