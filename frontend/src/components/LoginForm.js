@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import {Link} from 'react-router-dom'
+import { Link } from "react-router-dom";
+import Welcome from "./Welcome";
 
 function LoginForm({ Login, error }) {
   const [details, setDetails] = useState({
@@ -10,6 +11,9 @@ function LoginForm({ Login, error }) {
   const submitHandler = (e) => {
     e.preventDefault();
     Login(details);
+    {
+      <Welcome />;
+    }
   };
 
   return (

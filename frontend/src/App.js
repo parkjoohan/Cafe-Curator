@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import LoginForm from "./components/LoginForm";
 import SignupForm from "./components/SignupForm";
+import Welcome from "./components/Welcome";
 import "./App.css";
-import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom'
-
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 function App() {
   const adminUser = {
@@ -37,24 +37,28 @@ function App() {
   };
   return (
     <div className="App">
-    <Router>
-      
-      <Link to="/login">Login</Link>
-      <Link to="/signup">Signup</Link>
+      <Router>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-around",
+            backgroundColor: "gray",
+          }}
+        >
+          <div style={{ paddingTop: "15px" }}>
+            <Link to="/login">Login</Link>
+            <Link to="/signup">Signup</Link>
+            <span onClick={Logout}>logout</span>
+          </div>
+        </div>
 
-      <div className="welcome">
-        <h2>
-          Welcome, <span>{user.name}</span>
-        </h2>
-        <button onClick={Logout}>Logout</button>
-      </div>
-
-      <Switch>
-        <Route path="/login"><LoginForm Login={Login} error={error} /></Route>
-        <Route path="/signup" component={SignupForm}></Route>
-      </Switch>
-
-    </Router>
+        <Switch>
+          <Route path="/login">
+            <LoginForm Login={Login} error={error} />
+          </Route>
+          <Route path="/signup" component={SignupForm}></Route>
+        </Switch>
+      </Router>
     </div>
   );
 }

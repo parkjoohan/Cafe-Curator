@@ -1,20 +1,21 @@
 import React, { useState } from "react";
 
 export default function SignupForm() {
-  
   const [details, setDetails] = useState({
     name: "",
     email: "",
     password: "",
-    passwordConfirmation:"",
+    passwordConfirmation: "",
   });
 
-  const [passwordCorrect,setpasswordCorrect] = useState(false);
+  const [passwordCorrect, setpasswordCorrect] = useState(false);
 
-  const isCorrect = e => {
-    if ((e.target.value) == details.password){
-      console.log('correct!')
-    } else {console.log('incorrect!')}
+  const isCorrect = (e) => {
+    if (e.target.value == details.password) {
+      console.log("correct!");
+    } else {
+      console.log("incorrect!");
+    }
   };
 
   return (
@@ -59,13 +60,11 @@ export default function SignupForm() {
             type="password"
             name="password"
             id="password"
-            onChange={(e) =>isCorrect(e)}
+            onChange={(e) => isCorrect(e)}
             // value={details.password}
           />
         </div>
         <input type="submit" value="회원가입" />
-        
-        <button> 회원가입 </button>
       </div>
     </form>
   );
