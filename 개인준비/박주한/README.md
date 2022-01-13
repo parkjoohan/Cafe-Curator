@@ -48,6 +48,8 @@
   ![로그인_성공창](/uploads/8e0329e9fdd3d834c67682335a2fb9c4/로그인_성공창.JPG)
 
 # 1.13.(목) 진행 사항+
+* JIRA 진행사항 (프론트)<br/>
+  ![JIRA0113](/uploads/3ad966f4e31075992c209006a54705f8/JIRA0113.JPG)
 * React 공부<br/>
   ![연습](/uploads/8b1dce4826cbb788a9d6042957588acb/연습.JPG)
   ![연습2](/uploads/d8b9fbd3f0baf39ec33a58a6b8d32b91/연습2.JPG)
