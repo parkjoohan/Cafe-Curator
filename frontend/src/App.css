@@ -105,4 +105,26 @@ form .form-inner input[type="submit"] {
 
 form .form-inner input[type="submit"] :hover {
   background-position: 100% 0%;
+<<<<<<< HEAD
+=======
+}
+
+.welcome {
+  width: 100%;
+  max-width: 480px;
+  background-color: #fff;
+  padding: 15px 30px;
+}
+
+.welcome h2 {
+  color: #888;
+  font-size: 28px;
+  font-weight: 500;
+  margin-bottom: 30px;
+}
+
+.welcome h2 span {
+  color: #fe4880;
+  font-weight: 700;
+>>>>>>> 38d8132ea517bc035626af134d54ef8b3e264506
 } */

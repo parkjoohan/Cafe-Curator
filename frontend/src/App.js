@@ -37,6 +37,7 @@ function App() {
   };
   return (
     <div className="App">
+<<<<<<< HEAD
       <Router>
         <div
           style={{
@@ -51,6 +52,31 @@ function App() {
             <span onClick={Logout}>logout</span>
           </div>
         </div>
+=======
+    <Router>
+      <div style={{display:"flex",justifyContent:"space-around",backgroundColor:"gray"}}>
+
+        <div className="welcome">
+          <p>
+            Welcome, <span>{user.name}</span>
+          </p>
+        </div>
+
+        <div style={{paddingTop:"15px"}}>
+          <Link to="/login">Login</Link>
+          <Link to="/signup">Signup</Link>
+          <span onClick={Logout}>logout</span>
+        </div>
+
+    
+
+      </div>
+
+      <Switch>
+        <Route path="/login"><LoginForm Login={Login} error={error} /></Route>
+        <Route path="/signup" component={SignupForm}></Route>
+      </Switch>
+>>>>>>> 38d8132ea517bc035626af134d54ef8b3e264506
 
         <Switch>
           <Route path="/login">
