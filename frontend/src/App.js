@@ -1,6 +1,9 @@
 import React, { useState } from "react";
-import LoginForm from "./componenets/LoginForm";
+import LoginForm from "./components/LoginForm";
+import SignupForm from "./components/SignupForm";
 import "./App.css";
+import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
+
 
 function App() {
   const adminUser = {
@@ -34,6 +37,7 @@ function App() {
   };
   return (
     <div className="App">
+      <Router>
       {user.email != "" ? (
         <div className="welcome">
           <h2>
@@ -41,9 +45,13 @@ function App() {
           </h2>
           <button onClick={Logout}>Logout</button>
         </div>
-      ) : (
+      ) : ( 
         <LoginForm Login={Login} error={error} />
       )}
+        <Switch>
+          <Route path="/signup" component={SignupForm}></Route>
+        </Switch>
+      </Router>
     </div>
   );
 }
