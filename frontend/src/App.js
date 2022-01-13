@@ -38,15 +38,22 @@ function App() {
   return (
     <div className="App">
     <Router>
-      
-      <Link to="/login">Login</Link>
-      <Link to="/signup">Signup</Link>
+      <div style={{display:"flex",justifyContent:"space-around",backgroundColor:"gray"}}>
 
-      <div className="welcome">
-        <h2>
-          Welcome, <span>{user.name}</span>
-        </h2>
-        <button onClick={Logout}>Logout</button>
+        <div className="welcome">
+          <p>
+            Welcome, <span>{user.name}</span>
+          </p>
+        </div>
+
+        <div style={{paddingTop:"15px"}}>
+          <Link to="/login">Login</Link>
+          <Link to="/signup">Signup</Link>
+          <span onClick={Logout}>logout</span>
+        </div>
+
+    
+
       </div>
 
       <Switch>
