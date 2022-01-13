@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import LoginForm from "./components/LoginForm";
 import SignupForm from "./components/SignupForm";
 import "./App.css";
-import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
+import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom'
 
 
 function App() {
@@ -11,7 +11,7 @@ function App() {
     password: "ssafy",
   };
 
-  const [user, setUser] = useState({ name: "", email: "" });
+  const [user, setUser] = useState({ name: "익명", email: "" });
   const [error, setError] = useState("");
 
   const Login = (details) => {
@@ -33,25 +33,28 @@ function App() {
   };
 
   const Logout = () => {
-    setUser({ name: "", email: "" });
+    setUser({ name: "익명", email: "" });
   };
   return (
     <div className="App">
-      <Router>
-      {user.email != "" ? (
-        <div className="welcome">
-          <h2>
-            Welcome, <span>{user.name}</span>
-          </h2>
-          <button onClick={Logout}>Logout</button>
-        </div>
-      ) : ( 
-        <LoginForm Login={Login} error={error} />
-      )}
-        <Switch>
-          <Route path="/signup" component={SignupForm}></Route>
-        </Switch>
-      </Router>
+    <Router>
+      
+      <Link to="/login">Login</Link>
+      <Link to="/signup">Signup</Link>
+
+      <div className="welcome">
+        <h2>
+          Welcome, <span>{user.name}</span>
+        </h2>
+        <button onClick={Logout}>Logout</button>
+      </div>
+
+      <Switch>
+        <Route path="/login"><LoginForm Login={Login} error={error} /></Route>
+        <Route path="/signup" component={SignupForm}></Route>
+      </Switch>
+
+    </Router>
     </div>
   );
 }
