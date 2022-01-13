@@ -4,19 +4,19 @@ import {Form} from 'react-bootstrap'
 
 export default function SignupForm() {
 
-  useEffect(() => {
-    const tag = document.getElementsByClassName("confirm")[0]
+  // useEffect(() => {
+  //   const tag = document.getElementsByClassName("confirm")[0]
     
-    tag.addEventListener('keydown',()=>{
-      if(tag.value!==""){ setshowalert(true); } else { setshowalert(false) }
-    })
-    return () => {
-      tag.removeEventListener('keydown',()=>{
-        if(tag.value!==""){ setshowalert(true); } else { setshowalert(false) }
-      })
-      setshowalert(false);
-    }
-  }, [])
+  //   tag.addEventListener('keydown',()=>{
+  //     if(tag.value!==null){ setshowalert(true); } else { setshowalert(false) }
+  //   })
+  //   return () => {
+  //     tag.removeEventListener('keydown',()=>{
+  //       if(tag.value!==null){ setshowalert(true); } else { setshowalert(false) }
+  //     })
+  //     setshowalert(false);
+  //   }
+  // }, [])
 
   
 
@@ -24,18 +24,32 @@ export default function SignupForm() {
     name: "",
     email: "",
     password: "",
-    passwordConfirmation: "",
   });
+
+  const [passwordConfirm,setpasswordConfirm] = useState("")
 
   const [showalert,setshowalert] = useState(false)
 
   const [passwordCorrect,setpasswordCorrect] = useState(false);
 
+  useEffect(()=>{
+    isCorrect(passwordConfirm)
+  },[passwordConfirm])
+
   const isCorrect = e => {
-    if ((e.target.value) == details.password){
+    if (e!=="" && e===details.password){
       setpasswordCorrect(true)
-    } else {setpasswordCorrect(false)}
+      setshowalert(true)
+    } else if (e=="" || e==null) {
+      setpasswordCorrect(false)
+      setshowalert(false)
+    } else {
+      setpasswordCorrect(false)
+      setshowalert(true)
+    }
   };
+
+
 
 
 
@@ -85,7 +99,7 @@ export default function SignupForm() {
           type="password"
           name="password"
           id="password"
-          onChange={(e) =>isCorrect(e)}
+          onChange={(e) =>setpasswordConfirm(e.target.value)}
           // value={details.password}
         />
         {showalert && (
