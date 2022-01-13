@@ -14,8 +14,22 @@ export default function App() {
 
   return (
     <div className="App">
+
       <Container>
         <div style={{display:"flex",justifyContent:"space-around",backgroundColor:"gray"}}>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-around",
+            backgroundColor: "gray",
+          }}
+        >
+          <div style={{ paddingTop: "15px" }}>
+            <Link to="/login">Login</Link>
+            <Link to="/signup">Signup</Link>
+            <span onClick={Logout}>logout</span>
+          </div>
+        </div>
 
           <div className="welcome">
             <p>

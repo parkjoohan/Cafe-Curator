@@ -24,7 +24,7 @@ export default function SignupForm() {
     name: "",
     email: "",
     password: "",
-    passwordConfirmation:"",
+    passwordConfirmation: "",
   });
 
   const [showalert,setshowalert] = useState(false)
