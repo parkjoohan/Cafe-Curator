@@ -151,3 +151,6 @@ export default EmailModal
 
 ![image-20220114095136757](README.assets/image-20220114095136757.png)
 
+리액트 학습전 바닐라 자바스크립트 다시공부...
+
+![image-20220114100454103](README.assets/image-20220114100454103.png)
