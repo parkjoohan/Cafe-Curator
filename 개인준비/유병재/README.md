@@ -787,3 +787,54 @@ export default function Useaxios(opts, axiosInstance = defaultAxios) {
 
 ### 3. 그리고 일부 공부한 훅(ex. notification, axios)은 곧 구현해야할 큐레이팅sns에서 아주 잘 사용할 수 잇을것 같아서 의미있는 공부였다.
 
+
+
+
+
+> # 01.13 (프로젝트) Frontend 로그인, 회원가입 창 구현.
+>
+
+> 그동안 공부했던 것을 바탕으로 구현했다.
+
+
+
+![image-20220114094228690](README.assets/image-20220114094228690-1642120950240.png)
+
+![image-20220114094242885](README.assets/image-20220114094242885-1642120964636.png)
+
+### passwordConfirmation을 제때제때 업데이트하며 이전 비밀번호와 비교하기 위해 이전에 공부했던 라이프 사이클중 ComponentwillUpdate를 useEffect를 사용하여 구현했다.
+
+
+
+```jsx
+...
+  //passwordConfirm은 따로 state를 만들었다.
+  const [passwordConfirm,setpasswordConfirm] = useState("")
+  // 비밀번호가 일치한다! 안일치한다!와 같은 알림이 나오는지 여부 state
+  const [showalert,setshowalert] = useState(false)
+  // 비밀번호가 일치하면 true, 불일치하면 false를 나타낼 state
+  const [passwordCorrect,setpasswordCorrect] = useState(false);
+
+  useEffect(()=>{
+    //componentwillupdate 구현
+    isCorrect(passwordConfirm)
+  },[passwordConfirm])
+
+  const isCorrect = e => {
+    if (e!=="" && e===details.password){
+      setpasswordCorrect(true)
+      setshowalert(true)
+    } else if (e=="" || e==null) {
+      setpasswordCorrect(false)
+      setshowalert(false)
+    } else {
+      setpasswordCorrect(false)
+      setshowalert(true)
+    }
+  };
+
+...
+```
+
+
+
