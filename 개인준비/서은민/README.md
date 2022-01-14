@@ -1,11 +1,11 @@
-# 01/10
+# 01/10(월)
 
 - 담당 컨설턴트님과 팀 미팅 진행
 - ERD 초안 작성 시작 https://www.erdcloud.com/d/BqyD4bNpayfsJ7ijs
   - 피드 + 키워드 + 카페 테이블 설계 문제
   - 좋아요 테이블 카테고리(피드 or 댓글) 구별 문제
 
-# 01/11
+# 01/11(화)
 
 ### 실습 코치님 & 컨설턴트님 피드백으로 ERD 수정
 
@@ -39,7 +39,7 @@ lombok IDEs에 STS 경로 지정해서 해결 했지만 향후 프로젝트는 I
 JPA Pagination을 이용한 무한 스크롤 구현기  
 https://wbluke.tistory.com/18?category=349262
 
-# 01/12
+# 01/12(수)
 
 “좋아요 카운트 풀스캔 문제” → “log 또는 count 컬럼”  
 좋아요, 댓글 테이블에 카운트 컬럼 추가하는 방향으로 결정
@@ -111,7 +111,7 @@ ID는 기본형의 경우 wrapper 클래스 지정
 - @Query
   - JPQL(Java Persistence Query Language)
 
-# 01/13
+# 01/13(목)
 
 ### 컨설턴트님 피드백으로 ERD 수정
 
