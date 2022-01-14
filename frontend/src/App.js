@@ -1,25 +1,47 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from "react";
+import Routers from "./Routers";
+import "./App.css";
+import {BrowserRouter as Router, Link} from 'react-router-dom'
+import { Container } from "react-bootstrap";
 
-function App() {
+
+export default function App() {
+  const [user, setUser] = useState({ name: "익명", email: "" });
+
+  const Logout = () => {
+    setUser({ name: "익명", email: "" });
+  };
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+
+      <Container>
+        <div style={{display:"flex",justifyContent:"space-around",backgroundColor:"gray"}}>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-around",
+            backgroundColor: "gray",
+          }}
         >
-          Learn React
-        </a>
-      </header>
+        </div>
+          <div className="welcome">
+            <p>
+              Welcome, <span>{user.name}</span>
+            </p>
+          </div>
+
+          <div style={{paddingTop:"15px"}}>
+            <Link to="/login">Login</Link>
+            <Link to="/signup">Signup</Link>
+            <span onClick={Logout}>logout</span>
+          </div>
+
+        </div>
+        <Routers/>
+      </Container>
     </div>
   );
 }
 
-export default App;
+
