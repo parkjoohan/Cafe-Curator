@@ -110,3 +110,30 @@ ID는 기본형의 경우 wrapper 클래스 지정
   ```
 - @Query
   - JPQL(Java Persistence Query Language)
+
+# 01/13
+
+### 컨설턴트님 피드백으로 ERD 수정
+
+![image](https://user-images.githubusercontent.com/50658153/149433301-f6fcc168-cfdd-4d3e-bad5-6cc9abdc3d7e.png)
+
+유저 고유번호 INT → VARCHAR로 변경  
+보통 스트링(P, S 등 권한이나 역할 구분)이랑 int 섞어서 난수 발생 13자리  
+ex) P+숫자12자리
+
+유저 테이블 분리하는 정규화  
+유저 테이블에는 업데이트가 자주 일어나지 않는 정보만 저장  
+ex) 토큰은 계속 갱신되는 정보임
+
+JSON 타입을 포함하는 피드 목록 테이블 추가함  
+{”user_feed” : [1, 6, 10]} 형식으로 저장  
+https://www.lesstif.com/dbms/mysql-json-data-54952420.html
+
+#
+
+DB 설계를 하면 할 수록 어렵다. 일주일 내내 ERD만 보고있다  
+수정을 하고 보면 다른 문제가 생기고 다시 수정하면 또 꼬인다..  
+정답이 없고 지식도 부족해서 맞는 방향으로 가고 있는건지 판단이 안된다
+
+[프로젝트 기록용 노션](https://zany-perigee-3ef.notion.site/PJT-SNS-2757fc52632b4d299c7c966abea3a5a7)  
+(매일 메모&일기 형식으로 기록 예정)
