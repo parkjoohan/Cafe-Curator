@@ -1,2 +1,6 @@
-server:
-  port: 8080
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/caffe_in?serverTimezone=Asia/Seoul
+    username: ssafy
+    password: ssafy
