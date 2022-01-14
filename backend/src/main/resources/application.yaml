@@ -4,3 +4,5 @@ spring:
     url: jdbc:mysql://localhost:3306/caffe_in?serverTimezone=Asia/Seoul
     username: ssafy
     password: ssafy
+  jpa:
+    open-in-view: false
