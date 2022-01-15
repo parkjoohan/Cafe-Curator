@@ -1,3 +1,6 @@
+server:
+  port: 8080
+
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -6,3 +9,10 @@ spring:
     password: ssafy
   jpa:
     open-in-view: false
+
+logging.level.com.kql.caffein: debug
+
+jwt:
+  header: Authorization
+  secret: miniboard
+  token-validity-in-seconds: 86400 # 60 * 60 * 24
