@@ -41,15 +41,14 @@ CREATE TABLE IF NOT EXISTS `caffe_in`.`user_detail` (
   `pass` VARCHAR(70) NULL DEFAULT NULL,
   `introduction` VARCHAR(100) NULL DEFAULT NULL,
   `picture` VARCHAR(50) NULL DEFAULT NULL,
-  `refresh_token` VARCHAR(100) NULL,
+  `refresh_token` VARCHAR(100) NULL DEFAULT NULL,
   `category_list` JSON NULL DEFAULT NULL,
   PRIMARY KEY (`user_no`),
   INDEX `fk_user_detail_user1_idx` (`user_no` ASC) VISIBLE,
   CONSTRAINT `fk_user_detail_user1`
     FOREIGN KEY (`user_no`)
     REFERENCES `caffe_in`.`user` (`user_no`)
-    ON DELETE CASCADE
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
@@ -71,8 +70,7 @@ CREATE TABLE IF NOT EXISTS `caffe_in`.`feed` (
   CONSTRAINT `fk_feed_user_detail1`
     FOREIGN KEY (`user_no`)
     REFERENCES `caffe_in`.`user_detail` (`user_no`)
-    ON DELETE CASCADE
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE)
 ENGINE = InnoDB
 AUTO_INCREMENT = 20
 DEFAULT CHARACTER SET = utf8mb4
@@ -87,15 +85,14 @@ CREATE TABLE IF NOT EXISTS `caffe_in`.`bookmark` (
   `user_no` VARCHAR(13) NOT NULL,
   PRIMARY KEY (`feed_no`, `user_no`),
   INDEX `fk_bookmark_user_detail1_idx` (`user_no` ASC) VISIBLE,
-  CONSTRAINT `FK_feed_TO_bookmark_1`
-    FOREIGN KEY (`feed_no`)
-    REFERENCES `caffe_in`.`feed` (`feed_no`)
-    ON DELETE CASCADE,
   CONSTRAINT `fk_bookmark_user_detail1`
     FOREIGN KEY (`user_no`)
     REFERENCES `caffe_in`.`user_detail` (`user_no`)
-    ON DELETE CASCADE
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE,
+  CONSTRAINT `FK_feed_TO_bookmark_1`
+    FOREIGN KEY (`feed_no`)
+    REFERENCES `caffe_in`.`feed` (`feed_no`)
+    ON DELETE CASCADE)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
@@ -143,7 +140,8 @@ CREATE TABLE IF NOT EXISTS `caffe_in`.`category_log` (
     REFERENCES `caffe_in`.`categories` (`category`),
   CONSTRAINT `FK_feed_TO_category_log_1`
     FOREIGN KEY (`feed_no`)
-    REFERENCES `caffe_in`.`feed` (`feed_no`))
+    REFERENCES `caffe_in`.`feed` (`feed_no`)
+    ON DELETE CASCADE)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
@@ -154,14 +152,14 @@ COLLATE = utf8mb4_0900_ai_ci;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `caffe_in`.`comment` (
   `comment_no` INT NOT NULL AUTO_INCREMENT,
-  `comment_group` INT NOT NULL DEFAULT 0,
-  `sequence` INT NULL,
+  `comment_group` INT NOT NULL DEFAULT '0',
+  `sequence` INT NULL DEFAULT NULL,
   `content` VARCHAR(500) NOT NULL,
   `reg_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `like_count` INT NOT NULL DEFAULT '0',
   `feed_no` INT NOT NULL,
   `user_no` VARCHAR(13) NOT NULL,
-  `parent_no` VARCHAR(13) NULL,
+  `parent_no` VARCHAR(13) NULL DEFAULT NULL,
   PRIMARY KEY (`comment_no`),
   INDEX `fk_comment_feed1_idx` (`feed_no` ASC) VISIBLE,
   INDEX `fk_comment_user_detail1_idx` (`user_no` ASC) VISIBLE,
@@ -169,18 +167,15 @@ CREATE TABLE IF NOT EXISTS `caffe_in`.`comment` (
   CONSTRAINT `fk_comment_feed1`
     FOREIGN KEY (`feed_no`)
     REFERENCES `caffe_in`.`feed` (`feed_no`)
-    ON DELETE CASCADE
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE,
   CONSTRAINT `fk_comment_user_detail1`
     FOREIGN KEY (`user_no`)
     REFERENCES `caffe_in`.`user_detail` (`user_no`)
-    ON DELETE CASCADE
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE,
   CONSTRAINT `fk_comment_user_detail2`
     FOREIGN KEY (`parent_no`)
     REFERENCES `caffe_in`.`user_detail` (`user_no`)
-    ON DELETE SET NULL
-    ON UPDATE NO ACTION)
+    ON DELETE SET NULL)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
@@ -194,15 +189,14 @@ CREATE TABLE IF NOT EXISTS `caffe_in`.`comment_like` (
   `user_no` VARCHAR(13) NOT NULL,
   PRIMARY KEY (`comment_no`, `user_no`),
   INDEX `fk_comment_like_user_detail1_idx` (`user_no` ASC) VISIBLE,
-  CONSTRAINT `FK_comment_TO_comment_like_1`
-    FOREIGN KEY (`comment_no`)
-    REFERENCES `caffe_in`.`comment` (`comment_no`)
-    ON DELETE CASCADE,
   CONSTRAINT `fk_comment_like_user_detail1`
     FOREIGN KEY (`user_no`)
     REFERENCES `caffe_in`.`user_detail` (`user_no`)
-    ON DELETE CASCADE
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE,
+  CONSTRAINT `FK_comment_TO_comment_like_1`
+    FOREIGN KEY (`comment_no`)
+    REFERENCES `caffe_in`.`comment` (`comment_no`)
+    ON DELETE CASCADE)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
@@ -221,8 +215,7 @@ CREATE TABLE IF NOT EXISTS `caffe_in`.`email_auth` (
   CONSTRAINT `fk_email_auth_user1`
     FOREIGN KEY (`user_no`)
     REFERENCES `caffe_in`.`user` (`user_no`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
@@ -236,15 +229,14 @@ CREATE TABLE IF NOT EXISTS `caffe_in`.`feed_like` (
   `user_no` VARCHAR(13) NOT NULL,
   PRIMARY KEY (`feed_no`, `user_no`),
   INDEX `fk_feed_like_user_detail1_idx` (`user_no` ASC) VISIBLE,
-  CONSTRAINT `FK_feed_TO_feed_like_1`
-    FOREIGN KEY (`feed_no`)
-    REFERENCES `caffe_in`.`feed` (`feed_no`)
-    ON DELETE CASCADE,
   CONSTRAINT `fk_feed_like_user_detail1`
     FOREIGN KEY (`user_no`)
     REFERENCES `caffe_in`.`user_detail` (`user_no`)
-    ON DELETE CASCADE
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE,
+  CONSTRAINT `FK_feed_TO_feed_like_1`
+    FOREIGN KEY (`feed_no`)
+    REFERENCES `caffe_in`.`feed` (`feed_no`)
+    ON DELETE CASCADE)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
@@ -259,7 +251,8 @@ CREATE TABLE IF NOT EXISTS `caffe_in`.`feeds` (
   PRIMARY KEY (`user_no`),
   CONSTRAINT `FK_user_TO_feeds_1`
     FOREIGN KEY (`user_no`)
-    REFERENCES `caffe_in`.`user` (`user_no`))
+    REFERENCES `caffe_in`.`user` (`user_no`)
+    ON DELETE CASCADE)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
@@ -277,8 +270,7 @@ CREATE TABLE IF NOT EXISTS `caffe_in`.`file` (
   CONSTRAINT `fk_file_feed1`
     FOREIGN KEY (`feed_no`)
     REFERENCES `caffe_in`.`feed` (`feed_no`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE)
 ENGINE = InnoDB
 AUTO_INCREMENT = 8
 DEFAULT CHARACTER SET = utf8mb4
@@ -297,13 +289,11 @@ CREATE TABLE IF NOT EXISTS `caffe_in`.`follow` (
   CONSTRAINT `fk_follow_user_detail1`
     FOREIGN KEY (`user_no`)
     REFERENCES `caffe_in`.`user_detail` (`user_no`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+    ON DELETE CASCADE,
   CONSTRAINT `fk_follow_user_detail2`
     FOREIGN KEY (`get_user_no`)
     REFERENCES `caffe_in`.`user_detail` (`user_no`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
