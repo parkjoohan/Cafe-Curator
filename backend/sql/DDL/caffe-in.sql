@@ -41,7 +41,7 @@ CREATE TABLE IF NOT EXISTS `caffe_in`.`user_detail` (
   `pass` VARCHAR(70) NULL DEFAULT NULL,
   `introduction` VARCHAR(100) NULL DEFAULT NULL,
   `picture` VARCHAR(50) NULL DEFAULT NULL,
-  `refresh_token` VARCHAR(100) NOT NULL,
+  `refresh_token` VARCHAR(100) NULL,
   `category_list` JSON NULL DEFAULT NULL,
   PRIMARY KEY (`user_no`),
   INDEX `fk_user_detail_user1_idx` (`user_no` ASC) VISIBLE,
