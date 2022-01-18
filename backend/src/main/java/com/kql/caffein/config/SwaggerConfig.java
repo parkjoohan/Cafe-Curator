@@ -19,7 +19,7 @@ public class SwaggerConfig {
                 .groupName("caffe-in")
                 .apiInfo(apiInfo())
                 .select()
-                .apis(RequestHandlerSelectors.basePackage("com.kql.caffein.api"))
+                .apis(RequestHandlerSelectors.basePackage("com.kql.caffein"))
                 .paths(PathSelectors.ant("/**"))
                 .build();
     }
