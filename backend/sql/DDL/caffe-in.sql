@@ -2,7 +2,7 @@
 
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
-SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
 -- -----------------------------------------------------
 -- Schema mydb
@@ -153,17 +153,17 @@ COLLATE = utf8mb4_0900_ai_ci;
 CREATE TABLE IF NOT EXISTS `caffe_in`.`comment` (
   `comment_no` INT NOT NULL AUTO_INCREMENT,
   `comment_group` INT NOT NULL DEFAULT '0',
-  `sequence` INT NULL DEFAULT NULL,
+  `sequence` INT NOT NULL DEFAULT '0',
   `content` VARCHAR(500) NOT NULL,
   `reg_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `like_count` INT NOT NULL DEFAULT '0',
   `feed_no` INT NOT NULL,
   `user_no` VARCHAR(13) NOT NULL,
-  `parent_no` VARCHAR(13) NULL DEFAULT NULL,
+  `parent_no` INT NULL DEFAULT '0',
   PRIMARY KEY (`comment_no`),
   INDEX `fk_comment_feed1_idx` (`feed_no` ASC) VISIBLE,
   INDEX `fk_comment_user_detail1_idx` (`user_no` ASC) VISIBLE,
-  INDEX `fk_comment_user_detail2_idx` (`parent_no` ASC) VISIBLE,
+  INDEX `fk_comment_comment1_idx` (`parent_no` ASC) VISIBLE,
   CONSTRAINT `fk_comment_feed1`
     FOREIGN KEY (`feed_no`)
     REFERENCES `caffe_in`.`feed` (`feed_no`)
@@ -172,11 +172,13 @@ CREATE TABLE IF NOT EXISTS `caffe_in`.`comment` (
     FOREIGN KEY (`user_no`)
     REFERENCES `caffe_in`.`user_detail` (`user_no`)
     ON DELETE CASCADE,
-  CONSTRAINT `fk_comment_user_detail2`
+  CONSTRAINT `fk_comment_comment1`
     FOREIGN KEY (`parent_no`)
-    REFERENCES `caffe_in`.`user_detail` (`user_no`)
-    ON DELETE SET NULL)
+    REFERENCES `caffe_in`.`comment` (`comment_no`)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB
+AUTO_INCREMENT = 5
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
