@@ -159,7 +159,7 @@ CREATE TABLE IF NOT EXISTS `caffe_in`.`comment` (
   `like_count` INT NOT NULL DEFAULT '0',
   `feed_no` INT NOT NULL,
   `user_no` VARCHAR(13) NOT NULL,
-  `parent_no` INT NULL DEFAULT '0',
+  `parent_no` INT NULL DEFAULT NULL,
   PRIMARY KEY (`comment_no`),
   INDEX `fk_comment_feed1_idx` (`feed_no` ASC) VISIBLE,
   INDEX `fk_comment_user_detail1_idx` (`user_no` ASC) VISIBLE,
