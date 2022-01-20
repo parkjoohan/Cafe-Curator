@@ -2,7 +2,7 @@
 
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
-SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
 
 -- -----------------------------------------------------
 -- Schema mydb
@@ -37,10 +37,10 @@ COLLATE = utf8mb4_0900_ai_ci;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `caffe_in`.`user_detail` (
   `user_no` VARCHAR(13) NOT NULL,
-  `id` VARCHAR(10) NOT NULL,
+  `user_id` VARCHAR(10) NOT NULL,
   `pass` VARCHAR(70) NULL DEFAULT NULL,
   `introduction` VARCHAR(100) NULL DEFAULT NULL,
-  `picture` VARCHAR(50) NULL DEFAULT NULL,
+  `picture` VARCHAR(400) NULL DEFAULT NULL,
   `refresh_token` VARCHAR(100) NULL DEFAULT NULL,
   `category_list` JSON NULL DEFAULT NULL,
   PRIMARY KEY (`user_no`),
@@ -182,7 +182,6 @@ AUTO_INCREMENT = 5
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
-
 -- -----------------------------------------------------
 -- Table `caffe_in`.`comment_like`
 -- -----------------------------------------------------
@@ -208,16 +207,15 @@ COLLATE = utf8mb4_0900_ai_ci;
 -- Table `caffe_in`.`email_auth`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `caffe_in`.`email_auth` (
-  `email_auth_no` INT NOT NULL,
-  `code` VARCHAR(6) NOT NULL,
-  `send_date` DATETIME NOT NULL,
   `user_no` VARCHAR(13) NOT NULL,
-  PRIMARY KEY (`email_auth_no`),
+  `code` VARCHAR(6) NOT NULL,
+  `state` TINYINT NULL,
   INDEX `fk_email_auth_user1_idx` (`user_no` ASC) VISIBLE,
   CONSTRAINT `fk_email_auth_user1`
     FOREIGN KEY (`user_no`)
     REFERENCES `caffe_in`.`user` (`user_no`)
-    ON DELETE CASCADE)
+    ON DELETE CASCADE
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
