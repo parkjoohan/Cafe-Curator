@@ -1,10 +1,13 @@
 package com.kql.caffein.controller;
 
+import com.kql.caffein.dto.EmailAuthDto;
 import com.kql.caffein.dto.UserDetailDto;
 import com.kql.caffein.dto.UserDto;
+import com.kql.caffein.entity.EmailAuth;
 import com.kql.caffein.entity.User;
 import com.kql.caffein.entity.UserDetail;
 import com.kql.caffein.jwt.TokenProvider;
+import com.kql.caffein.service.EmailAuthService;
 import com.kql.caffein.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -19,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Email;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,6 +34,7 @@ import java.util.Optional;
 @RequestMapping("/api/users")
 public class UserController {
     private final UserService userService;
+    private final EmailAuthService emailAuthService;
     private final TokenProvider tokenProvider;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
 
@@ -51,13 +56,15 @@ public class UserController {
         return new ResponseEntity<Optional<UserDetail>>(userDetail, HttpStatus.OK);
     }
 
-    @ApiOperation(value = "이메일 인증", response = String.class)
-    @GetMapping("/emailCheck/{email}")
-    public ResponseEntity<String> emailCheck(@PathVariable @ApiParam(value = "유저 이메일", required = true) String email) throws Exception{
-        log.info("emailCheck called!! email : {}",email);
-        userService.findByEmail(email);
-
-        return new ResponseEntity<String>(HttpStatus.OK);
+    @ApiOperation(value = "이메일 인증", response = EmailAuth.class)
+    @PostMapping("/emailCheck")
+    public ResponseEntity<EmailAuth> verifyCode(@RequestBody EmailAuthDto emailAuthDto) throws Exception {
+        log.info("verifyCode called!! emailAuthDto: {}", emailAuthDto);
+        if(emailAuthService.verifyCode(emailAuthDto) == true){
+            return new ResponseEntity<EmailAuth>(emailAuthService.findByUserNo(emailAuthDto.getUserNo()), HttpStatus.OK);
+        } else{
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @ApiOperation(value = "모든 회원 상세정보 조회", response = List.class)
@@ -96,5 +103,4 @@ public class UserController {
 
         return new ResponseEntity<String>(userNo, HttpStatus.OK);
     }
-
 }

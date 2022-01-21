@@ -3,8 +3,10 @@ package com.kql.caffein.service;
 import com.kql.caffein.dto.Role;
 import com.kql.caffein.dto.UserDetailDto;
 import com.kql.caffein.dto.UserDto;
+import com.kql.caffein.entity.EmailAuth;
 import com.kql.caffein.entity.User;
 import com.kql.caffein.entity.UserDetail;
+import com.kql.caffein.repository.EmailAuthRepository;
 import com.kql.caffein.repository.UserDetailRepository;
 import com.kql.caffein.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -24,6 +26,8 @@ import java.util.*;
 public class UserServiceImpl implements UserService{
     private final UserRepository userRepository;
     private final UserDetailRepository userDetailRepository;
+    private final EmailAuthRepository emailAuthRepository;
+    private final EmailAuthService emailAuthService;
     private final PasswordEncoder passwordEncoder;
     private final String separ = File.separator;
 
@@ -87,7 +91,7 @@ public class UserServiceImpl implements UserService{
                 .email(userDto.getEmail())
                 .joinDate(new Date())
                 .oauthType("kql")
-                .role(Role.USER)
+                .role(Role.RECRUIT)
                 .build();
         userRepository.save(user);
 
@@ -98,6 +102,14 @@ public class UserServiceImpl implements UserService{
                 .introduction(userDetailDto.getIntroduction())
                 .build();
         userDetailRepository.save(userDetail);
+
+        EmailAuth emailAuth = EmailAuth.builder()
+                .userNo(randomUserNo)
+                .code(emailAuthService.setCode())
+                .state(false)
+                .build();
+        emailAuthRepository.save(emailAuth);
+        emailAuthService.sendMail(userDto.getEmail(), emailAuth.getCode());
     }
 
     @Override
@@ -115,7 +127,7 @@ public class UserServiceImpl implements UserService{
                 .email(userDto.getEmail())
                 .joinDate(new Date())
                 .oauthType("kql")
-                .role(Role.USER)
+                .role(Role.RECRUIT)
                 .build();
         userRepository.save(user);
 
@@ -127,6 +139,14 @@ public class UserServiceImpl implements UserService{
                 .picture(filePath)
                 .build();
         userDetailRepository.save(userDetail);
+
+        EmailAuth emailAuth = EmailAuth.builder()
+                .userNo(randomUserNo)
+                .code(emailAuthService.setCode())
+                .state(false)
+                .build();
+        emailAuthRepository.save(emailAuth);
+        emailAuthService.sendMail(userDto.getEmail(), emailAuth.getCode());
     }
 
     @Override

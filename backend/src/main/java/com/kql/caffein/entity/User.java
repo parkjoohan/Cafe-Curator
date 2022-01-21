@@ -9,6 +9,7 @@ import java.util.Date;
 
 
 @Getter
+@Setter
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
@@ -21,6 +22,10 @@ public class User {
     @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
     @JsonBackReference
     private UserDetail userDetail;
+
+    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
+    @JsonBackReference
+    private EmailAuth emailAuth;
 
     @Column(nullable = false)
     private String email;
