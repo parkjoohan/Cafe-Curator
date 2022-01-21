@@ -10,7 +10,6 @@ import lombok.ToString;
 
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
-import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
