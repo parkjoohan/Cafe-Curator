@@ -103,16 +103,38 @@ public class FeedController {
 
     @ApiOperation(value = "게시글 수정")
     @PutMapping("{userNo}")
-    public ResponseEntity<String> feedModify(@RequestParam String userNo, @RequestPart FeedModifyDto feedDto,
-                                             @RequestPart(value = "files") MultipartFile[] files) throws IOException{
+    public ResponseEntity<String> feedModify(@PathVariable String userNo, @RequestPart FeedModifyDto feedDto,
+                                             @RequestPart(value = "files", required = false) MultipartFile[] files) throws IOException{
 
         try{
             feedService.feedModify(userNo, feedDto, files);
             System.out.println("피드 수정 성공 >> " + feedDto);
             return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
         }catch (Exception e){
-            e.printStackTrace();
-            System.out.println("피드 수정 실패");
+//            e.printStackTrace();
+            return new ResponseEntity<>("FAIL : " + e.getMessage(), HttpStatus.OK);
+        }
+//        return new ResponseEntity<>("FAIL", HttpStatus.OK);
+    }
+
+    @ApiOperation(value = " 피드 북마크 컨트롤", notes="북마크 등록, 삭제")
+    @GetMapping("/bookmark/{feedNo}/{userNo}")
+    public ResponseEntity<String> feedBookmarkControl(@PathVariable int feedNo, @PathVariable String userNo){
+
+        try{
+            String msg = feedService.feedBookmarkControl(feedNo, userNo);
+            return new ResponseEntity<>("SUCCESS : " + msg, HttpStatus.OK);
+        }catch (Exception e){
+        }
+        return new ResponseEntity<>("FAIL", HttpStatus.OK);
+    }
+
+    @ApiOperation(value = "북마크한 피드 목록", notes = "", response = List.class)
+    @GetMapping("bookmarkList/{userNo}")
+    public ResponseEntity bookmarkList(@PathVariable String userNo){
+        try{
+            return new ResponseEntity<>(feedService.bookmarkList(userNo), HttpStatus.OK);
+        }catch (Exception e){
         }
         return new ResponseEntity<>("FAIL", HttpStatus.OK);
     }

@@ -30,9 +30,12 @@ public class FeedResDto {
     private List<FileDto> files;
     @ApiModelProperty(value="피드 좋아요 상태")
     private boolean liked;
+    @ApiModelProperty(value="피드 북마크 상태")
+    private boolean marked;
 
     @Builder
-    public FeedResDto(int feedNo, String content, LocalDateTime regTime, Integer cafeId, List<String> categoryList, int likeCount, String userId, List<FileDto> files, boolean liked){
+    public FeedResDto(int feedNo, String content, LocalDateTime regTime, Integer cafeId, List<String> categoryList,
+                      int likeCount, String userId, List<FileDto> files, boolean liked, boolean marked){
         this.feedNo = feedNo;
         this.content = content;
         this.regTime = regTime;
@@ -42,5 +45,6 @@ public class FeedResDto {
         this.userId = userId;
         this.files = files;
         this.liked = liked;
+        this.marked = marked;
     }
 }

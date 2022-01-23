@@ -29,6 +29,9 @@ public class FeedServiceImpl implements FeedService{
     FeedLikeRepository feedLikeRepository;
 
     @Autowired
+    BookmarkRepository bookmarkRepository;
+
+    @Autowired
     UserDetailRepository userDetailRepository;
 
     @Autowired
@@ -150,6 +153,7 @@ public class FeedServiceImpl implements FeedService{
                 .userId(feedUserId)
                 .files(files)
                 .liked(feedLikeState(feedNo, userNo)) //좋아요 상태 확인
+                .marked(BookmarkState(feedNo, userNo)) //북마크 상태 확인
                 .build();
 
         return feedDto;
@@ -161,6 +165,17 @@ public class FeedServiceImpl implements FeedService{
 
         Optional<Optional<FeedLike>> feedLike = Optional.ofNullable(feedLikeRepository.findById(new FeedLikeId(feedNo, userNo)));
         if(feedLike.get().isEmpty()) //feed_like 테이블에 존재하지 않는다면
+            return false;
+        else
+            return true;
+    }
+
+    //피드 북마크 상태
+    @Override
+    public boolean BookmarkState(int feedNo, String userNo){
+
+        Optional<Optional<Bookmark>> bookmark = Optional.ofNullable(bookmarkRepository.findById(new BookmarkId(feedNo, userNo)));
+        if(bookmark.get().isEmpty()) //bookmark 테이블에 존재하지 않는다면
             return false;
         else
             return true;
@@ -231,14 +246,99 @@ public class FeedServiceImpl implements FeedService{
 
     //게시글 수정
     @Override
+    @Transactional
     public void feedModify(String userNo, FeedModifyDto feedDto, MultipartFile[] files) throws Exception{
 
-//        int feedNo =
+        Optional<Feed> obj = feedRepository.findById(feedDto.getFeedNo());
+        if(obj.isEmpty())
+            throw new NullPointerException("해당 피드가 존재하지 않습니다");
 
-        //feedModifyDto에 삭제한 사진(파일) 번호 포함해서 받기
+        Feed feed = obj.get();
+
+        String feedUserNo = feed.getUserNo();
+        if(!userNo.equals(feedUserNo))
+            throw new Exception("피드 작성자가 아닙니다");
+
+        //기존 사진을 다 삭제하고 새로운 사진을 올리지 않은 경우
+        if(files == null && feed.getFiles().size() == feedDto.getDeleteList().size())
+            throw new NullPointerException("이미지를 등록하세요");
+
+        //파일 확장자 검사
+        if(files != null){
+            for(MultipartFile mfile : files){
+                String originFileName = mfile.getOriginalFilename();
+                String extension = originFileName.substring(originFileName.length()-3);
+
+                if(!(extension.equals("jpg") || extension.equals("png")))
+                    throw new FileUploadException("파일 확장자가 jpg나 png가 아닙니다.");
+            }
+        }
+
         //기존 파일 삭제
-        //새로운 파일 등록
+        for(int fileNo : feedDto.getDeleteList()){
+            System.out.println(fileNo + "삭제");
+            fileRepository.deleteById(fileNo);
+        }
 
-        //카테고리 목록 수정 -> 카테고리 로그, 캐시 삭제?
+        //내용 수정
+        feed.setContent(feedDto.getContent());
+        feed.setCafeId(feedDto.getCafeId());
+        feed.setCategoryList(feedDto.getCategoryList());
+        feedRepository.save(feed);
+
+        //카페 아이디 or 카테고리 목록 수정 -> 카테고리 로그, 캐시 영향
+
+        //새로운 파일 저장
+        if(files != null){
+            for (MultipartFile mfile : files) {
+                String imgURL = s3Service.upload(mfile);  //S3에 파일 업로드 후 URL 가져오기
+
+                File file =  File.builder()
+                        .filePath(imgURL)
+                        .feed(feed)
+                        .build();
+
+                fileRepository.save(file); //DB에 파일 저장
+            }
+        }
+    }
+
+    //게시글 북마크 컨트롤
+    @Override
+    public String feedBookmarkControl(int feedNo, String userNo) throws Exception {
+
+        Optional<Feed> obj = feedRepository.findById(feedNo);
+        if (obj.isEmpty())
+            throw new NullPointerException("해당 피드가 존재하지 않습니다");
+
+        Feed feed = obj.get();
+
+        Optional<Optional<Bookmark>> bookmark = Optional.ofNullable(bookmarkRepository.findById(new BookmarkId(feedNo, userNo)));
+        if (bookmark.get().isEmpty()) {
+            bookmarkRepository.save(new Bookmark(new BookmarkId(feedNo, userNo)));
+
+            return ("ADD BOOKMARK");
+        } else {
+            bookmarkRepository.deleteById(new BookmarkId(feedNo, userNo));
+
+            return ("DELETE BOOKMARK");
+        }
+    }
+    
+    //북마크한 피드 리스트
+    @Override
+    @Transactional
+    public List<FeedResDto> bookmarkList(String userNo) throws Exception{
+
+        Optional<List<Bookmark>> bookmarkList = bookmarkRepository.findByBookmarkId_UserNo(userNo);
+
+        if(bookmarkList.get().isEmpty()) //userNo가 북마크한 피드 없음
+            return new ArrayList<>(); //빈 리스트 return
+
+        List<FeedResDto> feedDtoList = new ArrayList<>();
+        for(Bookmark bookmark : bookmarkList.get())
+            feedDtoList.add(feedDetail(bookmark.getBookmarkId().getFeedNo(), userNo));
+
+        return feedDtoList;
     }
 }

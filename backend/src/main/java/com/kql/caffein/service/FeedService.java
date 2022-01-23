@@ -19,4 +19,8 @@ public interface FeedService {
     public List<FeedResDto> feedList(String feedUserNo, String userNo) throws Exception;
     public String feedLikeControl(int feedNo, String userNo) throws Exception;
     public void feedModify(String userNo, FeedModifyDto feedDto, MultipartFile[] files) throws Exception;
+
+    public String feedBookmarkControl(int feedNo, String userNo) throws Exception;
+    public boolean BookmarkState(int feedNo, String userNo);
+    public List<FeedResDto> bookmarkList(String userNo) throws Exception;
 }
