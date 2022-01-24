@@ -64,6 +64,7 @@ CREATE TABLE IF NOT EXISTS `caffe_in`.`feed` (
   `cafe_id` INT NULL DEFAULT NULL,
   `category_list` JSON NULL DEFAULT NULL,
   `like_count` INT NOT NULL DEFAULT '0',
+  `comment_count` INT NOT NULL DEFAULT '0',
   `user_no` VARCHAR(13) NOT NULL,
   PRIMARY KEY (`feed_no`),
   INDEX `fk_feed_user_detail1_idx` (`user_no` ASC) VISIBLE,
