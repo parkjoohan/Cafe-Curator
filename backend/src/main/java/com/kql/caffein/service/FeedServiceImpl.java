@@ -5,13 +5,14 @@ import com.kql.caffein.entity.*;
 import com.kql.caffein.repository.*;
 import org.apache.tomcat.util.http.fileupload.FileUploadException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class FeedServiceImpl implements FeedService{
@@ -129,7 +130,7 @@ public class FeedServiceImpl implements FeedService{
     //피드 상세보기
     @Override
     @Transactional
-    public FeedResDto feedDetail(int feedNo, String userNo) throws Exception{
+    public FeedDetailDto feedDetail(int feedNo, String userNo) throws Exception{
 
         Optional<Feed> obj = feedRepository.findById(feedNo);
         if(obj.isEmpty())
@@ -143,7 +144,7 @@ public class FeedServiceImpl implements FeedService{
         for(File file : feed.getFiles() )
             files.add(new FileDto(file.getFileNo(), file.getFilePath()));
 
-        FeedResDto feedDto = FeedResDto.builder()
+        FeedDetailDto feedDto = FeedDetailDto.builder()
                 .feedNo(feed.getFeedNo())
                 .content(feed.getContent())
                 .regTime(feed.getRegTime())
@@ -159,92 +160,7 @@ public class FeedServiceImpl implements FeedService{
         return feedDto;
     }
 
-    //피드 좋아요 상태
-    @Override
-    public boolean feedLikeState(int feedNo, String userNo){
-
-        Optional<Optional<FeedLike>> feedLike = Optional.ofNullable(feedLikeRepository.findById(new FeedLikeId(feedNo, userNo)));
-        if(feedLike.get().isEmpty()) //feed_like 테이블에 존재하지 않는다면
-            return false;
-        else
-            return true;
-    }
-
-    //피드 북마크 상태
-    @Override
-    public boolean BookmarkState(int feedNo, String userNo){
-
-        Optional<Optional<Bookmark>> bookmark = Optional.ofNullable(bookmarkRepository.findById(new BookmarkId(feedNo, userNo)));
-        if(bookmark.get().isEmpty()) //bookmark 테이블에 존재하지 않는다면
-            return false;
-        else
-            return true;
-    }
-
-    //피드 리스트(feeds 테이블)
-    @Override
-    @Transactional
-    public List<FeedResDto> feedListByTable(String feedUserNo, String userNo) throws Exception {
-
-        Optional<Feeds> feeds = feedsRepository.findById(feedUserNo);
-        if(feeds.isEmpty()) //feedUser가 작성한 피드 없음
-            return new ArrayList<>(); //빈 리스트 return
-
-        List<Integer> feedList  = feeds.get().getFeedList(); //feedUser의 피드 목록
-//        System.out.println("피드 목록 : " + feedList);
-
-        List<FeedResDto> feedDtoList = new ArrayList<>();
-        for(int feedNo : feedList)
-            feedDtoList.add(feedDetail(feedNo, userNo));
-
-        return feedDtoList;
-    }
-
-    //피드 리스트(userNo)
-    @Override
-    @Transactional
-    public List<FeedResDto> feedList(String feedUserNo, String userNo) throws Exception{
-
-        Optional<List<Feed>> feedList = feedRepository.findByUserNoOrderByRegTime(feedUserNo);
-        if(feedList.isEmpty()) //feedUser가 작성한 피드 없음
-            return new ArrayList<>(); //빈 리스트 return
-
-        List<FeedResDto> feedDtoList = new ArrayList<>();
-        for(Feed feed : feedList.get())
-            feedDtoList.add(feedDetail(feed.getFeedNo(), userNo));
-
-        return feedDtoList;
-    }
-
-    //게시글 좋아요 컨트롤
-    @Override
-    public String feedLikeControl(int feedNo, String userNo) throws Exception {
-
-        Optional<Feed> obj = feedRepository.findById(feedNo);
-        if (obj.isEmpty())
-            throw new NullPointerException("해당 피드가 존재하지 않습니다");
-
-        Feed feed = obj.get();
-
-        Optional<Optional<FeedLike>> feedLike = Optional.ofNullable(feedLikeRepository.findById(new FeedLikeId(feedNo, userNo)));
-        if (feedLike.get().isEmpty()) {
-            feedLikeRepository.save(new FeedLike(new FeedLikeId(feedNo, userNo)));
-
-            feed.setLikeCount(feed.getLikeCount() + 1); //피드 좋아요 카운트 증가
-            feedRepository.save(feed);
-
-            return ("ADD LIKE");
-        } else {
-            feedLikeRepository.deleteById(new FeedLikeId(feedNo, userNo));
-
-            feed.setLikeCount(feed.getLikeCount() - 1); //피드 좋아요 카운트 감소
-            feedRepository.save(feed);
-
-            return ("DELETE LIKE");
-        }
-    }
-
-    //게시글 수정
+    //피드 수정
     @Override
     @Transactional
     public void feedModify(String userNo, FeedModifyDto feedDto, MultipartFile[] files) throws Exception{
@@ -303,7 +219,57 @@ public class FeedServiceImpl implements FeedService{
         }
     }
 
-    //게시글 북마크 컨트롤
+    //피드 좋아요 상태
+    @Override
+    public boolean feedLikeState(int feedNo, String userNo){
+
+        Optional<Optional<FeedLike>> feedLike = Optional.ofNullable(feedLikeRepository.findById(new FeedLikeId(feedNo, userNo)));
+        if(feedLike.get().isEmpty()) //feed_like 테이블에 존재하지 않는다면
+            return false;
+        else
+            return true;
+    }
+
+    //피드 좋아요 컨트롤
+    @Override
+    public String feedLikeControl(int feedNo, String userNo) throws Exception {
+
+        Optional<Feed> obj = feedRepository.findById(feedNo);
+        if (obj.isEmpty())
+            throw new NullPointerException("해당 피드가 존재하지 않습니다");
+
+        Feed feed = obj.get();
+
+        Optional<Optional<FeedLike>> feedLike = Optional.ofNullable(feedLikeRepository.findById(new FeedLikeId(feedNo, userNo)));
+        if (feedLike.get().isEmpty()) {
+            feedLikeRepository.save(new FeedLike(new FeedLikeId(feedNo, userNo)));
+
+            feed.setLikeCount(feed.getLikeCount() + 1); //피드 좋아요 카운트 증가
+            feedRepository.save(feed);
+
+            return ("ADD LIKE");
+        } else {
+            feedLikeRepository.deleteById(new FeedLikeId(feedNo, userNo));
+
+            feed.setLikeCount(feed.getLikeCount() - 1); //피드 좋아요 카운트 감소
+            feedRepository.save(feed);
+
+            return ("DELETE LIKE");
+        }
+    }
+
+    //피드 북마크 상태
+    @Override
+    public boolean BookmarkState(int feedNo, String userNo){
+
+        Optional<Optional<Bookmark>> bookmark = Optional.ofNullable(bookmarkRepository.findById(new BookmarkId(feedNo, userNo)));
+        if(bookmark.get().isEmpty()) //bookmark 테이블에 존재하지 않는다면
+            return false;
+        else
+            return true;
+    }
+
+    //피드 북마크 컨트롤
     @Override
     public String feedBookmarkControl(int feedNo, String userNo) throws Exception {
 
@@ -324,18 +290,113 @@ public class FeedServiceImpl implements FeedService{
             return ("DELETE BOOKMARK");
         }
     }
-    
+
+    //피드 리스트(feeds 테이블) + 페이징
+    @Override
+    @Transactional
+    public List<FeedResDto> feedListWithPaging(String feedUserNo, String userNo, int lastFeedNo, int size) throws Exception{
+
+        Optional<Feeds> feeds = feedsRepository.findById(feedUserNo);
+        if(feeds.isEmpty()) //feedUser가 작성한 피드 없음
+            return new ArrayList<>(); //빈 리스트 return
+
+        List<Integer> feedList  = feeds.get().getFeedList(); //feedUser의 피드 목록
+//        System.out.println("피드 목록 : " + feedList);
+
+        Page<Feed> f = feedRepository.findByFeedNoLessThanAndFeedNoInOrderByFeedNoDesc(lastFeedNo, feedList,
+                PageRequest.of(0, size)); //페이지네이션을 위한 PageRequest, 페이지는 0으로 고정
+
+        return makeFeedDtoList(f, userNo);
+    }
+
+    //북마크한 피드 리스트 + 페이징
+    @Override
+    @Transactional
+    public List<FeedResDto> bookmarkListWithPaging(String userNo, int lastFeedNo, int size) throws Exception{
+
+        Optional<List<Integer>> bookmarkList = bookmarkRepository.getBookmarkList(userNo);
+//        System.out.println("북마크 목록 : " + bookmarkList.get());
+
+        Page<Feed> f = feedRepository.findByFeedNoLessThanAndFeedNoInOrderByFeedNoDesc(lastFeedNo, bookmarkList.get(),
+                PageRequest.of(0, size)); //페이지네이션을 위한 PageRequest, 페이지는 0으로 고정
+
+        return makeFeedDtoList(f, userNo);
+    }
+
+    //목록 조회 응답 DtoList 만들기
+    @Override
+    public List<FeedResDto> makeFeedDtoList(Page<Feed> list, String userNo){
+        List<FeedResDto> feedDtoList = new ArrayList<>();
+
+        for(Feed feed : list){
+            String feedUserId = userDetailRepository.findByUserNo(feed.getUserNo()).getUserId();
+            File file = feed.getFiles().get(0); //대표 사진만 포함
+
+            FeedResDto feedDto = FeedResDto.builder()
+                    .feedNo(feed.getFeedNo())
+                    .content(feed.getContent())
+                    .regTime(feed.getRegTime())
+                    .cafeId(feed.getCafeId())
+                    .categoryList(feed.getCategoryList())
+                    .likeCount(feed.getLikeCount())
+                    .userId(feedUserId)
+                    .file(new FileDto(file.getFileNo(), file.getFilePath()))
+                    .liked(feedLikeState(feed.getFeedNo(), userNo))
+                    .marked(BookmarkState(feed.getFeedNo(), userNo))
+                    .build();
+            feedDtoList.add(feedDto);
+        }
+        return feedDtoList;
+    }
+
+
+    //페이징 처리 X
+    //피드 리스트(feeds 테이블)
+    @Override
+    @Transactional
+    public List<FeedDetailDto> feedListByTable(String feedUserNo, String userNo) throws Exception {
+
+        Optional<Feeds> feeds = feedsRepository.findById(feedUserNo);
+        if(feeds.isEmpty()) //feedUser가 작성한 피드 없음
+            return new ArrayList<>(); //빈 리스트 return
+
+        List<Integer> feedList  = feeds.get().getFeedList(); //feedUser의 피드 목록
+//        System.out.println("피드 목록 : " + feedList);
+
+        List<FeedDetailDto> feedDtoList = new ArrayList<>();
+        for(int feedNo : feedList)
+            feedDtoList.add(feedDetail(feedNo, userNo));
+
+        return feedDtoList;
+    }
+
+    //피드 리스트(userNo)
+    @Override
+    @Transactional
+    public List<FeedDetailDto> feedList(String feedUserNo, String userNo) throws Exception{
+
+        Optional<List<Feed>> feedList = feedRepository.findByUserNoOrderByRegTime(feedUserNo);
+        if(feedList.isEmpty()) //feedUser가 작성한 피드 없음
+            return new ArrayList<>(); //빈 리스트 return
+
+        List<FeedDetailDto> feedDtoList = new ArrayList<>();
+        for(Feed feed : feedList.get())
+            feedDtoList.add(feedDetail(feed.getFeedNo(), userNo));
+
+        return feedDtoList;
+    }
+
     //북마크한 피드 리스트
     @Override
     @Transactional
-    public List<FeedResDto> bookmarkList(String userNo) throws Exception{
+    public List<FeedDetailDto> bookmarkList(String userNo) throws Exception{
 
-        Optional<List<Bookmark>> bookmarkList = bookmarkRepository.findByBookmarkId_UserNo(userNo);
+        Optional<List<Bookmark>> bookmarkList = bookmarkRepository.findByBookmarkIdUserNo(userNo);
 
         if(bookmarkList.get().isEmpty()) //userNo가 북마크한 피드 없음
             return new ArrayList<>(); //빈 리스트 return
 
-        List<FeedResDto> feedDtoList = new ArrayList<>();
+        List<FeedDetailDto> feedDtoList = new ArrayList<>();
         for(Bookmark bookmark : bookmarkList.get())
             feedDtoList.add(feedDetail(bookmark.getBookmarkId().getFeedNo(), userNo));
 

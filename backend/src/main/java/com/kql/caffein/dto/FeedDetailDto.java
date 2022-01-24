@@ -10,7 +10,7 @@ import java.util.List;
 
 @Data
 @NoArgsConstructor
-public class FeedResDto {
+public class FeedDetailDto {
 
     @ApiModelProperty(value="피드 번호")
     private int feedNo;
@@ -26,16 +26,16 @@ public class FeedResDto {
     private int likeCount;
     @ApiModelProperty(value="피드 작성자 아이디")
     private String userId;
-    @ApiModelProperty(value="피드 사진(파일)")
-    private FileDto file;
+    @ApiModelProperty(value="피드 사진(파일) 목록")
+    private List<FileDto> files;
     @ApiModelProperty(value="피드 좋아요 상태")
     private boolean liked;
     @ApiModelProperty(value="피드 북마크 상태")
     private boolean marked;
 
     @Builder
-    public FeedResDto(int feedNo, String content, LocalDateTime regTime, Integer cafeId, List<String> categoryList,
-                      int likeCount, String userId, FileDto file, boolean liked, boolean marked){
+    public FeedDetailDto(int feedNo, String content, LocalDateTime regTime, Integer cafeId, List<String> categoryList,
+                         int likeCount, String userId, List<FileDto> files, boolean liked, boolean marked){
         this.feedNo = feedNo;
         this.content = content;
         this.regTime = regTime;
@@ -43,7 +43,7 @@ public class FeedResDto {
         this.categoryList = categoryList;
         this.likeCount = likeCount;
         this.userId = userId;
-        this.file = file;
+        this.files = files;
         this.liked = liked;
         this.marked = marked;
     }
