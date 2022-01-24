@@ -35,6 +35,8 @@ public class Comment {
     private String regTime;
     @Column
     private int likeCount;
+    @Column
+    private int commentCount;
 
     @Builder
     public Comment(int feedNo, String userNo, int commentGroup, int sequence, Integer parentNo, String content) {

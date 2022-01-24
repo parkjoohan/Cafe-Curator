@@ -7,6 +7,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.models.auth.In;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -43,22 +44,74 @@ public class CommentController {
         }
     }
 
-    @GetMapping("/{userNo}/{feedNo}")
+//    @GetMapping("/{userNo}/{feedNo}")
+//    @ApiOperation(value = "피드에 달린 댓글 조회")
+//    @ApiImplicitParams({
+//            @ApiImplicitParam(name = "userNo", value = "회원 고유 번호", required = true,
+//                    dataType = "string", paramType = "path"),
+//            @ApiImplicitParam(name = "feedNo", value = "피드 번호", required = true,
+//                    dataType = "int", paramType = "path")
+//    })
+//    public ResponseEntity listComment (@PathVariable String userNo, @PathVariable int feedNo) {
+//        try {
+//            List<CommentResDto> list = commentService.listComment(userNo, feedNo);
+//            if(list.isEmpty())
+//                return new ResponseEntity<>("댓글이 존재하지 않습니다.",HttpStatus.OK);
+//            else
+//                return new ResponseEntity<>(list,HttpStatus.OK);
+//        }catch (Exception e) {
+//            return new ResponseEntity<>(FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
+//        }
+//    }
+
+    @GetMapping
     @ApiOperation(value = "피드에 달린 댓글 조회")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "userNo", value = "회원 고유 번호", required = true,
-                    dataType = "string", paramType = "path"),
+                    dataType = "string", paramType = "query"),
             @ApiImplicitParam(name = "feedNo", value = "피드 번호", required = true,
-                    dataType = "int", paramType = "path")
+                    dataType = "int", paramType = "query"),
+            @ApiImplicitParam(name = "lastCommentNo", value = "마지막 댓글 번호", required = false,
+                    dataType = "int", paramType = "query"),
+            @ApiImplicitParam(name = "size", value = "화면에 보여질 사이즈", required = true,
+                    dataType = "int", paramType = "query")
     })
-    public ResponseEntity listComment (@PathVariable String userNo, @PathVariable int feedNo) {
+    public ResponseEntity listComment (@RequestParam(value = "userNo") String userNo, @RequestParam int feedNo,
+                                       @RequestParam(required = false) Integer lastCommentNo, @RequestParam int size) {
         try {
-            List<CommentResDto> list = commentService.listComment(userNo, feedNo);
+            List<CommentResDto> list = commentService.pageComment(userNo, feedNo, lastCommentNo, size);
             if(list.isEmpty())
                 return new ResponseEntity<>("댓글이 존재하지 않습니다.",HttpStatus.OK);
             else
                 return new ResponseEntity<>(list,HttpStatus.OK);
         }catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/nested")
+    @ApiOperation(value = "댓글에 달린 대댓글 조회")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "userNo", value = "회원 고유 번호", required = true,
+                    dataType = "string", paramType = "query"),
+            @ApiImplicitParam(name = "parentNo", value = "부모 댓글 번호", required = true,
+                    dataType = "int", paramType = "query"),
+            @ApiImplicitParam(name = "lastCommentNo", value = "마지막 댓글 번호", required = false,
+                    dataType = "int", paramType = "query"),
+            @ApiImplicitParam(name = "size", value = "화면에 보여질 사이즈", required = true,
+                    dataType = "int", paramType = "query")
+    })
+    public ResponseEntity listNestedComment (@RequestParam(value = "userNo") String userNo, @RequestParam int parentNo,
+                                       @RequestParam(required = false) Integer lastCommentNo, @RequestParam int size) {
+        try {
+            List<CommentResDto> list = commentService.pageNestedComment(userNo, parentNo, lastCommentNo, size);
+            if(list.isEmpty())
+                return new ResponseEntity<>("댓글이 존재하지 않습니다.",HttpStatus.OK);
+            else
+                return new ResponseEntity<>(list,HttpStatus.OK);
+        }catch (Exception e) {
+            e.printStackTrace();
             return new ResponseEntity<>(FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

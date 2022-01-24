@@ -11,6 +11,8 @@ import com.kql.caffein.repository.UserDetailRepository;
 import com.kql.caffein.service.CommentService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -41,8 +43,16 @@ public class CommentServiceImpl implements CommentService {
 
         //부모 댓글이 존재하지 않는다면
         if(commentDto.getParentNo()==0) {
-            //피드의 댓글의 수(대댓글 포함x)
-            grp = commentRepository.countByFeedNo(commentDto.getFeedNo())+1;
+            Optional<List<Comment>> comments = commentRepository.findByFeedNoAndSequence(feedNo,0);
+            //피드에 댓글이 존재하면
+            if(comments.isPresent()) {
+                //그룹 번호 중 큰 값 구한다.
+                for(Comment comment : comments.get()) {
+                    grp = Math.max(grp,comment.getCommentGroup());
+                }
+            }
+            //다음 그룹에 저장해야 하기 때문에 +1
+            grp++;
         }else {
             //부모 댓글이 존재한다면
             parentNo = commentDto.getParentNo();
@@ -51,7 +61,12 @@ public class CommentServiceImpl implements CommentService {
             grp = parentComment.get().getCommentGroup();
 
             //그룹 내 가장 높은 단계
-            sequence = commentRepository.maxByFeedNoAndAndCommentGroup(feedNo,grp)+1;
+            sequence = commentRepository.maxByFeedNoAndCommentGroup(feedNo,grp)+1;
+
+            //댓글 카운팅
+            int commentCount = parentComment.get().getCommentCount()+1;
+            parentComment.get().setCommentCount(commentCount);
+            commentRepository.save(parentComment.get());
         }
 
         Comment comment = Comment.builder()
@@ -66,17 +81,13 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public List<CommentResDto> listComment(String userNo, int feedNo) {
-
-        //피드의 댓글
-        List<Comment> commentList = commentRepository.findByFeedNoOrderByCommentGroupAndSequence(feedNo);
-
+    public List<CommentResDto> listComment(String userNo, Page<Comment> comments) {
         List<CommentResDto> list = new ArrayList<>();
 
         String commentUserID = "";
         String parentID = "";
 
-        for(Comment comment : commentList) {
+        for(Comment comment : comments) {
             boolean checkLike = findCommentLikeByUserNo(new CommentLikeId(userNo,comment.getCommentNo()));
 
             commentUserID = userDetailRepository.findById(comment.getUserNo()).get().getUserId(); //회원 번호로 회원 아이디 찾기
@@ -93,12 +104,36 @@ public class CommentServiceImpl implements CommentService {
                     .regTime(comment.getRegTime())
                     .parentId(parentID)
                     .likeCount(comment.getLikeCount())
+                    .commentCount(comment.getCommentCount())
                     .checkLike(checkLike).build();
-
             list.add(commentDto);
         }
-
         return list;
+    }
+
+    @Override
+    public List<CommentResDto> pageComment(String userNo, int feedNo, Integer lastCommentNo, int size) {
+        if(lastCommentNo == null)lastCommentNo = Integer.MAX_VALUE;
+
+        PageRequest pageRequest = PageRequest.of(0,size);
+        Page<Comment> comments = commentRepository.findByFeedNoAndSequenceAndCommentNoLessThanOrderByCommentNoDesc(feedNo,0,lastCommentNo, pageRequest);
+
+        return listComment(userNo, comments);
+    }
+
+    @Override
+    public List<CommentResDto> pageNestedComment(String userNo, int parentNo, Integer lastCommentNo, int size) {
+        Comment parent = commentRepository.findById(parentNo).get();
+        int feedNo = parent.getFeedNo();
+        int group = parent.getCommentGroup();
+
+        if(lastCommentNo == null) lastCommentNo = 0;
+
+        PageRequest pageRequest = PageRequest.of(0,size);
+        //같은 피드, 같은 그룹내 부모댓글 제외하고
+        Page<Comment> comments = commentRepository.findByFeedNoAndCommentGroupAndSequenceGreaterThanEqualAndCommentNoGreaterThanOrderByCommentNo(feedNo,group,1,lastCommentNo,pageRequest);
+
+        return listComment(userNo, comments);
     }
 
     @Override
