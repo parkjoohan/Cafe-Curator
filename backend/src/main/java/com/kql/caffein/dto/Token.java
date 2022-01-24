@@ -11,5 +11,5 @@ import lombok.ToString;
 @AllArgsConstructor
 public class Token {
     String accessToken;
-    String refreshToken;
+//    String refreshToken;
 }
