@@ -7,7 +7,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-import io.swagger.models.auth.In;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -43,26 +42,6 @@ public class CommentController {
             return new ResponseEntity<>(FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
-//    @GetMapping("/{userNo}/{feedNo}")
-//    @ApiOperation(value = "피드에 달린 댓글 조회")
-//    @ApiImplicitParams({
-//            @ApiImplicitParam(name = "userNo", value = "회원 고유 번호", required = true,
-//                    dataType = "string", paramType = "path"),
-//            @ApiImplicitParam(name = "feedNo", value = "피드 번호", required = true,
-//                    dataType = "int", paramType = "path")
-//    })
-//    public ResponseEntity listComment (@PathVariable String userNo, @PathVariable int feedNo) {
-//        try {
-//            List<CommentResDto> list = commentService.listComment(userNo, feedNo);
-//            if(list.isEmpty())
-//                return new ResponseEntity<>("댓글이 존재하지 않습니다.",HttpStatus.OK);
-//            else
-//                return new ResponseEntity<>(list,HttpStatus.OK);
-//        }catch (Exception e) {
-//            return new ResponseEntity<>(FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
-//        }
-//    }
 
     @GetMapping
     @ApiOperation(value = "피드에 달린 댓글 조회")
