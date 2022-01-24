@@ -36,7 +36,7 @@ public class FeedController {
             return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
         }catch (Exception e){
 //            e.printStackTrace();
-            return new ResponseEntity<>("FAIL" + e.getMessage(), HttpStatus.EXPECTATION_FAILED);
+            return new ResponseEntity<>("FAIL : " + e.getMessage(), HttpStatus.EXPECTATION_FAILED);
         }
     }
 
@@ -49,7 +49,7 @@ public class FeedController {
             return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
         } catch (Exception e){
 //            e.printStackTrace();
-            return new ResponseEntity<>("FAIL" + e.getMessage(), HttpStatus.OK);
+            return new ResponseEntity<>("FAIL : " + e.getMessage(), HttpStatus.OK);
         }
     }
 
@@ -62,7 +62,7 @@ public class FeedController {
             return new ResponseEntity<>(feedDto, HttpStatus.OK);
         }catch (Exception e){
 //            e.printStackTrace();
-            return new ResponseEntity<>("FAIL" + e.getMessage(), HttpStatus.OK);
+            return new ResponseEntity<>("FAIL : " + e.getMessage(), HttpStatus.OK);
         }
     }
 
@@ -73,10 +73,9 @@ public class FeedController {
 
         try{
             feedService.feedModify(userNo, feedDto, files);
-            System.out.println("피드 수정 성공 >> " + feedDto);
             return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
         }catch (Exception e){
-            e.printStackTrace();
+//            e.printStackTrace();
             return new ResponseEntity<>("FAIL : " + e.getMessage(), HttpStatus.OK);
         }
     }
@@ -89,7 +88,8 @@ public class FeedController {
             String msg = feedService.feedLikeControl(feedNo, userNo);
             return new ResponseEntity<>("SUCCESS : " + msg, HttpStatus.OK);
         }catch (Exception e){
-            return new ResponseEntity<>("FAIL" + e.getMessage(), HttpStatus.OK);
+//            e.printStackTrace();
+            return new ResponseEntity<>("FAIL : " + e.getMessage(), HttpStatus.OK);
         }
     }
 
@@ -101,31 +101,45 @@ public class FeedController {
             String msg = feedService.feedBookmarkControl(feedNo, userNo);
             return new ResponseEntity<>("SUCCESS : " + msg, HttpStatus.OK);
         }catch (Exception e){
-            return new ResponseEntity<>("FAIL" + e.getMessage(), HttpStatus.OK);
+            return new ResponseEntity<>("FAIL : " + e.getMessage(), HttpStatus.OK);
         }
     }
 
-    @ApiOperation(value = "피드 목록(feeds 테이블)", notes = "페이징 처리", response = List.class)
+    @ApiOperation(value = "개인 피드 목록(feeds 테이블)")
     @GetMapping("feedList/{feedUserNo}/{userNo}")
     public ResponseEntity feedListWithPaging(@ApiParam(value = "조회할 유저")@PathVariable String feedUserNo,
                                    @ApiParam(value = "조회하는 유저")@PathVariable String userNo,
+                                   @ApiParam(value = "타입(feed 또는 blog)")@RequestParam String type,
                                    @RequestParam int lastFeedNo, @RequestParam int size) {
         try{
-            return new ResponseEntity<>(feedService.feedListWithPaging(feedUserNo, userNo, lastFeedNo, size), HttpStatus.OK);
+            return new ResponseEntity<>(feedService.feedListWithPaging(feedUserNo, userNo,type, lastFeedNo, size), HttpStatus.OK);
         }catch (Exception e){
-            e.printStackTrace();
-            return new ResponseEntity<>("FAIL" + e.getMessage(), HttpStatus.OK);
+//            e.printStackTrace();
+            return new ResponseEntity<>("FAIL : " + e.getMessage(), HttpStatus.OK);
         }
     }
 
-    @ApiOperation(value = "북마크 목록", notes = "페이징 처리", response = List.class)
+    @ApiOperation(value = "북마크 목록")
     @GetMapping("bookmarkList/{userNo}")
-    public ResponseEntity bookmarkListWithPaging(@PathVariable String userNo, @RequestParam int lastFeedNo, @RequestParam int size) {
+    public ResponseEntity bookmarkListWithPaging(@PathVariable String userNo, @ApiParam(value = "타입(feed 또는 blog)")@RequestParam String type,
+                                                 @RequestParam int lastFeedNo, @RequestParam int size) {
         try{
-            return new ResponseEntity<>(feedService.bookmarkListWithPaging(userNo, lastFeedNo, size), HttpStatus.OK);
+            return new ResponseEntity<>(feedService.bookmarkListWithPaging(userNo, type, lastFeedNo, size), HttpStatus.OK);
         }catch (Exception e){
-            e.printStackTrace();
-            return new ResponseEntity<>("FAIL" + e.getMessage(), HttpStatus.OK);
+//            e.printStackTrace();
+            return new ResponseEntity<>("FAIL : " + e.getMessage(), HttpStatus.OK);
+        }
+    }
+
+    @ApiOperation(value = "좋아요 목록")
+    @GetMapping("likeList/{userNo}")
+    public ResponseEntity likeListWithPaging(@PathVariable String userNo, @ApiParam(value = "타입(feed 또는 blog)")@RequestParam String type,
+                                                 @RequestParam int lastFeedNo, @RequestParam int size) {
+        try{
+            return new ResponseEntity<>(feedService.likeListWithPaging(userNo, type, lastFeedNo, size), HttpStatus.OK);
+        }catch (Exception e){
+//            e.printStackTrace();
+            return new ResponseEntity<>("FAIL : " + e.getMessage(), HttpStatus.OK);
         }
     }
 }

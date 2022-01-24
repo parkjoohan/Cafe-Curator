@@ -12,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 public class FeedServiceImpl implements FeedService{
@@ -108,6 +107,10 @@ public class FeedServiceImpl implements FeedService{
         if(!userNo.equals(feedUserNo))
             throw new Exception("피드 작성자가 아닙니다");
 
+        //S3에서 파일 삭제
+        for(File file : feedRepository.getById(feedNo).getFiles())
+            s3Service.delete(file.getFilePath());
+
         removeFeedList(feedNo, userNo); //피드 목록에서 삭제
         feedRepository.deleteById(feedNo); //피드 삭제
 
@@ -191,8 +194,8 @@ public class FeedServiceImpl implements FeedService{
 
         //기존 파일 삭제
         for(int fileNo : feedDto.getDeleteList()){
-            System.out.println(fileNo + "삭제");
-            fileRepository.deleteById(fileNo);
+            s3Service.delete(fileRepository.findById(fileNo).get().getFilePath()); //S3
+            fileRepository.deleteById(fileNo); //DB
         }
 
         //내용 수정
@@ -290,10 +293,10 @@ public class FeedServiceImpl implements FeedService{
         }
     }
 
-    //피드 리스트(feeds 테이블) + 페이징
+    //개인 피드 목록(feeds 테이블)
     @Override
     @Transactional
-    public List<FeedResDto> feedListWithPaging(String feedUserNo, String userNo, int lastFeedNo, int size) throws Exception{
+    public List feedListWithPaging(String feedUserNo, String userNo, String type, int lastFeedNo, int size) throws Exception{
 
         Optional<Feeds> feeds = feedsRepository.findById(feedUserNo);
         if(feeds.isEmpty()) //feedUser가 작성한 피드 없음
@@ -305,13 +308,17 @@ public class FeedServiceImpl implements FeedService{
         Page<Feed> f = feedRepository.findByFeedNoLessThanAndFeedNoInOrderByFeedNoDesc(lastFeedNo, feedList,
                 PageRequest.of(0, size)); //페이지네이션을 위한 PageRequest, 페이지는 0으로 고정
 
-        return makeFeedDtoList(f, userNo);
+
+        if(type.equals("blog"))
+            return makeBlogDtoList(f, userNo);
+        else
+            return makeFeedDtoList(f, userNo);
     }
 
-    //북마크한 피드 리스트 + 페이징
+    //북마크한 피드 목록
     @Override
     @Transactional
-    public List<FeedResDto> bookmarkListWithPaging(String userNo, int lastFeedNo, int size) throws Exception{
+    public List bookmarkListWithPaging(String userNo, String type, int lastFeedNo, int size) throws Exception{
 
         Optional<List<Integer>> bookmarkList = bookmarkRepository.getBookmarkList(userNo);
 //        System.out.println("북마크 목록 : " + bookmarkList.get());
@@ -319,10 +326,57 @@ public class FeedServiceImpl implements FeedService{
         Page<Feed> f = feedRepository.findByFeedNoLessThanAndFeedNoInOrderByFeedNoDesc(lastFeedNo, bookmarkList.get(),
                 PageRequest.of(0, size)); //페이지네이션을 위한 PageRequest, 페이지는 0으로 고정
 
-        return makeFeedDtoList(f, userNo);
+        if(type.equals("blog"))
+            return makeBlogDtoList(f, userNo);
+        else
+            return makeFeedDtoList(f, userNo);
     }
 
-    //목록 조회 응답 DtoList 만들기
+    //좋아요 누른 피드 목록
+    @Override
+    @Transactional
+    public List likeListWithPaging(String userNo, String type, int lastFeedNo, int size) throws Exception{
+
+        Optional<List<Integer>> likeList = feedLikeRepository.getLikeList(userNo);
+//        System.out.println("북마크 목록 : " + bookmarkList.get());
+
+        Page<Feed> f = feedRepository.findByFeedNoLessThanAndFeedNoInOrderByFeedNoDesc(lastFeedNo, likeList.get(),
+                PageRequest.of(0, size)); //페이지네이션을 위한 PageRequest, 페이지는 0으로 고정
+
+        if(type.equals("blog"))
+            return makeBlogDtoList(f, userNo);
+        else
+            return makeFeedDtoList(f, userNo);
+    }
+
+    //목록 조회 응답 DtoList (블로그 형식)
+    @Override
+    public List<BlogResDto> makeBlogDtoList(Page<Feed> list, String userNo){
+        List<BlogResDto> feedDtoList = new ArrayList<>();
+
+        for(Feed feed : list){
+            String feedUserId = userDetailRepository.findByUserNo(feed.getUserNo()).getUserId();
+            File file = feed.getFiles().get(0); //대표 사진만 포함
+
+            BlogResDto feedDto = BlogResDto.builder()
+                    .feedNo(feed.getFeedNo())
+                    .content(feed.getContent())
+                    .regTime(feed.getRegTime())
+                    .cafeId(feed.getCafeId())
+                    .categoryList(feed.getCategoryList())
+                    .likeCount(feed.getLikeCount())
+                    .commentCount(feed.getCommentCount())
+                    .userId(feedUserId)
+                    .file(new FileDto(file.getFileNo(), file.getFilePath()))
+                    .liked(feedLikeState(feed.getFeedNo(), userNo))
+                    .marked(BookmarkState(feed.getFeedNo(), userNo))
+                    .build();
+            feedDtoList.add(feedDto);
+        }
+        return feedDtoList;
+    }
+
+    //목록 조회 응답 DtoList (피드 형식)
     @Override
     public List<FeedResDto> makeFeedDtoList(Page<Feed> list, String userNo){
         List<FeedResDto> feedDtoList = new ArrayList<>();
@@ -333,13 +387,8 @@ public class FeedServiceImpl implements FeedService{
 
             FeedResDto feedDto = FeedResDto.builder()
                     .feedNo(feed.getFeedNo())
-                    .content(feed.getContent())
-                    .regTime(feed.getRegTime())
-                    .cafeId(feed.getCafeId())
-                    .categoryList(feed.getCategoryList())
                     .likeCount(feed.getLikeCount())
-                    .likeCount(feed.getCommentCount())
-                    .userId(feedUserId)
+                    .commentCount(feed.getCommentCount())
                     .file(new FileDto(file.getFileNo(), file.getFilePath()))
                     .liked(feedLikeState(feed.getFeedNo(), userNo))
                     .marked(BookmarkState(feed.getFeedNo(), userNo))

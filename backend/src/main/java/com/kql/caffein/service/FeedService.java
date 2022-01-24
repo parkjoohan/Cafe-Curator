@@ -1,9 +1,6 @@
 package com.kql.caffein.service;
 
-import com.kql.caffein.dto.FeedModifyDto;
-import com.kql.caffein.dto.FeedRegisterDto;
-import com.kql.caffein.dto.FeedDetailDto;
-import com.kql.caffein.dto.FeedResDto;
+import com.kql.caffein.dto.*;
 import com.kql.caffein.entity.Feed;
 import org.springframework.data.domain.Page;
 import org.springframework.web.multipart.MultipartFile;
@@ -28,7 +25,10 @@ public interface FeedService {
     public boolean BookmarkState(int feedNo, String userNo);
     public String feedBookmarkControl(int feedNo, String userNo) throws Exception;
 
-    public List<FeedResDto> feedListWithPaging(String feedUserNo, String userNo, int lastFeedNo, int size) throws Exception;
-    public List<FeedResDto> bookmarkListWithPaging(String userNo, int lastFeedNo, int size) throws Exception;
+    public List feedListWithPaging(String feedUserNo, String userNo, String type, int lastFeedNo, int size) throws Exception;
+    public List bookmarkListWithPaging(String userNo, String type, int lastFeedNo, int size) throws Exception;
+    public List likeListWithPaging(String userNo, String type, int lastFeedNo, int size) throws Exception;
+
+    public List<BlogResDto> makeBlogDtoList(Page<Feed> list, String userNo);
     public List<FeedResDto> makeFeedDtoList(Page<Feed> list, String userNo);
 }

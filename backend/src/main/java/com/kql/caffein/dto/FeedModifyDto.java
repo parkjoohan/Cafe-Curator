@@ -19,6 +19,6 @@ public class FeedModifyDto {
     private Integer cafeId;
     @ApiModelProperty(value="피드 카테고리 목록")
     private List<String> categoryList;
-    @ApiModelProperty(value="기존 사진 중에 삭제한 사진의 fileNo")
+    @ApiModelProperty(value="기존 사진 중에 삭제한 사진의 fileNo", notes = "없다면 빈 리스트")
     private List<Integer> deleteList;
 }

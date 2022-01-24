@@ -1,5 +1,6 @@
 package com.kql.caffein.service;
 
+import com.amazonaws.AmazonServiceException;
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
@@ -59,5 +60,11 @@ public class S3Service {
                 .withCannedAcl(CannedAccessControlList.PublicRead));
 
         return s3Client.getUrl(bucket, fileName).toString();
+    }
+
+    public void delete(String url) throws AmazonServiceException {
+        String fileName = url.substring(url.indexOf("com/")+4); //50+4
+//        System.out.println(fileName + " 삭제");
+        s3Client.deleteObject(bucket, fileName);
     }
 }
