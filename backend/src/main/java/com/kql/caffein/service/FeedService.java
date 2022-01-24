@@ -31,10 +31,4 @@ public interface FeedService {
     public List<FeedResDto> feedListWithPaging(String feedUserNo, String userNo, int lastFeedNo, int size) throws Exception;
     public List<FeedResDto> bookmarkListWithPaging(String userNo, int lastFeedNo, int size) throws Exception;
     public List<FeedResDto> makeFeedDtoList(Page<Feed> list, String userNo);
-
-    //페이징 처리 X
-    public List<FeedDetailDto> feedListByTable(String feedUserNo, String userNo) throws Exception;
-    public List<FeedDetailDto> feedList(String feedUserNo, String userNo) throws Exception;
-    public List<FeedDetailDto> bookmarkList(String userNo) throws Exception;
-
 }

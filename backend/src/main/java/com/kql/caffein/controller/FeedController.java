@@ -129,38 +129,4 @@ public class FeedController {
         }
         return new ResponseEntity<>("FAIL", HttpStatus.OK);
     }
-
-    //페이징 처리 X
-    @ApiOperation(value = "피드 목록(feeds 테이블)", notes = "", response = List.class)
-    @GetMapping("getFeeds/{feedUserNo}/{userNo}")
-    public ResponseEntity feedListByTable(@ApiParam(value = "조회할 유저")@PathVariable String feedUserNo,
-                                          @ApiParam(value = "조회하는 유저")@PathVariable String userNo){
-        try{
-            return new ResponseEntity<>(feedService.feedListByTable(feedUserNo, userNo), HttpStatus.OK);
-        }catch (Exception e){
-//            e.printStackTrace();
-        }
-        return new ResponseEntity<>("FAIL", HttpStatus.OK);
-    }
-
-    @ApiOperation(value = "피드 목록(userNo)", notes = "", response = List.class)
-    @GetMapping("getFeeds2/{feedUserNo}/{userNo}")
-    public ResponseEntity feedList(@ApiParam(value = "조회할 유저")@PathVariable String feedUserNo,
-                                   @ApiParam(value = "조회하는 유저")@PathVariable String userNo){
-        try{
-            return new ResponseEntity<>(feedService.feedList(feedUserNo, userNo), HttpStatus.OK);
-        }catch (Exception e){
-        }
-        return new ResponseEntity<>("FAIL", HttpStatus.OK);
-    }
-
-    @ApiOperation(value = "북마크한 피드 목록", notes = "", response = List.class)
-    @GetMapping("getBookmarks/{userNo}")
-    public ResponseEntity bookmarkList(@PathVariable String userNo){
-        try{
-            return new ResponseEntity<>(feedService.bookmarkList(userNo), HttpStatus.OK);
-        }catch (Exception e){
-        }
-        return new ResponseEntity<>("FAIL", HttpStatus.OK);
-    }
 }

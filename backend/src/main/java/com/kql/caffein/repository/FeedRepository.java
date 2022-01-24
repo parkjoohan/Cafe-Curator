@@ -13,6 +13,4 @@ import java.util.Optional;
 public interface FeedRepository extends JpaRepository<Feed, Integer> {
 
   Page<Feed> findByFeedNoLessThanAndFeedNoInOrderByFeedNoDesc(int lastFeedNo, List<Integer> feedList, Pageable pageRequest);
-
-  Optional<List<Feed>> findByUserNoOrderByRegTime(String userNo);
 }

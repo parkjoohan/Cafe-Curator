@@ -123,8 +123,6 @@ public class FeedServiceImpl implements FeedService{
         feedList.remove(Integer.valueOf(feedNo));
         feeds.setFeedList(feedList);
         feedsRepository.save(feeds);
-
-        System.out.println("피드 목록 삭제 성공 >> " + feeds.getFeedList());
     }
 
     //피드 상세보기
@@ -346,60 +344,6 @@ public class FeedServiceImpl implements FeedService{
                     .build();
             feedDtoList.add(feedDto);
         }
-        return feedDtoList;
-    }
-
-
-    //페이징 처리 X
-    //피드 리스트(feeds 테이블)
-    @Override
-    @Transactional
-    public List<FeedDetailDto> feedListByTable(String feedUserNo, String userNo) throws Exception {
-
-        Optional<Feeds> feeds = feedsRepository.findById(feedUserNo);
-        if(feeds.isEmpty()) //feedUser가 작성한 피드 없음
-            return new ArrayList<>(); //빈 리스트 return
-
-        List<Integer> feedList  = feeds.get().getFeedList(); //feedUser의 피드 목록
-//        System.out.println("피드 목록 : " + feedList);
-
-        List<FeedDetailDto> feedDtoList = new ArrayList<>();
-        for(int feedNo : feedList)
-            feedDtoList.add(feedDetail(feedNo, userNo));
-
-        return feedDtoList;
-    }
-
-    //피드 리스트(userNo)
-    @Override
-    @Transactional
-    public List<FeedDetailDto> feedList(String feedUserNo, String userNo) throws Exception{
-
-        Optional<List<Feed>> feedList = feedRepository.findByUserNoOrderByRegTime(feedUserNo);
-        if(feedList.isEmpty()) //feedUser가 작성한 피드 없음
-            return new ArrayList<>(); //빈 리스트 return
-
-        List<FeedDetailDto> feedDtoList = new ArrayList<>();
-        for(Feed feed : feedList.get())
-            feedDtoList.add(feedDetail(feed.getFeedNo(), userNo));
-
-        return feedDtoList;
-    }
-
-    //북마크한 피드 리스트
-    @Override
-    @Transactional
-    public List<FeedDetailDto> bookmarkList(String userNo) throws Exception{
-
-        Optional<List<Bookmark>> bookmarkList = bookmarkRepository.findByBookmarkIdUserNo(userNo);
-
-        if(bookmarkList.get().isEmpty()) //userNo가 북마크한 피드 없음
-            return new ArrayList<>(); //빈 리스트 return
-
-        List<FeedDetailDto> feedDtoList = new ArrayList<>();
-        for(Bookmark bookmark : bookmarkList.get())
-            feedDtoList.add(feedDetail(bookmark.getBookmarkId().getFeedNo(), userNo));
-
         return feedDtoList;
     }
 }
