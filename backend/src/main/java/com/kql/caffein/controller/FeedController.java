@@ -36,8 +36,8 @@ public class FeedController {
             return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
         }catch (Exception e){
 //            e.printStackTrace();
+            return new ResponseEntity<>("FAIL" + e.getMessage(), HttpStatus.EXPECTATION_FAILED);
         }
-        return new ResponseEntity<>("FAIL", HttpStatus.EXPECTATION_FAILED);
     }
 
     @ApiOperation(value = "피드 삭제", notes = "파일까지 모두 삭제")
@@ -49,8 +49,8 @@ public class FeedController {
             return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
         } catch (Exception e){
 //            e.printStackTrace();
+            return new ResponseEntity<>("FAIL" + e.getMessage(), HttpStatus.OK);
         }
-        return new ResponseEntity<>("FAIL", HttpStatus.OK);
     }
 
     @ApiOperation(value = "피드 상세보기", notes = "feedNo에 해당하는 피드 반환")
@@ -62,8 +62,8 @@ public class FeedController {
             return new ResponseEntity<>(feedDto, HttpStatus.OK);
         }catch (Exception e){
 //            e.printStackTrace();
+            return new ResponseEntity<>("FAIL" + e.getMessage(), HttpStatus.OK);
         }
-        return new ResponseEntity<>("FAIL", HttpStatus.OK);
     }
 
     @ApiOperation(value = "피드 수정", notes="삭제한 파일 번호를 deleteList에 포함해서 요청, 삭제하는 파일이 없는 경우 빈 리스트로")
@@ -79,7 +79,6 @@ public class FeedController {
             e.printStackTrace();
             return new ResponseEntity<>("FAIL : " + e.getMessage(), HttpStatus.OK);
         }
-//        return new ResponseEntity<>("FAIL", HttpStatus.OK);
     }
 
     @ApiOperation(value = " 피드 좋아요 컨트롤", notes="좋아요 등록, 삭제")
@@ -90,8 +89,8 @@ public class FeedController {
             String msg = feedService.feedLikeControl(feedNo, userNo);
             return new ResponseEntity<>("SUCCESS : " + msg, HttpStatus.OK);
         }catch (Exception e){
+            return new ResponseEntity<>("FAIL" + e.getMessage(), HttpStatus.OK);
         }
-        return new ResponseEntity<>("FAIL", HttpStatus.OK);
     }
 
     @ApiOperation(value = "피드 북마크 컨트롤", notes="북마크 등록, 삭제")
@@ -102,8 +101,8 @@ public class FeedController {
             String msg = feedService.feedBookmarkControl(feedNo, userNo);
             return new ResponseEntity<>("SUCCESS : " + msg, HttpStatus.OK);
         }catch (Exception e){
+            return new ResponseEntity<>("FAIL" + e.getMessage(), HttpStatus.OK);
         }
-        return new ResponseEntity<>("FAIL", HttpStatus.OK);
     }
 
     @ApiOperation(value = "피드 목록(feeds 테이블)", notes = "페이징 처리", response = List.class)
@@ -115,8 +114,8 @@ public class FeedController {
             return new ResponseEntity<>(feedService.feedListWithPaging(feedUserNo, userNo, lastFeedNo, size), HttpStatus.OK);
         }catch (Exception e){
             e.printStackTrace();
+            return new ResponseEntity<>("FAIL" + e.getMessage(), HttpStatus.OK);
         }
-        return new ResponseEntity<>("FAIL", HttpStatus.OK);
     }
 
     @ApiOperation(value = "북마크 목록", notes = "페이징 처리", response = List.class)
@@ -126,7 +125,7 @@ public class FeedController {
             return new ResponseEntity<>(feedService.bookmarkListWithPaging(userNo, lastFeedNo, size), HttpStatus.OK);
         }catch (Exception e){
             e.printStackTrace();
+            return new ResponseEntity<>("FAIL" + e.getMessage(), HttpStatus.OK);
         }
-        return new ResponseEntity<>("FAIL", HttpStatus.OK);
     }
 }

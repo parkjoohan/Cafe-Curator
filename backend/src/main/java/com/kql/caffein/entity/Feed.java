@@ -37,6 +37,8 @@ public class Feed {
 
     private int likeCount;
 
+    private int commentCount;
+
     private String userNo;
 
     @JsonManagedReference
@@ -44,12 +46,14 @@ public class Feed {
     private List<File> files = new ArrayList<>();
 
     @Builder
-    public Feed(String content, LocalDateTime regTime, Integer cafeId, List<String> categoryList, int likeCount, String userNo){
+    public Feed(String content, LocalDateTime regTime, Integer cafeId, List<String> categoryList,
+                int likeCount, int commentCount, String userNo){
         this.content = content;
         this.regTime = regTime;
         this.cafeId = cafeId;
         this.categoryList = categoryList;
         this.likeCount = likeCount;
+        this.commentCount = commentCount;
         this.userNo = userNo;
     }
 }

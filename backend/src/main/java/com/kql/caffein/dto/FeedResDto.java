@@ -24,6 +24,8 @@ public class FeedResDto {
     private List<String> categoryList;
     @ApiModelProperty(value="피드 좋아요 수")
     private int likeCount;
+    @ApiModelProperty(value="피드 댓글 수")
+    private int commentCount;
     @ApiModelProperty(value="피드 작성자 아이디")
     private String userId;
     @ApiModelProperty(value="피드 사진(파일)")
@@ -35,13 +37,14 @@ public class FeedResDto {
 
     @Builder
     public FeedResDto(int feedNo, String content, LocalDateTime regTime, Integer cafeId, List<String> categoryList,
-                      int likeCount, String userId, FileDto file, boolean liked, boolean marked){
+                      int likeCount, int commentCount, String userId, FileDto file, boolean liked, boolean marked){
         this.feedNo = feedNo;
         this.content = content;
         this.regTime = regTime;
         this.cafeId = cafeId;
         this.categoryList = categoryList;
         this.likeCount = likeCount;
+        this.commentCount = commentCount;
         this.userId = userId;
         this.file = file;
         this.liked = liked;

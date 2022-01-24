@@ -58,7 +58,7 @@ public class FeedServiceImpl implements FeedService{
         }
 
         Feed feed = feedDto.toEntity();
-        feedRepository.save(feed); //DB에 내용 먼저 저장
+        feedRepository.save(feed); //DB에 내용 저장
 
         for (MultipartFile mfile : files) {
             String imgURL = s3Service.upload(mfile);  //S3에 파일 업로드 후 URL 가져오기
@@ -149,6 +149,7 @@ public class FeedServiceImpl implements FeedService{
                 .cafeId(feed.getCafeId())
                 .categoryList(feed.getCategoryList())
                 .likeCount(feed.getLikeCount())
+                .commentCount(feed.getCommentCount())
                 .userId(feedUserId)
                 .files(files)
                 .liked(feedLikeState(feedNo, userNo)) //좋아요 상태 확인
@@ -337,6 +338,7 @@ public class FeedServiceImpl implements FeedService{
                     .cafeId(feed.getCafeId())
                     .categoryList(feed.getCategoryList())
                     .likeCount(feed.getLikeCount())
+                    .likeCount(feed.getCommentCount())
                     .userId(feedUserId)
                     .file(new FileDto(file.getFileNo(), file.getFilePath()))
                     .liked(feedLikeState(feed.getFeedNo(), userNo))
