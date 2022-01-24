@@ -160,10 +160,15 @@ CREATE TABLE IF NOT EXISTS `caffe_in`.`comment` (
   `feed_no` INT NOT NULL,
   `user_no` VARCHAR(13) NOT NULL,
   `parent_no` INT NULL DEFAULT NULL,
+  `comment_count` INT NOT NULL DEFAULT '0',
   PRIMARY KEY (`comment_no`),
   INDEX `fk_comment_feed1_idx` (`feed_no` ASC) VISIBLE,
   INDEX `fk_comment_user_detail1_idx` (`user_no` ASC) VISIBLE,
   INDEX `fk_comment_comment1_idx` (`parent_no` ASC) VISIBLE,
+  CONSTRAINT `fk_comment_comment1`
+    FOREIGN KEY (`parent_no`)
+    REFERENCES `caffe_in`.`comment` (`comment_no`)
+    ON DELETE CASCADE,
   CONSTRAINT `fk_comment_feed1`
     FOREIGN KEY (`feed_no`)
     REFERENCES `caffe_in`.`feed` (`feed_no`)
@@ -171,14 +176,9 @@ CREATE TABLE IF NOT EXISTS `caffe_in`.`comment` (
   CONSTRAINT `fk_comment_user_detail1`
     FOREIGN KEY (`user_no`)
     REFERENCES `caffe_in`.`user_detail` (`user_no`)
-    ON DELETE CASCADE,
-  CONSTRAINT `fk_comment_comment1`
-    FOREIGN KEY (`parent_no`)
-    REFERENCES `caffe_in`.`comment` (`comment_no`)
-    ON DELETE CASCADE
-    ON UPDATE NO ACTION)
+    ON DELETE CASCADE)
 ENGINE = InnoDB
-AUTO_INCREMENT = 5
+AUTO_INCREMENT = 13
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
