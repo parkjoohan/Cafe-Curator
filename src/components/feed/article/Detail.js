@@ -23,8 +23,7 @@ export default function Detail() {
       <div className='article_con'>
         <Row  style={{ justifyContent: "space-around"}}>
           {/* 사진 창 */}
-          <Col className='article_frame' xs={12} md={5} lg={6} 
-          style={{border:"1px solid black" }}>
+          <Col className='article_frame' xs={12} md={5} lg={6}>
             <img 
               src='/test/4.3.png'
               className='article_img'
@@ -32,8 +31,7 @@ export default function Detail() {
           </Col>
 
           {/* 게시물 창 */}
-          <Col className='article_frame' xs={12} md={7} lg={5}
-          style={{border:"1px solid black"}}>
+          <Col className='article_frame' xs={12} md={7} lg={5}>
             
             {/* 유저프로필,작성일 */}
             <div className='profile_info'>
@@ -90,20 +88,21 @@ export default function Detail() {
             <div className='comment'>
               <p>총 3개의 댓글이 있습니다.</p>
                 <div className='comment_frame'>
+                  <div className='comments-frame'>
                   <div className='comments'>
-                    <div style={{display:"flex"}}>
-                      <h5>username1</h5>
-                      <h5 style={{marginLeft:"3%"}}>리뷰 1</h5>
+                      <h5 className='comments_user'>username1</h5>
+                      <h5 className='comments_content'>리뷰 1</h5>
                     </div>
 
-                    <div style={{position:"relative",display:"flex"}}>
-                      <h5>username2</h5>
-                      <h5 style={{marginLeft:"3%"}}>리뷰 1</h5>
+                    <div className='comments'>
+                      <h5 className='comments_user'>username2</h5>
+                      <h5 className='comments_content'>리뷰 1</h5>
                     </div>
 
-                    <div style={{position:"relative",display:"flex",top:"20%",left:"20%"}}>
-                      <h5>username3</h5>
-                      <h5 style={{marginLeft:"3%"}}>@username2 리뷰 1</h5>
+                    <div className='re_comments'>
+                      <h5 className='comments_user'>username3</h5>
+                      <h5 className='tag_user'>@username2</h5>
+                      <h5 className='comments_content'>리뷰 1</h5>
                     </div>
                   </div>
                 </div>

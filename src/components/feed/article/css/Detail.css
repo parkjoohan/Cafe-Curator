@@ -7,12 +7,13 @@
 
 .article_frame {
     border-radius: 10px;
+    border: 2px solid black;
 }
 
 .article_img {
+    padding-top: 35%;
     margin: 3%;
     width: 95%;
-    height: auto;
 }
 
 .profile_info {
@@ -110,13 +111,38 @@
 
 .comment_frame {
     border: 1px solid black;
-    height: 1000px;
+    height: 100%;
     display: flex;
     flex-direction: column;
     padding: 3%;
     border-radius: 10px;
 }
 
+.comments-frame {
+    margin: 1%;
+    height: 100%;
+}
+
 .comments {
-    height: 250px;
+    position: relative;
+    display: flex;
+}
+
+.comments_user {
+    font-weight: bold;
+}
+
+.comments_content {
+    margin-left: 3%;
+    margin-right: 3%;
+}
+
+.re_comments {
+    position: relative;
+    display: flex; 
+    left: 10%;
+}
+
+.tag_user {
+    margin-left: 3%;
 }
