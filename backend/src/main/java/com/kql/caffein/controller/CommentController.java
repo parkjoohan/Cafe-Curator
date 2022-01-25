@@ -137,7 +137,7 @@ public class CommentController {
                     dataType = "string", paramType = "query"),
             @ApiImplicitParam(name = "commentNo", value = "댓글 번호", required = true,
                     dataType = "int", paramType = "query"),
-            @ApiImplicitParam(name = "lastUserNo", value = "마지막 댓글 번호", required = false,
+            @ApiImplicitParam(name = "lastUserNo", value = "마지막 회원 고유 번호", required = false,
                     dataType = "String", paramType = "query"),
             @ApiImplicitParam(name = "size", value = "화면에 보여질 사이즈", required = true,
                     dataType = "int", paramType = "query")
