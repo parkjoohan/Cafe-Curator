@@ -1,7 +1,10 @@
 package com.kql.caffein.service.Impl;
 
 import com.kql.caffein.dto.Feed.*;
+import com.kql.caffein.dto.FollowDto;
+import com.kql.caffein.entity.Comment.CommentLike;
 import com.kql.caffein.entity.Feed.*;
+import com.kql.caffein.entity.User.UserDetail;
 import com.kql.caffein.repository.*;
 import com.kql.caffein.service.FeedService;
 import com.kql.caffein.service.S3Service;
@@ -34,6 +37,8 @@ public class FeedServiceImpl implements FeedService {
     FollowRepository followRepository;
     @Autowired
     S3Service s3Service;
+    @Autowired
+    FollowServiceImpl followService;
 
     //피드 등록
     @Override
@@ -326,7 +331,7 @@ public class FeedServiceImpl implements FeedService {
 
         Page<Feed> f;
         if(userNo == null) //비회원
-            f = feedRepository.findByFeedNoLessThanOrderByFeedNoDesc(lastFeedNo, PageRequest.of(0, size));
+            f = feedRepository.findByFeedNoLessThanOrderByFeedNoDesc(lastFeedNo, PageRequest.of(0, size)); //전체 게시글 조회
         else{
             Optional<List<String>> followingList = followRepository.getFollowingList(userNo);
             f = feedRepository.findByUserNoInAndFeedNoLessThanOrderByFeedNoDesc(followingList.get(), lastFeedNo, PageRequest.of(0,size));
@@ -385,5 +390,22 @@ public class FeedServiceImpl implements FeedService {
             feedDtoList.add(feedDto);
         }
         return feedDtoList;
+    }
+
+    @Override
+    public List<FollowDto> feedLikeUserList(String userNo, int feedNo, String lastUserNo, int size) {
+        if(lastUserNo == null) lastUserNo = "z";
+        PageRequest pageRequest = PageRequest.of(0,size);
+        Page<FeedLike> userList = feedLikeRepository.findByFeedNoAndUserNoLessThanOrderByUserNoDesc(feedNo,lastUserNo,pageRequest);
+
+        List<FollowDto> list = new ArrayList<>();
+        for(FeedLike user : userList) {
+            String no = user.getFeedLikeId().getUserNo();
+            UserDetail userDetail = userDetailRepository.findById(no).get();
+
+            if(no.equals(userNo)) continue;
+            list.add(new FollowDto(no, userDetail.getUserId(), userDetail.getPicture(), followService.checkFollow(userNo,no)));
+        }
+        return list;
     }
 }

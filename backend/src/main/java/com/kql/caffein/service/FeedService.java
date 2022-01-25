@@ -1,6 +1,7 @@
 package com.kql.caffein.service;
 
 import com.kql.caffein.dto.Feed.*;
+import com.kql.caffein.dto.FollowDto;
 import com.kql.caffein.entity.Feed.Feed;
 import org.springframework.data.domain.Page;
 import org.springframework.web.multipart.MultipartFile;
@@ -43,6 +44,9 @@ public interface FeedService {
     public List likeListWithPaging(String userNo, String type, int lastFeedNo, int size) throws Exception;
     //메인 피드 목록
     public List mainFeedListWithPaging(String userNo, String type, int lastFeedNo, int size) throws Exception;
+
+    //피드 좋아요 누른 회원 목록
+    public List<FollowDto> feedLikeUserList(String userNo, int feedNo, String lastUserNo, int size);
 
     public List<BlogResDto> makeBlogDtoList(Page<Feed> list, String userNo);
     public List<FeedResDto> makeFeedDtoList(Page<Feed> list, String userNo);

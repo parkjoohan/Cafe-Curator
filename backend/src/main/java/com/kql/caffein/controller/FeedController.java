@@ -3,8 +3,11 @@ package com.kql.caffein.controller;
 import com.kql.caffein.dto.Feed.FeedModifyDto;
 import com.kql.caffein.dto.Feed.FeedRegisterDto;
 import com.kql.caffein.dto.Feed.FeedDetailDto;
+import com.kql.caffein.dto.FollowDto;
 import com.kql.caffein.repository.FeedLikeRepository;
 import com.kql.caffein.service.Impl.FeedServiceImpl;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 @RequestMapping("feed")
@@ -142,8 +146,21 @@ public class FeedController {
         try{
             return new ResponseEntity<>(feedService.mainFeedListWithPaging(userNo, type, lastFeedNo, size), HttpStatus.OK);
         }catch (Exception e){
-            e.printStackTrace();
             return new ResponseEntity<>("FAIL : " + e.getMessage(), HttpStatus.OK);
         }
     }
+
+    @GetMapping("likeUserList")
+    @ApiOperation(value = "피드 좋아요 누른 회원 목록")
+    public ResponseEntity feedLikeUserList (@RequestParam(value = "userNo") String userNo, @RequestParam int feedNo,
+                                               @RequestParam(required = false) String lastUserNo, @RequestParam int size) {
+        try {
+            List<FollowDto> list = feedService.feedLikeUserList(userNo, feedNo, lastUserNo, size);
+            return new ResponseEntity<>(list,HttpStatus.OK);
+        }catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>("FAIL : " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }
