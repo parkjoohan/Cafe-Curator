@@ -7,12 +7,14 @@ import Checkbox from '@material-ui/core/Checkbox';
 import { Link } from 'react-router-dom';
 import Profile from './Profile';
 import EmailModal from './EmailModal';
+import TermsModal from './TermsModal';
 import { blue } from '@material-ui/core/colors';
 
 export default function SignupForm () {
 
   const [ProfilemodalShow, ProfilesetModalShow] = React.useState(false);
   const [EmailmodalShow, EmailsetModalShow] = React.useState(false);
+  const [TermsmodalShow, TermssetModalShow] = React.useState(false);
 
   const paperStyle = {
     padding: 20,
@@ -61,6 +63,8 @@ export default function SignupForm () {
               show={ProfilemodalShow}
               onHide={() => ProfilesetModalShow(false)}
             />
+
+            {/* 이메일 */}
             <TextField label="Email" placeholder='Enter email' fullWidth required /><br />
             <Button className='emailbutton' variant="primary" onClick={() => EmailsetModalShow(true)}>
             이메일인증
@@ -69,9 +73,13 @@ export default function SignupForm () {
               show={EmailmodalShow}
               onHide={() => EmailsetModalShow(false)}
             />
+
+            {/* 비밀번호 & 아이디 */}
             <TextField label="Password" placeholder='Enter password' type="password" fullWidth required/><br /><br/>
             <TextField label="Re-Password" placeholder='Enter password' type="password" fullWidth required/><br /><br/>
-            <TextField label="Username" placeholder='Enter username' type="password" fullWidth required/>
+            <TextField label="Username" placeholder='Enter username' type="password" fullWidth required />
+            
+            {/* 약관동의 */}
             <FormControlLabel
               control={
                 <Checkbox
@@ -81,11 +89,18 @@ export default function SignupForm () {
                 }
                 label="약관동의"
             />
-            <Link className="link"  to="/TermsModal">
+            <Link className="link" onClick={() => TermssetModalShow(true)}>
                 약관 확인
             </Link><br /><br />
+            <TermsModal
+              show={TermsmodalShow}
+              onHide={() => TermssetModalShow(false)}
+            />
+
+            {/* 회원가입 버튼 */}
             <Button type="submit" color="primary" variant='contained' style={btnStyle} fullWidth>Sign Up</Button><br /><br/>
 
+            {/* 소셜 회원가입 */}
             <div className="divider">
               <hr className="line" />
               <p className="sociallogin">소셜 회원가입</p>
@@ -98,6 +113,7 @@ export default function SignupForm () {
 
             <hr />
 
+            {/* 로그인 하러가기 버튼 */}
             <div className="d-grid gap-2">
               <Link className="link"  to="/login"><Button type="submit" color="light" variant='contained' size="lg" fullWidth>
                 로그인하러 가기

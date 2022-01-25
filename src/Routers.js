@@ -3,8 +3,7 @@ import {Switch, Route} from 'react-router-dom'
 import Home from './components/common/Home';
 import LoginForm from "./components/user/LoginForm";
 import SignupForm from "./components/user/SignupForm";
-import Feed from './components/feed/Feed';
-import SkeletonPrint from './components/feed/SkeletonPrint';
+import TermsModal from './components/user/TermsModal';
 import BookMarkPrint from './components/feed/BookMarkPrint';
 import Detail from './components/feed/article/Detail'
 import Mainfeed from './components/feed/Mainfeed';
@@ -22,6 +21,7 @@ export default function Routers(props) {
       <Route path="/article/:pk" component={Detail}></Route>
       <Route path="/profile/:pk" component = {userProfile}></Route>
       <Route path="/store/:pk" component = {StoreProfile}></Route>
+      <Route path="/termmodal" component = {TermsModal}></Route>
     </Switch>
   )
 }

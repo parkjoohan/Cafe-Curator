@@ -10,16 +10,14 @@
   color: #484848;
 }
 #navcolor {
-  border: 0;
-
-  background-color: #864A13;
-  opacity: 0.8;
+  height: 30px;
+  background-color: #4b6b79;
 }
 #NoBgButton {
   background-color : white;
   border: none;
   color : #1E4DF6;
-  font-weight:500;
+  font-weight:bold;
 }
 
 #NoBgExit {
@@ -27,12 +25,17 @@
   background-color : white;
   border: none;
   color : #484848;
-  font-weight:500;
+  font-weight:bold;
 }
 #ModalPadding {
   padding : 0;
 }
 
-#EmailMarginLeft {
+#EmailMarginLeft  {
   margin-left : 20px;
+}
+
+#EmailMarginLeft h4 {
+  margin-left : 20px;
+  font-weight: bold;
 }

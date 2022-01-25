@@ -12,7 +12,7 @@
   background-color : white;
   border: none;
   color : #1E4DF6;
-  font-weight:500;
+  font-weight:bold;
 }
 
 #NoBgExit {
@@ -20,10 +20,15 @@
   background-color : white;
   border: none;
   color : #484848;
-  font-weight:500;
+  font-weight:bold;
 }
 
 .profile_image {
   width: 20%;
   border: 1;
+}
+
+.upload_pic {
+  margin-left: 3%;
+  color: black
 }

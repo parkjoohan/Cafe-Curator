@@ -12,9 +12,6 @@ const EmailModal = ( { show, onHide }) => {
       dialogClassName="modal-w"
       centered
     >
-      
-       
-      
       <Modal.Body id = "ModalPadding">
         <EmailForm />
       </Modal.Body>

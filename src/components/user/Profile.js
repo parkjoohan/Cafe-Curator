@@ -4,7 +4,20 @@ import  { Modal, Button, Container, Row, Col } from 'react-bootstrap';
 import './css/Profile.css'
 
 const Profile = ({ show, onHide }) => {
-  const [ProfilemodalShow, ProfilesetModalShow] = React.useState(false);
+
+  // //파일 미리볼 url을 저장해줄 state const 
+  // [fileImage, setFileImage] = useState("");
+
+  // // 파일 저장 
+  // const saveFileImage = (e) => {
+  //   setFileImage(URL.createObjectURL(e.target.files[0]));
+  // };
+  
+  // // 파일 삭제 
+  // const deleteFileImage = () => {
+  //   URL.revokeObjectURL(fileImage); setFileImage("");
+  // };
+
   return (
     <Modal show={show} onHide={onHide} aria-labelledby="contained-modal-title-vcenter" dialogClassName="modal-w" centered>
       <Modal.Body id = "ModalPadding">
@@ -15,16 +28,14 @@ const Profile = ({ show, onHide }) => {
           <Row>
             {/* 이미지 경로 */}
             <Col>
-            <img className='profile_image' src={process.env.PUBLIC_URL + "/image/Profileimage.png"} onClick={() => ProfilesetModalShow(true)}/>
-            <input className="input" type="email" name="email" placeholder="파일명"/>
-            <br></br>
-            <a href="#">선택</a>          
-          </Col>
-          
+              <img className='profile_image' src={process.env.PUBLIC_URL + "/image/Profileimage.png"}/>
+              <input className='upload_pic' type='file'/>
+              <br></br>
+            </Col>
           </Row>
         </Container>
       </Modal.Body>
-      <Modal.Footer>
+      <Modal.Footer style={{ height: "50px", alignContent: "center" }}>
         <Button id="NoBgExit" variant="secondary" onClick={onHide}>닫기</Button>
         <Button id="NoBgButton" onClick={onHide}>등록하기</Button>
       </Modal.Footer>

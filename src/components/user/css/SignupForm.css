@@ -6,6 +6,7 @@
 }
 .emailbutton {
   font-size: 14px;
+  font-weight: bold;
   width: 110px;
   color: blue;
 }
