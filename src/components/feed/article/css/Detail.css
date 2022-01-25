@@ -5,6 +5,16 @@
     margin-bottom: 100px;
 }
 
+.article_frame {
+    border-radius: 10px;
+}
+
+.article_img {
+    margin: 3%;
+    width: 95%;
+    height: auto;
+}
+
 .profile_info {
     display: flex;
     justify-content: space-between;
@@ -59,6 +69,7 @@
     width: 90%;
     height: 400px;
     justify-content: flex-start;
+    border-radius: 10px;
 }
 
 .article_content {
@@ -70,6 +81,12 @@
     width: 90%;
     margin-top: 3%;
     justify-content: flex-start;
+}
+
+.category_content {
+    margin-right: 3%;
+    padding: 5px;
+    border-radius: 10px;
 }
 
 .heart_bookmark {
@@ -84,7 +101,7 @@
     display: flex;
     flex-direction: column;
     width: 90%;
-    height: 150px;
+    height: 200px;
     margin-top: 1%;
     margin-left: 5%;
     margin-bottom: 5%;
@@ -97,6 +114,7 @@
     display: flex;
     flex-direction: column;
     padding: 3%;
+    border-radius: 10px;
 }
 
 .comments {

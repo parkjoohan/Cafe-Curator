@@ -19,7 +19,7 @@ export default function Routers(props) {
       <Route path="/signup" component={SignupForm}></Route>
       <Route exact path="/feed"><Mainfeed setFootershow={props.setFootershow}/></Route>
       <Route path="/feed/bookmark" component={BookMarkPrint}></Route>
-      <Route path="/feed/article/:pk" component={Detail}></Route>
+      <Route path="/article/:pk" component={Detail}></Route>
       <Route path="/profile/:pk" component = {userProfile}></Route>
       <Route path="/store/:pk" component = {StoreProfile}></Route>
     </Switch>

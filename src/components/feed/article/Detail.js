@@ -21,17 +21,18 @@ export default function Detail() {
 
       {/* 게시물 컨테이너 */}
       <div className='article_con'>
-        <Row style={{ justifyContent: "space-around" }}>
+        <Row  style={{ justifyContent: "space-around"}}>
           {/* 사진 창 */}
-          <Col xs={12} md={5} lg={4} 
-          style={{border:"1px solid black"}}>
+          <Col className='article_frame' xs={12} md={5} lg={6} 
+          style={{border:"1px solid black" }}>
             <img 
-            src='/test/4.3.png'
-            style={{width:"100%",height:"auto"}}/>
+              src='/test/4.3.png'
+              className='article_img'
+            />
           </Col>
 
           {/* 게시물 창 */}
-          <Col xs={12} md={7} lg={6.5}
+          <Col className='article_frame' xs={12} md={7} lg={5}
           style={{border:"1px solid black"}}>
             
             {/* 유저프로필,작성일 */}
@@ -70,8 +71,8 @@ export default function Detail() {
               </div>
               {/* 관심사 카테고리 표시 폼 */}
               <div className='category'>
-                <p style={{marginRight:"3%", backgroundColor:"skyblue", padding:"5px"}}>공부하기 좋은 카페</p>
-                <p style={{marginRight:"3%", backgroundColor:"tomato", padding:"5px"}}>공부하기 좋은 카페</p>
+                <p className='category_content' style={{ backgroundColor:"skyblue"}}>공부하기 좋은 카페</p>
+                <p className='category_content' style={{ backgroundColor:"tomato" }}>공부하기 좋은 카페</p>
               </div>
 
               
@@ -79,7 +80,7 @@ export default function Detail() {
 
             {/* 하트 & 북마크*/}
             <div className='heart_bookmark'>
-                <div style={{marginRight:"3%"}}>❤</div>
+                <div style={{marginRight:"3%"}}>💓</div>
                 <p style={{marginRight:"3%"}}>30</p>
                 <div style={{marginRight:"3%"}}>🔖</div>
                 <p style={{marginRight:"3%"}}>북마크</p>
