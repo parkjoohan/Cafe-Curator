@@ -10,4 +10,8 @@ import java.util.List;
 public interface FeedRepository extends JpaRepository<Feed, Integer> {
 
   Page<Feed> findByFeedNoLessThanAndFeedNoInOrderByFeedNoDesc(int lastFeedNo, List<Integer> feedList, Pageable pageRequest);
+
+  Page<Feed> findByFeedNoLessThanOrderByFeedNoDesc(int lastFeedNo, Pageable pageable);
+
+  Page<Feed> findByUserNoInAndFeedNoLessThanOrderByFeedNoDesc(List<String> followingList, int lastFeedNo, Pageable pageable);
 }

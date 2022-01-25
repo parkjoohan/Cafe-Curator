@@ -34,7 +34,6 @@ public class FeedController {
             feedService.feedRegister(feedDto, files);
             return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
         }catch (Exception e){
-//            e.printStackTrace();
             return new ResponseEntity<>("FAIL : " + e.getMessage(), HttpStatus.EXPECTATION_FAILED);
         }
     }
@@ -47,7 +46,6 @@ public class FeedController {
             feedService.feedDelete(feedNo, userNo);
             return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
         } catch (Exception e){
-//            e.printStackTrace();
             return new ResponseEntity<>("FAIL : " + e.getMessage(), HttpStatus.OK);
         }
     }
@@ -60,7 +58,6 @@ public class FeedController {
             FeedDetailDto feedDto = feedService.feedDetail(feedNo, userNo);
             return new ResponseEntity<>(feedDto, HttpStatus.OK);
         }catch (Exception e){
-//            e.printStackTrace();
             return new ResponseEntity<>("FAIL : " + e.getMessage(), HttpStatus.OK);
         }
     }
@@ -74,7 +71,6 @@ public class FeedController {
             feedService.feedModify(userNo, feedDto, files);
             return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
         }catch (Exception e){
-//            e.printStackTrace();
             return new ResponseEntity<>("FAIL : " + e.getMessage(), HttpStatus.OK);
         }
     }
@@ -87,7 +83,6 @@ public class FeedController {
             String msg = feedService.feedLikeControl(feedNo, userNo);
             return new ResponseEntity<>("SUCCESS : " + msg, HttpStatus.OK);
         }catch (Exception e){
-//            e.printStackTrace();
             return new ResponseEntity<>("FAIL : " + e.getMessage(), HttpStatus.OK);
         }
     }
@@ -103,17 +98,16 @@ public class FeedController {
             return new ResponseEntity<>("FAIL : " + e.getMessage(), HttpStatus.OK);
         }
     }
-
-    @ApiOperation(value = "개인 피드 목록(feeds 테이블)")
-    @GetMapping("feedList/{feedUserNo}/{userNo}")
+    
+    @ApiOperation(value = "개인 피드 목록(feeds 테이블)", notes = "비회원도 조회 가능")
+    @GetMapping(value={"feedList/{feedUserNo}","feedList/{feedUserNo}/{userNo}"})
     public ResponseEntity feedListWithPaging(@ApiParam(value = "조회할 유저")@PathVariable String feedUserNo,
-                                   @ApiParam(value = "조회하는 유저")@PathVariable String userNo,
+                                   @ApiParam(value = "조회하는 유저") @PathVariable(required = false) String userNo,
                                    @ApiParam(value = "타입(feed 또는 blog)")@RequestParam String type,
                                    @RequestParam int lastFeedNo, @RequestParam int size) {
         try{
             return new ResponseEntity<>(feedService.feedListWithPaging(feedUserNo, userNo,type, lastFeedNo, size), HttpStatus.OK);
         }catch (Exception e){
-//            e.printStackTrace();
             return new ResponseEntity<>("FAIL : " + e.getMessage(), HttpStatus.OK);
         }
     }
@@ -125,7 +119,6 @@ public class FeedController {
         try{
             return new ResponseEntity<>(feedService.bookmarkListWithPaging(userNo, type, lastFeedNo, size), HttpStatus.OK);
         }catch (Exception e){
-//            e.printStackTrace();
             return new ResponseEntity<>("FAIL : " + e.getMessage(), HttpStatus.OK);
         }
     }
@@ -137,7 +130,19 @@ public class FeedController {
         try{
             return new ResponseEntity<>(feedService.likeListWithPaging(userNo, type, lastFeedNo, size), HttpStatus.OK);
         }catch (Exception e){
-//            e.printStackTrace();
+            return new ResponseEntity<>("FAIL : " + e.getMessage(), HttpStatus.OK);
+        }
+    }
+
+    @ApiOperation(value = "메인 피드 목록(팔로잉 게시물)", notes = "비회원은 전체 게시물")
+    @GetMapping(value={"mainFeedList", "mainFeedList/{userNo}"})
+    public ResponseEntity mainFeedListWithPaging(@PathVariable(required = false) String userNo,
+                                                 @ApiParam(value = "타입(feed 또는 blog)")@RequestParam String type,
+                                                 @RequestParam int lastFeedNo, @RequestParam int size) {
+        try{
+            return new ResponseEntity<>(feedService.mainFeedListWithPaging(userNo, type, lastFeedNo, size), HttpStatus.OK);
+        }catch (Exception e){
+            e.printStackTrace();
             return new ResponseEntity<>("FAIL : " + e.getMessage(), HttpStatus.OK);
         }
     }

@@ -20,22 +20,18 @@ public class FeedServiceImpl implements FeedService {
 
     @Autowired
     FeedRepository feedRepository;
-
     @Autowired
     FileRepository fileRepository;
-
     @Autowired
     FeedsRepository feedsRepository;
-
     @Autowired
     FeedLikeRepository feedLikeRepository;
-
     @Autowired
     BookmarkRepository bookmarkRepository;
-
     @Autowired
     UserDetailRepository userDetailRepository;
-
+    @Autowired
+    FollowRepository followRepository;
     @Autowired
     S3Service s3Service;
 
@@ -47,12 +43,9 @@ public class FeedServiceImpl implements FeedService {
         if(files == null)
             throw new NullPointerException("이미지를 등록하세요");
 
-        //파일 확장자 검사 먼저
-        for(MultipartFile mfile : files){
+        for(MultipartFile mfile : files){ //파일 확장자 검사
             String originFileName = mfile.getOriginalFilename();
             String extension = originFileName.substring(originFileName.length()-3);
-
-            //System.out.println("content type >> " + mfile.getContentType());
 
             if(!(extension.equals("jpg") || extension.equals("png")))
                 throw new FileUploadException("파일 확장자가 jpg나 png가 아닙니다.");
@@ -105,12 +98,10 @@ public class FeedServiceImpl implements FeedService {
         if(feed.isEmpty())
             throw new NullPointerException("해당 피드가 존재하지 않습니다");
 
-        String feedUserNo = feed.get().getUserNo();
-        if(!userNo.equals(feedUserNo))
+        if(!userNo.equals(feed.get().getUserNo()))
             throw new Exception("피드 작성자가 아닙니다");
 
-        //S3에서 파일 삭제
-        for(File file : feedRepository.getById(feedNo).getFiles())
+        for(File file : feed.get().getFiles()) //S3에서 파일 삭제
             s3Service.delete(file.getFilePath());
 
         removeFeedList(feedNo, userNo); //피드 목록에서 삭제
@@ -140,8 +131,7 @@ public class FeedServiceImpl implements FeedService {
             throw new NullPointerException("해당 피드가 존재하지 않습니다");
 
         Feed feed = obj.get();
-        String feedUserNo = feed.getUserNo();
-        String feedUserId = userDetailRepository.findByUserNo(feedUserNo).getUserId(); //피드 작성자의 userId
+        String feedUserId = userDetailRepository.findById(feed.getUserNo()).get().getUserId(); //피드 작성자의 userId
 
         List<FileDto> files = new ArrayList<>();
         for(File file : feed.getFiles() )
@@ -183,8 +173,7 @@ public class FeedServiceImpl implements FeedService {
         if(files == null && feed.getFiles().size() == feedDto.getDeleteList().size())
             throw new NullPointerException("이미지를 등록하세요");
 
-        //파일 확장자 검사
-        if(files != null){
+        if(files != null){ //파일 확장자 검사
             for(MultipartFile mfile : files){
                 String originFileName = mfile.getOriginalFilename();
                 String extension = originFileName.substring(originFileName.length()-3);
@@ -208,8 +197,7 @@ public class FeedServiceImpl implements FeedService {
 
         //카페 아이디 or 카테고리 목록 수정 -> 카테고리 로그, 캐시 영향
 
-        //새로운 파일 저장
-        if(files != null){
+        if(files != null){ //새로운 파일 저장
             for (MultipartFile mfile : files) {
                 String imgURL = s3Service.upload(mfile);  //S3에 파일 업로드 후 URL 가져오기
 
@@ -226,12 +214,7 @@ public class FeedServiceImpl implements FeedService {
     //피드 좋아요 상태
     @Override
     public boolean feedLikeState(int feedNo, String userNo){
-
-        Optional<Optional<FeedLike>> feedLike = Optional.ofNullable(feedLikeRepository.findById(new FeedLikeId(feedNo, userNo)));
-        if(feedLike.get().isEmpty()) //feed_like 테이블에 존재하지 않는다면
-            return false;
-        else
-            return true;
+        return feedLikeRepository.findById(new FeedLikeId(feedNo, userNo)).isPresent();
     }
 
     //피드 좋아요 컨트롤
@@ -250,14 +233,12 @@ public class FeedServiceImpl implements FeedService {
 
             feed.setLikeCount(feed.getLikeCount() + 1); //피드 좋아요 카운트 증가
             feedRepository.save(feed);
-
             return ("ADD LIKE");
         } else {
             feedLikeRepository.deleteById(new FeedLikeId(feedNo, userNo));
 
             feed.setLikeCount(feed.getLikeCount() - 1); //피드 좋아요 카운트 감소
             feedRepository.save(feed);
-
             return ("DELETE LIKE");
         }
     }
@@ -265,12 +246,7 @@ public class FeedServiceImpl implements FeedService {
     //피드 북마크 상태
     @Override
     public boolean BookmarkState(int feedNo, String userNo){
-
-        Optional<Optional<Bookmark>> bookmark = Optional.ofNullable(bookmarkRepository.findById(new BookmarkId(feedNo, userNo)));
-        if(bookmark.get().isEmpty()) //bookmark 테이블에 존재하지 않는다면
-            return false;
-        else
-            return true;
+        return bookmarkRepository.findById(new BookmarkId(feedNo, userNo)).isPresent();
     }
 
     //피드 북마크 컨트롤
@@ -286,11 +262,9 @@ public class FeedServiceImpl implements FeedService {
         Optional<Optional<Bookmark>> bookmark = Optional.ofNullable(bookmarkRepository.findById(new BookmarkId(feedNo, userNo)));
         if (bookmark.get().isEmpty()) {
             bookmarkRepository.save(new Bookmark(new BookmarkId(feedNo, userNo)));
-
             return ("ADD BOOKMARK");
         } else {
             bookmarkRepository.deleteById(new BookmarkId(feedNo, userNo));
-
             return ("DELETE BOOKMARK");
         }
     }
@@ -302,14 +276,12 @@ public class FeedServiceImpl implements FeedService {
 
         Optional<Feeds> feeds = feedsRepository.findById(feedUserNo);
         if(feeds.isEmpty()) //feedUser가 작성한 피드 없음
-            return new ArrayList<>(); //빈 리스트 return
+            return null;
 
         List<Integer> feedList  = feeds.get().getFeedList(); //feedUser의 피드 목록
-//        System.out.println("피드 목록 : " + feedList);
 
         Page<Feed> f = feedRepository.findByFeedNoLessThanAndFeedNoInOrderByFeedNoDesc(lastFeedNo, feedList,
                 PageRequest.of(0, size)); //페이지네이션을 위한 PageRequest, 페이지는 0으로 고정
-
 
         if(type.equals("blog"))
             return makeBlogDtoList(f, userNo);
@@ -323,10 +295,8 @@ public class FeedServiceImpl implements FeedService {
     public List bookmarkListWithPaging(String userNo, String type, int lastFeedNo, int size) throws Exception{
 
         Optional<List<Integer>> bookmarkList = bookmarkRepository.getBookmarkList(userNo);
-//        System.out.println("북마크 목록 : " + bookmarkList.get());
 
-        Page<Feed> f = feedRepository.findByFeedNoLessThanAndFeedNoInOrderByFeedNoDesc(lastFeedNo, bookmarkList.get(),
-                PageRequest.of(0, size)); //페이지네이션을 위한 PageRequest, 페이지는 0으로 고정
+        Page<Feed> f = feedRepository.findByFeedNoLessThanAndFeedNoInOrderByFeedNoDesc(lastFeedNo, bookmarkList.get(), PageRequest.of(0, size));
 
         if(type.equals("blog"))
             return makeBlogDtoList(f, userNo);
@@ -340,10 +310,27 @@ public class FeedServiceImpl implements FeedService {
     public List likeListWithPaging(String userNo, String type, int lastFeedNo, int size) throws Exception{
 
         Optional<List<Integer>> likeList = feedLikeRepository.getLikeList(userNo);
-//        System.out.println("북마크 목록 : " + bookmarkList.get());
 
-        Page<Feed> f = feedRepository.findByFeedNoLessThanAndFeedNoInOrderByFeedNoDesc(lastFeedNo, likeList.get(),
-                PageRequest.of(0, size)); //페이지네이션을 위한 PageRequest, 페이지는 0으로 고정
+        Page<Feed> f = feedRepository.findByFeedNoLessThanAndFeedNoInOrderByFeedNoDesc(lastFeedNo, likeList.get(), PageRequest.of(0, size));
+
+        if(type.equals("blog"))
+            return makeBlogDtoList(f, userNo);
+        else
+            return makeFeedDtoList(f, userNo);
+    }
+
+    //메인 피드 목록(팔로잉 게시물)
+    @Override
+    @Transactional
+    public List mainFeedListWithPaging(String userNo, String type, int lastFeedNo, int size) throws Exception{
+
+        Page<Feed> f;
+        if(userNo == null) //비회원
+            f = feedRepository.findByFeedNoLessThanOrderByFeedNoDesc(lastFeedNo, PageRequest.of(0, size));
+        else{
+            Optional<List<String>> followingList = followRepository.getFollowingList(userNo);
+            f = feedRepository.findByUserNoInAndFeedNoLessThanOrderByFeedNoDesc(followingList.get(), lastFeedNo, PageRequest.of(0,size));
+        }
 
         if(type.equals("blog"))
             return makeBlogDtoList(f, userNo);
@@ -357,7 +344,7 @@ public class FeedServiceImpl implements FeedService {
         List<BlogResDto> feedDtoList = new ArrayList<>();
 
         for(Feed feed : list){
-            String feedUserId = userDetailRepository.findByUserNo(feed.getUserNo()).getUserId();
+            String feedUserId = userDetailRepository.findById(feed.getUserNo()).get().getUserId();
             File file = feed.getFiles().get(0); //대표 사진만 포함
 
             BlogResDto feedDto = BlogResDto.builder()
@@ -384,7 +371,7 @@ public class FeedServiceImpl implements FeedService {
         List<FeedResDto> feedDtoList = new ArrayList<>();
 
         for(Feed feed : list){
-            String feedUserId = userDetailRepository.findByUserNo(feed.getUserNo()).getUserId();
+            String feedUserId = userDetailRepository.findById(feed.getUserNo()).get().getUserId();
             File file = feed.getFiles().get(0); //대표 사진만 포함
 
             FeedResDto feedDto = FeedResDto.builder()
