@@ -11,9 +11,6 @@ function Footer(props) {
     console.log(props)
   })
   return (
-    <div id="footer" className="footer">
-      <div className="con">
-        <div></div>
         <Grid container className="footer__container">
           <Grid container md={4} sm={12} alignItems="center" className="center">
             <img
@@ -166,8 +163,6 @@ function Footer(props) {
             </div>
           </Grid>
         </Grid>
-      </div>
-    </div>
   );
 }
 

@@ -13,7 +13,7 @@ export default function Detail() {
   const history = useHistory();
 
   return (
-    <Container>
+    <Container >
       {/* 뒤로 가기 버튼 */}
       <div>
         <FiCornerUpLeft size="30" onClick={() => { history.goBack() }} />
@@ -43,7 +43,7 @@ export default function Detail() {
                   />
                 </div>
                 <div className='username'>
-                  <h5>username</h5>
+                  <p>username</p>
                 </div>
               </div>
               <div className='profile_date'>
@@ -57,19 +57,16 @@ export default function Detail() {
             </div>
 
             {/* 본문내용, 카페관심사태그 */}
-            <div className='article_content_frame'>
+            <div className='article_body'>
               {/* 본문 내용  */}
-              <div className='article_content'>
-                contentcontentcontentcontentcontentcontent<br/>
-                contentcontentcontentcontentcontentcontent<br/>
-                contentcontentcontentcontentcontentcontent<br/>
-                contentcontentcontentcontentcontentcontent<br/>
-                contentcontentcontentcontentcontentcontent<br/>
-                contentcontentcontentcontentcontentcontent<br/>
-                contentcontentcontentcontentcontentcontent<br/>
-                contentcontentcontentcontentcontentcontent<br/>
-                contentcontentcontentcontentcontentcontent<br/>
-                contentcontentcontentcontentcontentcontent<br/>
+              <div className='article_content_frame'>
+                <div className='article_content' style={{display:"flex"}}>
+                  contentcontentcontentcontentcontentcontent<br/>
+                  contentcontentcontentcontentcontentcontent<br/>
+                  contentcontentcontentcontentcontentcontent<br/>
+                  contentcontentcontentcontentcontentcontent<br/>
+                  contentcontentcontentcontentcontentcontent<br/>
+                </div>
               </div>
               {/* 관심사 카테고리 표시 폼 */}
               <div className='category'>
@@ -91,26 +88,26 @@ export default function Detail() {
             {/* 댓글 */}
             <div className='comment'>
               <p>총 3개의 댓글이 있습니다.</p>
-              <div className='comment_frame'>
+                <div className='comment_frame'>
+                  <div className='comments'>
+                    <div style={{display:"flex"}}>
+                      <h5>username1</h5>
+                      <h5 style={{marginLeft:"3%"}}>리뷰 1</h5>
+                    </div>
 
-                <div style={{display:"flex"}}>
-                  <h5>username1</h5>
-                  <h5 style={{marginLeft:"3%"}}>리뷰 1</h5>
-                </div>
+                    <div style={{position:"relative",display:"flex"}}>
+                      <h5>username2</h5>
+                      <h5 style={{marginLeft:"3%"}}>리뷰 1</h5>
+                    </div>
 
-                <div style={{position:"relative",display:"flex"}}>
-                  <h5>username2</h5>
-                  <h5 style={{marginLeft:"3%"}}>리뷰 1</h5>
-                </div>
-
-                <div style={{position:"relative",display:"flex",top:"20%",left:"20%"}}>
-                    <h5>username3</h5>
-                    <h5 style={{marginLeft:"3%"}}>@username2 리뷰 1</h5>
-                
+                    <div style={{position:"relative",display:"flex",top:"20%",left:"20%"}}>
+                      <h5>username3</h5>
+                      <h5 style={{marginLeft:"3%"}}>@username2 리뷰 1</h5>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-          </Col>
+            </Col>
           </Row>
         </div>
     </Container>

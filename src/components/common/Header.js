@@ -8,7 +8,7 @@ function Header() {
   
   const history = useHistory();
   return (
-    <Navbar className='nav' expand="lg" bg="light">
+    <Navbar className='nav' expand="sm" bg="light">
       <Col className='left' xs={3}>
         <Nav className="me-auto">
           <Nav.Link><Link to="/" className="link">Home</Link></Nav.Link>
