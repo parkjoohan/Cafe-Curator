@@ -2,12 +2,12 @@
   width: 150px;
   height: 150px;
 }
-#navcolor {
-  border: 0;
 
-  background-color: #864A13;
-  opacity: 0.8;
+.navcolor {
+  height: 30px;
+  background-color: #4b6b79;
 }
+
 #NoBgButton {
   background-color : white;
   border: none;
@@ -21,4 +21,9 @@
   border: none;
   color : #484848;
   font-weight:500;
+}
+
+.profile_image {
+  width: 20%;
+  border: 1;
 }

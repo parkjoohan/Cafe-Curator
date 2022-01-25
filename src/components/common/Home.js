@@ -24,12 +24,12 @@ export default function Home(props) {
         <Container className='content'>
           <Card
             title="지도중심 빠른찾기"
-            sub_title="현재 위치를 기준으로 카페를 추천"
+            sub_title="현 위치를 기준으로 카페를 추천"
             images="../image/Map2.png"
             alt="map"
           />&nbsp;&nbsp;
           <Card
-            title="까다로운 원두족을 위한 추천"
+            title="원두족을 위한 추천"
             sub_title="커피 맛 좋은 카페를 추천"
             images="../image/Coffee.png"
             alt="coffee"

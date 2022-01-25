@@ -13,7 +13,7 @@ export default function card(props) {
                 <div className="card_img" style={{ "backgroundImage": bg_img }}></div>
                 <div className='cardInfo'>
                     <h5>{title}</h5>
-                    <h8>{sub_title}</h8>
+                    <h6>{sub_title}</h6>
                 </div>
             </div>
         </div>
