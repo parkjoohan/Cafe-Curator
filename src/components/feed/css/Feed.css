@@ -1,0 +1,8 @@
+#Writebutton {
+    margin-right: 100px;
+}
+
+#container {
+    flex-direction: row;
+    flex-wrap:wrap;
+  }

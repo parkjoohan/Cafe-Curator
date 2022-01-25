@@ -1,0 +1,70 @@
+/* #navcolor {
+    border: 0;
+    background-color: #864A13;
+    opacity: 0.9;
+    width: 1140px;
+  }
+  #NoBgExitTerms {
+    margin-right: auto;
+    background-color : #864A13;
+    border: none;
+    color : #484848;
+    font-weight:500;
+  }
+  #ModalPadding {
+    padding : 0;
+  }
+
+  *, ::after, ::before {
+    box-sizing: border-box;
+    color: black;
+}
+  
+  #TermsMarginLeft {
+    margin-left : 20px;
+  }
+  #TermsMarginUnderline {
+    margin-left : 20px;
+    text-decoration: underline;
+    text-underline-position:under;
+  }
+  #TermsMarginX {
+    margin-left: 20px;
+    margin-right: 20px;
+    font-size : 15px;
+  }
+  #QlabUnderline {
+    text-decoration: underline;
+    text-underline-position:under;
+    color: #484848
+  } */
+
+  .likebutton {
+    background-color: skyblue;
+    padding : 5px;
+    margin-top: 10px;
+    border-radius: 30px;
+    font-weight: 700;
+    text-align:center;
+  }
+
+  .selected {
+    background-color: skyblue;
+    margin-top: 10px;
+    border-radius: 30px;
+    font-weight: 700;
+    text-align:center;
+    font-size:70%;
+  }
+
+  .pictureinput{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .minipicture{
+    display: flex;
+    justify-content: center;
+  }
