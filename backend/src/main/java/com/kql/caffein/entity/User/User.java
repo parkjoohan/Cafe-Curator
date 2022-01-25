@@ -1,7 +1,8 @@
-package com.kql.caffein.entity;
+package com.kql.caffein.entity.User;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.kql.caffein.dto.Role;
+import com.kql.caffein.entity.EmailAuth;
 import lombok.*;
 
 import javax.persistence.*;

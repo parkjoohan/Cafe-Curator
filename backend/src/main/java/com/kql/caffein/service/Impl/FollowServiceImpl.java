@@ -3,7 +3,7 @@ package com.kql.caffein.service.Impl;
 import com.kql.caffein.dto.FollowDto;
 import com.kql.caffein.entity.Follow.Follow;
 import com.kql.caffein.entity.Follow.FollowId;
-import com.kql.caffein.entity.UserDetail;
+import com.kql.caffein.entity.User.UserDetail;
 import com.kql.caffein.repository.FollowRepository;
 import com.kql.caffein.repository.UserDetailRepository;
 import com.kql.caffein.service.FollowService;

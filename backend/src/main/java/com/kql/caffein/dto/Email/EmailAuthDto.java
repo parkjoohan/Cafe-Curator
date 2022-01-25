@@ -1,4 +1,4 @@
-package com.kql.caffein.dto;
+package com.kql.caffein.dto.Email;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

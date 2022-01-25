@@ -1,14 +1,16 @@
-package com.kql.caffein.service;
+package com.kql.caffein.service.Impl;
 
 import com.kql.caffein.dto.Role;
-import com.kql.caffein.dto.UserDetailDto;
-import com.kql.caffein.dto.UserDto;
+import com.kql.caffein.dto.User.UserDetailDto;
+import com.kql.caffein.dto.User.UserDto;
 import com.kql.caffein.entity.EmailAuth;
-import com.kql.caffein.entity.User;
-import com.kql.caffein.entity.UserDetail;
+import com.kql.caffein.entity.User.User;
+import com.kql.caffein.entity.User.UserDetail;
 import com.kql.caffein.repository.EmailAuthRepository;
 import com.kql.caffein.repository.UserDetailRepository;
 import com.kql.caffein.repository.UserRepository;
+import com.kql.caffein.service.EmailAuthService;
+import com.kql.caffein.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.util.http.fileupload.FileUploadException;
@@ -23,7 +25,7 @@ import java.util.*;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final UserDetailRepository userDetailRepository;
     private final EmailAuthRepository emailAuthRepository;

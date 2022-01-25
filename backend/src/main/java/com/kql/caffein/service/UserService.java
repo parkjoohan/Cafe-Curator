@@ -1,9 +1,9 @@
 package com.kql.caffein.service;
 
-import com.kql.caffein.dto.UserDetailDto;
-import com.kql.caffein.dto.UserDto;
-import com.kql.caffein.entity.User;
-import com.kql.caffein.entity.UserDetail;
+import com.kql.caffein.dto.User.UserDetailDto;
+import com.kql.caffein.dto.User.UserDto;
+import com.kql.caffein.entity.User.User;
+import com.kql.caffein.entity.User.UserDetail;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;

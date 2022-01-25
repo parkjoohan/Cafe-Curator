@@ -1,11 +1,12 @@
-package com.kql.caffein.service;
+package com.kql.caffein.service.Impl;
 
-import com.kql.caffein.dto.EmailAuthDto;
+import com.kql.caffein.dto.Email.EmailAuthDto;
 import com.kql.caffein.dto.Role;
 import com.kql.caffein.entity.EmailAuth;
-import com.kql.caffein.entity.User;
+import com.kql.caffein.entity.User.User;
 import com.kql.caffein.repository.EmailAuthRepository;
 import com.kql.caffein.repository.UserRepository;
+import com.kql.caffein.service.EmailAuthService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ import java.util.Random;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class EmailAuthServiceImpl implements EmailAuthService{
+public class EmailAuthServiceImpl implements EmailAuthService {
     private final EmailAuthRepository emailAuthRepository;
     private final UserRepository userRepository;
 

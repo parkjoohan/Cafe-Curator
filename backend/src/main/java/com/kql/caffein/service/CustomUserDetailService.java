@@ -1,7 +1,7 @@
 package com.kql.caffein.service;
 
-import com.kql.caffein.entity.User;
-import com.kql.caffein.entity.UserDetail;
+import com.kql.caffein.entity.User.User;
+import com.kql.caffein.entity.User.UserDetail;
 import com.kql.caffein.repository.UserDetailRepository;
 import com.kql.caffein.repository.UserRepository;
 import lombok.RequiredArgsConstructor;

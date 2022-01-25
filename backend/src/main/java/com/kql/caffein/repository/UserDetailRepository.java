@@ -1,6 +1,6 @@
 package com.kql.caffein.repository;
 
-import com.kql.caffein.entity.UserDetail;
+import com.kql.caffein.entity.User.UserDetail;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

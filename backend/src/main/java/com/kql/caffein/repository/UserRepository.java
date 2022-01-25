@@ -1,6 +1,6 @@
 package com.kql.caffein.repository;
 
-import com.kql.caffein.entity.User;
+import com.kql.caffein.entity.User.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import javax.transaction.Transactional;

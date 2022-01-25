@@ -1,9 +1,12 @@
 package com.kql.caffein.controller;
 
 import com.kql.caffein.dto.*;
+import com.kql.caffein.dto.Email.EmailAuthDto;
+import com.kql.caffein.dto.User.UserDetailDto;
+import com.kql.caffein.dto.User.UserDto;
+import com.kql.caffein.dto.User.UserLoginDto;
 import com.kql.caffein.entity.EmailAuth;
-import com.kql.caffein.entity.User;
-import com.kql.caffein.entity.UserDetail;
+import com.kql.caffein.entity.User.UserDetail;
 import com.kql.caffein.jwt.JwtFilter;
 import com.kql.caffein.jwt.TokenProvider;
 import com.kql.caffein.service.EmailAuthService;
@@ -13,7 +16,6 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.aspectj.bridge.Message;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +27,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
-import javax.validation.constraints.Email;
 import java.util.List;
 import java.util.Optional;
 

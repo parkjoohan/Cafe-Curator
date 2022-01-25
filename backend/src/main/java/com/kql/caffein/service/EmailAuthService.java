@@ -1,6 +1,6 @@
 package com.kql.caffein.service;
 
-import com.kql.caffein.dto.EmailAuthDto;
+import com.kql.caffein.dto.Email.EmailAuthDto;
 import com.kql.caffein.entity.EmailAuth;
 
 public interface EmailAuthService {
