@@ -3,6 +3,7 @@ import { Container,Grid,Col,Row } from 'react-bootstrap'
 import './css/Home.css'
 import styles from './css/Home.module.css'
 import Card from './Card';
+import { Link } from 'react-router-dom'
 
 export default function Home(props) {
 
@@ -27,24 +28,28 @@ export default function Home(props) {
             sub_title="현 위치를 기준으로 카페를 추천"
             images="../image/Map2.png"
             alt="map"
-          />&nbsp;&nbsp;
+            src="feed"
+          ></Card>&nbsp;&nbsp;
           <Card
             title="원두족을 위한 추천"
             sub_title="커피 맛 좋은 카페를 추천"
             images="../image/Coffee.png"
             alt="coffee"
+            src="bookmark"
           />&nbsp;&nbsp;
           <Card
             title="뷰 좋은 카페를 추천"
             sub_title="전망 좋은 카페를 추천"
             images="../image/View.png"
             alt="view"
+            src="login"
           />&nbsp;&nbsp;
           <Card
             title="카공족을 위한 추천"
             sub_title="공부하기 좋은 카페를 추천"
             images="../image/Study.png"
             alt="study"
+            src="signup"
           />
         </Container>
       </div>

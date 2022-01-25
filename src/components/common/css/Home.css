@@ -152,6 +152,7 @@
   box-sizing: border-box;
   font-family: "Roboto";
   color: #666;
+  text-align: center;
 }
 .cardInfo h5 {
   font-size: 25px;
