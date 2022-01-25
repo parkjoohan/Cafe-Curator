@@ -2,13 +2,16 @@ package com.kql.caffein.service.Impl;
 
 import com.kql.caffein.dto.Comment.CommentReqDto;
 import com.kql.caffein.dto.Comment.CommentResDto;
+import com.kql.caffein.dto.FollowDto;
 import com.kql.caffein.entity.Comment.Comment;
 import com.kql.caffein.entity.Comment.CommentLike;
 import com.kql.caffein.entity.Comment.CommentLikeId;
+import com.kql.caffein.entity.User.UserDetail;
 import com.kql.caffein.repository.CommentLikeRepository;
 import com.kql.caffein.repository.CommentRepository;
 import com.kql.caffein.repository.UserDetailRepository;
 import com.kql.caffein.service.CommentService;
+import com.kql.caffein.service.FollowService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -25,12 +28,14 @@ public class CommentServiceImpl implements CommentService {
     private final CommentRepository commentRepository;
     private final CommentLikeRepository commentLikeRepository;
     private final UserDetailRepository userDetailRepository;
+    private final FollowService followService;
 
     @Autowired
-    public CommentServiceImpl(CommentRepository commentRepository, CommentLikeRepository commentLikeRepository, UserDetailRepository userDetailRepository) {
+    public CommentServiceImpl(CommentRepository commentRepository, CommentLikeRepository commentLikeRepository, UserDetailRepository userDetailRepository, FollowService followService) {
         this.commentRepository = commentRepository;
         this.commentLikeRepository = commentLikeRepository;
         this.userDetailRepository = userDetailRepository;
+        this.followService = followService;
     }
 
     @Override
@@ -166,5 +171,22 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public boolean findCommentLikeByUserNo(CommentLikeId commentLikeId) {
         return commentLikeRepository.findById(commentLikeId).isPresent();
+    }
+
+    @Override
+    public List<FollowDto> commentLikeUserList(String userNo, int commentNo, String lastUserNo, int size) {
+        if(lastUserNo == null) lastUserNo = "z";
+        PageRequest pageRequest = PageRequest.of(0,size);
+        Page<CommentLike> userList = commentLikeRepository.findByCommentNoAndUserNoLessThanOrderByUserNoDesc(commentNo,lastUserNo,pageRequest);
+
+        List<FollowDto> list = new ArrayList<>();
+        for(CommentLike user : userList) {
+            String no = user.getCommentLikeId().getUserNo();
+            UserDetail userDetail = userDetailRepository.findById(no).get();
+
+            if(no.equals(userNo)) continue;
+            list.add(new FollowDto(no, userDetail.getUserId(), userDetail.getPicture(), followService.checkFollow(userNo,no)));
+        }
+        return list;
     }
 }

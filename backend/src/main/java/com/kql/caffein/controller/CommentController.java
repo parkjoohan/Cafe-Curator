@@ -2,6 +2,7 @@ package com.kql.caffein.controller;
 
 import com.kql.caffein.dto.Comment.CommentReqDto;
 import com.kql.caffein.dto.Comment.CommentResDto;
+import com.kql.caffein.dto.FollowDto;
 import com.kql.caffein.service.CommentService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -125,6 +126,29 @@ public class CommentController {
             commentService.likeComment(userNo, commentNo);
             return new ResponseEntity<>(SUCCESS, HttpStatus.OK);
         } catch (Exception e) {
+            return new ResponseEntity<>(FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/likeUserList")
+    @ApiOperation(value = "댓글 좋아요누른 회원 목록 조회")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "userNo", value = "회원 고유 번호", required = true,
+                    dataType = "string", paramType = "query"),
+            @ApiImplicitParam(name = "commentNo", value = "댓글 번호", required = true,
+                    dataType = "int", paramType = "query"),
+            @ApiImplicitParam(name = "lastUserNo", value = "마지막 댓글 번호", required = false,
+                    dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "size", value = "화면에 보여질 사이즈", required = true,
+                    dataType = "int", paramType = "query")
+    })
+    public ResponseEntity commentLikeUserList (@RequestParam(value = "userNo") String userNo, @RequestParam int commentNo,
+                                       @RequestParam(required = false) String lastUserNo, @RequestParam int size) {
+        try {
+            List<FollowDto> list = commentService.commentLikeUserList(userNo, commentNo, lastUserNo, size);
+            return new ResponseEntity<>(list,HttpStatus.OK);
+        }catch (Exception e) {
+            e.printStackTrace();
             return new ResponseEntity<>(FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

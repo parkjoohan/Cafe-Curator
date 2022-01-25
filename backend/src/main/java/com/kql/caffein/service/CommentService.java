@@ -2,6 +2,7 @@ package com.kql.caffein.service;
 
 import com.kql.caffein.dto.Comment.CommentReqDto;
 import com.kql.caffein.dto.Comment.CommentResDto;
+import com.kql.caffein.dto.FollowDto;
 import com.kql.caffein.entity.Comment.Comment;
 import com.kql.caffein.entity.Comment.CommentLikeId;
 import org.springframework.data.domain.Page;
@@ -28,4 +29,6 @@ public interface CommentService {
 
     //댓글 좋아요 유무 확인
     boolean findCommentLikeByUserNo(CommentLikeId commentLikeId);
+
+    List<FollowDto> commentLikeUserList(String userNo, int commentNo, String lastUserNo, int size);
 }
