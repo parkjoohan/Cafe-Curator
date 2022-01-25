@@ -37,4 +37,6 @@ public class UserDetail {
 
     @Column(name = "category_list")
     private String categoryList;
+
 }
+
