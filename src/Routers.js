@@ -9,7 +9,7 @@ import BookMarkPrint from './components/feed/BookMarkPrint';
 import Detail from './components/feed/article/Detail'
 import Mainfeed from './components/feed/Mainfeed';
 import userProfile from './components/user/userProfile'
-
+import StoreProfile from './components/store/StoreProfile';
 
 export default function Routers(props) {
   return (
@@ -21,6 +21,7 @@ export default function Routers(props) {
       <Route path="/feed/bookmark" component={BookMarkPrint}></Route>
       <Route path="/feed/article/:pk" component={Detail}></Route>
       <Route path="/profile/:pk" component = {userProfile}></Route>
+      <Route path="/store/:pk" component = {StoreProfile}></Route>
     </Switch>
   )
 }

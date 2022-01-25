@@ -1,0 +1,77 @@
+#ProfileContainer {
+  width: 80%;
+  margin-left: 20vh;
+  margin-right: 20vh;
+}
+#divback {
+  background-color: #864b139f;
+}
+#ImgPreview {
+  border-radius: 65px;
+  
+  height: 130px;
+  margin-left: 20%;
+}
+#aMarginleft {
+  margin-left : 20px;
+}
+#pMarginTop{
+  margin-top : 5%;
+}
+#FeedImage {
+  margin-top : 20%;
+  margin-left : 15%;
+  margin-bottom : 30%;
+  width: 300px;
+  height: 300px;
+  filter : drop-shadow(3px 3px 3px #484848)
+}
+#FeedImage:hover {
+  margin-top : 17%;
+  margin-left : 12%;
+  margin-bottom : 30%;
+  width: 330px;
+  height: 330px;
+  filter : drop-shadow(3px 3px 3px #484848);
+  transition : all 0.5s;
+}
+#HrStyle {
+  width: 80%;
+  margin-left:10%;
+}
+
+#ProfileCol {
+  padding : 0px;
+}
+
+#ProfileButton {
+  width: 80%;
+  border : 0;
+  padding : 0;
+}
+#ProfileButtonLeft {
+  width: 80%;
+  margin-left: 100px;
+  border : 0;
+  padding : 500px;
+}
+#ContainerWidth {
+  width: 10%;
+}
+#btnplus {
+  border : 1px solid black;
+  width: 20vw;
+}
+#case2 {
+  border : 1px solid black;
+  width: 20vw;
+}
+#ButtonDiv {
+  margin-left: 30vw;
+}
+#modalbox {
+  padding: 0;
+}
+#modalbackground {
+  background-color : #864b139f;
+}
