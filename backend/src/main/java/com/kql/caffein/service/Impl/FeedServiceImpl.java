@@ -4,6 +4,7 @@ import com.kql.caffein.dto.Feed.*;
 import com.kql.caffein.dto.FollowDto;
 import com.kql.caffein.entity.Comment.CommentLike;
 import com.kql.caffein.entity.Feed.*;
+import com.kql.caffein.entity.User.User;
 import com.kql.caffein.entity.User.UserDetail;
 import com.kql.caffein.repository.*;
 import com.kql.caffein.service.FeedService;
@@ -349,7 +350,7 @@ public class FeedServiceImpl implements FeedService {
         List<BlogResDto> feedDtoList = new ArrayList<>();
 
         for(Feed feed : list){
-            String feedUserId = userDetailRepository.findById(feed.getUserNo()).get().getUserId();
+            UserDetail feedUser = userDetailRepository.findById(feed.getUserNo()).get();
             File file = feed.getFiles().get(0); //대표 사진만 포함
 
             BlogResDto feedDto = BlogResDto.builder()
@@ -360,7 +361,8 @@ public class FeedServiceImpl implements FeedService {
                     .categoryList(feed.getCategoryList())
                     .likeCount(feed.getLikeCount())
                     .commentCount(feed.getCommentCount())
-                    .userId(feedUserId)
+                    .userId(feedUser.getUserId())
+                    .userPicture(feedUser.getPicture())
                     .file(new FileDto(file.getFileNo(), file.getFilePath()))
                     .liked(feedLikeState(feed.getFeedNo(), userNo))
                     .marked(BookmarkState(feed.getFeedNo(), userNo))

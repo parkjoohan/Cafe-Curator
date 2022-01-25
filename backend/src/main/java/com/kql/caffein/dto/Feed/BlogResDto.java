@@ -28,6 +28,8 @@ public class BlogResDto {
     private int commentCount;
     @ApiModelProperty(value="피드 작성자 아이디")
     private String userId;
+    @ApiModelProperty(value="피드 작성자 사진")
+    private String userPicture;
     @ApiModelProperty(value="피드 사진(파일)")
     private FileDto file;
     @ApiModelProperty(value="피드 좋아요 상태")
@@ -37,7 +39,7 @@ public class BlogResDto {
 
     @Builder
     public BlogResDto(int feedNo, String content, LocalDateTime regTime, Integer cafeId, List<String> categoryList,
-                      int likeCount, int commentCount, String userId, FileDto file, boolean liked, boolean marked){
+                      int likeCount, int commentCount, String userId, String userPicture, FileDto file, boolean liked, boolean marked){
         this.feedNo = feedNo;
         this.content = content;
         this.regTime = regTime;
@@ -45,6 +47,7 @@ public class BlogResDto {
         this.categoryList = categoryList;
         this.likeCount = likeCount;
         this.commentCount = commentCount;
+        this.userPicture = userPicture;
         this.userId = userId;
         this.file = file;
         this.liked = liked;
