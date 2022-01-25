@@ -4,15 +4,13 @@ import React, { useEffect, useState } from "react";
 import BookMarks from "./BookMarks";
 import { Container,Button, Col, Row } from 'react-bootstrap';
 import WriteModal from './article/WriteModal';
+import { Link } from 'react-router-dom'
 
 function BookMarksPrint() {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [WritemodalShow, WritesetModalShow] = React.useState(false);
-  let Writebutton = {
-    fontSize: 13,
-    width: 95,
-  }
+
   useEffect(() => {
     setIsLoading(true);
 
@@ -37,9 +35,8 @@ function BookMarksPrint() {
                     <Container>
                         <Row>
                             <Col>
-                                <Button href="/feed/feed" variant="outline-primary" style={Writebutton}>피드형</Button>{' '}
-                                <Button href="/feed/skeleton" variant="outline-primary" style={Writebutton}>블로그형</Button>{' '}
-                                <Button as="buttoncommon" style={Writebutton} variant="outline-success" onClick={() => WritesetModalShow(true)}>
+                                <Link to="/feed"><Button variant="outline-primary" style={{fontSize: "13", width: "140"}}>피드형 & 블로그형</Button></Link>{' '}
+                                <Button as="buttoncommon" style={{fontSize: "13",width: "95"}} variant="outline-success" onClick={() => WritesetModalShow(true)}>
                                     게시글 작성
                                 </Button>
                             </Col>

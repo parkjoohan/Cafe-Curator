@@ -3,9 +3,8 @@ import Toggle from './Toggle';
 import Feed from './Feed';
 import SkeletonPrint from './SkeletonPrint'
 import {Container,Col,Row,Button} from 'react-bootstrap'
-import { useHistory } from 'react-router-dom'
+import { Link,useHistory } from 'react-router-dom'
 import WriteModal from './article/WriteModal'
-import Map from './Map';
 
 export default function Mainfeed(props) {
 
@@ -36,7 +35,7 @@ export default function Mainfeed(props) {
           <Row>
             <Col>
               <div></div>
-                <Button href="/feed/bookmark" variant="outline-primary" style={Writebutton}>북마크</Button>{' '}
+                <Link to="/bookmark"><Button variant="outline-primary" style={Writebutton}>북마크</Button></Link>{' '}
                 <Button as="buttoncommon" style={Writebutton} variant="outline-success" onClick={() => WritesetModalShow(true)}>
                   게시글 작성
                 </Button><br /> <br />                
