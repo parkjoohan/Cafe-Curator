@@ -6,7 +6,6 @@ import  { Modal, Button, Container, Row, Col, Form } from 'react-bootstrap';
 const Skeletons = props => {
     return (
         <div>
-            <h1>게시글</h1>
             {props.isLoading
                 ? new Array(10).fill(1).map((_, i) => {
                     return <Skeleton key={i} />;
@@ -14,16 +13,14 @@ const Skeletons = props => {
             : props.data.map(item => {
                 return (
                     <li key={item.id} className="item">
-                        <Col xs={14} md={10}>
+                        <Col xs={7} md={9}>
                             <img className="img" src={item.avatar} alt="" />
-                            <p>
-                                <strong>{item.first_name} {item.last_name}</strong>
-                            </p>
-                            <p>{item.email}</p>
+                            <strong style={{marginTop: "2%", marginLeft: "2%"}}>{item.first_name} {item.last_name}</strong>
+                            <p style={{marginTop: "2%"}}>{item.email}</p>
                         </Col>
                         <Col xs={7} md={5}>
                             <div className="info">
-                                <img src='image/coffeecong.jpg'/>
+                                <img src='image/coffeecong.jpg' style={{width: "60%"}}/>
                             </div>
                         </Col>
                     </li>

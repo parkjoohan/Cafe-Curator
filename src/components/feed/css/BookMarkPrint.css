@@ -11,16 +11,17 @@
   
   .item {
     display: flex;
-    align-items: center;
+    align-items: inherit;
     margin: 20px 0;
     padding: 20px;
-    border-radius: 4px;
+    height: 200px;
+    border-radius: 15px;
     border: 1px solid #ccc;
   }
   
   .img {
-    width: 50px;
-    height: 50px;
+    width: 60px;
+    height: 60px;
     border-radius: 50%;
   }
   
