@@ -1,4 +1,4 @@
-package com.kql.caffein.dto;
+package com.kql.caffein.dto.Feed;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Builder;
@@ -10,7 +10,7 @@ import java.util.List;
 
 @Data
 @NoArgsConstructor
-public class BlogResDto {
+public class FeedDetailDto {
 
     @ApiModelProperty(value="피드 번호")
     private int feedNo;
@@ -28,16 +28,16 @@ public class BlogResDto {
     private int commentCount;
     @ApiModelProperty(value="피드 작성자 아이디")
     private String userId;
-    @ApiModelProperty(value="피드 사진(파일)")
-    private FileDto file;
+    @ApiModelProperty(value="피드 사진(파일) 목록")
+    private List<FileDto> files;
     @ApiModelProperty(value="피드 좋아요 상태")
     private boolean liked;
     @ApiModelProperty(value="피드 북마크 상태")
     private boolean marked;
 
     @Builder
-    public BlogResDto(int feedNo, String content, LocalDateTime regTime, Integer cafeId, List<String> categoryList,
-                      int likeCount, int commentCount, String userId, FileDto file, boolean liked, boolean marked){
+    public FeedDetailDto(int feedNo, String content, LocalDateTime regTime, Integer cafeId, List<String> categoryList,
+                         int likeCount, int commentCount, String userId, List<FileDto> files, boolean liked, boolean marked){
         this.feedNo = feedNo;
         this.content = content;
         this.regTime = regTime;
@@ -46,7 +46,7 @@ public class BlogResDto {
         this.likeCount = likeCount;
         this.commentCount = commentCount;
         this.userId = userId;
-        this.file = file;
+        this.files = files;
         this.liked = liked;
         this.marked = marked;
     }

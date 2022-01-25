@@ -1,7 +1,7 @@
 package com.kql.caffein.repository;
 
-import com.kql.caffein.entity.Bookmark;
-import com.kql.caffein.entity.BookmarkId;
+import com.kql.caffein.entity.Feed.Bookmark;
+import com.kql.caffein.entity.Feed.BookmarkId;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

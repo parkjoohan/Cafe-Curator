@@ -1,10 +1,10 @@
 package com.kql.caffein.controller;
 
-import com.kql.caffein.dto.FeedModifyDto;
-import com.kql.caffein.dto.FeedRegisterDto;
-import com.kql.caffein.dto.FeedDetailDto;
+import com.kql.caffein.dto.Feed.FeedModifyDto;
+import com.kql.caffein.dto.Feed.FeedRegisterDto;
+import com.kql.caffein.dto.Feed.FeedDetailDto;
 import com.kql.caffein.repository.FeedLikeRepository;
-import com.kql.caffein.service.FeedServiceImpl;
+import com.kql.caffein.service.Impl.FeedServiceImpl;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.List;
 
 @RestController
 @RequestMapping("feed")

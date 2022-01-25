@@ -1,7 +1,7 @@
 package com.kql.caffein.service;
 
-import com.kql.caffein.dto.*;
-import com.kql.caffein.entity.Feed;
+import com.kql.caffein.dto.Feed.*;
+import com.kql.caffein.entity.Feed.Feed;
 import org.springframework.data.domain.Page;
 import org.springframework.web.multipart.MultipartFile;
 

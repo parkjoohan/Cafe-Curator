@@ -1,6 +1,5 @@
-package com.kql.caffein.dto;
+package com.kql.caffein.dto.Feed;
 
-import com.kql.caffein.entity.Feed;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;

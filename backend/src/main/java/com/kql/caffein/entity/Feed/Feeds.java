@@ -1,4 +1,4 @@
-package com.kql.caffein.entity;
+package com.kql.caffein.entity.Feed;
 
 import com.kql.caffein.converter.FeedListConverter;
 import lombok.*;

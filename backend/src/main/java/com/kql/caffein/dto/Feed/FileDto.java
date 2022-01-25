@@ -1,4 +1,4 @@
-package com.kql.caffein.dto;
+package com.kql.caffein.dto.Feed;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

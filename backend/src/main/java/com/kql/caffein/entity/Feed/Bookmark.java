@@ -1,4 +1,4 @@
-package com.kql.caffein.entity;
+package com.kql.caffein.entity.Feed;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -12,9 +12,9 @@ import javax.persistence.Table;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="feed_like")
-public class FeedLike {
+@Table(name="bookmark")
+public class Bookmark {
 
     @EmbeddedId
-    private FeedLikeId feedLikeId;
+    private BookmarkId bookmarkId;
 }

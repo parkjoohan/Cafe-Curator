@@ -1,8 +1,10 @@
-package com.kql.caffein.service;
+package com.kql.caffein.service.Impl;
 
-import com.kql.caffein.dto.*;
-import com.kql.caffein.entity.*;
+import com.kql.caffein.dto.Feed.*;
+import com.kql.caffein.entity.Feed.*;
 import com.kql.caffein.repository.*;
+import com.kql.caffein.service.FeedService;
+import com.kql.caffein.service.S3Service;
 import org.apache.tomcat.util.http.fileupload.FileUploadException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -14,7 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.*;
 
 @Service
-public class FeedServiceImpl implements FeedService{
+public class FeedServiceImpl implements FeedService {
 
     @Autowired
     FeedRepository feedRepository;

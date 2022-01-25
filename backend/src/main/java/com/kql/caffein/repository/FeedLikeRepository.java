@@ -1,7 +1,7 @@
 package com.kql.caffein.repository;
 
-import com.kql.caffein.entity.FeedLike;
-import com.kql.caffein.entity.FeedLikeId;
+import com.kql.caffein.entity.Feed.FeedLike;
+import com.kql.caffein.entity.Feed.FeedLikeId;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

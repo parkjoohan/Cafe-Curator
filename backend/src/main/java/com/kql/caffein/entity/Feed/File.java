@@ -1,6 +1,7 @@
-package com.kql.caffein.entity;
+package com.kql.caffein.entity.Feed;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.kql.caffein.entity.Feed.Feed;
 import lombok.*;
 
 import javax.persistence.*;
