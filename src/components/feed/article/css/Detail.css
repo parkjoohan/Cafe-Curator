@@ -1,8 +1,14 @@
+.article_con {
+    margin-bottom: 100px;
+}
+
 .profile_info {
     display: flex;
     justify-content: space-between;
     height: 10%;
-    margin-top: 10%;
+    margin-top: 5%;
+    margin-left: 5%;
+    margin-right: 5%;
 }
 
 .profile_frame {
@@ -28,7 +34,57 @@
 }
 
 .cafe_name {
-    margin-left: 10%;
+    font-size: 20px;
+    margin-left: 5%;
     margin-bottom: 3%;
     margin-top: 3%;
+}
+
+.article_content_frame {
+    display: flex ;
+    flex-direction: column;
+    align-items: center;
+}
+
+.article_content {
+    border: 1px solid black;
+    width: 90%;
+    padding: 5px 10px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.category {
+    display: flex;
+    width: 90%;
+    margin-top: 3%;
+    justify-content: flex-start;
+}
+
+.heart_bookmark {
+    display: flex;
+    width: 80%; 
+    margin-top: 1%;
+    margin-left: 5%;
+    justify-content: flex-start;
+}
+
+.comment {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    height: 100px;
+    margin-top: 1%;
+    margin-left: 5%;
+    justify-content: flex-start;
+}
+
+.comment_frame {
+    border: 1px solid black;
+    display: flex;
+    flex-direction: column;
+    padding-top: 3%;
+    padding-left: 3%;
+    padding-right: 3%;
+    padding-bottom: 5%;
 }

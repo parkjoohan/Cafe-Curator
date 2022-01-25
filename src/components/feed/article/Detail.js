@@ -20,10 +20,10 @@ export default function Detail() {
       </div><br />
 
       {/* 게시물 컨테이너 */}
-      <div>
+      <div className='article_con'>
         <Row style={{ justifyContent: "space-around" }}>
           {/* 사진 창 */}
-          <Col xs={12} md={5} lg={5} 
+          <Col xs={12} md={5} lg={4} 
           style={{border:"1px solid black"}}>
             <img 
             src='/test/4.3.png'
@@ -31,7 +31,7 @@ export default function Detail() {
           </Col>
 
           {/* 게시물 창 */}
-          <Col xs={12} md={5} lg={5}
+          <Col xs={12} md={7} lg={6.5}
           style={{border:"1px solid black"}}>
             
             {/* 유저프로필,작성일 */}
@@ -57,10 +57,9 @@ export default function Detail() {
             </div>
 
             {/* 본문내용, 카페관심사태그 */}
-            <div style={{display:'flex',flexDirection:"column",alignItems:"center"}}>
-
-              <div style={{border:"1px solid black",
-              width:"80%",padding:"5px 10px",textOverflow: "ellipsis",overflow: "hidden"}}>
+            <div className='article_content_frame'>
+              {/* 본문 내용  */}
+              <div className='article_content'>
                 contentcontentcontentcontentcontentcontent<br/>
                 contentcontentcontentcontentcontentcontent<br/>
                 contentcontentcontentcontentcontentcontent<br/>
@@ -72,7 +71,8 @@ export default function Detail() {
                 contentcontentcontentcontentcontentcontent<br/>
                 contentcontentcontentcontentcontentcontent<br/>
               </div>
-              <div style={{display:"flex",width:"80%",marginTop:"3%",justifyContent:"flex-start"}}>
+              {/* 관심사 카테고리 표시 폼 */}
+              <div className='category'>
                 <p style={{marginRight:"3%", backgroundColor:"skyblue", padding:"5px"}}>공부하기 좋은 카페</p>
                 <p style={{marginRight:"3%", backgroundColor:"tomato", padding:"5px"}}>공부하기 좋은 카페</p>
               </div>
@@ -81,7 +81,7 @@ export default function Detail() {
             </div>
 
             {/* 하트 & 북마크*/}
-            <div style={{display:"flex",width:"80%",marginTop:"1%",marginLeft:"10%",justifyContent:"flex-start"}}>
+            <div className='heart_bookmark'>
                 <div style={{marginRight:"3%"}}>❤</div>
                 <p style={{marginRight:"3%"}}>30</p>
                 <div style={{marginRight:"3%"}}>🔖</div>
@@ -89,9 +89,9 @@ export default function Detail() {
             </div>
 
             {/* 댓글 */}
-            <div style={{display:"flex",flexDirection:"column",width:"80%",marginTop:"1%",marginLeft:"10%",justifyContent:"flex-start"}}>
+            <div className='comment'>
               <p>총 3개의 댓글이 있습니다.</p>
-              <div style={{border:"1px solid black",display:"flex",flexDirection:"column",padding:"3%"}}>
+              <div className='comment_frame'>
 
                 <div style={{display:"flex"}}>
                   <h5>username1</h5>
@@ -106,6 +106,7 @@ export default function Detail() {
                 <div style={{position:"relative",display:"flex",top:"20%",left:"20%"}}>
                     <h5>username3</h5>
                     <h5 style={{marginLeft:"3%"}}>@username2 리뷰 1</h5>
+                
                 </div>
               </div>
             </div>
