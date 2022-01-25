@@ -7,6 +7,7 @@ import Footer from "./components/common/Footer";
 
 export default function App() {
 
+  //git test
   const [user,setUser] = useState("")
   const [footershow,setFootershow] = useState(true)
 
