@@ -1,10 +1,9 @@
-package com.kql.caffein.entity;
+package com.kql.caffein.entity.Follow;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.IdClass;

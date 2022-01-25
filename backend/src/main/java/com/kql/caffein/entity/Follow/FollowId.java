@@ -1,4 +1,4 @@
-package com.kql.caffein.entity;
+package com.kql.caffein.entity.Follow;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

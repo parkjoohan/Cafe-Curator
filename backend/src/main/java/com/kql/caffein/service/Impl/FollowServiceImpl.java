@@ -1,12 +1,12 @@
-package com.kql.caffein.service;
+package com.kql.caffein.service.Impl;
 
 import com.kql.caffein.dto.FollowDto;
-import com.kql.caffein.entity.Follow;
-import com.kql.caffein.entity.FollowId;
+import com.kql.caffein.entity.Follow.Follow;
+import com.kql.caffein.entity.Follow.FollowId;
 import com.kql.caffein.entity.UserDetail;
 import com.kql.caffein.repository.FollowRepository;
 import com.kql.caffein.repository.UserDetailRepository;
-import com.kql.caffein.repository.UserRepository;
+import com.kql.caffein.service.FollowService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
