@@ -13,7 +13,7 @@ function Header() {
         <Nav className="me-auto">
           <Nav.Link><Link to="/" className="link">Home</Link></Nav.Link>
           <Nav.Link><Link to="/feed" className="link">Map & Feed</Link></Nav.Link>
-          <Nav.Link><Link to="/bookmark" className="link">BookMark & Like</Link></Nav.Link>
+          <Nav.Link><Link to="/feed2" className="link">BookMark & Like</Link></Nav.Link>
           <Nav.Link><Link to="/bookmark" className="link">Search</Link></Nav.Link>
         </Nav>
       </Col>

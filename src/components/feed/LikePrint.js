@@ -1,12 +1,12 @@
 import "./css/BookMarkPrint.css";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import BookMarks from "./BookMarks";
+import Likes from "./Likes";
 import { Container,Button, Col, Row } from 'react-bootstrap';
 import WriteModal from './article/WriteModal';
 import { Link } from 'react-router-dom'
 
-function BookMarksPrint() {
+function LikesPrint() {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [WritemodalShow, WritesetModalShow] = React.useState(false);
@@ -40,7 +40,7 @@ function BookMarksPrint() {
                     <Container>
                         <div className="App">
                             <ul className="contentWrapper">
-                            <BookMarks isLoading={isLoading} data={data} />
+                            <Likes isLoading={isLoading} data={data} />
                             </ul>
                         </div>
                     </Container>
@@ -51,4 +51,4 @@ function BookMarksPrint() {
   );
 }
 
-export default BookMarksPrint;
+export default LikesPrint;

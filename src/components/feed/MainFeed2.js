@@ -1,13 +1,13 @@
 import React,{useState,useEffect} from 'react';
 import Toggle from './Toggle';
-import Feed from './Feed';
-import SkeletonPrint from './SkeletonPrint'
+import BookMarkPrint from './BookMarkPrint';
+import LikePrint from './LikePrint'
 import {Container,Col,Row,Button} from 'react-bootstrap'
 import { Link,useHistory } from 'react-router-dom'
 import WriteModal from './article/WriteModal'
-import './css/MainFeed.css'
+import './css/MainFeed2.css'
 
-export default function Mainfeed(props) {
+export default function Mainfeed2(props) {
 
   const history = useHistory();
 
@@ -24,7 +24,7 @@ export default function Mainfeed(props) {
   }
 
   return (
-  <Container className='MainFeed_container'>
+  <Container className='MainFeed2_container'>
     <Row>
       <div className='buttons'>
         <Container>
@@ -32,7 +32,7 @@ export default function Mainfeed(props) {
               <Col xs={11}>
               <div>
                 <Toggle onChange={(e)=>Changotogle(e)} />
-                <p style={style}>{toggled ? "피드형" : "블로그형"}</p>
+                <p style={style}>{toggled ? "북마크" : "좋아요"}</p>
               </div>
             </Col>
             <Col xs={1}>
@@ -48,7 +48,7 @@ export default function Mainfeed(props) {
         show={WritemodalShow}
         onHide={() => WritesetModalShow(false)}
       />
-      {toggled? <Feed setFootershow={props.setFootershow}/>:<SkeletonPrint/>}
+      {toggled? <BookMarkPrint setFootershow={props.setFootershow}/>:<LikePrint/>}
     </Row>
   </Container>
   );
