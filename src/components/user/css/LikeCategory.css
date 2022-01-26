@@ -1,0 +1,27 @@
+.navcolor {
+    border: 0;
+    background-color: #4b6b79;
+}
+
+.ModalPadding {
+    padding : 0;
+}
+
+
+.LikeCategory_Margin_Underline {
+    margin-top: 5%;
+    margin-left : 20px;
+    text-decoration: underline;
+    text-underline-position:under;
+}
+
+.LikeCategory_If {
+    margin-top: 13%;
+}
+
+.NoBgButton {
+    background-color : white;
+    border: none;
+    color : black;
+    font-weight:bold;
+}

@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom';
 import Profile from './Profile';
 import EmailModal from './EmailModal';
 import TermsModal from './TermsModal';
+import LikeCategoryModal from './LikeCategoryModal';
 import { blue } from '@material-ui/core/colors';
 
 export default function SignupForm () {
@@ -15,6 +16,7 @@ export default function SignupForm () {
   const [ProfilemodalShow, ProfilesetModalShow] = React.useState(false);
   const [EmailmodalShow, EmailsetModalShow] = React.useState(false);
   const [TermsmodalShow, TermssetModalShow] = React.useState(false);
+  const [LikeCategorymodalShow, LikeCategoryModalShow] = React.useState(false);
 
   const paperStyle = {
     padding: 20,
@@ -65,28 +67,33 @@ export default function SignupForm () {
             />
 
             {/* 이메일 */}
-            <TextField label="Email" placeholder='Enter email' fullWidth required /><br />
+            <TextField label="Email" placeholder='Enter email' fullWidth required />
             <Button className='emailbutton' variant="primary" onClick={() => EmailsetModalShow(true)}>
             이메일인증
             </Button>
-            <EmailModal
-              show={EmailmodalShow}
-              onHide={() => EmailsetModalShow(false)}
-            />
+            <EmailModal show={EmailmodalShow} onHide={() => EmailsetModalShow(false)}/>
 
             {/* 비밀번호 & 아이디 */}
-            <TextField label="Password" placeholder='Enter password' type="password" fullWidth required/><br /><br/>
-            <TextField label="Re-Password" placeholder='Enter password' type="password" fullWidth required/><br /><br/>
+            <div className="singup_content">
+            <TextField  label="Password" placeholder='Enter password' type="password" fullWidth required/>
+            </div>
+            <div className="singup_content">
+            <TextField label="Re-Password" placeholder='Enter password' type="password" fullWidth required />
+            </div>
+
             <TextField label="Username" placeholder='Enter username' type="password" fullWidth required />
             
+            {/* 관심사선택 */}
+            <div>
+              <Button variant="secondary" size="sm" onClick={() => LikeCategoryModalShow(true)}>
+                관심사 선택
+              </Button>
+              <LikeCategoryModal show={LikeCategorymodalShow} onHide={() => LikeCategoryModalShow(false)}/>
+            </div>
+
             {/* 약관동의 */}
             <FormControlLabel
-              control={
-                <Checkbox
-                  name="checkedB"
-                  color='primary'
-                />
-                }
+              control={ <Checkbox name="checkedB" color='primary'/> }
                 label="약관동의"
             />
             <Link className="link" onClick={() => TermssetModalShow(true)}>

@@ -1,4 +1,3 @@
-import { buildQueries } from '@testing-library/react';
 import React from 'react';
 import  { Modal, Button } from 'react-bootstrap';
 import './css/Terms.css'
