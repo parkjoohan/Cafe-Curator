@@ -165,7 +165,7 @@ public class FeedServiceImpl implements FeedService {
             throw new NullPointerException("해당 피드가 존재하지 않습니다");
 
         Feed feed = obj.get();
-        String feedUserId = userDetailRepository.findById(feed.getUserNo()).get().getUserId(); //피드 작성자의 userId
+        UserDetail feedUser = userDetailRepository.findById(feed.getUserNo()).get(); //피드 작성자의 정보
 
         List<FileDto> files = new ArrayList<>();
         for(File file : feed.getFiles() )
@@ -179,7 +179,8 @@ public class FeedServiceImpl implements FeedService {
                 .categoryList(feed.getCategoryList())
                 .likeCount(feed.getLikeCount())
                 .commentCount(feed.getCommentCount())
-                .userId(feedUserId) //프로필 사진 추가!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                .userId(feedUser.getUserId())
+                .userPicture(feedUser.getPicture())
                 .files(files)
                 .liked(feedLikeState(feedNo, userNo)) //좋아요 상태 확인
                 .marked(BookmarkState(feedNo, userNo)) //북마크 상태 확인
@@ -385,16 +386,13 @@ public class FeedServiceImpl implements FeedService {
             BlogResDto feedDto = BlogResDto.builder()
                     .feedNo(feed.getFeedNo())
                     .content(feed.getContent())
-                    .regTime(feed.getRegTime())
                     .cafeName(feed.getCafeName())
                     .categoryList(feed.getCategoryList())
                     .likeCount(feed.getLikeCount())
-                    .commentCount(feed.getCommentCount())
                     .userId(feedUser.getUserId())
                     .userPicture(feedUser.getPicture())
                     .file(new FileDto(file.getFileNo(), file.getFilePath()))
                     .liked(feedLikeState(feed.getFeedNo(), userNo))
-                    .marked(BookmarkState(feed.getFeedNo(), userNo))
                     .build();
             feedDtoList.add(feedDto);
         }
@@ -413,10 +411,8 @@ public class FeedServiceImpl implements FeedService {
             FeedResDto feedDto = FeedResDto.builder()
                     .feedNo(feed.getFeedNo())
                     .likeCount(feed.getLikeCount())
-                    .commentCount(feed.getCommentCount())
                     .file(new FileDto(file.getFileNo(), file.getFilePath()))
                     .liked(feedLikeState(feed.getFeedNo(), userNo))
-                    .marked(BookmarkState(feed.getFeedNo(), userNo))
                     .build();
             feedDtoList.add(feedDto);
         }
