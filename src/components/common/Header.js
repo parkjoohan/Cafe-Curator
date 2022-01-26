@@ -9,13 +9,15 @@ function Header() {
   const history = useHistory();
   return (
     <Navbar className='nav' expand="sm" bg="light">
-      <Col className='left' xs={3}>
+      <Col className='left' xs={5}>
         <Nav className="me-auto">
           <Nav.Link><Link to="/" className="link">Home</Link></Nav.Link>
           <Nav.Link><Link to="/feed" className="link">Map & Feed</Link></Nav.Link>
+          <Nav.Link><Link to="/bookmark" className="link">BookMark & Like</Link></Nav.Link>
+          <Nav.Link><Link to="/bookmark" className="link">Search</Link></Nav.Link>
         </Nav>
       </Col>
-      <Col className='center' xs={6} >
+      <Col className='center' xs={4} >
         <Navbar.Brand className='link_img'>
           <Link to="/" className="link_img">Cafe Curator </Link>
         </Navbar.Brand>
