@@ -2,6 +2,8 @@ package com.kql.caffein.service.Impl;
 
 import com.kql.caffein.dto.Feed.*;
 import com.kql.caffein.dto.FollowDto;
+import com.kql.caffein.entity.Cafe;
+import com.kql.caffein.entity.CategoryLog;
 import com.kql.caffein.entity.Comment.CommentLike;
 import com.kql.caffein.entity.Feed.*;
 import com.kql.caffein.entity.User.User;
@@ -36,6 +38,10 @@ public class FeedServiceImpl implements FeedService {
     UserDetailRepository userDetailRepository;
     @Autowired
     FollowRepository followRepository;
+    @Autowired
+    CafeRepository cafeRepository;
+    @Autowired
+    CategoryLogRepository categoryLogRepository;
     @Autowired
     S3Service s3Service;
     @Autowired
@@ -73,7 +79,28 @@ public class FeedServiceImpl implements FeedService {
 
         addFeedList(feed.getFeedNo(), feed.getUserNo()); //피드 목록에 추가
 
-        //카테고리 로그 추가
+        int cafeId = 0;
+        Optional<Cafe> cafe = cafeRepository.findByName(feedDto.getCafeName());
+        if(cafe.isEmpty()){
+            Cafe cafeEntity = Cafe.builder().name(feedDto.getCafeName()).build();
+            cafeRepository.save(cafeEntity); //카페 테이블에 존재하지 않는다면 추가
+            cafeId = cafeEntity.getCafeId();
+        }
+        else
+            cafeId = cafe.get().getCafeId();
+
+        for(String category : feed.getCategoryList()){
+            System.out.println(category + " " + cafeId + " " + feed.getFeedNo());
+            CategoryLog categoryLog = CategoryLog.builder()
+                    .cafeId(cafeId)
+                    .category(category)
+                    .feedNo(feed.getFeedNo())
+                    .build();
+
+            categoryLogRepository.save(categoryLog); //카테고리 로그 추가
+
+            //캐시?
+        }
     }
 
     //유저의 피드 목록에 피드 추가
@@ -113,6 +140,7 @@ public class FeedServiceImpl implements FeedService {
         removeFeedList(feedNo, userNo); //피드 목록에서 삭제
         feedRepository.deleteById(feedNo); //피드 삭제
 
+        //캐시?
         //카테고리 로그에서 삭제
     }
 
@@ -147,11 +175,11 @@ public class FeedServiceImpl implements FeedService {
                 .feedNo(feed.getFeedNo())
                 .content(feed.getContent())
                 .regTime(feed.getRegTime())
-                .cafeId(feed.getCafeId())
+                .cafeName(feed.getCafeName())
                 .categoryList(feed.getCategoryList())
                 .likeCount(feed.getLikeCount())
                 .commentCount(feed.getCommentCount())
-                .userId(feedUserId)
+                .userId(feedUserId) //프로필 사진 추가!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 .files(files)
                 .liked(feedLikeState(feedNo, userNo)) //좋아요 상태 확인
                 .marked(BookmarkState(feedNo, userNo)) //북마크 상태 확인
@@ -197,7 +225,7 @@ public class FeedServiceImpl implements FeedService {
 
         //내용 수정
         feed.setContent(feedDto.getContent());
-        feed.setCafeId(feedDto.getCafeId());
+        feed.setCafeName(feedDto.getCafeName());
         feed.setCategoryList(feedDto.getCategoryList());
         feedRepository.save(feed);
 
@@ -325,15 +353,16 @@ public class FeedServiceImpl implements FeedService {
             return makeFeedDtoList(f, userNo);
     }
 
-    //메인 피드 목록(팔로잉 게시물)
+    //메인 피드 목록
     @Override
     @Transactional
     public List mainFeedListWithPaging(String userNo, String type, int lastFeedNo, int size) throws Exception{
 
         Page<Feed> f;
         if(userNo == null) //비회원
-            f = feedRepository.findByFeedNoLessThanOrderByFeedNoDesc(lastFeedNo, PageRequest.of(0, size)); //전체 게시글 조회
-        else{
+            f = feedRepository.findByFeedNoLessThanOrderByFeedNoDesc(lastFeedNo, PageRequest.of(0, size)); //전체 게시글 조회 가 아니라 랜덤!!!!!!!!!
+        else{ //팔로잉 게시물 + 본인 게시물 + 추천 게시물
+            //오 이걸 어떻게 하지 ㅎㅎ
             Optional<List<String>> followingList = followRepository.getFollowingList(userNo);
             f = feedRepository.findByUserNoInAndFeedNoLessThanOrderByFeedNoDesc(followingList.get(), lastFeedNo, PageRequest.of(0,size));
         }
@@ -357,7 +386,7 @@ public class FeedServiceImpl implements FeedService {
                     .feedNo(feed.getFeedNo())
                     .content(feed.getContent())
                     .regTime(feed.getRegTime())
-                    .cafeId(feed.getCafeId())
+                    .cafeName(feed.getCafeName())
                     .categoryList(feed.getCategoryList())
                     .likeCount(feed.getLikeCount())
                     .commentCount(feed.getCommentCount())
