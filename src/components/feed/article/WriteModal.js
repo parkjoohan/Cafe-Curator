@@ -3,6 +3,7 @@ import  { Modal } from 'react-bootstrap';
 import {TextField, Button} from '@material-ui/core';
 import { Row,Col } from 'react-bootstrap'
 import './css/WriteModal.css'
+import Search from './Search';
 
 
 
@@ -152,6 +153,7 @@ const WriteModal = ( {show, onHide}) => {
     >
       <Modal.Body>
         <TextField label="Cafe name" placeholder='카페 이름' fullWidth required/><br /><br/>
+        <Search/>
 
         <Row>
         </Row>

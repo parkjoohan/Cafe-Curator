@@ -9,6 +9,8 @@ import Detail from './components/feed/article/Detail'
 import Mainfeed from './components/feed/Mainfeed';
 import userProfile from './components/user/userProfile'
 import StoreProfile from './components/store/StoreProfile';
+//  searchtest용입니다. 테스트 끝나면 지울거임
+import Search from './components/feed/article/Search'
 
 export default function Routers(props) {
   return (
@@ -22,6 +24,8 @@ export default function Routers(props) {
       <Route path="/profile/:pk" component = {userProfile}></Route>
       <Route path="/store/:pk" component = {StoreProfile}></Route>
       <Route path="/termmodal" component = {TermsModal}></Route>
+      {/* searchtest용입니다. 테스트 끝나면 지울거임 */}
+      <Route path="/Search" component = {Search}></Route>
     </Switch>
   )
 }

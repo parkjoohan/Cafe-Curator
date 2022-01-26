@@ -16,7 +16,7 @@ export default function App() {
       {user}
       <Header />
       <Routers user={user} setUser={setUser} setFootershow={setFootershow}/>
-      {footershow && <Footer />}
+      {/* {footershow && <Footer />} */}
     </div>
   );
 }
