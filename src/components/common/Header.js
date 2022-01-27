@@ -24,15 +24,20 @@ function Header() {
   // 모달부분
   const profileModal = () => {
     profilesetOpen(true);
+    setAnchorEl(null);
   };
   const modalHandleClose = () => {
     profilesetOpen(false);
+    setAnchorEl(null);
   };
 
   const handleClose = () => {
     setAnchorEl(null);
   };
-
+  const gotoProfile = () => {
+    setAnchorEl(null);
+    history.push('/profile/0')
+  }
 const style = {
   position: 'absolute',
   top: '50%',
@@ -89,7 +94,7 @@ const style = {
               onClose={handleClose}
               TransitionComponent={Fade}
             >
-              <MenuItem onClick={()=>{history.push('/profile/0')}}>Profile</MenuItem>
+              <MenuItem onClick={gotoProfile}>Profile</MenuItem>
               <MenuItem onClick={profileModal}>My account</MenuItem>
               <MenuItem onClick={handleClose}>Logout</MenuItem>
             </Menu>
