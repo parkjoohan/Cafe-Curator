@@ -30,6 +30,7 @@
 
 .left {
   float: left;
+  
 }
 
 .center {
@@ -38,6 +39,7 @@
 
 .right {
   float: right;
+  margin-right: 3vh
 }
 
 .link {

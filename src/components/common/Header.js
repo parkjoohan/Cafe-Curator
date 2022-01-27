@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, useHistory } from 'react-router-dom'
-import {Navbar,Nav,Col} from "react-bootstrap";
+import {Navbar,Nav,Col, NavDropdown} from "react-bootstrap";
 import './css/Header.css'
 import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
@@ -24,16 +24,13 @@ function Header() {
   // 모달부분
   const profileModal = () => {
     profilesetOpen(true);
-    setAnchorEl(null);
+
   };
   const modalHandleClose = () => {
     profilesetOpen(false);
-    setAnchorEl(null);
+
   };
 
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
   const gotoProfile = () => {
     setAnchorEl(null);
     history.push('/profile/0')
@@ -72,8 +69,15 @@ const style = {
           <Nav.Link><Link to="/login" className="link">Login</Link></Nav.Link>
           <Nav.Link><Link to="/signup" className="link">Signup</Link></Nav.Link>
           <div className="profile">
-
-            <Button
+          <NavDropdown align="end" title={<img className="prof_img" style={{width: "40px"}}
+            src={process.env.PUBLIC_URL + "/image/hello.png"}
+            />} id="dropdown-menu-align-end">
+            <NavDropdown.Item onClick={gotoProfile}>Profile</NavDropdown.Item>
+            <NavDropdown.Item onClick={profileModal}>My account</NavDropdown.Item>
+            <NavDropdown.Divider />
+            <NavDropdown.Item>Logout</NavDropdown.Item>
+          </NavDropdown>
+            {/* <Button
               id="fade-button"
               aria-controls={open ? 'fade-menu' : undefined}
               aria-haspopup="true"
@@ -97,7 +101,7 @@ const style = {
               <MenuItem onClick={gotoProfile}>Profile</MenuItem>
               <MenuItem onClick={profileModal}>My account</MenuItem>
               <MenuItem onClick={handleClose}>Logout</MenuItem>
-            </Menu>
+            </Menu> */}
            <Modal
             open={profileopen}
             onClose={modalHandleClose}
