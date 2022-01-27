@@ -1,12 +1,15 @@
 package com.kql.caffein.entity.User;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.kql.caffein.dto.Role;
 import com.kql.caffein.entity.EmailAuth;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Date;
+import java.util.List;
 
 
 @Getter
@@ -24,12 +27,10 @@ public class User {
     @JsonBackReference
     private UserDetail userDetail;
 
-    @OneToOne(mappedBy = "user", fetch = FetchType.LAZY)
-    @JsonBackReference
+    @OneToOne(fetch = FetchType.LAZY)
+    @JsonManagedReference
+    @JoinColumn(name = "email")
     private EmailAuth emailAuth;
-
-    @Column(nullable = false)
-    private String email;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "join_date")
@@ -41,4 +42,15 @@ public class User {
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Role role;
+
+//    @Builder
+//    public User(String userNo, String email, Date joinDate, String oauthType, Role role){
+//        this.content = content;
+//        this.regTime = regTime;
+//        this.cafeName = cafeName;
+//        this.categoryList = categoryList;
+//        this.likeCount = likeCount;
+//        this.commentCount = commentCount;
+//        this.userNo = userNo;
+//    }
 }

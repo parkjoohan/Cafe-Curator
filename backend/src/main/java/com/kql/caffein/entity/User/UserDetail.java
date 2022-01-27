@@ -1,9 +1,11 @@
 package com.kql.caffein.entity.User;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.kql.caffein.converter.CategoryDataConverter;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @Setter
@@ -32,11 +34,13 @@ public class UserDetail {
     @Column
     private String picture;
 
-    @Column(name = "refresh_token")
-    private String refreshToken;
+    @Convert(converter = CategoryDataConverter.class)
+    @Column(name = "category_list", columnDefinition = "json")
+    private List<String> categoryList;
 
-    @Column(name = "category_list")
-    private String categoryList;
+    @Column(name = "follower_count")
+    private int followerCount;
 
+    @Column(name = "following_count")
+    private int followingCount;
 }
-
