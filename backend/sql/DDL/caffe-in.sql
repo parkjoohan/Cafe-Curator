@@ -18,6 +18,19 @@ CREATE SCHEMA IF NOT EXISTS `caffe_in` DEFAULT CHARACTER SET utf8mb4 COLLATE utf
 USE `caffe_in` ;
 
 -- -----------------------------------------------------
+-- Table `caffe_in`.`email_auth`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `caffe_in`.`email_auth` (
+  `email` VARCHAR(30) NOT NULL,
+  `code` VARCHAR(6) NOT NULL,
+  `state` TINYINT NULL DEFAULT NULL,
+  PRIMARY KEY (`email`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
 -- Table `caffe_in`.`user`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `caffe_in`.`user` (
@@ -26,7 +39,11 @@ CREATE TABLE IF NOT EXISTS `caffe_in`.`user` (
   `join_date` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `oauth_type` VARCHAR(10) NOT NULL,
   `role` VARCHAR(10) NOT NULL DEFAULT 'USER',
-  PRIMARY KEY (`user_no`))
+  PRIMARY KEY (`user_no`),
+  INDEX `fk_user_email_auth1_idx` (`email` ASC) VISIBLE,
+  CONSTRAINT `fk_user_email_auth1`
+    FOREIGN KEY (`email`)
+    REFERENCES `caffe_in`.`email_auth` (`email`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
@@ -41,8 +58,9 @@ CREATE TABLE IF NOT EXISTS `caffe_in`.`user_detail` (
   `pass` VARCHAR(70) NULL DEFAULT NULL,
   `introduction` VARCHAR(100) NULL DEFAULT NULL,
   `picture` VARCHAR(400) NULL DEFAULT NULL,
-  `refresh_token` VARCHAR(100) NULL DEFAULT NULL,
   `category_list` JSON NULL DEFAULT NULL,
+  `follower_count` INT NOT NULL DEFAULT '0',
+  `following_count` INT NOT NULL DEFAULT '0',
   PRIMARY KEY (`user_no`),
   INDEX `fk_user_detail_user1_idx` (`user_no` ASC) VISIBLE,
   CONSTRAINT `fk_user_detail_user1`
@@ -61,7 +79,7 @@ CREATE TABLE IF NOT EXISTS `caffe_in`.`feed` (
   `feed_no` INT NOT NULL AUTO_INCREMENT,
   `content` TEXT NOT NULL,
   `reg_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `cafe_id` INT NULL DEFAULT NULL,
+  `cafe_name` VARCHAR(30) NULL DEFAULT NULL,
   `category_list` JSON NULL DEFAULT NULL,
   `like_count` INT NOT NULL DEFAULT '0',
   `comment_count` INT NOT NULL DEFAULT '0',
@@ -73,7 +91,7 @@ CREATE TABLE IF NOT EXISTS `caffe_in`.`feed` (
     REFERENCES `caffe_in`.`user_detail` (`user_no`)
     ON DELETE CASCADE)
 ENGINE = InnoDB
-AUTO_INCREMENT = 20
+AUTO_INCREMENT = 40
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
@@ -103,10 +121,14 @@ COLLATE = utf8mb4_0900_ai_ci;
 -- Table `caffe_in`.`cafe`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `caffe_in`.`cafe` (
-  `cafe_id` INT NOT NULL,
-  `name` VARCHAR(15) NOT NULL,
+  `cafe_id` INT NOT NULL AUTO_INCREMENT,
+  `cafe_name` VARCHAR(20) NOT NULL,
+  `cafe_address` VARCHAR(45) NOT NULL,
+  `cafe_lat` VARCHAR(20) NOT NULL,
+  `cafe_lng` VARCHAR(20) NOT NULL,
   PRIMARY KEY (`cafe_id`))
 ENGINE = InnoDB
+AUTO_INCREMENT = 6
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
@@ -126,12 +148,14 @@ COLLATE = utf8mb4_0900_ai_ci;
 -- Table `caffe_in`.`category_log`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `caffe_in`.`category_log` (
+  `log_id` INT NOT NULL AUTO_INCREMENT,
   `cafe_id` INT NOT NULL,
   `category` VARCHAR(20) NOT NULL,
   `feed_no` INT NOT NULL,
-  PRIMARY KEY (`cafe_id`, `category`, `feed_no`),
+  PRIMARY KEY (`log_id`),
   INDEX `FK_categories_TO_category_log_1` (`category` ASC) VISIBLE,
   INDEX `FK_feed_TO_category_log_1` (`feed_no` ASC) VISIBLE,
+  INDEX `FK_cafe_TO_category_log_1` (`cafe_id` ASC) VISIBLE,
   CONSTRAINT `FK_cafe_TO_category_log_1`
     FOREIGN KEY (`cafe_id`)
     REFERENCES `caffe_in`.`cafe` (`cafe_id`)
@@ -144,6 +168,7 @@ CREATE TABLE IF NOT EXISTS `caffe_in`.`category_log` (
     REFERENCES `caffe_in`.`feed` (`feed_no`)
     ON DELETE CASCADE)
 ENGINE = InnoDB
+AUTO_INCREMENT = 8
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
@@ -183,6 +208,7 @@ AUTO_INCREMENT = 13
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
+
 -- -----------------------------------------------------
 -- Table `caffe_in`.`comment_like`
 -- -----------------------------------------------------
@@ -199,24 +225,6 @@ CREATE TABLE IF NOT EXISTS `caffe_in`.`comment_like` (
     FOREIGN KEY (`comment_no`)
     REFERENCES `caffe_in`.`comment` (`comment_no`)
     ON DELETE CASCADE)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
-
-
--- -----------------------------------------------------
--- Table `caffe_in`.`email_auth`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `caffe_in`.`email_auth` (
-  `user_no` VARCHAR(13) NOT NULL,
-  `code` VARCHAR(6) NOT NULL,
-  `state` TINYINT NULL,
-  INDEX `fk_email_auth_user1_idx` (`user_no` ASC) VISIBLE,
-  CONSTRAINT `fk_email_auth_user1`
-    FOREIGN KEY (`user_no`)
-    REFERENCES `caffe_in`.`user` (`user_no`)
-    ON DELETE CASCADE
-    ON UPDATE NO ACTION)
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
@@ -273,7 +281,7 @@ CREATE TABLE IF NOT EXISTS `caffe_in`.`file` (
     REFERENCES `caffe_in`.`feed` (`feed_no`)
     ON DELETE CASCADE)
 ENGINE = InnoDB
-AUTO_INCREMENT = 8
+AUTO_INCREMENT = 30
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
