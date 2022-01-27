@@ -33,24 +33,51 @@ public class SearchController {
         this.searchService = searchService;
     }
 
-    @GetMapping("/category")
-    @ApiOperation(value = "카테고리 검색")
+    @GetMapping("/category/top")
+    @ApiOperation(value = "카테고리 검색 - 인기순")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "userNo", value = "회원 고유 번호", required = true,
                     dataType = "string", paramType = "query"),
             @ApiImplicitParam(name = "category", value = "카테고리", required = true,
                     dataType = "string", paramType = "query"),
-            @ApiImplicitParam(name = "order", value = "정렬 방법", required = true,
-                    dataType = "string", paramType = "query", example = "top/recent"),
+            @ApiImplicitParam(name = "lastLikeCount", value = "화면에 보여진 마지막 좋아요 수", required = false,
+                    dataType = "Integer", paramType = "query"),
+            @ApiImplicitParam(name = "lastFeedNo", value = "화면에 보여진 마지막 피드 번호", required = false,
+                    dataType = "Integer", paramType = "query"),
             @ApiImplicitParam(name = "size", value = "화면에 보여질 사이즈", required = true,
                     dataType = "int", paramType = "query")
     })
-    public ResponseEntity follower (@RequestParam(value = "userNo") String userNo,
-                                    @RequestParam(value = "category") String category,
-                                    @RequestParam(value = "order") String order,
-                                    @RequestParam int size) {
+    public ResponseEntity categoryTopController (@RequestParam(value = "userNo") String userNo,
+                                                 @RequestParam(value = "category") String category,
+                                                 @RequestParam(required = false) Integer lastLikeCount,
+                                                 @RequestParam(required = false) Integer lastFeedNo,
+                                                 @RequestParam int size) {
         try {
-            return new ResponseEntity<>(searchService.categorySearchWithPaging(userNo, category, order, size), HttpStatus.OK);
+            return new ResponseEntity<>(searchService.categorySearchTopWithPaging(userNo, category, lastLikeCount, lastFeedNo, size), HttpStatus.OK);
+        }catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping("/category/recent")
+    @ApiOperation(value = "카테고리 검색 - 최신순")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "userNo", value = "회원 고유 번호", required = true,
+                    dataType = "string", paramType = "query"),
+            @ApiImplicitParam(name = "category", value = "카테고리", required = true,
+                    dataType = "string", paramType = "query"),
+            @ApiImplicitParam(name = "lastFeedNo", value = "화면에 보여진 마지막 피드 번호", required = false,
+                    dataType = "Integer", paramType = "query"),
+            @ApiImplicitParam(name = "size", value = "화면에 보여질 사이즈", required = true,
+                    dataType = "int", paramType = "query")
+    })
+    public ResponseEntity categoryRecentController (@RequestParam(value = "userNo") String userNo,
+                                                 @RequestParam(value = "category") String category,
+                                                 @RequestParam(required = false) Integer lastFeedNo,
+                                                 @RequestParam int size) {
+        try {
+            return new ResponseEntity<>(searchService.categorySearchRecentWithPaging(userNo, category, lastFeedNo, size), HttpStatus.OK);
         }catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>(FAIL, HttpStatus.INTERNAL_SERVER_ERROR);

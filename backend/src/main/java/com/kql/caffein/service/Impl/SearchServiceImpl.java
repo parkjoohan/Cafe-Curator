@@ -7,6 +7,7 @@ import com.kql.caffein.service.SearchService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,14 +27,23 @@ public class SearchServiceImpl implements SearchService {
 
     @Override
     @Transactional
-    public List categorySearchWithPaging(String userNo, String category, String order, int size) {
-        PageRequest pageRequest = PageRequest.of(0,size);
-        Page<Feed> feedList;
+    public List categorySearchTopWithPaging(String userNo, String category, Integer lastLikeCount, Integer lastFeedNo, int size) {
+        if (lastFeedNo == null) lastFeedNo = Integer.MAX_VALUE;
+        if(lastLikeCount == null) lastLikeCount = Integer.MAX_VALUE;
 
-        if(order.equals("top")) //인기순
-            feedList = feedRepository.findByCategoryListOrderByLikeCountDesc(category, pageRequest);
-        else //최신순
-            feedList = feedRepository.findByCategoryListOrderByRegTime(category, pageRequest);
+        PageRequest pageRequest  = PageRequest.of(0, size);
+        Page<Feed>  feedList = feedRepository.findByCategoryListOrderByLikeCountDesc(lastLikeCount, lastFeedNo, category, pageRequest);
+
+        return feedService.makeFeedDtoList(feedList, userNo);
+    }
+
+    @Override
+    @Transactional
+    public List categorySearchRecentWithPaging(String userNo, String category, Integer lastFeedNo, int size) {
+        if (lastFeedNo == null) lastFeedNo = Integer.MAX_VALUE;
+
+        PageRequest pageRequest  = PageRequest.of(0, size);
+        Page<Feed> feedList = feedRepository.findByCategoryListOrderByRegTime(lastFeedNo, category, pageRequest);
 
         return feedService.makeFeedDtoList(feedList, userNo);
     }

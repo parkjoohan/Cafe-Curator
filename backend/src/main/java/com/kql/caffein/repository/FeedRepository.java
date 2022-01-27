@@ -16,9 +16,11 @@ public interface FeedRepository extends JpaRepository<Feed, Integer> {
 
   Page<Feed> findByUserNoInAndFeedNoLessThanOrderByFeedNoDesc(List<String> followingList, int lastFeedNo, Pageable pageable);
 
-  @Query(value = "select * from feed where :category member of (category_list) order by like_count desc", nativeQuery = true)
-  Page<Feed> findByCategoryListOrderByLikeCountDesc(String category, Pageable pageRequest);
+  @Query(value = "select * from feed " +
+          "where like_count <= :lastLikeCount and feed_no < :lastFeedNo and :category member of (category_list) " +
+          "order by like_count desc, feed_no desc", nativeQuery = true)
+  Page<Feed> findByCategoryListOrderByLikeCountDesc(Integer lastLikeCount, Integer lastFeedNo, String category, Pageable pageRequest);
 
-  @Query(value = "select * from Feed where :category member of (category_list) order by reg_time desc", nativeQuery = true)
-  Page<Feed> findByCategoryListOrderByRegTime(String category, Pageable pageRequest);
+  @Query(value = "select * from Feed where feed_no < :lastFeedNo and :category member of (category_list) order by feed_no desc", nativeQuery = true)
+  Page<Feed> findByCategoryListOrderByRegTime(Integer lastFeedNo, String category, Pageable pageRequest);
 }
