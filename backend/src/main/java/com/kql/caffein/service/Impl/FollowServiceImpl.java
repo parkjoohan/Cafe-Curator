@@ -36,11 +36,21 @@ public class FollowServiceImpl implements FollowService {
 
     @Override
     public void follow(String userNo, String followNo) {
-        if(checkFollow(userNo, followNo))
-            followRepository.deleteById(new FollowId(userNo,followNo));
-        else
-            followRepository.save(new Follow(userNo,followNo));
+        UserDetail user = userDetailRepository.findById(userNo).get();
+        UserDetail followUser = userDetailRepository.findById(followNo).get();
 
+        if(checkFollow(userNo, followNo)) { //언팔로우
+            followRepository.deleteById(new FollowId(userNo, followNo));
+            user.setFollowingCount(user.getFollowingCount()-1);
+            followUser.setFollowerCount(followUser.getFollowerCount()-1);
+        }else { //팔로우
+            followRepository.save(new Follow(userNo, followNo));
+            user.setFollowingCount(user.getFollowingCount()+1);
+            followUser.setFollowerCount(followUser.getFollowerCount()+1);
+        }
+
+        userDetailRepository.save(user);
+        userDetailRepository.save(followUser);
     }
 
     @Override

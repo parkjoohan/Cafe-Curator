@@ -29,7 +29,6 @@ public class FollowController {
         this.followService = followService;
     }
 
-    //질문. 다른 회원의 계정에 들어갔을때 고유번호를 알 수 있는가?
     @GetMapping("/checkFollow/{userNo}/{followNo}")
     @ApiOperation(value = "팔로우 여부 확인")
     @ApiImplicitParams({
