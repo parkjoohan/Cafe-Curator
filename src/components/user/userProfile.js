@@ -1,6 +1,6 @@
 import React , {useState} from "react";
 import {Container, Col, Row} from 'react-bootstrap'
-import '../css/UserProfile.css';
+import './css/UserProfile.css';
 import SignupForm from "./SignupForm";
 import EmailForm from "./EmailForm";
 
