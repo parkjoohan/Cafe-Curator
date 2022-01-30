@@ -11,9 +11,10 @@ const LikeCategoryModal = ({ show, onHide }) => {
     [1,false],
     [2,false],
     [3,false],
+    [4,false],
   ])
 
-  let likename = ['메뉴관심사1','메뉴관심사2','메뉴관심사3','메뉴관심사4'];
+  let likename = ['커피','케이크','마카롱/쿠키','브런치','차'];
 
   const selectlike = (n) => {
     if(cnt==3){
@@ -37,9 +38,9 @@ const LikeCategoryModal = ({ show, onHide }) => {
   const defaultlike = like.map((num)=>(
     <>
       {num[1]==false?
-        <Col lg={3} md={5} xs={10}>
+        <Col lg={5} md={5} xs={10}>
           <div 
-          className='likebutton' 
+          className='likecate_likebutton' 
           id={num[0]}
           onClick={()=>selectlike(num[0])}
           >{likename[num[0]]}</div>
@@ -53,9 +54,9 @@ const LikeCategoryModal = ({ show, onHide }) => {
   const selected = like.map((num)=>(
     <>
       {num[1]==true?
-        <Col xs={2}>
+        <Col lg={3} xs={2}>
           <div 
-          className='selected' 
+          className='likecate_likebutton' 
           id={num[0]}
           onClick={()=>unlike(num[0])}
           >{likename[num[0]]}</div>
@@ -73,9 +74,10 @@ const LikeCategoryModal = ({ show, onHide }) => {
     [1,false],
     [2,false],
     [3,false],
+    [4,false],
   ])
 
-  let likename2 = ['분위기관심사1','분위기관심사2','분위기관심사3','분위기관심사4'];
+  let likename2 = ['사진찍기 좋은','아늑한','힙한','공부하기 좋은', '테마있는'];
 
   const selectlike2 = (n) => {
     if(cnt==3){
@@ -98,9 +100,9 @@ const LikeCategoryModal = ({ show, onHide }) => {
   const defaultlike2 = like2.map((num)=>(
     <>
       {num[1]==false?
-        <Col lg={3} md={5} xs={10}>
+        <Col lg={5} md={5} xs={10}>
           <div 
-          className='likebutton' 
+          className='likecate_likebutton' 
           id={num[0]}
           onClick={()=>selectlike2(num[0])}
           >{likename2[num[0]]}</div>
@@ -114,9 +116,9 @@ const LikeCategoryModal = ({ show, onHide }) => {
   const selected2 = like2.map((num)=>(
     <>
       {num[1]==true?
-        <Col xs={2}>
+        <Col lg={3} xs={2}>
           <div 
-          className='selected' 
+          className='likecate_likebutton' 
           id={num[0]}
           onClick={()=>unlike2(num[0])}
           >{likename2[num[0]]}</div>
@@ -136,31 +138,45 @@ const LikeCategoryModal = ({ show, onHide }) => {
       dialogClassName="modal-w"
       centered
     >
-      
-      <Modal.Body>
-        <div className="navcolor_cate"></div>
+      <div id="navcolor"></div>
+      <Modal.Header>
+        <div id="navcolor_cate"></div>
+          <Col md={8}>
+            <h3 id="LikeCategory_Margin_Underline">관심사를 선택해주세요</h3>
+          </Col>
+          <Col md={8}>
+            <h6 id='LikeCategory_If'>※ 조건 : 최소 1개 ~ 최대 3개</h6>
+          </Col>
+
+      </Modal.Header>
+      <Modal.Body>  
         <Row>
-          <Col xs={6} md={6}>
-            <h3 className="LikeCategory_Margin_Underline">관심사를 선택해주세요</h3>
+          {/* 선택된 카테고리 */}
+          <Col md={3}>
+            <p id='selected_cate'>선택된 카테고리</p>
           </Col>
-          <Col xs={6} md={4}>
-            <h6 className='LikeCategory_If'>※ 조건 : 최소 1개 ~ 최대 3개</h6>
-          </Col>
-          <Col xs={6} md={2}>
+          <Col md={9}>
+            <Row>{selected}{selected2}</Row>
+            
           </Col>
         </Row>
-        
-        {/* 선택된 카테고리 */}선택된 카테고리{selected}{selected2}
         <hr />
-
-        {/* 분위기 카테고리 */}분위기 카테고리{defaultlike2}<br /><br /><br />
-
-        {/* 메뉴 카테고리 */}메뉴 카테고리{defaultlike}<br /><br /><br />
-        
+        <Row id='cate_select'>
+          <Col id='cate_air' md={6}>
+            {/* 분위기 카테고리 */}
+            <p style={{fontWeight: "bold"}}>분위기 카테고리</p>
+            <Row>{defaultlike2}</Row>
+          </Col>
+          <Col id='cate_menu' md={6}>
+            {/* 메뉴 카테고리 */}
+            <p style={{fontWeight: "bold"}}>메뉴 카테고리</p>
+            <Row>{defaultlike}</Row>
+          </Col>
+        </Row>
       </Modal.Body>
       <Modal.Footer style={{ height: "50px", alignContent: "center" }}>
-      <Button className="NoBgButton" onClick={onHide}>뒤로가기</Button> {/*추후 구현*/}
-      <Button className="NoBgButton" onClick={onHide}>완료</Button>
+      <Button id="NoBgButton" onClick={onHide}>뒤로가기</Button> {/*추후 구현*/}
+      <Button id="NoBgButton" onClick={onHide}>완료</Button>
       </Modal.Footer>
     </Modal>
   )

@@ -1,23 +1,53 @@
-.navcolor_cate {
+#navcolor_cate {
     border: 0;
     background: #4b6b79;
   }
 
 
-.LikeCategory_Margin_Underline {
+#LikeCategory_Margin_Underline {
     margin-top: 0%;
     margin-left : 20px;
     text-decoration: underline;
     text-underline-position:under;
 }
 
-.LikeCategory_If {
+#LikeCategory_If {
     margin-top: 5%;
 }
 
-.NoBgButton {
+#NoBgButton {
     background-color : white;
     border: none;
     color : black;
     font-weight:bold;
 }
+
+.likecate_likebutton {
+    background-color: skyblue;
+    padding: 5px;
+    margin-top: 10px;
+    border-radius: 30px;
+    font-weight: 700;
+    text-align: center;
+}
+
+#selected_cate {
+    margin-top: 7%;
+    text-align-last: center;
+    font-weight: bold;
+}
+
+#cate_select {
+    margin-top: 5%;
+    margin-bottom: 5%;
+    height: 150px;
+}
+
+#cate_air {
+    text-align: -webkit-center;
+}
+
+#cate_menu {
+    text-align: -webkit-center;
+}
+
