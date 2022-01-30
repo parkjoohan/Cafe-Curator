@@ -1,22 +1,18 @@
-.navcolor {
+.navcolor_cate {
     border: 0;
-    background-color: #4b6b79;
-}
-
-.ModalPadding {
-    padding : 0;
-}
+    background: #4b6b79;
+  }
 
 
 .LikeCategory_Margin_Underline {
-    margin-top: 5%;
+    margin-top: 0%;
     margin-left : 20px;
     text-decoration: underline;
     text-underline-position:under;
 }
 
 .LikeCategory_If {
-    margin-top: 13%;
+    margin-top: 5%;
 }
 
 .NoBgButton {

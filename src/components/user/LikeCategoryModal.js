@@ -136,8 +136,9 @@ const LikeCategoryModal = ({ show, onHide }) => {
       dialogClassName="modal-w"
       centered
     >
-      <Modal.Body className="ModalPadding">
-        <div className="navcolor"></div>
+      
+      <Modal.Body>
+        <div className="navcolor_cate"></div>
         <Row>
           <Col xs={6} md={6}>
             <h3 className="LikeCategory_Margin_Underline">관심사를 선택해주세요</h3>

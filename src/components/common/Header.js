@@ -1,14 +1,9 @@
 import React from "react";
 import { Link, useHistory } from 'react-router-dom'
-import {Navbar,Nav,Col, NavDropdown} from "react-bootstrap";
+import {Navbar,Nav,Col,Row, NavDropdown, Button, Container} from "react-bootstrap";
 import './css/Header.css'
-import Button from '@mui/material/Button';
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-import Fade from '@mui/material/Fade';
 import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
-import TextField from '@mui/material/TextField';
 import Grid from '@mui/material/Grid';
 
 function Header() {
@@ -50,26 +45,26 @@ const style = {
 };
 
   return (
-    <Navbar className='nav' expand="sm" bg="light">
-      <Col className='left' xs={5}>
+    <Navbar id='nav' expand="sm" bg="light">
+      <Col id='left' xs={5}>
         <Nav className="me-auto">
-          <Nav.Link><Link to="/" className="link">Home</Link></Nav.Link>
-          <Nav.Link><Link to="/feed" className="link">Map & Feed</Link></Nav.Link>
-          <Nav.Link><Link to="/feed2" className="link">BookMark & Like</Link></Nav.Link>
-          <Nav.Link><Link to="/bookmark" className="link">Search</Link></Nav.Link>
+          <Nav.Link><Link to="/" id="link">Home</Link></Nav.Link>
+          <Nav.Link><Link to="/feed" id="link">Map & Feed</Link></Nav.Link>
+          <Nav.Link><Link to="/feed2" id="link">BookMark & Like</Link></Nav.Link>
+          <Nav.Link><Link to="/bookmark" id="link">Search</Link></Nav.Link>
         </Nav>
       </Col>
-      <Col className='center' xs={3} >
-        <Navbar.Brand className='link_img'>
-          <Link to="/" className="link_img">Cafe Curator </Link>
+      <Col id='center' xs={3} >
+        <Navbar.Brand id='link_img'>
+          <Link to="/" id="link_img">Cafe Curator </Link>
         </Navbar.Brand>
       </Col>
       <Col  xs={4}>
-        <Nav className='right'>
-          <Nav.Link><Link to="/login" className="link">Login</Link></Nav.Link>
-          <Nav.Link><Link to="/signup" className="link">Signup</Link></Nav.Link>
-          <div className="profile">
-          <NavDropdown align="end" title={<img className="prof_img" style={{width: "40px"}}
+        <Nav id='right'>
+          <Nav.Link><Link to="/login" id="link">Login</Link></Nav.Link>
+          <Nav.Link><Link to="/signup" id="link">Signup</Link></Nav.Link>
+          <div id="profile">
+          <NavDropdown align="end" title={<img id="prof_img" style={{width: "40px"}}
             src={process.env.PUBLIC_URL + "/image/hello.png"}
             />} id="dropdown-menu-align-end">
             <NavDropdown.Item onClick={gotoProfile}>Profile</NavDropdown.Item>
@@ -77,104 +72,54 @@ const style = {
             <NavDropdown.Divider />
             <NavDropdown.Item>Logout</NavDropdown.Item>
           </NavDropdown>
-            {/* <Button
-              id="fade-button"
-              aria-controls={open ? 'fade-menu' : undefined}
-              aria-haspopup="true"
-              aria-expanded={open ? 'true' : undefined}
-              onClick={handleClick}
-            >
-              <img className="prof_img" style={{width: "40px"}}
-            src={process.env.PUBLIC_URL + "/image/hello.png"}
-            />
-            </Button>
-            <Menu
-              id="fade-menu"
-              MenuListProps={{
-                'aria-labelledby': 'fade-button',
-              }}
-              anchorEl={anchorEl}
-              open={open}
-              onClose={handleClose}
-              TransitionComponent={Fade}
-            >
-              <MenuItem onClick={gotoProfile}>Profile</MenuItem>
-              <MenuItem onClick={profileModal}>My account</MenuItem>
-              <MenuItem onClick={handleClose}>Logout</MenuItem>
-            </Menu> */}
-           <Modal
-            open={profileopen}
-            onClose={modalHandleClose}
-            aria-labelledby="parent-modal-title"
-            aria-describedby="parent-modal-description"
-            >
-            <Box sx={{ ...style, width: 500, padding: 0 }}>
-              
-              <div style={{backgroundColor : "#4b6b79"}}>
-                <br />
-                <br />
-              </div>
-              <p id="parent-modal-description">
-              <Box
-                style={{marginLeft: "5%",marginTop : "5%"}}
-                component="form"
-                sx={{
-                  '& > :not(style)': { m: 1, width: '18ch' },
-                }}
-                noValidate
-                autoComplete="off"
-                size="small"
-              >
+            <Modal open={profileopen} onClose={modalHandleClose} aria-labelledby="parent-modal-title" aria-describedby="parent-modal-description">
+              <Box sx={{ ...style, width: 600, padding: 0 }}>
+                <div id="navcolor"></div>
                 
-                <h1>회원 정보 수정</h1>
-                <hr style={{width: '40ch'}}/>
-                <Grid style={{width: "100%"}}container spacing={2}>
-                  <Grid style={{padding : '0'}}item xs={6}>
-                <a>변경할 이름</a>
-                <br />
-                <TextField
-                  id="outlined-name"
-                  label="Name"
-                  
-                 
-                />
-                <br />
-                <a>변경할 비밀번호</a>
-                <br />
-                <TextField
-                  id="outlined-uncontrolled"
-                  label="Password"
-                  // defaultValue="pw"
-
-                />
-                <br />
-                <a>비밀번호 재확인</a>
-                <br />
-                <TextField
-                  id="outlined-uncontrolled"
-                  label="PasswordConfirm"
-                  // defaultValue="pw"
-
-                />
-                  </Grid>
-                  <Grid item xs={6}>
-                    <p style={{textAlign: "center" }}>회원사진</p>
-                    <br />
-                    <img id ="ImgPreview" src={process.env.PUBLIC_URL + "/image/map.png"}></img>
-                    <br />
-                    <Button style={{marginLeft: "75px"}}>변경하기</Button>
-                  </Grid>
-                </Grid>
-                <br />
-                <Button style={{width: "120px"}}size="small" variant="outlined">관심사 선택</Button>
-                <br />
-                <Button style={{padding: 0,margin: 0 ,width: "120px", color: "#484848", fontSize: "23px"}}>뒤로가기</Button>
-                <Button style={{padding: 0,margin: 0 ,width: "120px", marginLeft : "215px" ,color: "#1E4DF6", fontSize: "23px"}}>적용하기</Button>
+                <p id="parent-modal-description">
+                  <Container id='fix_profile_con' >
+                    <h1 id='modal_title'>회원 정보 수정</h1>
+                    
+                      <Grid id="fix_profile_center" container>
+                      <Grid id="fix_profile_left" item xs={8}>
+                        <Row>
+                          <a>변경할 이름</a>
+                          <input id='fix_info' placeholder="Name" />
+                        </Row>
+                        <Row>
+                          <a>변경할 비밀번호</a>
+                          <input id="fix_info" placeholder="Password" />
+                        </Row>
+                        <Row>
+                          <a>비밀번호 재확인</a>
+                          <input id="fix_info" placeholder="PasswordConfirm" />
+                        </Row>
+                        </Grid>
+              
+                      <Grid id="fix_profile_right" item xs={4}>
+                        <Row>
+                          <img id ="fix_profile_pic" src={process.env.PUBLIC_URL + "/image/map.png"}></img>
+                          <Button id='fix_profile_select_pic' variant="outline-light">변경하기</Button> 
+                        </Row>
+                      </Grid>
+                      
+                    </Grid>
+                  </Container>
+                  <hr id='fix_profile_hr'/>
+                  <div>
+                    <Row xs={5} md={5}>
+                      <Button id='fix_profile_cate' variant="outline-light">관심사선택</Button>
+                      <Button id='fix_profile_delete' variant="outline-light">회원탈퇴</Button>
+                      </Row>
+                      
+                      <Row xs={5} md={5}>
+                        <Button id='fix_profile_goback' variant="outline-light">뒤로가기</Button>
+                        <Button id='fix_profile_apply' variant="outline-light">적용하기</Button>
+                      </Row>
+                  </div>
+                </p>
               </Box>
-              </p>
-              {/* <ChildModal /> */}
-            </Box>
-           </Modal>
+            </Modal>
           </div>
         </Nav>
       </Col >
