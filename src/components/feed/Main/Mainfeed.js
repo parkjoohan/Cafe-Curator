@@ -1,7 +1,7 @@
 import React,{useState,useEffect} from 'react';
 import Toggle from './Toggle';
 import Feed from './Feed';
-import SkeletonPrint from '../Blog/BlogPrint'
+import SkeletonPrint from '../blog/BlogPrint'
 import {Container,Col,Row,Button} from 'react-bootstrap'
 import { Link,useHistory } from 'react-router-dom'
 import WriteModal from '../article/WriteModal'

@@ -1,7 +1,7 @@
 import React,{useState,useEffect} from 'react';
 import Toggle from './Toggle';
-import BookMarkPrint from '../BookMark/BookMarkPrint';
-import LikePrint from '../Like/LikePrint'
+import BookMarkPrint from '../bookMark/BookMarkPrint';
+import LikePrint from '../like/LikePrint'
 import {Container,Col,Row,Button} from 'react-bootstrap'
 import { Link,useHistory } from 'react-router-dom'
 import WriteModal from '../article/WriteModal'

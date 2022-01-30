@@ -4,11 +4,11 @@ import Home from './components/common/Home';
 import LoginForm from "./components/user/LoginForm";
 import SignupForm from "./components/user/SignupForm";
 import TermsModal from './components/user/TermsModal';
-import BookMarkPrint from './components/feed/BookMark/BookMarkPrint';
-import LikePrint from './components/feed/Like/LikePrint';
+import BookMarkPrint from './components/feed/bookMark/BookMarkPrint';
+import LikePrint from './components/feed/like/LikePrint';
 import Detail from './components/feed/article/Detail'
-import Mainfeed from './components/feed/Main/Mainfeed';
-import Mainfeed2 from './components/feed/Main/MainFeed2';
+import Mainfeed from './components/feed/main/Mainfeed';
+import Mainfeed2 from './components/feed/main/MainFeed2';
 import userProfile from './components/user/userProfile'
 import StoreProfile from './components/store/StoreProfile';
 //  searchtest용입니다. 테스트 끝나면 지울거임

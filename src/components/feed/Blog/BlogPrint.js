@@ -5,13 +5,13 @@ import Blogs from "./Blogs";
 import { Container, Button, Col, Row } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom'
 import WriteModal from '../article/WriteModal';
-import Toggle from '../Main/Toggle';
+// import Toggle from '../main/Toggle';
 
 function BlogPrint() {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [WritemodalShow, WritesetModalShow] = React.useState(false);
-  const [toggled, setToggled] = useState(false);
+  // const [toggled, setToggled] = useState(false);
   const history = useHistory();
 
   const style = {
