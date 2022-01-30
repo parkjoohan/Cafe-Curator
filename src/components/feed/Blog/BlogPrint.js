@@ -1,13 +1,13 @@
-import "./css/SkeletonPrint.css";
+import "./css/BlogPrint.css";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import Skeletons from "./Skeletons";
+import Blogs from "./Blogs";
 import { Container, Button, Col, Row } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom'
-import WriteModal from './article/WriteModal';
-import Toggle from './Toggle';
+import WriteModal from '../article/WriteModal';
+import Toggle from '../Main/Toggle';
 
-function SkeletonPrint() {
+function BlogPrint() {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [WritemodalShow, WritesetModalShow] = React.useState(false);
@@ -49,7 +49,7 @@ function SkeletonPrint() {
               <Container>
                   <div className="App">
                       <ul className="contentWrapper">
-                      <Skeletons isLoading={isLoading} data={data} />
+                      <Blogs isLoading={isLoading} data={data} />
                       </ul>
                   </div>
               </Container>
@@ -58,4 +58,4 @@ function SkeletonPrint() {
   );
 }
 
-export default SkeletonPrint;
+export default BlogPrint;

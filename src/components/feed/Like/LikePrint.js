@@ -1,9 +1,9 @@
-import "./css/BookMarkPrint.css";
+import "./css/LikePrint.css";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Likes from "./Likes";
 import { Container,Button, Col, Row } from 'react-bootstrap';
-import WriteModal from './article/WriteModal';
+import WriteModal from '../article/WriteModal';
 import { Link } from 'react-router-dom'
 
 function LikesPrint() {

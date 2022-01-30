@@ -1,10 +1,10 @@
 import React,{useState,useEffect} from 'react';
 import Toggle from './Toggle';
 import Feed from './Feed';
-import SkeletonPrint from './SkeletonPrint'
+import SkeletonPrint from '../Blog/BlogPrint'
 import {Container,Col,Row,Button} from 'react-bootstrap'
 import { Link,useHistory } from 'react-router-dom'
-import WriteModal from './article/WriteModal'
+import WriteModal from '../article/WriteModal'
 import './css/MainFeed.css'
 
 export default function Mainfeed(props) {

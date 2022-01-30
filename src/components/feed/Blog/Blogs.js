@@ -1,14 +1,14 @@
-import "./css/SkeletonPrint.css";
+import "./css/BlogPrint.css";
 import React from "react";
-import Skeleton from "./Skeleton";
+import Blog from "./Blog";
 import  { Modal, Button, Container, Row, Col, Form } from 'react-bootstrap';
 
-const Skeletons = props => {
+const Blogs = props => {
     return (
         <div>
             {props.isLoading
                 ? new Array(10).fill(1).map((_, i) => {
-                    return <Skeleton key={i} />;
+                    return <Blog key={i} />;
             })
             : props.data.map(item => {
                 return (
@@ -30,4 +30,4 @@ const Skeletons = props => {
     );
 };
 
-export default Skeletons;
+export default Blogs;

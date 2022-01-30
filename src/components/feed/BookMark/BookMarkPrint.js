@@ -2,9 +2,8 @@ import "./css/BookMarkPrint.css";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import BookMarks from "./BookMarks";
-import { Container,Button, Col, Row } from 'react-bootstrap';
-import WriteModal from './article/WriteModal';
-import { Link } from 'react-router-dom'
+import { Container, Row } from 'react-bootstrap';
+import WriteModal from '../article/WriteModal';
 
 function BookMarksPrint() {
   const [data, setData] = useState([]);
