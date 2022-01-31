@@ -81,6 +81,7 @@ CREATE TABLE IF NOT EXISTS `caffe_in`.`feed` (
                                                  `feed_no` INT NOT NULL AUTO_INCREMENT,
                                                  `content` TEXT NOT NULL,
                                                  `reg_time` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+                                                 `cafe_id` INT NULL,
                                                  `cafe_name` VARCHAR(30) NULL DEFAULT NULL,
     `category_list` JSON NULL DEFAULT NULL,
     `like_count` INT NOT NULL DEFAULT '0',
@@ -93,7 +94,6 @@ CREATE TABLE IF NOT EXISTS `caffe_in`.`feed` (
     REFERENCES `caffe_in`.`user_detail` (`user_no`)
     ON DELETE CASCADE)
     ENGINE = InnoDB
-    AUTO_INCREMENT = 40
     DEFAULT CHARACTER SET = utf8mb4
     COLLATE = utf8mb4_0900_ai_ci;
 
@@ -130,7 +130,6 @@ CREATE TABLE IF NOT EXISTS `caffe_in`.`cafe` (
     `cafe_lng` VARCHAR(20) NOT NULL,
     PRIMARY KEY (`cafe_id`))
     ENGINE = InnoDB
-    AUTO_INCREMENT = 6
     DEFAULT CHARACTER SET = utf8mb4
     COLLATE = utf8mb4_0900_ai_ci;
 
@@ -170,7 +169,6 @@ CREATE TABLE IF NOT EXISTS `caffe_in`.`category_log` (
     REFERENCES `caffe_in`.`feed` (`feed_no`)
     ON DELETE CASCADE)
     ENGINE = InnoDB
-    AUTO_INCREMENT = 8
     DEFAULT CHARACTER SET = utf8mb4
     COLLATE = utf8mb4_0900_ai_ci;
 
@@ -206,7 +204,6 @@ CREATE TABLE IF NOT EXISTS `caffe_in`.`comment` (
     REFERENCES `caffe_in`.`user_detail` (`user_no`)
     ON DELETE CASCADE)
     ENGINE = InnoDB
-    AUTO_INCREMENT = 13
     DEFAULT CHARACTER SET = utf8mb4
     COLLATE = utf8mb4_0900_ai_ci;
 
@@ -283,7 +280,6 @@ CREATE TABLE IF NOT EXISTS `caffe_in`.`file` (
     REFERENCES `caffe_in`.`feed` (`feed_no`)
     ON DELETE CASCADE)
     ENGINE = InnoDB
-    AUTO_INCREMENT = 30
     DEFAULT CHARACTER SET = utf8mb4
     COLLATE = utf8mb4_0900_ai_ci;
 
