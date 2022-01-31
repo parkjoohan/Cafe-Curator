@@ -36,10 +36,10 @@ function LikesPrint() {
                     onHide={() => WritesetModalShow(false)}
                 />
             
-                <div className='blog'>
+                <div id='like'>
                     <Container>
-                        <div className="App">
-                            <ul className="contentWrapper">
+                        <div id="App">
+                            <ul id="like_contentWrapper">
                             <Likes isLoading={isLoading} data={data} />
                             </ul>
                         </div>

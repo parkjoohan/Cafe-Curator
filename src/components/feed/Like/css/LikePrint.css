@@ -1,15 +1,9 @@
-.LikePrint {
-    text-align: center;
-    width: 90%;
-    display: flex;
-  }
-  
-  .contentWrapper {
+#like_contentWrapper {
     list-style-type: none;
     width: 100%;
   }
   
-  .item {
+#like_item {
     display: flex;
     align-items: inherit;
     margin: 20px 0;
@@ -19,21 +13,15 @@
     border: 1px solid #ccc;
   }
   
-  .img {
+#like_img {
     width: 60px;
     height: 60px;
     border-radius: 50%;
   }
   
-  .info {
+#like_info {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     margin-left: 10px;
-  }
-  .info .articleImg {
-      float: right;
-  }
-  .buttons {
-    text-align: -webkit-right;
   }

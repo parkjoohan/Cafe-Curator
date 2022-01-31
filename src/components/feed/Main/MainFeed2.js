@@ -30,7 +30,7 @@ export default function Mainfeed2(props) {
         <Container>
           <Row>
               <Col xs={11}>
-              <div>
+              <div style={{textAlign: "-webkit-right"}}>
                 <Toggle onChange={(e)=>Changotogle(e)} />
                 <p style={style}>{toggled ? "북마크" : "좋아요"}</p>
               </div>

@@ -8,7 +8,7 @@
     }
   }
   
-  .like-item {
+  #like-item {
     display: flex;
     align-items: center;
     margin: 15px 0;
@@ -19,7 +19,7 @@
     position: relative;
   }
   
-  .like-img::before {
+  #like-img::before {
     content: "";
     position: absolute;
     top: 0;
@@ -30,7 +30,7 @@
     animation: loading 2s infinite linear;
   }
   
-  .like-img {
+  #like-img {
     width: 50px;
     height: 50px;
     border-radius: 50%;
@@ -39,7 +39,7 @@
     overflow: hidden;
   }
   
-  .like-info {
+  #like-info {
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -47,7 +47,7 @@
     margin-left: 10px;
   }
   
-  .like-name {
+  #like-name {
     width: 70%;
     height: 18px;
     background: #f2f2f2;
@@ -55,7 +55,7 @@
     overflow: hidden;
   }
   
-  .like-name::before {
+  #like-name::before {
     content: "";
     position: absolute;
     top: 0;
@@ -66,7 +66,7 @@
     animation: loading 2s infinite linear;
   }
   
-  .like-email {
+  #like-email {
     width: 85%;
     height: 18px;
     background: #f2f2f2;
@@ -75,7 +75,7 @@
     overflow: hidden;
   }
   
-  .like-email::before {
+  #like-email::before {
     content: "";
     position: absolute;
     top: 0;
