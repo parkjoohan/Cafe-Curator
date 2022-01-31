@@ -58,7 +58,7 @@ export default function LoginForm() {
   return (
     <div>
       <Grid>
-        <div className='content'>
+        <div id='login_content'>
           <Paper elevation={10} style={paperStyle}>
             <Grid align="center">
               <Avatar style={avatarStyle}><LockOutlinedIcon /></Avatar>
@@ -77,15 +77,15 @@ export default function LoginForm() {
             /><br /><br/>
             <Button type="submit" color="primary" variant='contained' style={btnStyle} fullWidth>Login In</Button><br /><br/>
 
-            <div className="divider">
-              <hr className="line" />
-              <p className="sociallogin">소셜 로그인</p>
-              <hr className="line" />
+            {/* 소셜 회원가입 */}
+            <div id="login_divider">
+              <hr id="login_line" />
+              <p id="login_sociallogin">소셜 회원가입</p>
+              <hr id="login_line" />
             </div>
 
-            <div className="oauthlist">
-              <img className="oauthimage" src={process.env.PUBLIC_URL + "/image/kakaooauthimage.png"}/>
-              {/* <img className="oauthimage" src={process.env.PUBLIC_URL + "/image/naveroauthimage.png"}/> */}
+            <div id="login_oauthlist">
+              <img id="login_oauthimage" src={process.env.PUBLIC_URL + "/image/kakaooauthimage.png"}/>
             </div>
 
             <hr />
