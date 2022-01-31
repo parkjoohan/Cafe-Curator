@@ -1,16 +1,13 @@
-#navcolor {
-  border: 0;
-  background-color: #4b6b79;
+#Terms_ModalPadding {
+  padding : 0;
 }
-#NoBgExitTerms {
+
+#Terms_NoBgExitTerms {
   margin-right: auto;
   background-color : #864A13;
   border: none;
   color : #484848;
   font-weight:500;
-}
-#ModalPadding {
-  padding : 0;
 }
 
 #TermsMarginLeft {
@@ -18,7 +15,6 @@
 }
 
 #Terms_Margin_Underline {
-  margin-top: 5%;
   margin-left : 20px;
   text-decoration: underline;
   text-underline-position:under;
@@ -39,13 +35,13 @@
   font-size : 15px;
 }
 
-#QlabUnderline {
+#Terms_QlabUnderline {
   text-decoration: underline;
   text-underline-position:under;
   color: #484848
 }
 
-#NoBgButton {
+#Terms_NoBgButton {
   background-color : white;
   border: none;
   color : black;

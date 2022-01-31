@@ -147,8 +147,8 @@ const LikeCategoryModal = ({ show, onHide }) => {
           <Col md={8}>
             <h6 id='LikeCategory_If'>※ 조건 : 최소 1개 ~ 최대 3개</h6>
           </Col>
-
       </Modal.Header>
+      
       <Modal.Body>  
         <Row>
           {/* 선택된 카테고리 */}
