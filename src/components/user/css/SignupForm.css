@@ -1,46 +1,70 @@
-.link {
-  margin-bottom: 3%;
-  text-decoration: none;
-  margin-left:10px;
-  font-size:90%;
-  font-weight: 600;
-}
-.emailbutton {
-  border: 2px solid black;
-  font-size: 14px;
-  font-weight: bold;
-  width: 110px;
-  color: blue;
-}
-.divider {
-  display: flex;
-  justify-content: center;
-  margin-top: 10px;
-  margin-bottom: 10px;
+#signup_content {
+  font-family: system-ui, serif;
+  font-size: 1rem;
+  padding: 3rem;
+  border-radius: 1rem;
+  align-items: initial;
 }
 
-.line {
+#emailbutton {
+  border: 1px solid black;
+  font-size: 12px;
+  font-weight: bold;
+  width: 100px;
+  color: black;
+  margin-top: 1%;
+  margin-bottom: 1%;
+}
+
+#singup_content {
+  margin-bottom: 3%;
+}
+
+#signup_cate {
+  border: 1px solid black;
+  font-size: 12px;
+  font-weight: bold;
+  width: 100px;
+  color: black;
+  margin-top: 1%;
+  margin-bottom: 1%;
+}
+
+#signup_link {
+  border: 1px solid black;
+  font-size: 12px;
+  font-weight: bold;
+  width: 100px;
+  color: black;
+  margin-top: 1%;
+  margin-bottom: 1%;
+}
+
+#divider {
+  display: flex;
+  justify-content: center;
+}
+
+#line {
   width:30%;
 }
 
-.sociallogin {
+#sociallogin {
   font-size:90%;
   margin:auto;
   font-weight: 700;
   color:dimgrey;
 }
 
-.oauthimage{
-  width:80%;
+#signup_oauthlist{
+  width:100%;
   height:auto;
+  text-align: -webkit-center;
 }
 
-.oauthlist {
+#signup_oauthimage {
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-
-.singup_content {
-  margin-bottom: 3%;
+  width: 60%;
 }

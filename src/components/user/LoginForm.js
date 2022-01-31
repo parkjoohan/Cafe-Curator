@@ -6,7 +6,6 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import { Link } from 'react-router-dom';
-import { CenterFocusStrong } from '@material-ui/icons';
 
 function temp_pw_issuance() {
 	let ranValue1 = ['1','2','3','4','5','6','7','8','9','0'];
