@@ -48,7 +48,7 @@ export default function SignupForm () {
               <Avatar style={avatarStyle}><LockOutlinedIcon /></Avatar>
               <h2>Sign Up</h2>
             </Grid><br />
-            <img style={Profileimage} src={process.env.PUBLIC_URL + "/image/Profileimage.png"} id="ProfilePic" onClick={() => ProfilesetModalShow(true)}/>
+            <img style={Profileimage} src={process.env.PUBLIC_URL + "/image/Profileimage.png"} id="signup_profilePic" onClick={() => ProfilesetModalShow(true)}/>
             <Profile
               show={ProfilemodalShow}
               onHide={() => ProfilesetModalShow(false)}

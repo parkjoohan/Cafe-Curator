@@ -1,21 +1,16 @@
-#ProfilePic {
-  width: 150px;
-  height: 150px;
-}
-
-.navcolor {
+#profile_navcolor {
   height: 30px;
   background-color: #4b6b79;
 }
 
-#NoBgButton {
+#profile_NoBgButton {
   background-color : white;
   border: none;
   color : #1E4DF6;
   font-weight:bold;
 }
 
-#NoBgExit {
+#profile_NoBgExit {
   margin-right: auto;
   background-color : white;
   border: none;
@@ -23,12 +18,12 @@
   font-weight:bold;
 }
 
-.profile_image {
+#profile_image {
   width: 20%;
   border: 1;
 }
 
-.upload_pic {
+#profile_upload_pic {
   margin-left: 3%;
   color: black
 }
