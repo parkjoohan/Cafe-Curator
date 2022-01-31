@@ -56,7 +56,7 @@ export default function SignupForm () {
 
             {/* 이메일 */}
             <TextField label="Email" placeholder='Enter email' fullWidth required />
-            <Button id='emailbutton' variant="primary" onClick={() => EmailsetModalShow(true)}>
+            <Button id='signup_emailbutton' variant="primary" onClick={() => EmailsetModalShow(true)}>
             이메일인증
             </Button>
             <EmailModal show={EmailmodalShow} onHide={() => EmailsetModalShow(false)}/>
@@ -96,10 +96,10 @@ export default function SignupForm () {
             <Button type="submit" color="primary" variant='contained' style={btnStyle} fullWidth>Sign Up</Button><br /><br/>
 
             {/* 소셜 회원가입 */}
-            <div id="divider">
-              <hr id="line" />
-              <p id="sociallogin">소셜 회원가입</p>
-              <hr id="line" />
+            <div id="signup_divider">
+              <hr id="signup_line" />
+              <p id="signup_sociallogin">소셜 회원가입</p>
+              <hr id="signup_line" />
             </div>
 
             <div id="signup_oauthlist">
