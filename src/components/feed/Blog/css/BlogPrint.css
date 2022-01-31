@@ -1,15 +1,15 @@
-.SkeletonPrint {
+#id {
     text-align: center;
     width: 90%;
     display: flex;
   }
   
-  .contentWrapper {
+#blog_contentWrapper {
     list-style-type: none;
     width: 100%;
   }
   
-  .item {
+#blogs_item {
     display: flex;
     align-items: center;
     margin: 20px 0;
@@ -19,21 +19,15 @@
     border: 1px solid #ccc;
   }
   
-  .img {
+#blogs_img {
     width: 50px;
     height: 50px;
     border-radius: 50%;
-  }
+}
   
-  .info {
+#blogs_info {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     margin-left: 10px;
-  }
-  .info .articleImg {
-      float: right;
-  }
-  .buttons {
-    text-align: -webkit-right;
-  }
+}

@@ -12,14 +12,14 @@ const Blogs = props => {
             })
             : props.data.map(item => {
                 return (
-                    <li key={item.id} className="item">
+                    <li key={item.id} id="blogs_item">
                         <Col xs={7} md={9}>
-                            <img className="img" src={item.avatar} alt="" />
+                            <img id="blogs_img" src={item.avatar} alt="" />
                             <strong style={{marginTop: "2%", marginLeft: "2%"}}>{item.first_name} {item.last_name}</strong>
                             <p style={{marginTop: "2%"}}>{item.email}</p>
                         </Col>
                         <Col xs={7} md={5}>
-                            <div className="info">
+                            <div id="info">
                                 <img src='image/coffeecong.jpg' style={{width: "60%"}}/>
                             </div>
                         </Col>

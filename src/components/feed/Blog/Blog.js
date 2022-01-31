@@ -3,13 +3,13 @@ import React from 'react';
 
 const Blog = () => {
     return (
-        <li className="blog-item">
+        <li id="blog-item">
             <div>
-                <div className="blog-img" />
+                <div id="blog-img" />
             </div>
-            <div className="blog-info">
-                <p className="blog-name" />
-                <p className="blog-email" />
+            <div id="blog-info">
+                <p id="blog-name" />
+                <p id="blog-email" />
             </div>
         </li>
     );

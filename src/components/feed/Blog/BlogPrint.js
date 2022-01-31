@@ -45,10 +45,10 @@ function BlogPrint() {
               onHide={() => WritesetModalShow(false)}
           />
       
-          <div className='blog'>
+          <div id='blog'>
               <Container>
-                  <div className="App">
-                      <ul className="contentWrapper">
+                  <div id="App">
+                      <ul id="blog_contentWrapper">
                       <Blogs isLoading={isLoading} data={data} />
                       </ul>
                   </div>
