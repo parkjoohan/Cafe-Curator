@@ -3,13 +3,13 @@ import React from 'react';
 
 const BookMark = () => {
     return (
-        <li className="bookmark-item">
+        <li id="bookmark-item">
             <div>
-                <div className="bookmark-img" />
+                <div id="bookmark-img" />
             </div>
-            <div className="bookmark-info">
-                <p className="bookmark-name" />
-                <p className="bookmark-email" />
+            <div id="bookmark-info">
+                <p id="bookmark-name" />
+                <p id="bookmark-email" />
             </div>
         </li>
     );

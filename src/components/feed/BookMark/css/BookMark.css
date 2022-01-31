@@ -8,7 +8,7 @@
     }
   }
   
-  .bookmark-item {
+#bookmark-item {
     display: flex;
     align-items: center;
     margin: 15px 0;
@@ -19,7 +19,7 @@
     position: relative;
   }
   
-  .bookmark-img::before {
+#bookmark-img::before {
     content: "";
     position: absolute;
     top: 0;
@@ -30,7 +30,7 @@
     animation: loading 2s infinite linear;
   }
   
-  .bookmark-img {
+#bookmark-img {
     width: 50px;
     height: 50px;
     border-radius: 50%;
@@ -39,7 +39,7 @@
     overflow: hidden;
   }
   
-  .bookmark-info {
+#bookmark-info {
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -47,7 +47,7 @@
     margin-left: 10px;
   }
   
-  .bookmark-name {
+#bookmark-name {
     width: 70%;
     height: 18px;
     background: #f2f2f2;
@@ -55,7 +55,7 @@
     overflow: hidden;
   }
   
-  .bookmark-name::before {
+#bookmark-name::before {
     content: "";
     position: absolute;
     top: 0;
@@ -66,7 +66,7 @@
     animation: loading 2s infinite linear;
   }
   
-  .bookmark-email {
+#bookmark-email {
     width: 85%;
     height: 18px;
     background: #f2f2f2;
@@ -75,7 +75,7 @@
     overflow: hidden;
   }
   
-  .bookmark-email::before {
+#bookmark-email::before {
     content: "";
     position: absolute;
     top: 0;

@@ -35,10 +35,10 @@ function BookMarksPrint() {
                     onHide={() => WritesetModalShow(false)}
                 />
             
-                <div className='blog'>
+                <div id='bookmark'>
                     <Container>
-                        <div className="App">
-                            <ul className="contentWrapper">
+                        <div id="App">
+                            <ul id="bookmark_contentWrapper">
                             <BookMarks isLoading={isLoading} data={data} />
                             </ul>
                         </div>

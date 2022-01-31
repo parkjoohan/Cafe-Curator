@@ -19,7 +19,7 @@ const Blogs = props => {
                             <p style={{marginTop: "2%"}}>{item.email}</p>
                         </Col>
                         <Col xs={7} md={5}>
-                            <div id="info">
+                            <div id="blogs_info">
                                 <img src='image/coffeecong.jpg' style={{width: "60%"}}/>
                             </div>
                         </Col>
