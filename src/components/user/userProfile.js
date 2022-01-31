@@ -22,30 +22,22 @@ export const UserProfile = () => {
   
   return (
     <div>
-      <Container id="ProfileContainer">
+      <Container id="userfile_Container">
         <Row>
-          <Col sm={4}><img id ="ImgPreview" src={process.env.PUBLIC_URL + "/image/map.png"}></img></Col>
+          <Col sm={4}><img id ="userfile_ImgPreview" src={process.env.PUBLIC_URL + "/image/map.png"}></img></Col>
           <Col sm={4}>
             <h2>커피나라 주한대사</h2>
-            <a>게시물 42</a><a id="aMarginleft">팔로워 269</a><a id="aMarginleft">팔로우 242</a>
-            <h5 id="pMarginTop"> 맛집킬러</h5>
+            <a>게시물 42</a><a id="userfile_aMarginleft">팔로워 269</a><a id="userfile_aMarginleft">팔로우 242</a>
+            <h5 id="userfile_explain"> 맛집킬러</h5>
           </Col>
         </Row>
-        
-      </Container>
-      <hr id="HrStyle"></hr>
 
-      {/* <Container id="ContainerWidth">
+      <hr id="userfile_HrStyle"></hr>
+
         <Row>
-          <Col id="ProfileCol" sm={6}><Button id="ProfileButtonLeft">One</Button></Col>
-          <Col id="ProfileCol" sm={6}><Button id="ProfileButton">Two</Button></Col>
-        </Row>
-      </Container> */}
-      <Container>
-        <Row>
-          <Col sm={4}><img name="FeedImage" id ="FeedImage" src={process.env.PUBLIC_URL + "/image/map.png"}></img></Col>
-          <Col sm={4}><img name="FeedImage" id ="FeedImage" src={process.env.PUBLIC_URL + "/image/map.png"}></img></Col>
-          <Col sm={4}><img name="FeedImage" id ="FeedImage" src={process.env.PUBLIC_URL + "/image/map.png"}></img></Col>
+          <Col sm={4}><img name="FeedImage" id ="userfile_FeedImage" src={process.env.PUBLIC_URL + "/image/map.png"}></img></Col>
+          <Col sm={4}><img name="FeedImage" id ="userfile_FeedImage" src={process.env.PUBLIC_URL + "/image/map.png"}></img></Col>
+          <Col sm={4}><img name="FeedImage" id ="userfile_FeedImage" src={process.env.PUBLIC_URL + "/image/map.png"}></img></Col>
         </Row>
       </Container>
     </div>

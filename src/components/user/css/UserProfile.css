@@ -1,22 +1,28 @@
-#ProfileContainer {
+#userfile_Container {
   margin-top: 5%;
-  margin-right: 7%;
-  
 }
 
-#ImgPreview {
+#userfile_ImgPreview {
   border-radius: 65px;
   width: 130px;
   height: 130px;
   margin-left: 5%;
 }
-#aMarginleft {
+
+#userfile_aMarginleft {
   margin-left : 20px;
 }
-#pMarginTop{
+
+#userfile_explain{
   margin-top : 5%;
 }
-#FeedImage {
+
+#userfile_HrStyle {
+  width:100%;
+  margin-top: 5%;
+}
+
+#userfile_FeedImage {
   margin-top : 20%;
   margin-left : 15%;
   margin-bottom : 30%;
@@ -24,7 +30,7 @@
   height: 300px;
   filter : drop-shadow(3px 3px 3px #484848)
 }
-#FeedImage:hover {
+#userfile_FeedImage:hover {
   margin-top : 17%;
   margin-left : 12%;
   margin-bottom : 30%;
@@ -32,38 +38,4 @@
   height: 330px;
   filter : drop-shadow(3px 3px 3px #484848);
   transition : all 0.5s;
-}
-#HrStyle {
-  width: 80%;
-  margin-left:10%;
-}
-
-#ProfileCol {
-  padding : 0px;
-}
-
-#ProfileButton {
-  width: 80%;
-  border : 0;
-  padding : 0;
-}
-#ProfileButtonLeft {
-  width: 80%;
-  margin-left: 100px;
-  border : 0;
-  padding : 500px;
-}
-#ContainerWidth {
-  width: 10%;
-}
-#btnplus {
-  border : 1px solid black;
-  width: 20vw;
-}
-#case2 {
-  border : 1px solid black;
-  width: 20vw;
-}
-#ButtonDiv {
-  margin-left: 30vw;
 }
