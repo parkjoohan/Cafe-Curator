@@ -45,26 +45,26 @@ const style = {
 };
 
   return (
-    <Navbar id='nav' expand="sm" bg="light">
-      <Col id='left' xs={5}>
+    <Navbar id='header_nav' expand="sm" bg="light">
+      <Col id='header_left' xs={5}>
         <Nav className="me-auto">
-          <Nav.Link><Link to="/" id="link">Home</Link></Nav.Link>
-          <Nav.Link><Link to="/feed" id="link">Map & Feed</Link></Nav.Link>
-          <Nav.Link><Link to="/feed2" id="link">BookMark & Like</Link></Nav.Link>
-          <Nav.Link><Link to="/bookmark" id="link">Search</Link></Nav.Link>
+          <Nav.Link><Link to="/" id="header_link">Home</Link></Nav.Link>
+          <Nav.Link><Link to="/feed" id="header_link">Map & Feed</Link></Nav.Link>
+          <Nav.Link><Link to="/feed2" id="header_link">BookMark & Like</Link></Nav.Link>
+          <Nav.Link><Link to="/bookmark" id="header_link">Search</Link></Nav.Link>
         </Nav>
       </Col>
-      <Col id='center' xs={3} >
-        <Navbar.Brand id='link_img'>
-          <Link to="/" id="link_img">Cafe Curator </Link>
+      <Col id='header_center' xs={3} >
+        <Navbar.Brand id='header_link_img'>
+          <Link to="/" id="header_link_img">Cafe Curator </Link>
         </Navbar.Brand>
       </Col>
       <Col  xs={4}>
-        <Nav id='right'>
-          <Nav.Link><Link to="/login" id="link">Login</Link></Nav.Link>
-          <Nav.Link><Link to="/signup" id="link">Signup</Link></Nav.Link>
-          <div id="profile">
-          <NavDropdown align="end" title={<img id="prof_img" style={{width: "40px"}}
+        <Nav id='header_right'>
+          <Nav.Link><Link to="/login" id="header_link">Login</Link></Nav.Link>
+          <Nav.Link><Link to="/signup" id="header_link">Signup</Link></Nav.Link>
+          <div id="header_profile">
+          <NavDropdown align="end" title={<img id="header_prof_img" style={{width: "40px"}}
             src={process.env.PUBLIC_URL + "/image/hello.png"}
             />} id="dropdown-menu-align-end">
             <NavDropdown.Item onClick={gotoProfile}>Profile</NavDropdown.Item>
