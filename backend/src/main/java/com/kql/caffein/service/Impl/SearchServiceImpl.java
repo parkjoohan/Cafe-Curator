@@ -34,7 +34,7 @@ public class SearchServiceImpl implements SearchService {
         PageRequest pageRequest  = PageRequest.of(0, size);
         Page<Feed>  feedList = feedRepository.findByCategoryListOrderByLikeCountDesc(lastLikeCount, lastFeedNo, category, pageRequest);
 
-        return feedService.makeFeedDtoList(feedList, userNo);
+        return feedService.makeFeedDtoList(feedList.getContent(), userNo);
     }
 
     @Override
@@ -45,6 +45,6 @@ public class SearchServiceImpl implements SearchService {
         PageRequest pageRequest  = PageRequest.of(0, size);
         Page<Feed> feedList = feedRepository.findByCategoryListOrderByRegTime(lastFeedNo, category, pageRequest);
 
-        return feedService.makeFeedDtoList(feedList, userNo);
+        return feedService.makeFeedDtoList(feedList.getContent(), userNo);
     }
 }

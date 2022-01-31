@@ -19,5 +19,5 @@ public interface FollowRepository extends JpaRepository<Follow, FollowId> {
     Page<Follow> findByUserNoAndGetUserNoLessThanOrderByGetUserNoDesc(String userNo, String lastUserNo, Pageable pageRequest);
 
     @Query("select f.getUserNo from Follow f where f.userNo = ?1")
-    Optional<List<String>> getFollowingList(String userNo);
+    List<String> getFollowingList(String userNo);
 }

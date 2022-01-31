@@ -13,8 +13,14 @@ public class FeedRegisterDto {
 
     @ApiModelProperty(value="피드 내용")
     private String content;
-    @ApiModelProperty(value="카페 이름")
+    @ApiModelProperty(value="카페 이름", notes = "카페 미등록 시 null")
     private String cafeName;
+    @ApiModelProperty(value="카페 주소", notes = "카페 미등록 시 null")
+    private String cafeAddress;
+    @ApiModelProperty(value="카페 x좌표", notes = "카페 미등록 시 null")
+    private double cafeX;
+    @ApiModelProperty(value="카페 y좌표", notes = "카페 미등록 시 null")
+    private double cafeY;
     @ApiModelProperty(value="피드 카테고리 목록")
     private List<String> categoryList;
     @ApiModelProperty(value="피드 작성자 번호")

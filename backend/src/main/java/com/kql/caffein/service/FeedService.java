@@ -48,6 +48,9 @@ public interface FeedService {
     //피드 좋아요 누른 회원 목록
     public List<FollowDto> feedLikeUserList(String userNo, int feedNo, String lastUserNo, int size);
 
-    public List<BlogResDto> makeBlogDtoList(Page<Feed> list, String userNo);
-    public List<FeedResDto> makeFeedDtoList(Page<Feed> list, String userNo);
+    public List<BlogResDto> makeBlogDtoList(List<Feed> list, String userNo);
+    public List<FeedResDto> makeFeedDtoList(List<Feed> list, String userNo);
+
+    //카페 좌표 변환 후 DB 저장
+    public int addCafe(double cafeX, double cafeY, String cafeName, String cafeAddress);
 }

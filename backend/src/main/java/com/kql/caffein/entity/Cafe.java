@@ -15,10 +15,19 @@ public class Cafe {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int cafeId;
 
-    String name;
+    String cafeName;
+
+    String cafeAddress;
+
+    String cafeLat;
+
+    String cafeLng;
 
     @Builder
-    public Cafe(String name){
-        this.name = name;
+    public Cafe(String cafeName, String cafeAddress, String cafeLat, String cafeLng){
+        this.cafeName = cafeName;
+        this.cafeAddress = cafeAddress;
+        this.cafeLat = cafeLat;
+        this.cafeLng = cafeLng;
     }
 }

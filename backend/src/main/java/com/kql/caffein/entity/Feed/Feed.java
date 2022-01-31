@@ -29,6 +29,8 @@ public class Feed {
     @CreationTimestamp
     private LocalDateTime regTime;
 
+    private Integer cafeId;
+
     private String cafeName;
 
     @Convert(converter = CategoryDataConverter.class)
@@ -46,10 +48,11 @@ public class Feed {
     private List<File> files = new ArrayList<>();
 
     @Builder
-    public Feed(String content, LocalDateTime regTime, String cafeName, List<String> categoryList,
+    public Feed(String content, LocalDateTime regTime, Integer cafeId, String cafeName, List<String> categoryList,
                 int likeCount, int commentCount, String userNo){
         this.content = content;
         this.regTime = regTime;
+        this.cafeId = cafeId;
         this.cafeName = cafeName;
         this.categoryList = categoryList;
         this.likeCount = likeCount;
