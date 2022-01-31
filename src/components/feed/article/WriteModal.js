@@ -1,5 +1,5 @@
 import React,{useState,useEffect,useRef} from 'react';
-import  { Modal } from 'react-bootstrap';
+import  { Container, Modal } from 'react-bootstrap';
 import {TextField, Button} from '@material-ui/core';
 import { Row,Col } from 'react-bootstrap'
 import './css/WriteModal.css'
@@ -9,25 +9,34 @@ import Search from './Search';
 
 const WriteModal = ( {show, onHide}) => {
 
+  const [cnt,setCnt] = useState(0);
+  
   const [like,setlike] = useState([
     [0,false],
     [1,false],
     [2,false],
     [3,false],
+    [4,false],
   ])
 
-  let likename = ['관심사1','관심사2','관심사3','관심사4'];
+  let likename = ['커피','케이크','마카롱/쿠키','브런치','차'];
 
   const selectlike = (n) => {
+    if(cnt==3){
+      alert('관심사는 최대 3개까지 선택 가능합니다.')
+    }else{
     const newlike = [...like];
     newlike[n][1] = true;
     setlike(newlike);
+    setCnt(prev=>prev+1);
+    }
   }
 
   const unlike = (n) => {
     const newlike = [...like];
     newlike[n][1] = false;
     setlike(newlike);
+    setCnt(prev=>prev-1);
   }
 
   const [fileImage, setFileImage] = useState([])
@@ -58,7 +67,7 @@ const WriteModal = ( {show, onHide}) => {
   const defaultlike = like.map((num)=>(
     <>
       {num[1]==false?
-        <Col lg={2} md={5} xs={10}>
+        <Col lg={5} md={5} xs={10}>
           <div 
           className='writemodal_likebutton' 
           id={num[0]}
@@ -87,7 +96,65 @@ const WriteModal = ( {show, onHide}) => {
     </>
   ))
 
-  
+  const [like2,setlike2] = useState([
+    [0,false],
+    [1,false],
+    [2,false],
+    [3,false],
+    [4,false],
+  ])
+
+  let likename2 = ['사진찍기 좋은','아늑한','힙한','공부하기 좋은', '테마있는'];
+
+  const selectlike2 = (n) => {
+    if(cnt==3){
+      alert('관심사는 최대 3개까지 선택 가능합니다.')
+    }else{
+    const newlike = [...like2];
+    newlike[n][1] = true;
+    setlike2(newlike);
+    setCnt(prev=>prev+1);
+    }
+  }
+
+  const unlike2 = (n) => {
+    const newlike = [...like2];
+    newlike[n][1] = false;
+    setlike2(newlike);
+    setCnt(prev=>prev-1);
+  }
+
+  const defaultlike2 = like2.map((num)=>(
+    <>
+      {num[1]==false?
+        <Col lg={5} md={5} xs={10}>
+          <div 
+          className='writemodal_likebutton' 
+          id={num[0]}
+          onClick={()=>selectlike2(num[0])}
+          >{likename2[num[0]]}</div>
+        </Col>
+        :
+        <></>
+      }
+    </>
+  ))
+
+  const selected2 = like2.map((num)=>(
+    <>
+      {num[1]==true?
+        <Col lg={3} md={5} xs={10}>
+          <div 
+          className='writemodal_likebutton' 
+          id={num[0]}
+          onClick={()=>unlike2(num[0])}
+          >{likename2[num[0]]}</div>
+        </Col>
+        :
+        <></>
+      }
+    </>
+  ))
     
   // function addlike(e){
   //   const newselectlike = [...selectlike,e];
@@ -147,32 +214,42 @@ const WriteModal = ( {show, onHide}) => {
         {/* 카페 검색 창 */}
         <Search />
         {/* 카페 이름 출력창 */}
-        <TextField label="Cafe name" placeholder='카페 이름' fullWidth required/><br /><br/>
+        <TextField label="Cafe name" placeholder='카페 이름' fullWidth required/>
 
         {/* 관심사 선택 */}
-        
-        <div id='writemodal_cate'>
-          <Row>
-            {/* 선택된 카테고리 */}
-            <Col md={3}>
-              <p id='selected_cate'>선택된 카테고리</p>
-            </Col>
-            <Col md={9}>
-              <Row>{selected}</Row>
-            </Col>
-          </Row>
+        <Container id='writemodal_cate'>
+          <div>
+            <Row>
+              {/* 선택된 카테고리 */}
+              <Col md={3}>
+                <p id='writemodal_selected_cate'>선택된 카테고리</p>
+              </Col>
+              <Col md={9}>
+              <Row>{selected}{selected2}</Row>
+              </Col>
+            </Row>
 
-          <hr />
+            <hr />
 
-          <Row style={{ justifyContent: "start" }}>
-            <Row>{defaultlike}</Row>
-          </Row>
-        </div>
+            <Row id='writemodal_cate_select'>
+              <Col id='writemodal_cate_air' md={6}>
+                {/* 분위기 카테고리 */}
+                <p style={{fontWeight: "bold"}}>분위기 카테고리</p>
+                <Row>{defaultlike2}</Row>
+              </Col>
+              <Col id='writemodal_cate_menu' md={6}>
+                {/* 메뉴 카테고리 */}
+                <p style={{fontWeight: "bold"}}>메뉴 카테고리</p>
+                <Row>{defaultlike}</Row>
+              </Col>
+            </Row>
+          </div>
+        </Container>
 
         {/* 사진 선택 */}
         <Row>
           <Col lg={5} md={7}>
-            <div className='pictureinput'>
+            <div id='writemodal_pictureinput'>
               <p>이전</p>
               <div 
               style={{width:"50%", 
@@ -189,7 +266,7 @@ const WriteModal = ( {show, onHide}) => {
               </div>
               <p>이후</p>
             </div>
-            <div className='minipicture'>
+            <div id='minipicture'>
               {pictures()}
             </div>
             <div style={{textAlign:"center"}}>사진은 최대 4장까지 첨부가 가능합니다.</div>

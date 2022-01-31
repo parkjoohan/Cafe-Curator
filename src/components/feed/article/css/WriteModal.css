@@ -47,8 +47,9 @@
 } 
 
 #writemodal_cate {
+  margin-top: 3%;
   margin-bottom: 5%;
-  height: 130px;
+  height: 300px;
 }
 
 .writemodal_likebutton {
@@ -70,21 +71,41 @@
   text-align: center;
 }
 
-  .pictureinput{
+#writemodal_pictureinput{
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
-  }
+}
 
-  .minipicture{
+#writemodal_minipicture{
     display: flex;
     justify-content: center;
-  }
+}
 
-  #writemodal_NoBgButton {
+#writemodal_NoBgButton {
     background-color : white;
     border: none;
     color : black;
     font-weight:bold;
+}
+
+#writemodal_selected_cate {
+  margin-top: 7%;
+  text-align-last: center;
+  font-weight: bold;
+}
+
+#writemodal_cate_select {
+  margin-top: 5%;
+  margin-bottom: 5%;
+  height: 150px;
+}
+
+#writemodal_cate_air {
+  text-align: -webkit-center;
+}
+
+#writemodal_cate_menu {
+  text-align: -webkit-center;
 }
