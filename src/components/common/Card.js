@@ -9,11 +9,11 @@ export default function card(props) {
     let {title, sub_title, src, alt, images} = props
 
     return (
-        <div className='card'>
-            <div className='wrapper'>
+        <div id='home_card'>
+            <div id='home_wrapper'>
                 <div className={newClassName}></div>
-                <div className="card_img" style={{ "backgroundImage": bg_img }}></div>
-                <div className='cardInfo'>
+                <div id="home_card_img" style={{ "backgroundImage": bg_img }}></div>
+                <div id='home_cardInfo'>
                     <h5>{title}</h5>
                     <h6>{sub_title}</h6>
                     <Link to={src}><Button variant="primary" size="sm" style={{marginTop: "2%"}}>이동하기</Button></Link>

@@ -8,12 +8,12 @@ import { Link } from 'react-router-dom'
 export default function Home(props) {
 
   return (
-    <div className="home">
-      <div className='section1'>
-        <video className='video' src='../image/black_cafe.mp4' autoPlay loop muted></video>
-        <div className='text-wrapper'>
-          <h1 className='hometitle'>나만의 카페를 찾아보세요!</h1>
-          <h3 className='introduce'>
+    <div id="home_home">
+      <div id='home_section1'>
+        <video id='home_video' src='../image/black_cafe.mp4' autoPlay loop muted></video>
+        <div id='home_text_wrapper'>
+          <h1 id='home_hometitle'>나만의 카페를 찾아보세요!</h1>
+          <h3 id='home_introduce'>
             카페 큐레이팅 서비스 입니다.<br/>
             자신의 관심사를 선택하세요!<br/>
             {props.user}님을 위한 카페를 추천해드립니다!<br/>
