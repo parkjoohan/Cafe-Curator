@@ -1,6 +1,7 @@
 import React from 'react'
 import {Switch, Route} from 'react-router-dom'
 import Home from './components/common/Home';
+import EmailForm from "./components/user/EmailForm";
 import LoginForm from "./components/user/LoginForm";
 import SignupForm from "./components/user/SignupForm";
 import TermsModal from './components/user/TermsModal';
@@ -19,6 +20,7 @@ export default function Routers(props) {
     <Switch>
       <Route exact path="/"><Home user={props.user}/></Route>
       <Route path="/login"><LoginForm setUser={props.setUser}/></Route>
+      <Route path="/email" component={EmailForm}></Route>
       <Route path="/signup" component={SignupForm}></Route>
       <Route exact path="/feed"><Mainfeed setFootershow={props.setFootershow}/></Route>
       <Route exact path="/feed2"><Mainfeed2 setFootershow={props.setFootershow}/></Route>

@@ -62,7 +62,7 @@ const style = {
       <Col  xs={4}>
         <Nav id='header_right'>
           <Nav.Link><Link to="/login" id="header_link">Login</Link></Nav.Link>
-          <Nav.Link><Link to="/signup" id="header_link">Signup</Link></Nav.Link>
+          <Nav.Link><Link to="/email" id="header_link">Signup</Link></Nav.Link>
           <div id="header_profile">
           <NavDropdown align="end" title={<img id="header_prof_img" style={{width: "40px"}}
             src={process.env.PUBLIC_URL + "/image/hello.png"}

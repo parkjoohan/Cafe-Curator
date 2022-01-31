@@ -55,11 +55,9 @@ export default function SignupForm () {
             />
 
             {/* 이메일 */}
-            <TextField label="Email" placeholder='Enter email' fullWidth required />
-            <Button id='signup_emailbutton' variant="primary" onClick={() => EmailsetModalShow(true)}>
-            이메일인증
-            </Button>
-            <EmailModal show={EmailmodalShow} onHide={() => EmailsetModalShow(false)}/>
+            <div id="singup_content">
+              <TextField label="Email" placeholder='Enter email' type="email" fullWidth required />
+            </div>
 
             {/* 비밀번호 & 아이디 */}
             <div id="singup_content">
@@ -68,8 +66,10 @@ export default function SignupForm () {
             <div id="singup_content">
             <TextField label="Re-Password" placeholder='Enter password' type="password" fullWidth required />
             </div>
-
-            <TextField label="Username" placeholder='Enter username' type="password" fullWidth required />
+            <div id="singup_content">
+              <TextField label="Username" placeholder='Enter username' type="password" fullWidth required />
+            </div>
+            
             
             <div style={{marginTop: "3%", marginBottom: "5%"}}>
               <Row>

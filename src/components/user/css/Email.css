@@ -1,41 +1,35 @@
-.input {
+#email_content {
+  font-family: system-ui, serif;
+  font-size: 1rem;
+  padding: 3rem;
+  border-radius: 1rem;
+  align-items: initial;
+}
+
+#email_avatarStyle {
+  background: #1bbd7e;
+  margin-bottom: 3%;
+}
+
+#email_body  {
+  margin-left : 20px;
+}
+
+#email_body h4 {
+  font-weight: bold;
+}
+
+#input {
   flex: 1;
   font-size: 1rem;
   outline: none;
   border: none;
   border-bottom: 1px solid #969696;
 }
-.h4 {
-  margin-left: 3px;
-  color: #484848;
-}
-#navcolor {
-  height: 30px;
-  background-color: #4b6b79;
-}
-#NoBgButton {
+
+#email_NoBgButton {
   background-color : white;
   border: none;
   color : #1E4DF6;
   font-weight:bold;
-}
-
-#NoBgExit {
-  margin-right: auto;
-  background-color : white;
-  border: none;
-  color : #484848;
-  font-weight:bold;
-}
-#ModalPadding {
-  padding : 0;
-}
-
-#EmailMarginLeft  {
-  margin-left : 20px;
-}
-
-#EmailMarginLeft h4 {
-  margin-left : 20px;
-  font-weight: bold;
 }
