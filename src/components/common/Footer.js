@@ -11,154 +11,154 @@ function Footer(props) {
     console.log(props)
   })
   return (
-        <Grid container className="footer__container">
-          <Grid container md={4} sm={12} alignItems="center" className="center">
+        <Grid container id="footer_container">
+          <Grid container md={4} sm={12} alignItems="center" id="footer_center">
             <img
               src={process.env.PUBLIC_URL + "/image/java.png"}
               alt="logo"
-              className="logo"
+              id="footer_logo"
             />
-            <span className="logo__name">Cafe Curator</span>
-            <div className="logo__description">
+            <span id="footer_logo_name">Cafe Curator</span>
+            <div id="footer_logo_description">
               자신의 관심사에 맞는 카페에서<br />
               커피와 디저트를 즐기세요
             </div>
-            <hr className="hr" />
+            <hr id="footer_hr" />
           </Grid>
 
           <Grid container md sm={12}>
-            <Grid className="col" xs={12} sm md>
-              <div className="col__title">Products</div>
+            <Grid id="footer_col" xs={12} sm md>
+              <div id="footer_col_title">Products</div>
               <div style={{ marginBottom: "0.4rem" }}>
-                <a href="www.google.com" className="col__links">
+                <a href="www.google.com" id="footer_col_links">
                   Pricing
                 </a>
               </div>
               <div style={{ marginBottom: "0.4rem" }}>
-                <a href="www.google.com" className="col__links">
+                <a href="www.google.com" id="footer_col_links">
                   Teams
                 </a>
               </div>
               <div style={{ marginBottom: "0.4rem" }}>
-                <a href="www.google.com" className="col__links">
+                <a href="www.google.com" id="footer_col_links">
                   Education
                 </a>
               </div>
               <div style={{ marginBottom: "0.4rem" }}>
-                <a href="www.google.com" className="col__links">
+                <a href="www.google.com" id="footer_col_links">
                   Refer a friend
                 </a>
               </div>
               <div style={{ marginBottom: "0.4rem" }}>
-                <a href="www.google.com" className="col__links">
+                <a href="www.google.com" id="footer_col_links">
                   Updates
                 </a>
               </div>
             </Grid>
-            <Grid className="col" xs={12} sm md>
-              <div className="col__title">Features</div>
+            <Grid id="footer_col" xs={12} sm md>
+              <div id="footer_col_title">Features</div>
               <div style={{ marginBottom: "0.4rem" }}>
-                <a href="www.google.com" className="col__links">
+                <a href="www.google.com" id="footer_col_links">
                   Overview
                 </a>
               </div>
               <div style={{ marginBottom: "0.4rem" }}>
-                <a href="www.google.com" className="col__links">
+                <a href="www.google.com" id="footer_col_links">
                   Design
                 </a>
               </div>
               <div style={{ marginBottom: "0.4rem" }}>
-                <a href="www.google.com" className="col__links">
+                <a href="www.google.com" id="footer_col_links">
                   Code
                 </a>
               </div>
               <div style={{ marginBottom: "0.4rem" }}>
-                <a href="www.google.com" className="col__links">
+                <a href="www.google.com" id="footer_col_links">
                   Collaborate
                 </a>
               </div>
               <div style={{ marginBottom: "0.4rem" }}>
-                <a href="www.google.com" className="col__links">
+                <a href="www.google.com" id="footer_col_links">
                   Sletch Plugin
                 </a>
               </div>
             </Grid>
           </Grid>
           <Grid container md sm={12}>
-            <Grid className="col" xs={12} sm md>
-              <div className="col__title">Get Started</div>
+            <Grid id="footer_col" xs={12} sm md>
+              <div id="footer_col_title">Get Started</div>
               <div style={{ marginBottom: "0.4rem" }}>
-                <a href="www.google.com" className="col__links">
+                <a href="www.google.com" id="footer_col_links">
                   Tutorials
                 </a>
               </div>
               <div style={{ marginBottom: "0.4rem" }}>
-                <a href="www.google.com" className="col__links">
+                <a href="www.google.com" id="footer_col_links">
                   Resources
                 </a>
               </div>
               <div style={{ marginBottom: "0.4rem" }}>
-                <a href="www.google.com" className="col__links">
+                <a href="www.google.com" id="footer_col_links">
                   Guides
                 </a>
               </div>
               <div style={{ marginBottom: "0.4rem" }}>
-                <a href="www.google.com" className="col__links">
+                <a href="www.google.com" id="footer_col_links">
                   Examples
                 </a>
               </div>
               <div style={{ marginBottom: "0.4rem" }}>
-                <a href="www.google.com" className="col__links">
+                <a href="www.google.com" id="footer_col_links">
                   Docs
                 </a>
               </div>
             </Grid>
-            <Grid className="col" xs={12} sm md>
-              <div className="col__title">About</div>
+            <Grid id="footer_col" xs={12} sm md>
+              <div id="footer_col_title">About</div>
               <div style={{ marginBottom: "0.4rem" }}>
-                <a href="www.google.com" className="col__links">
+                <a href="www.google.com" id="footer_col_links">
                   Stories
                 </a>
               </div>
               <div style={{ marginBottom: "0.4rem" }}>
-                <a href="www.google.com" className="col__links">
+                <a href="www.google.com" id="footer_col_links">
                   Community
                 </a>
               </div>
               <div style={{ marginBottom: "0.4rem" }}>
-                <a href="www.google.com" className="col__links">
+                <a href="www.google.com" id="footer_col_links">
                   Blog
                 </a>
               </div>
               <div style={{ marginBottom: "0.4rem" }}>
-                <a href="www.google.com" className="col__links">
+                <a href="www.google.com" id="footer_col_links">
                   Careers
                 </a>
               </div>
               <div style={{ marginBottom: "0.4rem" }}>
-                <a href="www.google.com" className="col__links">
+                <a href="www.google.com" id="footer_col_links">
                   Brand Assets
                 </a>
               </div>
             </Grid>
           </Grid>
-          <Grid md={12} sm={12} className="social">
-            <hr className="social__hr" />
-            <div className="social__tags">
+          <Grid md={12} sm={12} id="footer_social">
+            <hr id="footer_social_hr" />
+            <div id="footer_social_tags">
               <IconButton>
-                <FacebookIcon className="social__tags__color" />
+                <FacebookIcon id="footer_social_tags_color" />
               </IconButton>
               <IconButton>
-                <LinkedInIcon className="social__tags__color" />
+                <LinkedInIcon id="footer_social_tags_color" />
               </IconButton>
               <IconButton>
-                <TwitterIcon className="social__tags__color" />
+                <TwitterIcon id="footer_social_tags_color" />
               </IconButton>
               <IconButton>
-                <GitHubIcon className="social__tags__color" />
+                <GitHubIcon id="footer_social_tags_color" />
               </IconButton>
             </div>
-            <div className="social__copyrights">
+            <div id="footer_social_copyrights">
               © 2022 King Q-Lab. All Rights Reserved.
             </div>
           </Grid>
@@ -167,106 +167,3 @@ function Footer(props) {
 }
 
 export default Footer;
-
-// import React from "react";
-// import "./css/Footer.css";
-// import Button from "react-bootstrap/Button";
-// import { Link } from "react-router-dom";
-
-// function Footer() {
-//   return (
-//     <div className="footer-container">
-//       <section className="footer-subscription">
-//         <p className="footer-subscription-heading">
-//           카페 큐레이터에 오신걸 환영합니다
-//         </p>
-//         <p className="footer-subscription-text">
-//           관심사에 맞게 카페를 찾아보세요!
-//         </p>
-//       </section>
-//       <div class="footer-links">
-//         <div className="footer-link-wrapper">
-//           <div class="footer-link-items">
-//             <h2>About Us</h2>
-//             <Link to="/">사이트 기능</Link>
-//             <Link to="/">사이트 목적</Link>
-//           </div>
-//           <div class="footer-link-items">
-//             <h2>Contact Us</h2>
-//             <Link to="/">Contact</Link>
-//             <Link to="/">Support</Link>
-//           </div>
-//         </div>
-//         <div className="footer-link-wrapper">
-//           <div class="footer-link-items">
-//             <h2>Nothing</h2>
-//             <Link to="/">Nothing</Link>
-//             <Link to="/">Nothing</Link>
-//           </div>
-//           <div class="footer-link-items">
-//             <h2>Social Media</h2>
-//             <Link to="/">Instagram</Link>
-//             <Link to="/">Facebook</Link>
-//             <Link to="/">Youtube</Link>
-//             <Link to="/">Twitter</Link>
-//           </div>
-//         </div>
-//       </div>
-//       <section class="social-media">
-//         <div class="social-media-wrap">
-//           <div class="footer-logo">
-//             <Link to="/" className="social-logo">
-//               King Q-Lab
-//               <i class="fab fa-typo3" />
-//             </Link>
-//           </div>
-//           <small class="website-rights">KingQ-Lab © 2022</small>
-//           <div class="social-icons">
-//             <Link
-//               class="social-icon-link facebook"
-//               to="/"
-//               target="_blank"
-//               aria-label="Facebook"
-//             >
-//               <i class="fab fa-facebook-f" />
-//             </Link>
-//             <Link
-//               class="social-icon-link instagram"
-//               to="/"
-//               target="_blank"
-//               aria-label="Instagram"
-//             >
-//               <i class="fab fa-instagram" />
-//             </Link>
-//             <Link
-//               class="social-icon-link youtube"
-//               to="/"
-//               target="_blank"
-//               aria-label="Youtube"
-//             >
-//               <i class="fab fa-youtube" />
-//             </Link>
-//             <Link
-//               class="social-icon-link twitter"
-//               to="/"
-//               target="_blank"
-//               aria-label="Twitter"
-//             >
-//               <i class="fab fa-twitter" />
-//             </Link>
-//             <Link
-//               class="social-icon-link twitter"
-//               to="/"
-//               target="_blank"
-//               aria-label="LinkedIn"
-//             >
-//               <i class="fab fa-linkedin" />
-//             </Link>
-//           </div>
-//         </div>
-//       </section>
-//     </div>
-//   );
-// }
-
-// export default Footer;
