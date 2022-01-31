@@ -1,22 +1,13 @@
-.con {
-    width: 80%;
-}
-.article_con {
+#article_con {
     margin-bottom: 100px;
 }
 
-.article_frame {
+#article_frame {
     border-radius: 10px;
     border: 2px solid black;
 }
 
-.article_img {
-    padding-top: 35%;
-    margin: 3%;
-    width: 95%;
-}
-
-.profile_info {
+#article_profile_info {
     display: flex;
     justify-content: space-between;
     height: 10%;
@@ -24,46 +15,51 @@
     margin-left: 5%;
     margin-right: 5%;
 }
+#article_article_img {
+    padding-top: 35%;
+    margin: 3%;
+    width: 95%;
+}
 
-.profile_frame {
+#article_profile_frame {
     border-radius: 50%;
     background-color: rgb(181, 230, 4);
     width: 100%;
     height: 100%;
 }
 
-.prof_img {
+#article_profile_prof_img {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
 
-.username {
+#article_username {
     align-self: center;
     margin-left: 10px;
     font-size: 30px;
     font-weight: bold;
 }
 
-.profile_date {
+#article_profile_date {
     align-self: center;
 }
 
-.cafe_name {
+#article_cafe_name {
     font-size: 20px;
     margin-left: 5%;
     margin-bottom: 3%;
     margin-top: 3%;
 }
 
-.article_body {
+#article_body {
     display: flex ;
     flex-direction: column;
     align-items: center;
     height: 400px;
 }
 
-.article_content_frame {
+#article_content_frame {
     border: 1px solid black;
     display: flex;
     flex-direction: column;
@@ -73,24 +69,24 @@
     border-radius: 10px;
 }
 
-.article_content {
-    margin: 3%;
+#article_content {
+    margin: 5%;
 }
 
-.category {
+#article_category {
     display: flex;
     width: 90%;
     margin-top: 3%;
     justify-content: flex-start;
 }
 
-.category_content {
+#article_category_content {
     margin-right: 3%;
     padding: 5px;
     border-radius: 10px;
 }
 
-.heart_bookmark {
+#article_heart_bookmark {
     display: flex;
     width: 80%; 
     margin-top: 1%;
@@ -98,7 +94,7 @@
     justify-content: flex-start;
 }
 
-.comment {
+#article_comment {
     display: flex;
     flex-direction: column;
     width: 90%;
@@ -109,7 +105,7 @@
     justify-content: flex-start;
 }
 
-.comment_frame {
+#article_comment_frame {
     border: 1px solid black;
     height: 100%;
     display: flex;
@@ -118,31 +114,31 @@
     border-radius: 10px;
 }
 
-.comments-frame {
+#article_comments-frame {
     margin: 1%;
     height: 100%;
 }
 
-.comments {
+#article_comments {
     position: relative;
     display: flex;
 }
 
-.comments_user {
+#article_comments_user {
     font-weight: bold;
 }
 
-.comments_content {
+#article_comments_content {
     margin-left: 3%;
     margin-right: 3%;
 }
 
-.re_comments {
+#article_re_comments {
     position: relative;
     display: flex; 
     left: 10%;
 }
 
-.tag_user {
+#article_tag_user {
     margin-left: 3%;
 }
