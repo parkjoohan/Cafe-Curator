@@ -1,5 +1,6 @@
 package com.kql.caffein.jwt;
 
+import com.kql.caffein.dto.Token;
 import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.InitializingBean;
@@ -23,12 +24,12 @@ import java.util.stream.Collectors;
 @Component
 public class TokenProvider implements InitializingBean {
     private static final String AUTHORITIES_KEY = "auth";
+    private static final String BEARER_TYPE = "bearer";
+    private static final long ACCESS_TOKEN_EXPIRE_TIME = 1000 * 60 * 60;            // 1시간
+    private static final long REFRESH_TOKEN_EXPIRE_TIME = 1000 * 60 * 60 * 24 * 14;  // 2주
 
     @Value("${jwt.secret}")
     private String secret;
-
-    @Value("${jwt.token-validity-in-seconds}")
-    private long tokenValidityInMilliseconds;
 
     private Key key;
 
@@ -40,7 +41,7 @@ public class TokenProvider implements InitializingBean {
     }
 
     //Jwt 토큰 생성 메소드
-    public String createToken(Authentication authentication){
+    public Token createToken(Authentication authentication){
         //권한들 가져오기
         String authorities = authentication.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
@@ -48,24 +49,40 @@ public class TokenProvider implements InitializingBean {
 
         Long now = new Date().getTime();
 
-        Date Validity = new Date(now + this.tokenValidityInMilliseconds * 1000);
-
-        return Jwts.builder()
-                .setSubject(authentication.getName()) // 토큰 제목 (sub Claim)
-                .claim(AUTHORITIES_KEY, authorities) //사용자 정의 Claim. 권한 설정 (auth Claim)
-                .setExpiration(Validity) //만료기간 (exp Claim)
-                .signWith(SignatureAlgorithm.HS512, key) //암호화 알고리즘, signature에 들어갈 secret값 세팅
+        Date accessTokenExpiresIn = new Date(now + ACCESS_TOKEN_EXPIRE_TIME);
+        String accessToken = Jwts.builder()
+                .setSubject(authentication.getName())       // 토큰 제목 (sub Claim). 예시 : payload "sub": "name"
+                .claim(AUTHORITIES_KEY, authorities)        // 사용자 정의 Claim. 권한 설정 (auth Claim). 예시 : payload "auth": "ROLE_USER"
+                .setExpiration(accessTokenExpiresIn)        // 만료기간 (exp Claim). 예시 : payload "exp": 1516239022
+                .signWith(SignatureAlgorithm.HS512, key)    // 암호화 알고리즘, signature에 들어갈 secret값 세팅. header "alg": "HS512"
                 .compact();
+
+        // Refresh Token 생성
+        String refreshToken = Jwts.builder()
+                .setExpiration(new Date(now + REFRESH_TOKEN_EXPIRE_TIME))
+                .signWith(SignatureAlgorithm.HS512, key)
+                .compact();
+
+        return Token.builder()
+                .accessToken(accessToken)
+                .refreshToken(refreshToken)
+                .refreshTokenExpirationTime(REFRESH_TOKEN_EXPIRE_TIME)
+                .build();
+
     }
 
     //인증 성공시 SecurityContextHolder에 저장할 Authentication 객체 생성 (권한 정보를 파싱하여 Authentication 객체 리턴)
-    public Authentication getAuthentication(String token){
+    public Authentication getAuthentication(String accessToken){
         //토큰에서 Payload(Claim) 추출
         Claims claims = Jwts
                 .parser()
                 .setSigningKey(key) //서명 키 생성
-                .parseClaimsJws(token) //토큰을 Jws로 파싱
+                .parseClaimsJws(accessToken) //토큰을 Jws로 파싱
                 .getBody();
+
+        if (claims.get(AUTHORITIES_KEY) == null) {
+            throw new RuntimeException("권한 정보가 없는 토큰입니다.");
+        }
 
         //Claim에서 권한 정보 가져오기
         Collection<? extends GrantedAuthority> authorities =
@@ -76,7 +93,7 @@ public class TokenProvider implements InitializingBean {
         //User 객체를 만들어서 Authentication 리턴
         User principal = new User(claims.getSubject(), "", authorities);
 
-        return new UsernamePasswordAuthenticationToken(principal, token, authorities);
+        return new UsernamePasswordAuthenticationToken(principal, accessToken, authorities);
     }
 
     //토큰 검증

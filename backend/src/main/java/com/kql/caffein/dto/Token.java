@@ -1,15 +1,15 @@
 package com.kql.caffein.dto;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 @Getter
+@Setter
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Token {
-    String accessToken;
-//    String refreshToken;
+    private String accessToken;
+    private String refreshToken;
+    private Long refreshTokenExpirationTime;
 }

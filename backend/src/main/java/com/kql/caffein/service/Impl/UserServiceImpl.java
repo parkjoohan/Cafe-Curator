@@ -1,26 +1,40 @@
 package com.kql.caffein.service.Impl;
 
 import com.kql.caffein.dto.Role;
+import com.kql.caffein.dto.Token;
 import com.kql.caffein.dto.User.UserDetailDto;
 import com.kql.caffein.dto.User.UserDto;
+import com.kql.caffein.dto.User.UserLoginDto;
 import com.kql.caffein.entity.EmailAuth;
 import com.kql.caffein.entity.User.User;
 import com.kql.caffein.entity.User.UserDetail;
+import com.kql.caffein.jwt.TokenProvider;
 import com.kql.caffein.repository.EmailAuthRepository;
 import com.kql.caffein.repository.UserDetailRepository;
 import com.kql.caffein.repository.UserRepository;
 import com.kql.caffein.service.EmailAuthService;
+import com.kql.caffein.service.S3Service;
 import com.kql.caffein.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.util.http.fileupload.FileUploadException;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.spi.MatchingStrategy;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
+import javax.validation.constraints.Email;
 import java.io.File;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -30,6 +44,10 @@ public class UserServiceImpl implements UserService {
     private final UserDetailRepository userDetailRepository;
     private final EmailAuthRepository emailAuthRepository;
     private final EmailAuthService emailAuthService;
+    private final S3Service s3Service;
+    private final TokenProvider tokenProvider;
+    private final AuthenticationManagerBuilder authenticationManagerBuilder;
+    private final RedisTemplate redisTemplate;
     private final PasswordEncoder passwordEncoder;
     private final String separ = File.separator;
 
@@ -53,102 +71,104 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public String uploadPicture(MultipartFile multipartFile) throws Exception {
-        //프로필 사진(multipartFile)이 비어있지 않다면 사진을 저장하고 DB에 저장할 경로명을 만듦
-        File file = new File("");
-        String rootPath = file.getAbsolutePath().split("backend")[0];
-        String savePath = rootPath + "frontend" + separ + "public" + separ + "image" + separ + "profileImg";
-
-        if(!new File(savePath).exists()){
-            try{
-                new File(savePath).mkdirs();
-            } catch (Exception e){
-                e.printStackTrace();
-            }
-        }
-
         String originFileName = multipartFile.getOriginalFilename();
         String extension = originFileName.substring(originFileName.length()-3);
         if(!(extension.equals("jpg") || extension.equals("png"))){
             throw new FileUploadException("파일 확장자가 jpg나 png가 아닙니다.");
         }
-        String saveFileName = UUID.randomUUID().toString() + originFileName;
-        String filePath = savePath + separ + saveFileName;
+        String imgURL = s3Service.upload(multipartFile);
 
-        multipartFile.transferTo(new File(filePath));
-
-        return filePath;
+        return imgURL;
     }
 
     @Override
     @Transactional
     public void register(UserDto userDto, UserDetailDto userDetailDto) throws Exception {
         Optional<User> users = findByEmail(userDto.getEmail());
-        if(!users.isEmpty()){
+        if(users.isPresent()){
             throw new IllegalArgumentException("이미 가입한 이메일입니다.");
         }
 
-        String randomUserNo = getUserNo();
-        User user = User.builder()
-                .userNo(randomUserNo)
-                .email(userDto.getEmail())
-                .joinDate(new Date())
-                .oauthType("kql")
-                .role(Role.RECRUIT)
-                .build();
-        userRepository.save(user);
+        try{
+            //userNo 생성
+            String randomUserNo = getUserNo();
 
-        UserDetail userDetail = UserDetail.builder()
-                .userNo(randomUserNo)
-                .userId(userDetailDto.getUserId())
-                .pass(passwordEncoder.encode(userDetailDto.getPass()))
-                .introduction(userDetailDto.getIntroduction())
-                .build();
-        userDetailRepository.save(userDetail);
+            Optional<EmailAuth> emailAuth = emailAuthRepository.findByEmail(userDto.getEmail());
 
-        EmailAuth emailAuth = EmailAuth.builder()
-                .userNo(randomUserNo)
-                .code(emailAuthService.setCode())
-                .state(false)
-                .build();
-        emailAuthRepository.save(emailAuth);
-        emailAuthService.sendMail(userDto.getEmail(), emailAuth.getCode());
+            User user = User.builder()
+                    .userNo(randomUserNo)
+                    .emailAuth(emailAuth.get())
+                    .joinDate(new Date())
+                    .oauthType("kql")
+                    .role(Role.USER)
+                    .build();
+            userRepository.save(user);
+
+            //관심사 나중에 해야함
+            UserDetail userDetail = UserDetail.builder()
+                    .userNo(randomUserNo)
+                    .userId(userDetailDto.getUserId())
+                    .pass(passwordEncoder.encode(userDetailDto.getPass()))
+                    .build();
+            userDetailRepository.save(userDetail);
+        } catch (Exception e){
+            e.printStackTrace();
+            throw new RuntimeException("가입 진행중 문제 발생");
+        }
+    }
+
+    @Override
+    public Token login(UserLoginDto userLoginDto) throws Exception {
+        UsernamePasswordAuthenticationToken authenticationToken =
+                new UsernamePasswordAuthenticationToken(userLoginDto.getEmail(), userLoginDto.getPass());
+
+        //유저 정보를 조회하여 인증 정보를 생성
+        Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
+        //해당 인증 정보를 현재 실행중인 스레드(Security Context)에 저장
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        //해당 인증 정보를 기반으로 jwt 토큰을 생성
+        Token jwt = tokenProvider.createToken(authentication);
+
+        redisTemplate.opsForValue().set(authentication.getName(), jwt.getRefreshToken(), jwt.getRefreshTokenExpirationTime(), TimeUnit.MILLISECONDS);
+        return jwt;
     }
 
     @Override
     @Transactional
     public void register(UserDto userDto, UserDetailDto userDetailDto, MultipartFile multipartFile) throws Exception {
         Optional<User> users = findByEmail(userDto.getEmail());
-        if(!users.isEmpty()){
+        if(users.isPresent()){
             throw new IllegalArgumentException("이미 가입한 이메일입니다.");
         }
 
-        String filePath = uploadPicture(multipartFile);
-        String randomUserNo = getUserNo();
-        User user = User.builder()
-                .userNo(randomUserNo)
-                .email(userDto.getEmail())
-                .joinDate(new Date())
-                .oauthType("kql")
-                .role(Role.RECRUIT)
-                .build();
-        userRepository.save(user);
+        try{
+            //userNo 생성
+            String randomUserNo = getUserNo();
 
-        UserDetail userDetail = UserDetail.builder()
-                .userNo(randomUserNo)
-                .userId(userDetailDto.getUserId())
-                .pass(passwordEncoder.encode(userDetailDto.getPass()))
-                .introduction(userDetailDto.getIntroduction())
-                .picture(filePath)
-                .build();
-        userDetailRepository.save(userDetail);
+            Optional<EmailAuth> emailAuth = emailAuthRepository.findByEmail(userDto.getEmail());
+            String imgRUL = uploadPicture(multipartFile);
 
-        EmailAuth emailAuth = EmailAuth.builder()
-                .userNo(randomUserNo)
-                .code(emailAuthService.setCode())
-                .state(false)
-                .build();
-        emailAuthRepository.save(emailAuth);
-        emailAuthService.sendMail(userDto.getEmail(), emailAuth.getCode());
+            User user = User.builder()
+                    .userNo(randomUserNo)
+                    .emailAuth(emailAuth.get())
+                    .joinDate(new Date())
+                    .oauthType("kql")
+                    .role(Role.USER)
+                    .build();
+            userRepository.save(user);
+
+            //관심사 나중에 해야함
+            UserDetail userDetail = UserDetail.builder()
+                    .userNo(randomUserNo)
+                    .userId(userDetailDto.getUserId())
+                    .pass(passwordEncoder.encode(userDetailDto.getPass()))
+                    .picture(imgRUL)
+                    .build();
+            userDetailRepository.save(userDetail);
+        } catch (Exception e){
+            e.printStackTrace();
+            throw new RuntimeException("가입 진행중 문제 발생");
+        }
     }
 
     @Override
@@ -172,25 +192,22 @@ public class UserServiceImpl implements UserService {
     public void updateUser(UserDetailDto userDetailDto, MultipartFile multipartFile) throws Exception {
         UserDetail userDetail = userDetailRepository.findByUserNo(userDetailDto.getUserNo());
 
-        File originFile = new File(userDetail.getPicture());
-
-        if(originFile.exists()){
-            originFile.delete();
-            log.info("이전 프로필 사진 삭제");
-        }
-
-        String filePath = uploadPicture(multipartFile);
+        String imgRUL = uploadPicture(multipartFile);
 
         userDetail.setUserId(userDetailDto.getUserId());
         userDetail.setIntroduction(userDetailDto.getIntroduction());
         userDetail.setCategoryList(userDetailDto.getCategoryList());
-        userDetail.setPicture(filePath);
+        userDetail.setPicture(imgRUL);
 
         userDetailRepository.save(userDetail);
     }
 
     @Override
+    @Transactional
     public void deleteByUserNo(String userNo) {
+        User user = userRepository.findByUserNo(userNo);
+        String email = user.getEmailAuth().getEmail();
+        emailAuthRepository.deleteByEmail(email);
         userRepository.deleteByUserNo(userNo);
     }
 
@@ -206,7 +223,35 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public UserDetailDto getUser(String userNo) throws Exception {
+        UserDetail userDetail = userDetailRepository.findByUserNo(userNo);
+//        UserDetailDto userDetailDto = UserDetailDto.builder()
+//                .userNo(userDetail.getUserNo())
+//                .categoryList(userDetail.getCategoryList())
+//                .followerCount(userDetail.getFollowerCount())
+//                .followingCount(userDetail.getFollowingCount())
+//                .introduction(userDetail.getIntroduction())
+//                .picture(userDetail.getPicture())
+//                .userId(userDetail.getUserId())
+//                .build();
+        ModelMapper mapper = new ModelMapper();
+        UserDetailDto userDetailDto = mapper.map(userDetail, UserDetailDto.class);
+
+        return userDetailDto;
+    }
+
+    @Override
     public List<UserDetail> findAll() {
         return userDetailRepository.findAll();
+    }
+
+    @Override
+    public List<UserDetailDto> getUsers() {
+        List<UserDetail> userDetailList = findAll();
+
+        ModelMapper mapper = new ModelMapper();
+        List<UserDetailDto> userDetailDtoList = userDetailList.stream().map(userDetail -> mapper.map(userDetail, UserDetailDto.class)).collect(Collectors.toList());
+
+        return userDetailDtoList;
     }
 }

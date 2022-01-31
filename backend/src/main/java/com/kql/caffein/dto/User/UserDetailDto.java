@@ -3,15 +3,13 @@ package com.kql.caffein.dto.User;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 @Getter
 @Setter
@@ -41,9 +39,12 @@ public class UserDetailDto {
     @ApiModelProperty(value = "프로필 사진")
     private String picture;
 
-    @ApiModelProperty(value = "리프레시 토큰")
-    private String refreshToken;
-
     @ApiModelProperty(value = "카테고리")
-    private String categoryList;
+    private List<String> categoryList;
+
+    @ApiModelProperty(value = "팔로워 수")
+    private int followerCount;
+
+    @ApiModelProperty(value = "팔로잉 수")
+    private int followingCount;
 }

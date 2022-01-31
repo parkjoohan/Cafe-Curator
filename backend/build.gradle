@@ -24,6 +24,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 	implementation 'io.springfox:springfox-swagger-ui:2.9.2'
 	implementation 'io.springfox:springfox-swagger2:2.9.2'
 	implementation 'mysql:mysql-connector-java:8.0.22'
@@ -33,6 +34,7 @@ dependencies {
 	implementation 'com.google.code.gson:gson:2.8.7'
 	implementation 'org.springframework.boot:spring-boot-starter-mail'
 	implementation 'org.springframework:spring-context-support:5.3.13'
+	implementation 'org.modelmapper:modelmapper:2.3.8'
 
 
 	compileOnly 'org.projectlombok:lombok'

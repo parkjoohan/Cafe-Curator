@@ -28,7 +28,7 @@ public class CustomUserDetailService implements UserDetailsService {
         if(user.isPresent()){
             UserDetail userDetail = userDetailRepository.findByUserNo(user.get().getUserNo());
             return org.springframework.security.core.userdetails.User.builder()
-                    .username(user.get().getEmail())
+                    .username(user.get().getEmailAuth().getEmail())
                     .password(userDetail.getPass())
                     .roles(user.get().getRole().getKey())
                     .build();

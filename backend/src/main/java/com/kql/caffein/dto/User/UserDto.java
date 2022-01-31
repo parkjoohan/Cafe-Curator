@@ -29,6 +29,7 @@ public class UserDto {
     @ApiModelProperty(value = "가입 날짜")
     private String joinDate;
 
+    @Size(max = 10)
     @ApiModelProperty(value = "회원가입 구분")
     private String oauthType;
 

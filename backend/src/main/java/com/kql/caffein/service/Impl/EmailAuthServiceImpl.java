@@ -14,6 +14,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
 import java.util.Random;
 
 @Slf4j
@@ -25,6 +26,31 @@ public class EmailAuthServiceImpl implements EmailAuthService {
 
     @Autowired
     private JavaMailSender mailSender;
+
+    @Override
+    public void emailCheck(EmailAuthDto emailAuthDto) throws Exception {
+        Optional<EmailAuth> emails = emailAuthRepository.findByEmail(emailAuthDto.getEmail());
+
+        //이메일로 조회한 결과가 있으면
+        if(emails.isPresent()){
+            throw new IllegalArgumentException("이미 가입한 이메일입니다.");
+        } else{ //이미 가입된 이메일이 없으면
+            // 코드 생성
+            String code = setCode();
+
+            //이메일을 보낸다.
+            sendMail(emailAuthDto.getEmail(), code);
+
+            //EmailAuth Entity를 만들어서 DB에 넣는다.
+            EmailAuth emailAuth = EmailAuth.builder()
+                    .email(emailAuthDto.getEmail())
+                    .code(code)
+                    .state(false)
+                    .build();
+
+            emailAuthRepository.save(emailAuth);
+        }
+    }
 
     @Override
     public String setCode() throws Exception{
@@ -41,25 +67,6 @@ public class EmailAuthServiceImpl implements EmailAuthService {
     }
 
     @Override
-    public boolean verifyCode(EmailAuthDto emailAuthDto) throws Exception {
-        EmailAuth emailAuth = emailAuthRepository.findByUserNo(emailAuthDto.getUserNo());
-        User user = userRepository.findByUserNo(emailAuthDto.getUserNo());
-
-        if(emailAuthDto.getCode().equals(emailAuth.getCode())){
-
-            emailAuth.setState(true);
-            emailAuthRepository.save(emailAuth);
-
-            user.setRole(Role.USER);
-            userRepository.save(user);
-
-            return true;
-        } else{
-            return false;
-        }
-    }
-
-    @Override
     public void sendMail(String email, String code) throws Exception {
         SimpleMailMessage message = new SimpleMailMessage();
 
@@ -71,7 +78,20 @@ public class EmailAuthServiceImpl implements EmailAuthService {
     }
 
     @Override
-    public EmailAuth findByUserNo(String userNo) {
-        return emailAuthRepository.findByUserNo(userNo);
+    public boolean verifyCode(EmailAuthDto emailAuthDto) throws Exception {
+        Optional<EmailAuth> emailAuth = emailAuthRepository.findByEmail(emailAuthDto.getEmail());
+
+        //DB에 등록된 이메일이 있다면
+        if(emailAuth.isPresent()){
+            //DB의 code와 Dto에 담긴 code가 일치한다면
+            if(emailAuthDto.getCode().equals(emailAuth.get().getCode())){
+                emailAuth.get().setState(true);
+                emailAuthRepository.save(emailAuth.get());
+                return true;
+            }
+        }else{
+            throw new IllegalStateException("등록된 이메일이 없습니다.");
+        }
+        return false;
     }
 }
