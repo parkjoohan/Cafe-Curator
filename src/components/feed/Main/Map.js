@@ -72,7 +72,7 @@ const Map=()=>{
 
 
     return (
-        <div className='mapContainer'>
+        <div id='mapContainer'>
         	<div id="map" style={{width:"100%", height:"550px"}}></div> 
         </div>
     )

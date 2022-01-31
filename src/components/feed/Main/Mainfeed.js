@@ -24,9 +24,9 @@ export default function Mainfeed(props) {
   }
 
   return (
-  <Container className='MainFeed_container'>
+  <Container id='MainFeed_container'>
     <Row>
-      <div className='buttons'>
+      <div id='MainFeed_buttons'>
         <Container>
           <Row>
               <Col xs={11}>
@@ -36,7 +36,7 @@ export default function Mainfeed(props) {
               </div>
             </Col>
             <Col xs={1}>
-              <Button className="Write_button" variant="outline-success" onClick={() => WritesetModalShow(true)}>
+              <Button id="MainFeed_Write_button" variant="outline-success" onClick={() => WritesetModalShow(true)}>
                   <h6 style={{margin: "1px"}}>게시글 작성</h6>
               </Button> 
             </Col>

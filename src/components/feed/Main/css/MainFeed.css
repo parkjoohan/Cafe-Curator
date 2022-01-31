@@ -1,7 +1,7 @@
-.MainFeed_container {
+#MainFeed_container {
     margin-top: 3%;
 }
 
-.Write_button {
+#MainFeed_Write_button {
     width: 100%;
 }
