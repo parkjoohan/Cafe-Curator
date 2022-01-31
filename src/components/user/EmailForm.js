@@ -1,7 +1,7 @@
 import React, { useState,useEffect } from "react";
 import './css/Email.css';
-import { Form, Button, Col, Row } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
+import { Form, Button, Col, Row, Container } from 'react-bootstrap';
+import { Link, } from 'react-router-dom';
 import { Grid, Paper, Avatar } from '@material-ui/core';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 
@@ -9,7 +9,7 @@ const EmailForm = () => {
   
   const paperStyle = {
     padding: 20,
-    height: "470px",
+    height: "510px",
     width: 500,
     margin: "20px auto",
   }
@@ -31,15 +31,22 @@ const EmailForm = () => {
                 <p> 이메일로 발송된 코드를 입력하세요.</p>
               </div>
 
-              <Form.Group>
-                <input
-                id="input"
-                type="email"
-                name="email"
-                placeholder="이메일을 입력하세요.."
-                style={{marginBottom: "8%", marginTop: "3%"}}
-                />
-              </Form.Group>
+              <Container id='email_input'>
+                <Row >
+                  <Col>
+                  <input id="input" type="email" name="email" placeholder="이메일을 입력하세요.." style={{ marginBottom: "3%" }} />
+                  <Button id="email_validate_submit">전송</Button>
+                  </Col>
+                </Row>
+                
+                <Row>
+                  <Col>
+                    <input id="input" type="validate" name="validate" placeholder="인증코드를 입력하세요.." style={{marginBottom: "8%", marginTop: "3%"}} />
+                    <Button id="email_validate_submit">확인</Button>
+                  </Col>
+                </Row>
+                
+              </Container>
 
               <div style={{ marginBottom: "8%" }}>
                 <a> 이메일이 발송되기까지 시간이 다소 소요될 수 있습니다.</a>
