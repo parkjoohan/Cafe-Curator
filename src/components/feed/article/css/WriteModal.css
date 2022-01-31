@@ -39,23 +39,36 @@
     color: #484848
   } */
 
-  .likebutton {
+#writemodal_Margin_Underline {
+  margin-top: 0%;
+  margin-left : 20px;
+  text-decoration: underline;
+  text-underline-position:under;
+} 
+
+#writemodal_cate {
+  margin-bottom: 5%;
+  height: 130px;
+}
+
+.writemodal_likebutton {
     background-color: skyblue;
     padding : 5px;
+    width: 75%;
     margin-top: 10px;
     border-radius: 30px;
     font-weight: 700;
-    text-align:center;
-  }
+    text-align: center;
+}
 
-  .selected {
-    background-color: skyblue;
-    margin-top: 10px;
-    border-radius: 30px;
-    font-weight: 700;
-    text-align:center;
-    font-size:70%;
-  }
+.writemodal_selected {
+  background-color: skyblue;
+  padding : 5px;
+  margin-top: 10px;
+  border-radius: 30px;
+  font-weight: 700;
+  text-align: center;
+}
 
   .pictureinput{
     display: flex;
@@ -68,3 +81,10 @@
     display: flex;
     justify-content: center;
   }
+
+  #writemodal_NoBgButton {
+    background-color : white;
+    border: none;
+    color : black;
+    font-weight:bold;
+}

@@ -55,11 +55,11 @@ export default function Search() {
         {
           results.map((d,index)=>(
             <div>
-            <div className='detail'>주소:{d.address_name}</div>
-            <div className='detail'>id:{d.id}</div>
-            <div className='detail'>좌표:{d.x},{d.y}</div>
-            <div className='detail'>이름:{d.place_name}</div>
-            <div className='detail'>카테고리:{d.category_group_name}</div>
+            <div id='search_detail'>주소:{d.address_name}</div>
+            <div id='search_detail'>id:{d.id}</div>
+            <div id='search_detail'>좌표:{d.x},{d.y}</div>
+            <div id='search_detail'>이름:{d.place_name}</div>
+            <div id='search_detail'>카테고리:{d.category_group_name}</div>
             <hr/>
             </div>
           ))

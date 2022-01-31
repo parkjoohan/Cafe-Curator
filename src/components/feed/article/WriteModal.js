@@ -58,9 +58,9 @@ const WriteModal = ( {show, onHide}) => {
   const defaultlike = like.map((num)=>(
     <>
       {num[1]==false?
-        <Col lg={3} md={5} xs={10}>
+        <Col lg={2} md={5} xs={10}>
           <div 
-          className='likebutton' 
+          className='writemodal_likebutton' 
           id={num[0]}
           onClick={()=>selectlike(num[0])}
           >{likename[num[0]]}</div>
@@ -74,9 +74,9 @@ const WriteModal = ( {show, onHide}) => {
   const selected = like.map((num)=>(
     <>
       {num[1]==true?
-        <Col xs={2}>
+        <Col lg={2} md={5} xs={10}>
           <div 
-          className='selected' 
+          className='writemodal_selected' 
           id={num[0]}
           onClick={()=>unlike(num[0])}
           >{likename[num[0]]}</div>
@@ -86,6 +86,8 @@ const WriteModal = ( {show, onHide}) => {
       }
     </>
   ))
+
+  
     
   // function addlike(e){
   //   const newselectlike = [...selectlike,e];
@@ -106,21 +108,6 @@ const WriteModal = ( {show, onHide}) => {
   //     </>
   //   )
   // }
-
-  const paperStyle = {
-    padding: 20,
-    height: "600px",
-    width: 500,
-    margin: "20px auto",
-  }
-
-  const avatarStyle = {
-    background: "#1bbd7e",
-  }
-
-  const btnStyle = {
-    margin: "8px, "
-  }
 
   function pictures(){
     console.log('사진 올라간다!or 삭제했다.!')
@@ -151,18 +138,38 @@ const WriteModal = ( {show, onHide}) => {
       show = {show}
       onHide = {onHide}
     >
+      <div id="navcolor"></div>
+      <Modal.Header>
+      <h3 id="writemodal_Margin_Underline">게시물 작성</h3>
+      </Modal.Header>
+
       <Modal.Body>
+        {/* 카페 검색 창 */}
+        <Search />
+        {/* 카페 이름 출력창 */}
         <TextField label="Cafe name" placeholder='카페 이름' fullWidth required/><br /><br/>
-        <Search/>
 
-        <Row>
-        </Row>
-
-        <Row style={{justifyContent:"start"}}>
-          {defaultlike}
-        </Row>
+        {/* 관심사 선택 */}
         
-        <br/><br/>
+        <div id='writemodal_cate'>
+          <Row>
+            {/* 선택된 카테고리 */}
+            <Col md={3}>
+              <p id='selected_cate'>선택된 카테고리</p>
+            </Col>
+            <Col md={9}>
+              <Row>{selected}</Row>
+            </Col>
+          </Row>
+
+          <hr />
+
+          <Row style={{ justifyContent: "start" }}>
+            <Row>{defaultlike}</Row>
+          </Row>
+        </div>
+
+        {/* 사진 선택 */}
         <Row>
           <Col lg={5} md={7}>
             <div className='pictureinput'>
@@ -196,14 +203,13 @@ const WriteModal = ( {show, onHide}) => {
                   margin='dense'
                   fullWidth required
             ></TextField>
-            <Row style={{justifyContent:"start"}}>
-              {selected}
-            </Row>
+            
           </Col>
         </Row>
       </Modal.Body>
+
       <Modal.Footer>
-        <Button variant="contained">작성</Button>
+        <Button id="writemodal_NoBgButton" onClick={onHide}>작성</Button>
       </Modal.Footer>
     </Modal>
   )
