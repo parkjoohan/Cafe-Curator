@@ -1,4 +1,4 @@
-#ProfileContainer {
+#storeprofile_Container {
   width: 80%;
   margin-left: 20vh;
   margin-right: 20vh;
@@ -6,16 +6,16 @@
 #divback {
   background-color: #864b139f;
 }
-#ImgPreview {
+#storeprofile_ImgPreview {
   border-radius: 65px;
-  
+  width: 130px;
   height: 130px;
   margin-left: 20%;
 }
-#aMarginleft {
+#storeprofile_aMarginleft {
   margin-left : 20px;
 }
-#pMarginTop{
+#storeprofile_pMarginTop{
   margin-top : 5%;
 }
 #FeedImage {
@@ -35,43 +35,29 @@
   filter : drop-shadow(3px 3px 3px #484848);
   transition : all 0.5s;
 }
-#HrStyle {
+#storeprofile_HrStyle {
   width: 80%;
   margin-left:10%;
 }
 
-#ProfileCol {
-  padding : 0px;
+#storeprofile_ButtonDiv {
+  margin-left: 30vw;
 }
 
-#ProfileButton {
-  width: 80%;
-  border : 0;
-  padding : 0;
-}
-#ProfileButtonLeft {
-  width: 80%;
-  margin-left: 100px;
-  border : 0;
-  padding : 500px;
-}
-#ContainerWidth {
-  width: 10%;
-}
 #btnplus {
   border : 1px solid black;
   width: 20vw;
 }
+
 #case2 {
   border : 1px solid black;
   width: 20vw;
 }
-#ButtonDiv {
-  margin-left: 30vw;
-}
-#modalbox {
+
+
+#storeprofile_modalbox {
   padding: 0;
 }
-#modalbackground {
+#storeprofile_modalbackground {
   background-color : #864b139f;
 }

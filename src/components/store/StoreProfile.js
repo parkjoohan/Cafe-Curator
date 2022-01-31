@@ -116,16 +116,16 @@ export const UserProfile = () => {
         </Row>
       </Container> */}
       
-      <Container id="ProfileContainer">
+      <Container id="storeprofile_Container">
         <Row>
-          <Col sm={5}><img id ="ImgPreview" src={process.env.PUBLIC_URL + "/image/map.png"}></img></Col>
+          <Col sm={5}><img id ="storeprofile_ImgPreview" src={process.env.PUBLIC_URL + "/image/map.png"}></img></Col>
           <Col sm={4}>
             <a style={{fontSize : "2rem"}}>caffemidwork</a><button>팔로우하기</button>
             <br></br>
-            <a>게시물 42</a><a id="aMarginleft">팔로워 269</a><a id="aMarginleft">팔로우 242</a>
+            <a>게시물 42</a><a id="storeprofile_aMarginleft">팔로워 269</a><a id="storeprofile_aMarginleft">팔로우 242</a>
             <br></br>
             <Button style={{color: "blue" }}onClick={handleOpen}>메뉴보기</Button>
-            <h5 id="pMarginTop"> 맛집킬러</h5>
+            <h5 id="storeprofile_pMarginTop"> 맛집킬러</h5>
           </Col>
           <Col sm={3}>
             {/* 라벨부 */}
@@ -137,8 +137,8 @@ export const UserProfile = () => {
         </Row>
         
       </Container>
-      <hr id="HrStyle"></hr>
-      <div id="ButtonDiv" class="btn-group" role="group" aria-label="Basic example">
+      <hr id="storeprofile_HrStyle"></hr>
+      <div id="storeprofile_ButtonDiv" class="btn-group" role="group" aria-label="Basic example">
         <button onClick={() => {GetClick(0);setViewContent(true)}} type="button" id="btnplus" class="btn" >
           
           <i class="fas fa-anchor fa-sm pr-2"
@@ -154,8 +154,8 @@ export const UserProfile = () => {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box id="modalbox" sx={modalstyle}>
-          <div id="modalbackground">
+        <Box id="storeprofile_modalbox" sx={modalstyle}>
+          <div id="storeprofile_modalbackground">
             <br></br>
               <Container>
                 <Row style={{width: "83%", marginLeft: "15%"}}>
