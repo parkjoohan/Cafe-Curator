@@ -12,14 +12,12 @@ import com.kql.caffein.jwt.TokenProvider;
 import com.kql.caffein.repository.EmailAuthRepository;
 import com.kql.caffein.repository.UserDetailRepository;
 import com.kql.caffein.repository.UserRepository;
-import com.kql.caffein.service.EmailAuthService;
 import com.kql.caffein.service.S3Service;
 import com.kql.caffein.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.util.http.fileupload.FileUploadException;
 import org.modelmapper.ModelMapper;
-import org.modelmapper.spi.MatchingStrategy;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -30,8 +28,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
-import javax.validation.constraints.Email;
-import java.io.File;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
@@ -43,13 +39,11 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final UserDetailRepository userDetailRepository;
     private final EmailAuthRepository emailAuthRepository;
-    private final EmailAuthService emailAuthService;
     private final S3Service s3Service;
     private final TokenProvider tokenProvider;
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final RedisTemplate redisTemplate;
     private final PasswordEncoder passwordEncoder;
-    private final String separ = File.separator;
 
     @Override
     public String getUserNo() throws Exception {
@@ -85,6 +79,8 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public void register(UserDto userDto, UserDetailDto userDetailDto) throws Exception {
         Optional<User> users = findByEmail(userDto.getEmail());
+
+        //이메일 중복검사
         if(users.isPresent()){
             throw new IllegalArgumentException("이미 가입한 이메일입니다.");
         }
@@ -115,22 +111,6 @@ public class UserServiceImpl implements UserService {
             e.printStackTrace();
             throw new RuntimeException("가입 진행중 문제 발생");
         }
-    }
-
-    @Override
-    public Token login(UserLoginDto userLoginDto) throws Exception {
-        UsernamePasswordAuthenticationToken authenticationToken =
-                new UsernamePasswordAuthenticationToken(userLoginDto.getEmail(), userLoginDto.getPass());
-
-        //유저 정보를 조회하여 인증 정보를 생성
-        Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
-        //해당 인증 정보를 현재 실행중인 스레드(Security Context)에 저장
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        //해당 인증 정보를 기반으로 jwt 토큰을 생성
-        Token jwt = tokenProvider.createToken(authentication);
-
-        redisTemplate.opsForValue().set(authentication.getName(), jwt.getRefreshToken(), jwt.getRefreshTokenExpirationTime(), TimeUnit.MILLISECONDS);
-        return jwt;
     }
 
     @Override
@@ -172,11 +152,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<User> findByEmail(String email) {
-        return userRepository.findByEmail(email);
-    }
-
-    @Override
     @Transactional
     public void updateUser(UserDetailDto userDetailDto) throws Exception {
         UserDetail userDetail = userDetailRepository.findByUserNo(userDetailDto.getUserNo());
@@ -212,38 +187,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDetail findByUserNo(String userNo) {
-        return userDetailRepository.findByUserNo(userNo);
-    }
-
-    @Override
-    public Optional<UserDetail> findByUserId(String userId) {
-        Optional<UserDetail> userDetail = userDetailRepository.findByUserId(userId);
-        return userDetail;
-    }
-
-    @Override
     public UserDetailDto getUser(String userNo) throws Exception {
         UserDetail userDetail = userDetailRepository.findByUserNo(userNo);
-//        UserDetailDto userDetailDto = UserDetailDto.builder()
-//                .userNo(userDetail.getUserNo())
-//                .categoryList(userDetail.getCategoryList())
-//                .followerCount(userDetail.getFollowerCount())
-//                .followingCount(userDetail.getFollowingCount())
-//                .introduction(userDetail.getIntroduction())
-//                .picture(userDetail.getPicture())
-//                .userId(userDetail.getUserId())
-//                .build();
         ModelMapper mapper = new ModelMapper();
         UserDetailDto userDetailDto = mapper.map(userDetail, UserDetailDto.class);
 
         return userDetailDto;
     }
 
-    @Override
-    public List<UserDetail> findAll() {
-        return userDetailRepository.findAll();
-    }
+
 
     @Override
     public List<UserDetailDto> getUsers() {
@@ -256,6 +208,22 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Token login(UserLoginDto userLoginDto) throws Exception {
+        UsernamePasswordAuthenticationToken authenticationToken =
+                new UsernamePasswordAuthenticationToken(userLoginDto.getEmail(), userLoginDto.getPass());
+
+        //유저 정보를 조회하여 인증 정보를 생성
+        Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
+        //해당 인증 정보를 현재 실행중인 스레드(Security Context)에 저장
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        //해당 인증 정보를 기반으로 jwt 토큰을 생성
+        Token jwt = tokenProvider.createToken(authentication);
+
+        redisTemplate.opsForValue().set(authentication.getName(), jwt.getRefreshToken(), jwt.getRefreshTokenExpirationTime(), TimeUnit.MILLISECONDS);
+        return jwt;
+    }
+
+    @Override
     @Transactional
     public Token reissue(Token token) throws Exception {
         // Refresh Token 검증
@@ -263,7 +231,7 @@ public class UserServiceImpl implements UserService {
             throw new RuntimeException("Refresh Token이 유효하지 않습니다.");
         }
 
-        // Access Token에서 Email 가져오기
+        //Access Token에서 Email 가져오기
         Authentication authentication = tokenProvider.getAuthentication(token.getAccessToken());
 
         //저장소에서 Email을 키 값으로 가지는 Refresh Token 값 가져옴
@@ -272,10 +240,34 @@ public class UserServiceImpl implements UserService {
             throw new RuntimeException("Refresh Token 정보가 일치하지 않습니다.");
         }
 
+        //새로운 토큰 생성
         Token newToken = tokenProvider.createToken(authentication);
 
+        //Redis에 새 값으로 업데이트
         redisTemplate.opsForValue().set(authentication.getName(), newToken.getRefreshToken(), newToken.getRefreshTokenExpirationTime(), TimeUnit.MILLISECONDS);
 
         return newToken;
     }
+
+    @Override
+    public UserDetail findByUserNo(String userNo) {
+        return userDetailRepository.findByUserNo(userNo);
+    }
+
+    @Override
+    public Optional<UserDetail> findByUserId(String userId) {
+        Optional<UserDetail> userDetail = userDetailRepository.findByUserId(userId);
+        return userDetail;
+    }
+
+    @Override
+    public Optional<User> findByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
+
+    @Override
+    public List<UserDetail> findAll() {
+        return userDetailRepository.findAll();
+    }
+
 }

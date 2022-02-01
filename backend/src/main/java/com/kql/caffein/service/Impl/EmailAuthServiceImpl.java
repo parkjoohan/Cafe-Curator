@@ -1,9 +1,7 @@
 package com.kql.caffein.service.Impl;
 
 import com.kql.caffein.dto.Email.EmailAuthDto;
-import com.kql.caffein.dto.Role;
 import com.kql.caffein.entity.EmailAuth;
-import com.kql.caffein.entity.User.User;
 import com.kql.caffein.repository.EmailAuthRepository;
 import com.kql.caffein.repository.UserRepository;
 import com.kql.caffein.service.EmailAuthService;
