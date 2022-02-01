@@ -254,4 +254,28 @@ public class UserServiceImpl implements UserService {
 
         return userDetailDtoList;
     }
+
+    @Override
+    @Transactional
+    public Token reissue(Token token) throws Exception {
+        // Refresh Token 검증
+        if(!tokenProvider.validateToken(token.getRefreshToken())){
+            throw new RuntimeException("Refresh Token이 유효하지 않습니다.");
+        }
+
+        // Access Token에서 Email 가져오기
+        Authentication authentication = tokenProvider.getAuthentication(token.getAccessToken());
+
+        //저장소에서 Email을 키 값으로 가지는 Refresh Token 값 가져옴
+        String refreshToken = (String)redisTemplate.opsForValue().get(authentication.getName());
+        if(!refreshToken.equals(token.getRefreshToken())){
+            throw new RuntimeException("Refresh Token 정보가 일치하지 않습니다.");
+        }
+
+        Token newToken = tokenProvider.createToken(authentication);
+
+        redisTemplate.opsForValue().set(authentication.getName(), newToken.getRefreshToken(), newToken.getRefreshTokenExpirationTime(), TimeUnit.MILLISECONDS);
+
+        return newToken;
+    }
 }

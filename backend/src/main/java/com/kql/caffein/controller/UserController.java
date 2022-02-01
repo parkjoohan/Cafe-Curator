@@ -144,4 +144,24 @@ public class UserController {
             return new ResponseEntity<String>("fail", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @GetMapping("/test")
+    public ResponseEntity test() throws Exception {
+
+            return new ResponseEntity<String>("test success", HttpStatus.OK);
+
+    }
+
+    @ApiOperation(value = "토큰 재발급")
+    @PostMapping("/reissue")
+    public ResponseEntity reissue(@ApiParam(value = "Access Token과 Refresh Token") @RequestBody Token token) throws Exception{
+        log.info("reissue called!! Token: {}", token);
+        try{
+            return new ResponseEntity(userService.reissue(token), HttpStatus.OK);
+        } catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity("fail", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
 }

@@ -26,4 +26,5 @@ public interface UserService {
     public Optional<UserDetail> findByUserId(String userId);
     public List<UserDetail> findAll();
     public List<UserDetailDto> getUsers();
+    public Token reissue(Token token) throws Exception;
 }
