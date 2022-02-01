@@ -51,7 +51,7 @@ const style = {
           <Nav.Link><Link to="/" id="header_link">Home</Link></Nav.Link>
           <Nav.Link><Link to="/feed" id="header_link">Map & Feed</Link></Nav.Link>
           <Nav.Link><Link to="/feed2" id="header_link">BookMark & Like</Link></Nav.Link>
-          <Nav.Link><Link to="/bookmark" id="header_link">Search</Link></Nav.Link>
+          <Nav.Link><Link to="/feed3" id="header_link">Search</Link></Nav.Link>
         </Nav>
       </Col>
       <Col id='header_center' xs={3} >

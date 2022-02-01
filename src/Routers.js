@@ -10,6 +10,7 @@ import LikePrint from './components/feed/like/LikePrint';
 import Detail from './components/feed/article/Detail'
 import Mainfeed from './components/feed/main/Mainfeed';
 import Mainfeed2 from './components/feed/main/MainFeed2';
+import Mainfeed3 from './components/feed/search/Mainfeed3';
 import userProfile from './components/user/userProfile'
 import StoreProfile from './components/store/StoreProfile';
 //  searchtest용입니다. 테스트 끝나면 지울거임
@@ -24,6 +25,7 @@ export default function Routers(props) {
       <Route path="/signup" component={SignupForm}></Route>
       <Route exact path="/feed"><Mainfeed setFootershow={props.setFootershow}/></Route>
       <Route exact path="/feed2"><Mainfeed2 setFootershow={props.setFootershow}/></Route>
+      <Route exact path="/feed3"><Mainfeed3 setFootershow={props.setFootershow}/></Route>
       <Route path="/bookmark" component={BookMarkPrint}></Route>
       <Route path="/like" component={LikePrint}></Route>
       <Route path="/article/:pk" component={Detail}></Route>
