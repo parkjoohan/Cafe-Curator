@@ -1,0 +1,29 @@
+#card1 {
+  background: linear-gradient(to left,
+  rgb(201, 139, 219) 0%,
+  rgba(201, 139, 219,1) 1%,
+  rgba(201, 139, 219,1) 2%,
+  rgba(201, 139, 219, 0.1) 3%,
+  rgba(201, 139, 219, 0.1) 100%
+  );
+}
+
+#card2 {
+  background: linear-gradient(to left,
+  rgb(66, 107, 219) 0%,
+  rgba(66, 107, 219,1) 1%,
+  rgba(66, 107, 219,1) 2%,
+  rgba(66, 107, 219, 0.1) 3%,
+  rgba(66, 107, 219, 0.1) 100%
+  );
+}
+
+#card3 {
+  background: linear-gradient(to left,
+  rgba(128, 68, 0, 1) 0%,
+  rgba(128, 68, 0,1) 1%,
+  rgba(128, 68, 0,1) 2%,
+  rgba(128, 68, 0, 0.1) 3%,
+  rgba(128, 68, 0, 0.1) 100%
+  );
+}

@@ -1,0 +1,49 @@
+#email_content {
+  font-family: system-ui, serif;
+  font-size: 1rem;
+  padding: 3rem;
+  border-radius: 1rem;
+  align-items: initial;
+}
+
+#email_avatarStyle {
+  background: #1bbd7e;
+  margin-bottom: 3%;
+}
+
+#email_body  {
+  margin-left : 20px;
+}
+
+#email_body h4 {
+  font-weight: bold;
+}
+
+#input {
+  flex: 1;
+  width: 60%;
+  font-size: 1rem;
+  outline: none;
+  border: none;
+  border-bottom: 1px solid #969696;
+}
+
+#email_input {
+  margin-left: 3%;
+  width: 100%;
+}
+
+#email_NoBgButton {
+  background-color : white;
+  border: none;
+  color : #1E4DF6;
+  font-weight:bold;
+}
+
+#email_validate_submit {
+  background-color : white;
+  border: none;
+  color : #1E4DF6;
+  font-weight:bold;
+  margin-left: 3%;
+}

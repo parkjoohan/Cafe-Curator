@@ -1,0 +1,49 @@
+#Terms_ModalPadding {
+  padding : 0;
+}
+
+#Terms_NoBgExitTerms {
+  margin-right: auto;
+  background-color : #864A13;
+  border: none;
+  color : #484848;
+  font-weight:500;
+}
+
+#TermsMarginLeft {
+  margin-left : 20px;
+}
+
+#Terms_Margin_Underline {
+  margin-left : 20px;
+  text-decoration: underline;
+  text-underline-position:under;
+}
+
+#Terms_Margin_Content {
+  margin-top: 5%;
+  margin-left: 3%;
+  margin-right: 3%;
+  font-size : 15px;
+}
+
+#Terms_Margin_Footer {
+  margin-top: 5%;
+  margin-left: 3%;
+  margin-right: 3%;
+  margin-bottom: 5%;
+  font-size : 15px;
+}
+
+#Terms_QlabUnderline {
+  text-decoration: underline;
+  text-underline-position:under;
+  color: #484848
+}
+
+#Terms_NoBgButton {
+  background-color : white;
+  border: none;
+  color : black;
+  font-weight:bold;
+}
