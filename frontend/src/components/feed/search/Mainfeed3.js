@@ -45,16 +45,24 @@ export default function Mainfeed(props) {
 
         <Container id='search_button_form'>
             <Router>
-                <header>
+                <header style={{textAlign: "-webkit-center"}}>
                     <ButtonGroup>
-                        <Link to="/popularsearch"><Button variant="light" id='popularsearch' onClick={GetClick}>인기순</Button></Link>
-                        <Link to="/recentsearch"><Button variant="light" id='recentsearch' onClick={GetClick}>최신순</Button></Link>
-                        <Link to="/locationsearch"><Button variant="light" id='locationsearch' onClick={GetClick}>장소</Button></Link>
-                        <Link to="/cafesearch"><Button variant="light" id='cafesearch' onClick={GetClick}>카페</Button></Link>
-                        <Link to="/accountsearch"><Button variant="light" id='accountsearch' onClick={GetClick}>계정</Button></Link>
+                        <Link to="/popularsearch"><Button variant="light" id='search_popularsearch' onClick={GetClick}>인기순</Button></Link>
+                        <Link to="/recentsearch"><Button variant="light" id='search_recentsearch' onClick={GetClick}>최신순</Button></Link>
+                        <Link to="/locationsearch"><Button variant="light" id='search_locationsearch' onClick={GetClick}>장소</Button></Link>
+                        <Link to="/cafesearch"><Button variant="light" id='search_cafesearch' onClick={GetClick}>카페</Button></Link>
+                        <Link to="/accountsearch"><Button variant="light" id='search_accountsearch' onClick={GetClick}>계정</Button></Link>
                     </ButtonGroup>
+                    <Row>
+                        <Col>
+                            <input id='search_input' placeholder='검색 내용을 입력하세요...'></input>
+                            <Button id='search_button'>검색</Button>
+                        </Col>
+                        
+                    </Row>
+                    
                 </header>
-                <main>
+                <div>
                     <Switch>
                         <Route exact path="/popularsearch" component={PopularSearch} />
                         <Route path="/recentsearch" component={RecentSearch} />
@@ -62,7 +70,7 @@ export default function Mainfeed(props) {
                         <Route path="/cafesearch" component={CafeSearch} />
                         <Route path="/accountsearch" component={AccountSearch} />
                     </Switch>
-                </main>
+                </div>
             </Router>
         </Container>            
 

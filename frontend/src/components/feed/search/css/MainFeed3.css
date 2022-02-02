@@ -1,28 +1,47 @@
 #search_button_form {
+    margin-top: 3%;
     text-align-last: center;
+    height: 1200px;
+    width: 80%;
 }
 
-#search_button1 {
-    width: 250px;
+#search_input {
+    width: 950px;
+    height: 38px;
+    margin-right: 2px;
+    margin-top: 3px;
+    text-align-last: left;
+}
+
+#search_button {
+    margin-bottom: 3px;
+}
+
+#search_popularsearch {
+    width: 200px;
     border : 1px solid black;
+    margin-right: 2px;
 }
 
-#search_button2 {
-    width: 250px;
+#search_recentsearch {
+    width: 200px;
     border : 1px solid black;
+    margin-right: 2px;
 }
 
-#search_button3 {
-    width: 250px;
+#search_locationsearch {
+    width: 200px;
     border : 1px solid black;
+    margin-right: 2px;
 }
 
-#search_button4 {
-    width: 250px;
+#search_cafesearch {
+    width: 200px;
     border : 1px solid black;
+    margin-right: 2px;
 }
 
-#search_button5 {
-    width: 250px;
+#search_accountsearch {
+    width: 200px;
     border : 1px solid black;
 }
