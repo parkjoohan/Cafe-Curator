@@ -15,6 +15,11 @@ import userProfile from './components/user/userProfile'
 import StoreProfile from './components/store/StoreProfile';
 //  searchtest용입니다. 테스트 끝나면 지울거임
 import Search from './components/feed/article/Search'
+import PopularSearch from './components/feed/search/PopularSearch'
+import RecentSearch from './components/feed/search/RecentSearch'
+import LocationSearch from './components/feed/search/LocationSearch'
+import CafeSearch from './components/feed/search/CafeSearch'
+import AccountSearch from './components/feed/search/AccountSearch'
 
 export default function Routers(props) {
   return (
@@ -33,7 +38,12 @@ export default function Routers(props) {
       <Route path="/store/:pk" component = {StoreProfile}></Route>
       <Route path="/termmodal" component = {TermsModal}></Route>
       {/* searchtest용입니다. 테스트 끝나면 지울거임 */}
-      <Route path="/Search" component = {Search}></Route>
+      <Route path="/search" component = {Mainfeed3}></Route>
+      <Route path="/popularsearch" component = {PopularSearch}></Route>
+      <Route path="/recentsearch" component = {RecentSearch}></Route>
+      <Route path="/locationsearch" component = {LocationSearch}></Route>
+      <Route path="/cafesearch" component = {CafeSearch}></Route>
+      <Route path="/accountsearch" component = {AccountSearch}></Route>
     </Switch>
   )
 }
