@@ -1,0 +1,41 @@
+#userfile_Container {
+  margin-top: 5%;
+}
+
+#userfile_ImgPreview {
+  border-radius: 65px;
+  width: 130px;
+  height: 130px;
+  margin-left: 5%;
+}
+
+#userfile_aMarginleft {
+  margin-left : 20px;
+}
+
+#userfile_explain{
+  margin-top : 5%;
+}
+
+#userfile_HrStyle {
+  width:100%;
+  margin-top: 5%;
+}
+
+#userfile_FeedImage {
+  margin-top : 20%;
+  margin-left : 15%;
+  margin-bottom : 30%;
+  width: 300px;
+  height: 300px;
+  filter : drop-shadow(3px 3px 3px #484848)
+}
+#userfile_FeedImage:hover {
+  margin-top : 17%;
+  margin-left : 12%;
+  margin-bottom : 30%;
+  width: 330px;
+  height: 330px;
+  filter : drop-shadow(3px 3px 3px #484848);
+  transition : all 0.5s;
+}

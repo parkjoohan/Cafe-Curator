@@ -1,0 +1,38 @@
+#login_content {
+    font-family: system-ui, serif;
+    font-size: 1rem;
+    padding: 3rem;
+    border-radius: 1rem;
+    align-items: initial;
+  }
+
+  #login_divider {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+  
+#login_line {
+    width:30%;
+  }
+  
+#login_sociallogin {
+    font-size:90%;
+    margin:auto;
+    font-weight: 700;
+    color:dimgrey;
+  }
+  
+#login_oauthlist{
+    width:100%;
+    height:auto;
+    text-align: -webkit-center;
+}
+  
+#login_oauthimage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 60%;
+}

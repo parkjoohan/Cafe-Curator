@@ -1,0 +1,29 @@
+#profile_navcolor {
+  height: 30px;
+  background-color: #4b6b79;
+}
+
+#profile_NoBgButton {
+  background-color : white;
+  border: none;
+  color : #1E4DF6;
+  font-weight:bold;
+}
+
+#profile_NoBgExit {
+  margin-right: auto;
+  background-color : white;
+  border: none;
+  color : #484848;
+  font-weight:bold;
+}
+
+#profile_image {
+  width: 20%;
+  border: 1;
+}
+
+#profile_upload_pic {
+  margin-left: 3%;
+  color: black
+}
