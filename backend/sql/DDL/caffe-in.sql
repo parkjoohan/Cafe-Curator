@@ -22,7 +22,7 @@ USE `caffe_in` ;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `caffe_in`.`email_auth` (
     `email` VARCHAR(30) NOT NULL,
-    `code` VARCHAR(6) NOT NULL,
+    `code` VARCHAR(6) NULL,
     `state` TINYINT NULL DEFAULT NULL,
     PRIMARY KEY (`email`))
     ENGINE = InnoDB
