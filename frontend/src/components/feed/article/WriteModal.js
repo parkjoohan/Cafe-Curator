@@ -272,15 +272,15 @@ const WriteModal = ( {show, onHide}) => {
             <div style={{textAlign:"center"}}>사진은 최대 4장까지 첨부가 가능합니다.</div>
           </Col>
           <Col lg={5} md={7}>
-            <TextField
+            {/* <Textarea
                   id="outlined-multiline-flexible"
                   label="Review"
                   multiline
                   minRows={2}
                   margin='dense'
                   fullWidth required
-            ></TextField>
-            
+            ></Textarea>       */}
+            <textarea id='writemodal_reviewbox'></textarea>
           </Col>
         </Row>
       </Modal.Body>
