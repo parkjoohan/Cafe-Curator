@@ -214,7 +214,7 @@ const WriteModal = ( {show, onHide}) => {
         {/* 카페 검색 창 */}
         <Search />
         {/* 카페 이름 출력창 */}
-        <TextField label="Cafe name" placeholder='카페 이름' fullWidth required/>
+        {/* <TextField label="Cafe name" placeholder='카페 이름' fullWidth required/> */}
 
         {/* 관심사 선택 */}
         <Container id='writemodal_cate'>
