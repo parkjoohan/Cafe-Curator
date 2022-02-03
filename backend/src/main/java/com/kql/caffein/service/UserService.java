@@ -39,6 +39,9 @@ public interface UserService {
     //로그인
     public Token login(UserLoginDto userLoginDto) throws Exception;
 
+    //비밀번호 업데이트
+    public void updatePass(UserUpdatePassDto userUpdatePassDto) throws Exception;
+
     //토큰 재발급
     public Token reissue(Token token) throws Exception;
 

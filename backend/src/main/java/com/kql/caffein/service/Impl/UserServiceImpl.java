@@ -246,6 +246,26 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
+    public void updatePass(UserUpdatePassDto userUpdatePassDto) throws Exception{
+        Optional<User> user = userRepository.findByEmail(userUpdatePassDto.getEmail());
+
+        if(user.isPresent()){
+            UserDetail userDetail = userDetailRepository.findByUserNo(user.get().getUserNo());
+            Optional<EmailAuth> emailAuth = emailAuthRepository.findByEmail(user.get().getEmailAuth().getEmail());
+
+            if(emailAuth.isPresent() && emailAuth.get().isState()){
+                userDetail.setPass(passwordEncoder.encode(userUpdatePassDto.getPass()));
+                userDetailRepository.save(userDetail);
+            } else{
+                throw new RuntimeException("가입된 이메일이 없거나 코드가 인증되지 않았습니다.");
+            }
+        } else{
+            throw new RuntimeException("에러 발생!!");
+        }
+    }
+
+    @Override
+    @Transactional
     public Token reissue(Token token) throws Exception {
         // Refresh Token 검증
         if(!tokenProvider.validateToken(token.getRefreshToken())){
