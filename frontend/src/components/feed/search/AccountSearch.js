@@ -1,10 +1,11 @@
 import React from 'react';
 import './css/Account.css'
-
+import userProfile from '../user/userProfile'
 
 export default function Mainfeed(props) {
-    
     return (
-        <p>계정검색</p>
+        <div>
+            <userProfile />
+        </div>
     );
 }
