@@ -44,4 +44,13 @@ public class CategoryLogService {
         return false;
     }
 
+    public void increaseCategoryCount(int cafeId, List<String> categoryList){
+        for(String category: categoryList)
+            redisTemplate.opsForZSet().incrementScore(String.valueOf(cafeId), category, 1);
+    }
+
+    public void decreaseCategoryCount(int cafeId, List<String> categoryList){
+        for(String category: categoryList)
+            redisTemplate.opsForZSet().incrementScore(String.valueOf(cafeId), category, -1);
+    }
 }
