@@ -5,6 +5,7 @@ import com.kql.caffein.dto.Email.EmailAuthDto;
 import com.kql.caffein.dto.User.UserDetailDto;
 import com.kql.caffein.dto.User.UserDto;
 import com.kql.caffein.dto.User.UserLoginDto;
+import com.kql.caffein.dto.User.UserUpdateDto;
 import com.kql.caffein.jwt.JwtFilter;
 import com.kql.caffein.service.EmailAuthService;
 import com.kql.caffein.service.UserService;
@@ -81,12 +82,12 @@ public class UserController {
         }
     }
 
-    @ApiOperation(value = "회원 한 명의 상세정보 조회")
+    @ApiOperation(value = "회원의 수정할 정보 조회")
     @GetMapping("/{userNo}")
     public ResponseEntity getUser(@PathVariable @ApiParam(value = "유저 고유번호", required = true) String userNo) throws Exception {
         log.info("getUser called!! userNo : {}", userNo);
         try{
-            return new ResponseEntity<UserDetailDto>(userService.getUser(userNo), HttpStatus.OK);
+            return new ResponseEntity<UserUpdateDto>(userService.getUser(userNo), HttpStatus.OK);
         } catch (Exception e){
             return new ResponseEntity<String>("fail", HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -114,7 +115,7 @@ public class UserController {
             } else {
                 userService.updateUser(userDetailDto, multipartFile);
             }
-            return new ResponseEntity<UserDetailDto>(userService.getUser(userDetailDto.getUserNo()), HttpStatus.OK);
+            return new ResponseEntity<UserUpdateDto>(userService.getUser(userDetailDto.getUserNo()), HttpStatus.OK);
         } catch (Exception e){
             return new ResponseEntity<String>("fail", HttpStatus.INTERNAL_SERVER_ERROR);
         }

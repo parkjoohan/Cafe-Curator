@@ -5,6 +5,7 @@ import com.kql.caffein.dto.Token;
 import com.kql.caffein.dto.User.UserDetailDto;
 import com.kql.caffein.dto.User.UserDto;
 import com.kql.caffein.dto.User.UserLoginDto;
+import com.kql.caffein.dto.User.UserUpdateDto;
 import com.kql.caffein.entity.EmailAuth;
 import com.kql.caffein.entity.User.User;
 import com.kql.caffein.entity.User.UserDetail;
@@ -187,12 +188,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDetailDto getUser(String userNo) throws Exception {
+    public UserUpdateDto getUser(String userNo) throws Exception {
         UserDetail userDetail = userDetailRepository.findByUserNo(userNo);
-        ModelMapper mapper = new ModelMapper();
-        UserDetailDto userDetailDto = mapper.map(userDetail, UserDetailDto.class);
+        UserUpdateDto userUpdateDto = UserUpdateDto.builder()
+                .userId(userDetail.getUserId())
+                .introduction(userDetail.getIntroduction())
+                .picture(userDetail.getPicture())
+                .categoryList(userDetail.getCategoryList()).build();
 
-        return userDetailDto;
+        return userUpdateDto;
     }
 
 
