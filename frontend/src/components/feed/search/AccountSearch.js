@@ -1,11 +1,11 @@
 import React from 'react';
-import './css/Account.css'
-import userProfile from '../user/userProfile'
+import './css/Account.css';
+import UserProfile from '../../user/UserProfile';
 
-export default function Mainfeed(props) {
+export default function AccountSearch(props) {
     return (
         <div>
-            <userProfile />
+            <UserProfile />
         </div>
     );
 }

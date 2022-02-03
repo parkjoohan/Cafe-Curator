@@ -1,7 +1,7 @@
 import React,{useState,useEffect} from 'react';
 import Toggle from './Toggle';
 import Feed from './Feed';
-import SkeletonPrint from '../blog/BlogPrint'
+import Blog from '../blog/BlogPrint'
 import {Container,Col,Row,Button} from 'react-bootstrap'
 import { Link,useHistory } from 'react-router-dom'
 import WriteModal from '../article/WriteModal'
@@ -48,7 +48,7 @@ export default function Mainfeed(props) {
         show={WritemodalShow}
         onHide={() => WritesetModalShow(false)}
       />
-      {toggled? <Feed setFootershow={props.setFootershow}/>:<SkeletonPrint/>}
+      {toggled? <Feed setFootershow={props.setFootershow}/>:<Blog/>}
     </Row>
   </Container>
   );

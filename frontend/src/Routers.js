@@ -11,7 +11,7 @@ import Detail from './components/feed/article/Detail'
 import Mainfeed from './components/feed/main/Mainfeed';
 import Mainfeed2 from './components/feed/main/MainFeed2';
 import Mainfeed3 from './components/feed/search/Mainfeed3';
-import userProfile from './components/user/userProfile'
+import UserProfile from './components/user/UserProfile'
 import StoreProfile from './components/store/StoreProfile';
 //  searchtest용입니다. 테스트 끝나면 지울거임
 import Search from './components/feed/article/Search'
@@ -34,7 +34,7 @@ export default function Routers(props) {
       <Route path="/bookmark" component={BookMarkPrint}></Route>
       <Route path="/like" component={LikePrint}></Route>
       <Route path="/article/:pk" component={Detail}></Route>
-      <Route path="/profile/:pk" component = {userProfile}></Route>
+      <Route path="/profile/:pk" component = {UserProfile}></Route>
       <Route path="/store/:pk" component = {StoreProfile}></Route>
       <Route path="/termmodal" component = {TermsModal}></Route>
       {/* searchtest용입니다. 테스트 끝나면 지울거임 */}

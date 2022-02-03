@@ -1,12 +1,11 @@
 import React from 'react';
 import './css/Popular.css'
+import Feed from '../main/Feed';
 
-
-export default function Mainfeed(props) {
-    
+export default function PopularSearch(props) {
     return (
-        <div>
-            <p>인기순</p>
-        </div>
+        
+            <Feed setFootershow={props.setFootershow}/>
+        
     );
 }
