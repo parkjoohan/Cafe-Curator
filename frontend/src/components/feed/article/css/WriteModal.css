@@ -38,6 +38,11 @@
     text-underline-position:under;
     color: #484848
   } */
+#writemodal_navcolor {
+  border: 0;
+  background: #4b6b79;
+  height: 35px;
+}
 
 #writemodal_Margin_Underline {
   margin-top: 0%;

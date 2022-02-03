@@ -205,7 +205,7 @@ const WriteModal = ( {show, onHide}) => {
       show = {show}
       onHide = {onHide}
     >
-      <div id="navcolor"></div>
+      <div id="writemodal_navcolor"></div>
       <Modal.Header>
       <h3 id="writemodal_Margin_Underline">게시물 작성</h3>
       </Modal.Header>
