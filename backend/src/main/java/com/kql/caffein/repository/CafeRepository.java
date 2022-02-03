@@ -8,4 +8,5 @@ import java.util.Optional;
 public interface CafeRepository extends JpaRepository<Cafe, Integer> {
 
     Optional<Cafe> findByCafeLngAndCafeLat(String cafeLng, String cafeLat);
+    Optional<Cafe> findByCafeName (String cafeName);
 }
