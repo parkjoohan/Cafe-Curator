@@ -1,9 +1,7 @@
 package com.kql.caffein.service;
 
 import com.kql.caffein.dto.Token;
-import com.kql.caffein.dto.User.UserDetailDto;
-import com.kql.caffein.dto.User.UserDto;
-import com.kql.caffein.dto.User.UserLoginDto;
+import com.kql.caffein.dto.User.*;
 import com.kql.caffein.entity.User.User;
 import com.kql.caffein.entity.User.UserDetail;
 import org.springframework.web.multipart.MultipartFile;
@@ -29,8 +27,11 @@ public interface UserService {
     //유저 삭제
     public void deleteByUserNo(String userNo);
 
+    //유저 계정 상단 조회
+    public UserAccountDto getUserAccount(String userNo) throws Exception;
+
     //유저 상세조회
-    public UserDetailDto getUser(String userNo) throws Exception;
+    public UserUpdateDto getUser(String userNo) throws Exception;
 
     //모든 유저 조회
     public List<UserDetailDto> getUsers();

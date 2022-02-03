@@ -2,10 +2,7 @@ package com.kql.caffein.controller;
 
 import com.kql.caffein.dto.*;
 import com.kql.caffein.dto.Email.EmailAuthDto;
-import com.kql.caffein.dto.User.UserDetailDto;
-import com.kql.caffein.dto.User.UserDto;
-import com.kql.caffein.dto.User.UserLoginDto;
-import com.kql.caffein.dto.User.UserUpdateDto;
+import com.kql.caffein.dto.User.*;
 import com.kql.caffein.jwt.JwtFilter;
 import com.kql.caffein.service.EmailAuthService;
 import com.kql.caffein.service.UserService;
@@ -77,6 +74,17 @@ public class UserController {
             }
 //        Optional<UserDetail> userDetail = userService.findByUserId(userDetailDto.getUserId());
             return new ResponseEntity<String>("success", HttpStatus.OK);
+        } catch (Exception e){
+            return new ResponseEntity<String>("fail", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @ApiOperation(value = "계정 - 회원 부분 조회")
+    @GetMapping("/account/{userNo}")
+    public ResponseEntity getUserAccount(@PathVariable @ApiParam(value = "유저 고유번호", required = true) String userNo) throws Exception {
+        log.info("getUser called!! userNo : {}", userNo);
+        try{
+            return new ResponseEntity<UserAccountDto>(userService.getUserAccount(userNo), HttpStatus.OK);
         } catch (Exception e){
             return new ResponseEntity<String>("fail", HttpStatus.INTERNAL_SERVER_ERROR);
         }

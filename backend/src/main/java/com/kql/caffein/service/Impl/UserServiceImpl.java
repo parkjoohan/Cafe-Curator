@@ -2,15 +2,13 @@ package com.kql.caffein.service.Impl;
 
 import com.kql.caffein.dto.Role;
 import com.kql.caffein.dto.Token;
-import com.kql.caffein.dto.User.UserDetailDto;
-import com.kql.caffein.dto.User.UserDto;
-import com.kql.caffein.dto.User.UserLoginDto;
-import com.kql.caffein.dto.User.UserUpdateDto;
+import com.kql.caffein.dto.User.*;
 import com.kql.caffein.entity.EmailAuth;
 import com.kql.caffein.entity.User.User;
 import com.kql.caffein.entity.User.UserDetail;
 import com.kql.caffein.jwt.TokenProvider;
 import com.kql.caffein.repository.EmailAuthRepository;
+import com.kql.caffein.repository.FeedsRepository;
 import com.kql.caffein.repository.UserDetailRepository;
 import com.kql.caffein.repository.UserRepository;
 import com.kql.caffein.service.S3Service;
@@ -45,6 +43,7 @@ public class UserServiceImpl implements UserService {
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final RedisTemplate redisTemplate;
     private final PasswordEncoder passwordEncoder;
+    private final FeedsRepository feedsRepository;
 
     @Override
     public String getUserNo() throws Exception {
@@ -185,6 +184,24 @@ public class UserServiceImpl implements UserService {
         String email = user.getEmailAuth().getEmail();
         emailAuthRepository.deleteByEmail(email);
         userRepository.deleteByUserNo(userNo);
+    }
+
+    @Override
+    public UserAccountDto getUserAccount(String userNo) throws Exception {
+        UserDetail userDetail = userDetailRepository.findByUserNo(userNo);
+
+        int feedCount = feedsRepository.findById(userNo).get().getFeedList().size();
+
+        UserAccountDto user = UserAccountDto.builder()
+                .userNo(userDetail.getUserNo())
+                .userId(userDetail.getUserId())
+                .introduction(userDetail.getIntroduction())
+                .picture(userDetail.getPicture())
+                .categoryList(userDetail.getCategoryList())
+                .feedCount(feedCount)
+                .followerCount(userDetail.getFollowerCount())
+                .followingCount(userDetail.getFollowingCount()).build();
+        return user;
     }
 
     @Override
