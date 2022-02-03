@@ -3,7 +3,11 @@ package com.kql.caffein.controller;
 import com.kql.caffein.dto.*;
 import com.kql.caffein.dto.Email.EmailAuthDto;
 import com.kql.caffein.dto.User.*;
+import com.kql.caffein.entity.User.User;
+import com.kql.caffein.entity.User.UserDetail;
 import com.kql.caffein.jwt.JwtFilter;
+import com.kql.caffein.repository.UserDetailRepository;
+import com.kql.caffein.repository.UserRepository;
 import com.kql.caffein.service.EmailAuthService;
 import com.kql.caffein.service.UserService;
 import io.swagger.annotations.Api;
@@ -19,7 +23,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 
 @Slf4j
@@ -31,6 +38,8 @@ import java.util.List;
 public class UserController {
     private final UserService userService;
     private final EmailAuthService emailAuthService;
+    private final UserRepository userRepository;
+    private final UserDetailRepository userDetailRepository;
 
     @ApiOperation(value = "이메일 인증", response = String.class)
     @PostMapping("/emailCheck")
@@ -136,7 +145,7 @@ public class UserController {
         log.info("deleteUser called! userNo : {}", userNo);
         try{
             userService.deleteByUserNo(userNo);
-            return new ResponseEntity<String>(userNo, HttpStatus.OK);
+            return new ResponseEntity<String>("success", HttpStatus.OK);
         } catch (Exception e){
             return new ResponseEntity<String>("fail", HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -147,13 +156,24 @@ public class UserController {
     public ResponseEntity login(@Valid @ApiParam(value = "email과 pass", required = true) @RequestBody UserLoginDto userLoginDto) throws Exception {
         log.info("login called!! userLoginDto: {}", userLoginDto);
         try {
+            Map<String, String> map = new HashMap<>();
+            Optional<User> user = userRepository.findByEmail(userLoginDto.getEmail());
             Token jwt = userService.login(userLoginDto);
 
+            if(user.isPresent()) {
+                UserDetail userDetail = userDetailRepository.findByUserNo(user.get().getUserNo());
+                map.put("userNo", userDetail.getUserNo());
+                map.put("userId", userDetail.getUserId());
+                map.put("picture", userDetail.getPicture());
+                map.put("accessToken", jwt.getAccessToken());
+                map.put("refreshToken", jwt.getRefreshToken());
+                map.put("refreshTokenExpirationTime", jwt.getRefreshTokenExpirationTime().toString());
+            }
             HttpHeaders httpHeaders = new HttpHeaders();
             httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
 
             //생성된 Token을 Response Header에 넣고, Token vo 객체를 이용해 Response Body에도 넣어서 리턴
-            return new ResponseEntity<>(jwt, httpHeaders, HttpStatus.OK);
+            return new ResponseEntity<>(map, httpHeaders, HttpStatus.OK);
         } catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<String>("fail", HttpStatus.INTERNAL_SERVER_ERROR);
@@ -169,6 +189,32 @@ public class UserController {
         } catch (Exception e){
             e.printStackTrace();
             return new ResponseEntity("fail", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @ApiOperation(value = "비밀번호 찾기 - 메일 전송(코드)")
+    @PostMapping("/findPassSendEmail/{email}")
+    public ResponseEntity findPass(@ApiParam(value = "email") @PathVariable String email) throws Exception{
+        log.info("findPass called!! userNo: {}", email);
+        try{
+            emailAuthService.findPassSendEmail(email);
+            return new ResponseEntity<String>("success", HttpStatus.OK);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<String>("fail", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @ApiOperation("비밀번호 업데이트")
+    @PostMapping("updatePass")
+    public ResponseEntity updatePass(@ApiParam(value = "email과 pass") @RequestBody UserUpdatePassDto userUpdatePassDto) throws Exception{
+        log.info("updatePass called!! UserUpdatePassDto: {}", userUpdatePassDto);
+        try{
+            userService.updatePass(userUpdatePassDto);
+            return new ResponseEntity<String>("success", HttpStatus.OK);
+        } catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<String>("fail", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
