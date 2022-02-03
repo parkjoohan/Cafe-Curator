@@ -5,6 +5,7 @@ import com.kql.caffein.dto.Feed.FeedResDto;
 import com.kql.caffein.entity.Feed.Feed;
 import com.kql.caffein.repository.CafeRepository;
 import com.kql.caffein.repository.FeedRepository;
+import com.kql.caffein.service.CategoryLogService;
 import com.kql.caffein.service.FeedService;
 import com.kql.caffein.service.SearchService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,13 +25,15 @@ public class SearchServiceImpl implements SearchService {
     private final FeedService feedService;
     private final CafeRepository cafeRepository;
     private final RedisTemplate redisTemplate;
+    private final CategoryLogService categoryLogService;
 
     @Autowired
-    public SearchServiceImpl(FeedRepository feedRepository, FeedService feedService, CafeRepository cafeRepository, RedisTemplate redisTemplate) {
+    public SearchServiceImpl(FeedRepository feedRepository, FeedService feedService, CafeRepository cafeRepository, RedisTemplate redisTemplate, CategoryLogService categoryLogService) {
         this.feedRepository = feedRepository;
         this.feedService = feedService;
         this.cafeRepository = cafeRepository;
         this.redisTemplate = redisTemplate;
+        this.categoryLogService = categoryLogService;
     }
 
     @Override
@@ -61,7 +64,12 @@ public class SearchServiceImpl implements SearchService {
     public CafeSearchDto cafeSearchWithPaging(String userNo, String cafeName, Integer lastFeedNo, int size) {
         int cafeId = cafeRepository.findByCafeName(cafeName).get().getCafeId();
         Set<String> category = redisTemplate.opsForZSet().reverseRange(String.valueOf(cafeId),0,1);
-
+        if(category.size()==0) {
+            //redis 에 존재 하지 않음
+            if(categoryLogService.registerCafeCategory(cafeId)) //redis에 값 저장 성공시
+                category = redisTemplate.opsForZSet().reverseRange(String.valueOf(cafeId),0,1); //재 조회
+        }
+        
         if(lastFeedNo == null) lastFeedNo = Integer.MAX_VALUE;
         PageRequest pageRequest  = PageRequest.of(0, size);
         Page<Feed> feedList = feedRepository.findByCafeIdAndFeedNoLessThanOrderByFeedNoDesc(cafeId, lastFeedNo, pageRequest);
