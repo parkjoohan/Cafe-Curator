@@ -57,6 +57,7 @@ public class SearchServiceImpl implements SearchService {
     }
 
     @Override
+    @Transactional
     public CafeSearchDto cafeSearchWithPaging(String userNo, String cafeName, Integer lastFeedNo, int size) {
         int cafeId = cafeRepository.findByCafeName(cafeName).get().getCafeId();
         Set<String> category = redisTemplate.opsForZSet().reverseRange(String.valueOf(cafeId),0,1);
@@ -64,10 +65,6 @@ public class SearchServiceImpl implements SearchService {
         if(lastFeedNo == null) lastFeedNo = Integer.MAX_VALUE;
         PageRequest pageRequest  = PageRequest.of(0, size);
         Page<Feed> feedList = feedRepository.findByCafeIdAndFeedNoLessThanOrderByFeedNoDesc(cafeId, lastFeedNo, pageRequest);
-
-        for(Feed f : feedList){
-            System.out.println(f.toString());
-        }
 
         List<FeedResDto> feedResDtoList = feedService.makeFeedDtoList(feedList.getContent(), userNo);
 
