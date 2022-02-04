@@ -2,14 +2,13 @@ package com.kql.caffein.service.Impl;
 
 import com.kql.caffein.dto.Role;
 import com.kql.caffein.dto.Token;
-import com.kql.caffein.dto.User.UserDetailDto;
-import com.kql.caffein.dto.User.UserDto;
-import com.kql.caffein.dto.User.UserLoginDto;
+import com.kql.caffein.dto.User.*;
 import com.kql.caffein.entity.EmailAuth;
 import com.kql.caffein.entity.User.User;
 import com.kql.caffein.entity.User.UserDetail;
 import com.kql.caffein.jwt.TokenProvider;
 import com.kql.caffein.repository.EmailAuthRepository;
+import com.kql.caffein.repository.FeedsRepository;
 import com.kql.caffein.repository.UserDetailRepository;
 import com.kql.caffein.repository.UserRepository;
 import com.kql.caffein.service.S3Service;
@@ -44,6 +43,7 @@ public class UserServiceImpl implements UserService {
     private final AuthenticationManagerBuilder authenticationManagerBuilder;
     private final RedisTemplate redisTemplate;
     private final PasswordEncoder passwordEncoder;
+    private final FeedsRepository feedsRepository;
 
     @Override
     public String getUserNo() throws Exception {
@@ -187,12 +187,33 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserDetailDto getUser(String userNo) throws Exception {
+    public UserAccountDto getUserAccount(String userNo) throws Exception {
         UserDetail userDetail = userDetailRepository.findByUserNo(userNo);
-        ModelMapper mapper = new ModelMapper();
-        UserDetailDto userDetailDto = mapper.map(userDetail, UserDetailDto.class);
 
-        return userDetailDto;
+        int feedCount = feedsRepository.findById(userNo).get().getFeedList().size();
+
+        UserAccountDto user = UserAccountDto.builder()
+                .userNo(userDetail.getUserNo())
+                .userId(userDetail.getUserId())
+                .introduction(userDetail.getIntroduction())
+                .picture(userDetail.getPicture())
+                .categoryList(userDetail.getCategoryList())
+                .feedCount(feedCount)
+                .followerCount(userDetail.getFollowerCount())
+                .followingCount(userDetail.getFollowingCount()).build();
+        return user;
+    }
+
+    @Override
+    public UserUpdateDto getUser(String userNo) throws Exception {
+        UserDetail userDetail = userDetailRepository.findByUserNo(userNo);
+        UserUpdateDto userUpdateDto = UserUpdateDto.builder()
+                .userId(userDetail.getUserId())
+                .introduction(userDetail.getIntroduction())
+                .picture(userDetail.getPicture())
+                .categoryList(userDetail.getCategoryList()).build();
+
+        return userUpdateDto;
     }
 
 
@@ -221,6 +242,26 @@ public class UserServiceImpl implements UserService {
 
         redisTemplate.opsForValue().set(authentication.getName(), jwt.getRefreshToken(), jwt.getRefreshTokenExpirationTime(), TimeUnit.MILLISECONDS);
         return jwt;
+    }
+
+    @Override
+    @Transactional
+    public void updatePass(UserUpdatePassDto userUpdatePassDto) throws Exception{
+        Optional<User> user = userRepository.findByEmail(userUpdatePassDto.getEmail());
+
+        if(user.isPresent()){
+            UserDetail userDetail = userDetailRepository.findByUserNo(user.get().getUserNo());
+            Optional<EmailAuth> emailAuth = emailAuthRepository.findByEmail(user.get().getEmailAuth().getEmail());
+
+            if(emailAuth.isPresent() && emailAuth.get().isState()){
+                userDetail.setPass(passwordEncoder.encode(userUpdatePassDto.getPass()));
+                userDetailRepository.save(userDetail);
+            } else{
+                throw new RuntimeException("가입된 이메일이 없거나 코드가 인증되지 않았습니다.");
+            }
+        } else{
+            throw new RuntimeException("에러 발생!!");
+        }
     }
 
     @Override
