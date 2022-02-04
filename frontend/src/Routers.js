@@ -11,7 +11,7 @@ import Detail from './components/feed/article/Detail'
 import Mainfeed from './components/feed/main/Mainfeed';
 import Mainfeed2 from './components/feed/main/MainFeed2';
 import Mainfeed3 from './components/feed/search/Mainfeed3';
-import UserProfile from './components/user/UserProfile'
+import UserProfile from './components/user/UserProfile';
 import StoreProfile from './components/store/StoreProfile';
 //  searchtest용입니다. 테스트 끝나면 지울거임
 import Search from './components/feed/article/Search'

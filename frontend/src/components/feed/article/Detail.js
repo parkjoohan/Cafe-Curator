@@ -3,6 +3,7 @@ import { useParams, useHistory } from 'react-router-dom'
 import { Container, Row, Col } from 'react-bootstrap'
 import { FiCornerUpLeft } from 'react-icons/fi';
 import './css/Detail.css'
+import axios from 'axios';
 
 export default function Detail() {
 
@@ -10,11 +11,37 @@ export default function Detail() {
   useEffect(()=>{
     console.log(params)
   }, [])
+
   const history = useHistory();
+  const [comments, setComments] = useState([]);
+  
+  useEffect(() => {
+    // fetch('http://localhost:8080/comment')
+    //   .then((response) => {
+    //     return response.json();
+    //   })
+    //   .then(function (data) {
+    //     setComments(data);
+    //   });
+    fetch('http://localhost:8080/comment?feedNo=1&lastCommentNo=100&size=3&userNo=a1')
+      .then((response) => response.json())
+      .then((json) => {
+        console.log(json)
+        setComments(json)
+      })
+      .catch(err => {
+      console.log(err)
+    })
+  }, []);
 
   return (
     <Container >
       {/* 뒤로 가기 버튼 */}
+      <div>
+        {comments.map((comment) => (
+          <h1>{comment.content}</h1>
+        ))}
+      </div>
       <div>
         <FiCornerUpLeft size="30" onClick={() => { history.goBack() }} />
       </div><br />
@@ -84,6 +111,8 @@ export default function Detail() {
                 <p style={{marginRight:"3%"}}>북마크</p>
             </div>
 
+            <button onClick={setComments}>버튼</button>
+
             {/* 댓글 */}
             <div id='article_comment'>
               <p>총 3개의 댓글이 있습니다.</p>
@@ -98,13 +127,15 @@ export default function Detail() {
                       <h5 id='article_comments_user'>username2</h5>
                       <h5 id='article_comments_content'>리뷰 1</h5>
                     </div>
-
+                    {comments.map((comment) => (
                     <div id='article_re_comments'>
-                      <h5 id='article_comments_user'>username3</h5>
+                      <h5 id='article_comments_user'>{comment.userId}</h5>
                       <h5 id='article_tag_user'>@username2</h5>
                       <h5 id='article_comments_content'>리뷰 1</h5>
-                    </div>
+                      </div>
+                    ))}
                   </div>
+
                 </div>
               </div>
             </Col>
