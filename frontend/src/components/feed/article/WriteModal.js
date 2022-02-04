@@ -205,7 +205,7 @@ const WriteModal = ( {show, onHide}) => {
       show = {show}
       onHide = {onHide}
     >
-      <div id="navcolor"></div>
+      <div id="writemodal_navcolor"></div>
       <Modal.Header>
       <h3 id="writemodal_Margin_Underline">게시물 작성</h3>
       </Modal.Header>
@@ -214,7 +214,7 @@ const WriteModal = ( {show, onHide}) => {
         {/* 카페 검색 창 */}
         <Search />
         {/* 카페 이름 출력창 */}
-        <TextField label="Cafe name" placeholder='카페 이름' fullWidth required/>
+        {/* <TextField label="Cafe name" placeholder='카페 이름' fullWidth required/> */}
 
         {/* 관심사 선택 */}
         <Container id='writemodal_cate'>
@@ -272,15 +272,15 @@ const WriteModal = ( {show, onHide}) => {
             <div style={{textAlign:"center"}}>사진은 최대 4장까지 첨부가 가능합니다.</div>
           </Col>
           <Col lg={5} md={7}>
-            <TextField
+            {/* <Textarea
                   id="outlined-multiline-flexible"
                   label="Review"
                   multiline
                   minRows={2}
                   margin='dense'
                   fullWidth required
-            ></TextField>
-            
+            ></Textarea>       */}
+            <textarea id='writemodal_reviewbox'></textarea>
           </Col>
         </Row>
       </Modal.Body>
