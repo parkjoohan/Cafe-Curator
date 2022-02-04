@@ -120,7 +120,7 @@ export default function Detail() {
                   <div id='article_comments-frame'>
                   <div id='article_comments'>
                       <h5 id='article_comments_user'>username1</h5>
-                      <h5 id='article_comments_content'>리뷰 1</h5>
+                      <h5 id='article_comments_content'>리뷰  1</h5>
                     </div>
 
                     <div id='article_comments'>
