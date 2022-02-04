@@ -8,27 +8,40 @@
   background-size:120%;
 }
 
+#hone_video_bg {
+  width: 100%;
+  height: 500px;
+  overflow: hidden;
+  position: relative;
+}
+
 #home_video {
-  position: absolute;
+  /* position: absolute;
   z-index: -1;
   width: 100%;
   height: auto;
   margin-top: -10%;
   overflow: hidden;
+  background-size: cover; */
+  width: 100%;
+  margin-top: -25%;
+  overflow: hidden;
   background-size: cover;
+  z-index: -1;
+  position: absolute;
 }
 
 #home_text_wrapper h1 {
   color: white;
-  margin-top: -3%;
+  margin-left: -2%;
   font-size: 50px;
   text-align: left;
 }
 
 #home_text_wrapper h3 {
   color: white;
-  margin-left: 5%;
-  margin-bottom: 20%;
+  margin-left: -1%;
+  margin-top: -5%;
   font-size: 18px;
   text-align: left;
 }
@@ -48,12 +61,12 @@
   padding-left: 5%;
 }
 
-.section2 {
-  padding-top: 5px;
-}
+/* .section2 {
+  margin-top: 1%;
+} */
 
 .content {
-  margin: 10% auto;
+  margin: 3% auto;
 }
 
 .mapsearch {

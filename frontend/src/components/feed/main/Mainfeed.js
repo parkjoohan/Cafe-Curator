@@ -1,7 +1,7 @@
 import React,{useState,useEffect} from 'react';
 import Toggle from './Toggle';
 import Feed from './Feed';
-import SkeletonPrint from '../blog/BlogPrint'
+import Blog from '../blog/BlogPrint'
 import {Container,Col,Row,Button} from 'react-bootstrap'
 import { Link,useHistory } from 'react-router-dom'
 import WriteModal from '../article/WriteModal'
@@ -37,7 +37,7 @@ export default function Mainfeed(props) {
             </Col>
             <Col xs={1}>
               <Button id="MainFeed_Write_button" variant="outline-success" onClick={() => WritesetModalShow(true)}>
-                  <h6 style={{margin: "1px"}}>게시글 작성</h6>
+                  <h6 style={{margin: "1px "}}>게시글 작성</h6>
               </Button> 
             </Col>
           </Row>
@@ -48,7 +48,7 @@ export default function Mainfeed(props) {
         show={WritemodalShow}
         onHide={() => WritesetModalShow(false)}
       />
-      {toggled? <Feed setFootershow={props.setFootershow}/>:<SkeletonPrint/>}
+      {toggled? <Feed setFootershow={props.setFootershow}/>:<Blog/>}
     </Row>
   </Container>
   );

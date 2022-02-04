@@ -20,10 +20,8 @@ const Profile = ({ show, onHide }) => {
 
   return (
     <Modal show={show} onHide={onHide} aria-labelledby="contained-modal-title-vcenter" dialogClassName="modal-w" centered>
-      <Modal.Body id = "ModalPadding">
-        <div id="profile_navcolor">
-            <br></br>
-        </div>
+      <div id="profile_navcolor"></div>
+      <Modal.Body id="ModalPadding">
         <Container>
           <Row>
             {/* 이미지 경로 */}

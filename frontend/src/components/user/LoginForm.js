@@ -105,7 +105,7 @@ export default function LoginForm() {
       </Grid>
 
       <Modal show={show} onHide={handleClose} className="Modal">
-      <Modal.Header className="Modalhead" closeButton >
+      <Modal.Header id="loginform_Modalhead" closeButton >
       </Modal.Header>
       <Modal.Body>
         <p className="passwordchangemessage">입력한 주소로 임시 비밀번호를 보냅니다.</p>

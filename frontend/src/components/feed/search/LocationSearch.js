@@ -1,10 +1,18 @@
 import React from 'react';
 import './css/Location.css'
+import Map from '../main/Map'
+import Blog from '../blog/BlogPrint'
+import {Container} from 'react-bootstrap'
 
-
-export default function Mainfeed(props) {
-    
+export default function LocationSearch(props) {
     return (
-        <p>장소검색</p>
+        <Container>
+            <div>
+                <Map id="LocationSearch_map" />
+            </div>
+            <div id='LocationSearch_blog'>
+                <Blog />
+            </div>
+        </Container>
     );
 }
