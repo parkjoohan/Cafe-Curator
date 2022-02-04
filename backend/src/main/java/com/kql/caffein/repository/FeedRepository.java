@@ -2,6 +2,7 @@ package com.kql.caffein.repository;
 
 import com.kql.caffein.entity.Feed.Feed;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -31,4 +32,7 @@ public interface FeedRepository extends JpaRepository<Feed, Integer> {
   //본인 게시글 + 팔로잉 게시물 + 카테고리 포함하는 게시물
   @Query(value = "select * from feed where (json_overlaps(category_list, :categoryList) or user_no in :followingList) and feed_no < :lastFeedNo order by feed_no desc ", nativeQuery = true)
   Page<Feed> getMainFeedList(String categoryList, List<String> followingList, int lastFeedNo, Pageable pageRequest);
+
+  //해당 카페를 등록한 피드 목록
+  Page<Feed> findByCafeIdAndFeedNoLessThanOrderByFeedNoDesc(int cafeId, Integer lastFeedNo, Pageable pageRequest);
 }

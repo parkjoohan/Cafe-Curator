@@ -2,6 +2,7 @@ package com.kql.caffein.service.Impl;
 
 import com.kql.caffein.dto.Email.EmailAuthDto;
 import com.kql.caffein.entity.EmailAuth;
+import com.kql.caffein.entity.User.User;
 import com.kql.caffein.repository.EmailAuthRepository;
 import com.kql.caffein.repository.UserRepository;
 import com.kql.caffein.service.EmailAuthService;
@@ -12,6 +13,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.Optional;
 import java.util.Random;
 
@@ -28,9 +30,10 @@ public class EmailAuthServiceImpl implements EmailAuthService {
     @Override
     public void emailCheck(EmailAuthDto emailAuthDto) throws Exception {
         Optional<EmailAuth> emails = emailAuthRepository.findByEmail(emailAuthDto.getEmail());
+        Optional<User> users = userRepository.findByEmail(emailAuthDto.getEmail());
 
-        //이메일로 조회한 결과가 있으면
-        if(emails.isPresent()){
+        //email_auth와 user 테이블에 이미 가입된 email이 있으면
+        if(emails.isPresent() && users.isPresent()){
             throw new IllegalArgumentException("이미 가입한 이메일입니다.");
         } else{ //이미 가입된 이메일이 없으면
             // 코드 생성
@@ -91,5 +94,23 @@ public class EmailAuthServiceImpl implements EmailAuthService {
             throw new IllegalStateException("등록된 이메일이 없습니다.");
         }
         return false;
+    }
+
+    @Override
+    @Transactional
+    public void findPassSendEmail(String email) throws Exception{
+        Optional<EmailAuth> emailAuth = emailAuthRepository.findByEmail(email);
+
+        if(emailAuth.isPresent()){
+            String code = setCode();
+            sendMail(email, code);
+
+            emailAuth.get().setCode(code);
+            emailAuth.get().setState(false);
+
+            emailAuthRepository.save(emailAuth.get());
+        }else{
+            throw new IllegalStateException("등록된 이메일이 없습니다.");
+        }
     }
 }

@@ -8,6 +8,7 @@ import com.kql.caffein.entity.CategoryLog;
 import com.kql.caffein.entity.Feed.*;
 import com.kql.caffein.entity.User.UserDetail;
 import com.kql.caffein.repository.*;
+import com.kql.caffein.service.CategoryLogService;
 import com.kql.caffein.service.FeedService;
 import com.kql.caffein.service.S3Service;
 import org.apache.tomcat.util.http.fileupload.FileUploadException;
@@ -18,6 +19,7 @@ import org.locationtech.proj4j.ProjCoordinate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -49,6 +51,11 @@ public class FeedServiceImpl implements FeedService {
     S3Service s3Service;
     @Autowired
     FollowServiceImpl followService;
+    @Autowired
+    RedisTemplate redisTemplate;
+    @Autowired
+    CategoryLogService categoryLogService;
+
 
     //피드 등록
     @Override
@@ -93,9 +100,15 @@ public class FeedServiceImpl implements FeedService {
                         .build();
 
                 categoryLogRepository.save(categoryLog); //카테고리 로그 추가
-
-                //캐시?
             }
+        }
+
+        //Redis 확인
+        if(redisTemplate.hasKey(String.valueOf(cafeId))){ //존재하면
+            categoryLogService.increaseCategoryCount(cafeId, feed.getCategoryList()); //카운트 증가
+        }
+        else{ //없으면
+            categoryLogService.registerCafeCategory(cafeId); //로그 데이터로 추가
         }
     }
 
@@ -134,10 +147,23 @@ public class FeedServiceImpl implements FeedService {
             s3Service.delete(file.getFilePath());
 
         removeFeedList(feedNo, userNo); //피드 목록에서 삭제
-        feedRepository.deleteById(feedNo); //피드 삭제
 
-        //카테고리 로그에서 삭제(cascade)
-        //캐시?
+        //Redis 확인
+        if(redisTemplate.hasKey(String.valueOf(feed.get().getCafeId()))){ //존재하면
+            categoryLogService.decreaseCategoryCount(feed.get().getCafeId(), feed.get().getCategoryList()); //카운트 감소
+
+            //피드 & 로그 삭제
+            feedRepository.deleteById(feedNo); //피드 삭제
+            //카테고리 로그에서 삭제(cascade)
+        }
+        else{ //없으면
+
+            //피드 & 로그 삭제
+            feedRepository.deleteById(feedNo); //피드 삭제
+            //카테고리 로그에서 삭제(cascade)
+
+            categoryLogService.registerCafeCategory(feed.get().getCafeId()); //로그 데이터로 추가
+        }
     }
 
     //유저의 피드 목록에서 피드 삭제
@@ -195,7 +221,7 @@ public class FeedServiceImpl implements FeedService {
         if(obj.isEmpty())
             throw new NullPointerException("해당 피드가 존재하지 않습니다");
 
-        Feed feed = obj.get(); //피드 가져오기
+        Feed feed = obj.get(); //기존 피드 가져오기
 
         String feedUserNo = feed.getUserNo();
         if(!userNo.equals(feedUserNo))
@@ -236,11 +262,17 @@ public class FeedServiceImpl implements FeedService {
         /*
         * 1. 기존에 등록한 카페에서 변동이 없는 경우(cafeModified : false)
         * 2. 기존 카페를 삭제하는 경우
+        *
         * 3. 기존 카페를 다른 카페로 수정하는 경우
         * 4. 카페를 새롭게 추가하는 경우
         * */
 
         Integer cafeId = feed.getCafeId();
+        //Redis 확인
+        if(redisTemplate.hasKey(String.valueOf(cafeId))){ //수정 전 카페 존재 하면
+            categoryLogService.decreaseCategoryCount(cafeId, feed.getCategoryList()); //카운트 감소
+        }
+
         if(feedDto.isCafeModified()){
             if(feedDto.getCafeName() == null){ //2번
                 cafeId = null;
@@ -269,8 +301,14 @@ public class FeedServiceImpl implements FeedService {
                         .build();
 
                 categoryLogRepository.save(categoryLog); //카테고리 로그 추가
+            }
 
-                //캐시?
+            //Redis 확인
+            if(redisTemplate.hasKey(String.valueOf(cafeId))){ //수정 후 카페 존재하면
+                categoryLogService.increaseCategoryCount(cafeId, feed.getCategoryList()); //카운트 증가
+            }
+            else{ //없으면
+                categoryLogService.registerCafeCategory(cafeId); //로그 데이터로 추가
             }
         }
     }
