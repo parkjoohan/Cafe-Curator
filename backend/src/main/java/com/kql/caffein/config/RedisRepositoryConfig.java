@@ -1,6 +1,7 @@
 package com.kql.caffein.config;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.data.redis.RedisProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,8 +20,14 @@ public class RedisRepositoryConfig {
 
     // lettuce
     @Bean
+    @ConditionalOnMissingBean(RedisConnectionFactory.class)
     public RedisConnectionFactory redisConnectionFactory() {
-        return new LettuceConnectionFactory(redisProperties.getHost(), redisProperties.getPort());
+        LettuceConnectionFactory connectionFactory = new LettuceConnectionFactory();
+        connectionFactory.setPort(redisProperties.getPort());
+        connectionFactory.setHostName(redisProperties.getHost());
+        connectionFactory.setPassword(redisProperties.getPassword());
+
+        return connectionFactory;
     }
 
     @Bean
