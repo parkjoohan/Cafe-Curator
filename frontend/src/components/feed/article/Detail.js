@@ -57,11 +57,7 @@ export default function Detail() {
               {/* 본문 내용  */}
               <div id='article_content_frame'>
                 <div di='article_content'>
-                  contentcontentcontentcontentcontentcontent<br/>
-                  contentcontentcontentcontentcontentcontent<br/>
-                  contentcontentcontentcontentcontentcontent<br/>
-                  contentcontentcontentcontentcontentcontent<br/>
-                  contentcontentcontentcontentcontentcontent<br/>
+                  게시글
                 </div>
               </div>
               {/* 관심사 카테고리 표시 폼 */}
@@ -88,3 +84,4 @@ export default function Detail() {
     </Container>
   )
 }
+

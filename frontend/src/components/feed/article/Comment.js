@@ -2,7 +2,7 @@ import React,{useEffect,useState} from 'react'
 import { useParams, useHistory } from 'react-router-dom'
 import { Container, Row, Col } from 'react-bootstrap'
 import { FiCornerUpLeft } from 'react-icons/fi';
-import './css/Detail.css'
+import './css/Comment.css'
 import axios from 'axios';
 
 export default function Comment() {
@@ -45,22 +45,21 @@ export default function Comment() {
     // }, [comments])
 
     // 대댓글 불러오기
-    useEffect(() => {
+    function showRecomment(props) {
         axios.get(url + '/nested', {
             params: {
-            "parentNo": 65,
-            "size": 5,
-            "userNo": "aa"
+                "parentNo": props, 
+                "size": 5,
+                "userNo": "aa"
             }
         }).then((data3) => {
             console.log(data3.data);
             setRecomments([...recomments, ...data3.data]);
-            }).catch(() => {
+        }).catch(() => {
             console.log('불러오기 실패')
         })
-    }, []);
+    };
     
-
     return (
         <Container > 
             <div id='article_comment'>
@@ -68,34 +67,32 @@ export default function Comment() {
                 <div id='article_comment_frame'>
                     {/* 댓글 */}
                     <div id='article_comments-frame'>
-                    {
-                        comments.length != 0 ?    
+                    {    
                         <div>   
-                        {comments.map((comment, i) => (            
-                        <div key={i} id='article_comments'>
-                            <h5 id='article_comments_user'>{comment.userId}</h5>
-                            <h5 id='article_comments_content'>{comment.content}</h5>
-                            <button onClick={() =>
-                            axios.delete(url + `/a4/${comment.commentNo}`).then(window.location.reload())
-                            }>삭제
-                            </button>
-                            </div>            
-                        ))}
-                        </div> : <div></div>
-                    }
-                    {/* 대댓글 */}
-                        {/* <div id='article_comments-frame'> */}
-                        {recomments.length != 0 ? 
+                        {comments.map((comment) => (   
                             <div>
-                            {recomments.map((recomment) => (
-                            <div id='article_comments'>
-                            <h5 id='article_comments_user'>{recomment.userId}</h5>
-                            <h5 id='article_comments_content'>{recomment.content}</h5>
-                            </div> 
-                            ))
-                            }</div> :<div></div>
-                        }
-                    {/* </div> */}
+                                <div id='article_comments'>
+                                    <h5 id='article_comments_user'>{comment.userId}</h5>
+                                    <h5 id='article_comments_content'>{comment.content}</h5>
+                                    <button onClick={() => showRecomment(comment.commentNo)} commentNo={comment.commentNo}>더보기</button>    
+                                    <button onClick={() =>
+                                    axios.delete(url + `/a4/${comment.commentNo}`).then(window.location.reload())
+                                    }>삭제
+                                    </button>
+                                </div>
+                                {/* 대댓글 */}
+                                <div id='article_recomments-frame'>             
+                                    {recomments.map((recomment) => (
+                                        <div id='article_comments'>
+                                        <h5 id='article_comments_user'>{recomment.userId}</h5>
+                                        <h5 id='article_comments_content'>{recomment.content}</h5>
+                                        </div> 
+                                    ))}
+                                </div> 
+                            </div>
+                        ))}
+                        </div>  
+                    }
                     </div> 
                 </div>
             </div>
