@@ -9,59 +9,6 @@ import axios from 'axios';
 export default function Detail() {
 
   const history = useHistory();
-  const [comments, setComments] = useState([]);
-  const [recomments, setRecomments] = useState([]); 
-  const url = "http://localhost:8080/comment"
-
-  // 댓글 불러오기
-  useEffect(() => {
-    axios.get(url, {
-      params: {
-        "feedNo": 40,
-        "size": 5,
-        "userNo": "aa"
-      }
-    }).then((data1) => {
-      console.log(data1.data);
-      setComments([...comments, ...data1.data]);
-    }).catch(() => {
-      console.log('불러오기 실패')
-    })
-  }, []);
-
-  //댓글 쓰기
-  useEffect(() => {
-    if(comments == "1") {
-    axios.post("/comment", {
-      "content": comments.content,
-      "feedNo": 40,
-      "userNo": "a3"
-    },
-      {
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      }).then((data2) => {
-      console.log(data2.data);
-    })}
-  }, [comments])
-
-  // 대댓글 불러오기
-  useEffect(() => {
-    axios.get(url + '/nested', {
-      params: {
-        "parentNo": 60,
-        "size": 5,
-        "userNo": "aa"
-      }
-    }).then((data3) => {
-        console.log(data3.data);
-        setRecomments([...recomments, ...data3.data]);
-      }).catch(() => {
-        console.log('불러오기 실패')
-      })
-  }, []);
-
   
   return (
     <Container >

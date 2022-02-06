@@ -27,28 +27,28 @@ export default function Comment() {
         })
     }, []);
 
-    //댓글 쓰기
-    useEffect(() => {
-        if(comments == "1") {
-        axios.post("/comment", {
-            "content": comments.content,
-            "feedNo": 40,
-            "userNo": "a3"
-        },
-        {
-            headers: {
-                'Content-Type': 'application/json'
-            }
-            }).then((data2) => {
-            console.log(data2.data);
-        })}
-    }, [comments])
+    // //댓글 쓰기
+    // useEffect(() => {
+    //     if(comments == "1") {
+    //     axios.post("/comment", {
+    //         "content": comments.content,
+    //         "feedNo": 40,
+    //         "userNo": "a3"
+    //     },
+    //     {
+    //         headers: {
+    //             'Content-Type': 'application/json'
+    //         }
+    //         }).then((data2) => {
+    //         console.log(data2.data);
+    //     })}
+    // }, [comments])
 
     // 대댓글 불러오기
     useEffect(() => {
         axios.get(url + '/nested', {
             params: {
-            "parentNo": 60,
+            "parentNo": 65,
             "size": 5,
             "userNo": "aa"
             }
@@ -59,6 +59,7 @@ export default function Comment() {
             console.log('불러오기 실패')
         })
     }, []);
+    
 
     return (
         <Container > 
@@ -68,7 +69,9 @@ export default function Comment() {
                     {/* 댓글 */}
                     <div id='article_comments-frame'>
                     {
-                        comments.map((comment, i) => (            
+                        comments.length != 0 ?    
+                        <div>   
+                        {comments.map((comment, i) => (            
                         <div key={i} id='article_comments'>
                             <h5 id='article_comments_user'>{comment.userId}</h5>
                             <h5 id='article_comments_content'>{comment.content}</h5>
@@ -76,16 +79,22 @@ export default function Comment() {
                             axios.delete(url + `/a4/${comment.commentNo}`).then(window.location.reload())
                             }>삭제
                             </button>
-                        </div>                
-                    ))}
+                            </div>            
+                        ))}
+                        </div> : <div></div>
+                    }
                     {/* 대댓글 */}
-                    {/* <div id='article_comments-frame'> */}
-                        {recomments.map((recomment) => (
+                        {/* <div id='article_comments-frame'> */}
+                        {recomments.length != 0 ? 
+                            <div>
+                            {recomments.map((recomment) => (
                             <div id='article_comments'>
                             <h5 id='article_comments_user'>{recomment.userId}</h5>
                             <h5 id='article_comments_content'>{recomment.content}</h5>
                             </div> 
-                        ))}
+                            ))
+                            }</div> :<div></div>
+                        }
                     {/* </div> */}
                     </div> 
                 </div>
