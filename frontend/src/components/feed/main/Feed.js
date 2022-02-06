@@ -1,3 +1,4 @@
+import axios from 'axios'
 import React,{useState,useEffect} from 'react'
 import {Container,Row,Col,Button} from 'react-bootstrap'
 import { useHistory } from 'react-router-dom'
@@ -7,21 +8,24 @@ import Map from './Map'
 export default function Feed(props) {
   // 서버에서 받아올 데이터 중 이미지의 url이 저장됨 Array
   const [url_arr,setUrl] = useState([
-    "/test/1.1.png",// => 3:3
-    "/test/3.2.png",// => 4:3
-    "/test/4.3.png",// => 4:3
-    "/test/4.3(2).png",// => 4:3
-    "/test/5.3.png",// => 5:3
-    "/test/5.4.png",//0.8 => 4:3
-    "/test/16.9.png",// => 5:3
-    "/test/16.10.png",//0.625 => 5:3
-    "/test/16.11.png",//0.6875 => 4:3
-    "/test/17.10.png",//0.588 => 5:3
-    "/test/1.1.png",// => 3:3
-    "/test/3.2.png",// => 4:3
-    "/test/4.3.png",// => 4:3
-    "/test/4.3(2).png",// => 4:3
+    // "/test/1.1.png",// => 3:3
+    // "/test/3.2.png",// => 4:3
+    // "/test/4.3.png",// => 4:3
+    // "/test/4.3(2).png",// => 4:3
+    // "/test/5.3.png",// => 5:3
+    // "/test/5.4.png",//0.8 => 4:3
+    // "/test/16.9.png",// => 5:3
+    // "/test/16.10.png",//0.625 => 5:3
+    // "/test/16.11.png",//0.6875 => 4:3
+    // "/test/17.10.png",//0.588 => 5:3
+    // "/test/1.1.png",// => 3:3
+    // "/test/3.2.png",// => 4:3
+    // "/test/4.3.png",// => 4:3
+    // "/test/4.3(2).png",// => 4:3
   ])
+
+  const [like, setLike] = useState([]);
+
 
   // 이미지 프리로드가 완료됐는가? boolean
   const [isload,setload] = useState(false);
@@ -45,11 +49,21 @@ export default function Feed(props) {
   const history = useHistory();
 
   //url_arr생성,업데이트시 이미지 preload
-  useEffect(()=>{
+  useEffect(() => {
+    if (url_arr) {
 
-    setload(false);
+      let newLikearr = new Array(url_arr.length)
+
+      for (let i = 0; i < newLikearr.length; i++) {
+        newLikearr[i] = url_arr[i].liked
+      }
+
+      setLike(newLikearr)
+
+      setload(false);
 
     // console.log('url_arr생성!')
+      console.log(url_arr)
 
     //생성,새로업데이트 된 이미지가 들어갈 배열길이 추가.
     //cnt부터하는 이유는. 무한스크롤이라고 가정했을 시,
@@ -61,11 +75,13 @@ export default function Feed(props) {
     setImages([...images,newimages])
 
 
-    for (let i = cnt; i < url_arr.length; i++) {
+    for (let i = 0; i < url_arr.length; i++) {
       const image = new Image();
       image.onload = ()=>imageupload(image,i);
-      image.src = url_arr[i]
+      image.src = url_arr[i].file.filePath
     }
+    }
+    
   },[url_arr]);
 
   //이미지낱개 로드시 콜백함수
@@ -82,7 +98,7 @@ export default function Feed(props) {
   //이미지낱개 로드 성공한 수가 url_arr길이하고 같은가?
   useEffect(()=>{
     // console.log(cnt)
-    if (cnt == url_arr.length) {
+    if (cnt == url_arr.length && url_arr.length != 0) {
       //프리로드 전부 완료!
       setload(true);
       // console.log("url 전부 로드 완료!")
@@ -98,6 +114,26 @@ export default function Feed(props) {
     setRows(parseInt(container.offsetWidth/300))
     window.addEventListener('resize',handleResize);
     props.setFootershow(false)
+
+    const data = {
+      "size":20,
+      "type":"feed",
+      "lastFeedNo":100,
+    }
+
+    const url = "http://localhost:8080/feed/mainFeedList"
+
+    axios.get(url,{
+      params:{
+        "size":10,
+        "type":"feed",
+        "lastFeedNo":100
+      }
+    }).then(function(res){
+      console.log(res.data,'사고다')
+      setUrl(res.data)
+    }).catch(console.log("DD"))
+
     return ()=>{
       window.removeEventListener('resize',handleResize);
       props.setFootershow(true)
@@ -129,12 +165,18 @@ export default function Feed(props) {
     }
   },[containerWidth,rows,isload])
 
+  function gotoDetail(num){
+    history.push(`/article/${num}`)
+  }
+
   //쌓는함수
   function block(percent){
+    console.log(like,'like!!')
     // console.log("이건 block함수",containerWidth,rows,percent,heightArr)
 
     // console.log('block함수 시작')
     // console.log(heightArr)
+    // console.log('block',images)
 
     if(!percent) {
       percent = 100;
@@ -150,8 +192,8 @@ export default function Feed(props) {
     }
     // console.log(images)
     //이제 이미지 차곡차곡 쌓을거임.
-    images.map((image)=>{
-
+    images.map((image,index)=>{
+      console.log(index)
       image.removeAttribute("width","100%");
       image.removeAttribute("height","100%");
 
@@ -167,6 +209,21 @@ export default function Feed(props) {
 
       //이미지를 둘러쌀 box하나 만듬.
       const box = document.createElement("div")
+
+      var heart = new Image();
+      heart.src = `${process.env.PUBLIC_URL}/image/heart.png`;
+      heart.style.position="absolute";
+      if(like[index]==false){
+        heart.style.display="none"
+      }
+
+      var heart2 = new Image();
+      heart2.src = `${process.env.PUBLIC_URL}/image/empty_heart.png`;
+      heart2.style.position="absolute";
+      if(like[index]==true){
+        heart2.style.display="none"
+      }
+
       const imageHeight = ((container.offsetWidth * (percent/100) * image.height) / image.width);
       box.style.position="absolute";
       box.style.left=`${container.offsetWidth * (percent/100) * min_idx}px`
@@ -174,10 +231,22 @@ export default function Feed(props) {
       box.style.width=`${percent}%`
       box.style.height=`${imageHeight}`
       box.style.borderRadius="10px"
-      box.style.overflow="hidden"
+      box.style.overflow = "hidden"
       box.appendChild(image);
-      image.style.objectFit="cover"
-      // image.style.borderStyle="groove";
+      box.appendChild(heart);
+      box.appendChild(heart2);
+      image.style.objectFit = "cover"
+      heart.style.width = "10%"
+      heart.style.height = "auto"
+      heart.style.zIndex = 1
+      heart.style.right = "3%";
+      heart.style.bottom = "3%";
+      heart2.style.width = "10%"
+      heart2.style.height = "auto"
+      heart2.style.zIndex = 1
+      heart2.style.right = "3%";
+      heart2.style.bottom = "3%";
+      box.addEventListener("click",()=>gotoDetail(url_arr[index].feedNo))
       image.setAttribute("width","100%");
       image.setAttribute("height","100%");
       division.appendChild(box);
@@ -204,6 +273,14 @@ export default function Feed(props) {
       </div>
       <div id="container" style={{display:'flex',position:'relative'}}>
       </div>
+      {
+        url_arr.map((url,index)=>(
+          <div>
+            {index}번째 좋아요는?{url.liked}
+            <br></br>
+          </div>
+        ))
+      }
     </Container>
   )
 }

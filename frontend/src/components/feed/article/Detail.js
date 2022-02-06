@@ -3,45 +3,69 @@ import { useParams, useHistory } from 'react-router-dom'
 import { Container, Row, Col } from 'react-bootstrap'
 import { FiCornerUpLeft } from 'react-icons/fi';
 import './css/Detail.css'
+import Comment from "./Comment";
 import axios from 'axios';
 
 export default function Detail() {
 
-  let params = useParams();
-  useEffect(()=>{
-    console.log(params)
-  }, [])
-
   const history = useHistory();
   const [comments, setComments] = useState([]);
-  
+  const [recomments, setRecomments] = useState([]); 
+  const url = "http://localhost:8080/comment"
+
+  // 댓글 불러오기
   useEffect(() => {
-    // fetch('http://localhost:8080/comment')
-    //   .then((response) => {
-    //     return response.json();
-    //   })
-    //   .then(function (data) {
-    //     setComments(data);
-    //   });
-    fetch('http://localhost:8080/comment?feedNo=1&lastCommentNo=100&size=3&userNo=a1')
-      .then((response) => response.json())
-      .then((json) => {
-        console.log(json)
-        setComments(json)
-      })
-      .catch(err => {
-      console.log(err)
+    axios.get(url, {
+      params: {
+        "feedNo": 40,
+        "size": 5,
+        "userNo": "aa"
+      }
+    }).then((data1) => {
+      console.log(data1.data);
+      setComments([...comments, ...data1.data]);
+    }).catch(() => {
+      console.log('불러오기 실패')
     })
   }, []);
 
+  //댓글 쓰기
+  useEffect(() => {
+    if(comments == "1") {
+    axios.post("/comment", {
+      "content": comments.content,
+      "feedNo": 40,
+      "userNo": "a3"
+    },
+      {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }).then((data2) => {
+      console.log(data2.data);
+    })}
+  }, [comments])
+
+  // 대댓글 불러오기
+  useEffect(() => {
+    axios.get(url + '/nested', {
+      params: {
+        "parentNo": 60,
+        "size": 5,
+        "userNo": "aa"
+      }
+    }).then((data3) => {
+        console.log(data3.data);
+        setRecomments([...recomments, ...data3.data]);
+      }).catch(() => {
+        console.log('불러오기 실패')
+      })
+  }, []);
+
+  
   return (
     <Container >
       {/* 뒤로 가기 버튼 */}
-      <div>
-        {comments.map((comment) => (
-          <h1>{comment.content}</h1>
-        ))}
-      </div>
       <div>
         <FiCornerUpLeft size="30" onClick={() => { history.goBack() }} />
       </div><br />
@@ -59,7 +83,6 @@ export default function Detail() {
 
           {/* 게시물 창 */}
           <Col id='article_frame' xs={12} md={7} lg={5}>
-            
             {/* 유저프로필,작성일 */}
             <div id='article_profile_info'>
               <div style={{display:"flex"}}>
@@ -99,45 +122,19 @@ export default function Detail() {
                 <p id='article_category_content' style={{ backgroundColor:"skyblue"}}>공부하기 좋은 카페</p>
                 <p id='article_category_content' style={{ backgroundColor:"tomato" }}>공부하기 좋은 카페</p>
               </div>
-
-              
             </div>
 
             {/* 하트 & 북마크*/}
             <div id='article_heart_bookmark'>
-                <div style={{marginRight:"3%"}}>💓</div>
-                <p style={{marginRight:"3%"}}>30</p>
-                <div style={{marginRight:"3%"}}>🔖</div>
-                <p style={{marginRight:"3%"}}>북마크</p>
+              <div style={{marginRight:"3%"}}>💓</div>
+              <p style={{marginRight:"3%"}}>30</p>
+              <div style={{marginRight:"3%"}}>🔖</div>
+              <p style={{marginRight:"3%"}}>북마크</p>
             </div>
 
-            <button onClick={setComments}>버튼</button>
-
-            {/* 댓글 */}
             <div id='article_comment'>
-              <p>총 3개의 댓글이 있습니다.</p>
-                <div id='article_comment_frame'>
-                  <div id='article_comments-frame'>
-                  <div id='article_comments'>
-                      <h5 id='article_comments_user'>username1</h5>
-                      <h5 id='article_comments_content'>리뷰  1</h5>
-                    </div>
-
-                    <div id='article_comments'>
-                      <h5 id='article_comments_user'>username2</h5>
-                      <h5 id='article_comments_content'>리뷰 1</h5>
-                    </div>
-                    {comments.map((comment) => (
-                    <div id='article_re_comments'>
-                      <h5 id='article_comments_user'>{comment.userId}</h5>
-                      <h5 id='article_tag_user'>@username2</h5>
-                      <h5 id='article_comments_content'>리뷰 1</h5>
-                      </div>
-                    ))}
-                  </div>
-
-                </div>
-              </div>
+              <Comment />
+            </div>
             </Col>
           </Row>
         </div>

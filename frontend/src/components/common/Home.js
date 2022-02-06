@@ -1,13 +1,16 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Container,Grid,Col,Row } from 'react-bootstrap'
 import './css/Home.css'
 import styles from './css/Home.module.css'
 import Card from './Card';
 import { Link } from 'react-router-dom'
 
+import axios from 'axios';
+
 export default function Home(props) {
 
   return (
+
     <div id="home_home">
       <div id='home_section1'>
         <div id='hone_video_bg'>
@@ -22,7 +25,7 @@ export default function Home(props) {
             </h3>
           </div>
         </div>
-      </div>
+      </div>               
       <div className='section2'>
         <Container className='content'>
           <Card
