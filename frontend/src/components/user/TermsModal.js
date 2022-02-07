@@ -11,7 +11,7 @@ const TermsModal = ( {show, onHide}) => {
       dialogClassName="modal-w"
       centered
     >
-      <div id="navcolor"></div>
+      <div id="Terms_navcolor"></div>
       <Modal.Header>
         <h2 id="Terms_Margin_Underline">약관</h2>
       </Modal.Header>

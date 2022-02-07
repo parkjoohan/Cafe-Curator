@@ -1,16 +1,26 @@
 /* global kakao */
 
-import React,{useState,useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
+import {TextField, Button} from '@material-ui/core';
 import './css/Search.css'
+import axios from 'axios'
+import { Col, Row } from 'react-bootstrap';
 
 export default function Search() {
 
   const [keyword,setKeyword] = useState("");
   const [results,setResults] = useState([]);
+  const [select,setSelect] = useState({});
+  const [form,setForm] = useState({
+    cafeName:"",
+    x:0,
+    y:0,
+    cafeId:0,
+    cafeAddress:"",
+  })
 
   const onChange = e => {
     setKeyword(e.target.value)
-    console.log(e.target.value)
   }
 
   useEffect(()=>{
@@ -48,20 +58,57 @@ export default function Search() {
     
   },[results])
 
+  function selectcafe(d){
+    setSelect(d)
+  };
+
+  useEffect(()=>{
+    const newForm = {...form}
+    newForm.cafeAddress = select.address_name;
+    newForm.cafeName = select.place_name
+    const url = `https://www.juso.go.kr/addrlink/addrLinkApi.do?confmKey=devU01TX0FVVEgyMDIyMDEyNzE0MTY1MTExMjE4Nzg=
+    &keyword=${newForm.cafeAddress}&resultType=json`
+    let rnMgtSn = "" //도로명코드
+    let admCd = "" //행정구역코드
+    let buldMnnm = 0 //건물본번
+    let buldSlno = 0 //건물부번
+    axios.get(url).then(res=>{
+      rnMgtSn = res.data.results.juso[0].rnMgtSn
+      admCd = res.data.results.juso[0].admCd
+      buldMnnm = res.data.results.juso[0].buldMnnm
+      buldSlno = res.data.results.juso[0].buldSlno
+      const url2 = `https://www.juso.go.kr/addrlink/addrCoordApi.do?confmKey=devU01TX0FVVEgyMDIyMDEyNzE2MzYwNjExMjE4ODk=&rnMgtSn=${rnMgtSn}&admCd=${admCd}&buldMnnm=${buldMnnm}&buldSlno=${buldSlno}&resultType=json&udrtYn=0`
+      axios.get(url2).then(res=>{
+        let beforex = res.data.results.juso[0].entX;
+        let beforey = res.data.results.juso[0].entY;
+        console.log(beforex,beforey)
+      })
+    }).catch(err=>console.log('카페 위치가 등록돼있지 않아요 ㅜㅜ'))
+  },[select])
+
   return (
     <div>
-      <input onChange={e => onChange(e)} style={{width:"100%"}}></input>
+      <TextField label="Cafe name" placeholder='카페 이름' onChange={e => onChange(e)} style={{width:"98%", marginLeft: "1%", marginBottom: "2%"}}></TextField>
       <div>
         {
-          results.map((d,index)=>(
-            <div>
-            <div id='search_detail'>주소:{d.address_name}</div>
-            <div id='search_detail'>id:{d.id}</div>
-            <div id='search_detail'>좌표:{d.x},{d.y}</div>
-            <div id='search_detail'>이름:{d.place_name}</div>
-            <div id='search_detail'>카테고리:{d.category_group_name}</div>
-            <hr/>
-            </div>
+          results.map((d, index) => (
+            <>
+              <div id='search_card' key={index} onClick={()=>selectcafe(d)}>
+                <Row>
+                  <Col md={1}>
+                    <img id='search_marker' src="image/marker.png"/>
+                  </Col>
+                  <Col md={11}>
+                      <div id='search_cafe_name'>{d.place_name}</div>
+                      <div id='search_cafe_address'>{d.address_name}</div>
+                      {/* <div id='search_detail'>id:{d.id}</div>
+                      <div id='search_detail'>좌표:{d.x},{d.y}</div>
+                      <div id='search_detail'>카테고리:{d.category_group_name}</div> */}
+                  </Col>
+                </Row>
+                </div>
+              <hr id='search_hr' />
+            </>
           ))
         }
       </div>

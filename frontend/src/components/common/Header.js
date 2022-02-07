@@ -74,7 +74,7 @@ const style = {
           </NavDropdown>
             <Modal open={profileopen} onClose={modalHandleClose} aria-labelledby="parent-modal-title" aria-describedby="parent-modal-description">
               <Box sx={{ ...style, width: 600, padding: 0 }}>
-                <div id="navcolor"></div>
+                <div id="fix_profile_navcolor"></div>
                 
                 <p id="parent-modal-description">
                   <Container id='fix_profile_con' >

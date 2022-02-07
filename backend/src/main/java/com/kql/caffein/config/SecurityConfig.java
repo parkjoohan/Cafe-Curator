@@ -30,6 +30,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception{
         http
+                .cors()
+
+                .and()
                 .csrf().disable()
 
                 // exception handling 할 때 우리가 만든 클래스를 추가

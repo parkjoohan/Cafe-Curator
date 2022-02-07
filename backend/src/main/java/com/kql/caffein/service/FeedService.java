@@ -37,13 +37,13 @@ public interface FeedService {
     public String feedBookmarkControl(int feedNo, String userNo) throws Exception;
 
     //개인 피드 목록
-    public List feedListWithPaging(String feedUserNo, String userNo, String type, int lastFeedNo, int size) throws Exception;
+    public List feedListWithPaging(String feedUserNo, String userNo, String type, Integer lastFeedNo, int size) throws Exception;
     //북마크한 피드 목록
-    public List bookmarkListWithPaging(String userNo, String type, int lastFeedNo, int size) throws Exception;
+    public List bookmarkListWithPaging(String userNo, String type, Integer lastFeedNo, int size) throws Exception;
     //좋아요 누른 피드 목록
-    public List likeListWithPaging(String userNo, String type, int lastFeedNo, int size) throws Exception;
+    public List likeListWithPaging(String userNo, String type, Integer lastFeedNo, int size) throws Exception;
     //메인 피드 목록
-    public List mainFeedListWithPaging(String userNo, String type, int lastFeedNo, int size) throws Exception;
+    public List mainFeedListWithPaging(String userNo, String type, Integer lastFeedNo, int size) throws Exception;
 
     //피드 좋아요 누른 회원 목록
     public List<FollowDto> feedLikeUserList(String userNo, int feedNo, String lastUserNo, int size);

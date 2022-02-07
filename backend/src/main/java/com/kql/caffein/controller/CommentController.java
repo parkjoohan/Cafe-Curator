@@ -21,6 +21,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequestMapping("/comment")
+@CrossOrigin(origins = {"*"}, maxAge = 6000)
 public class CommentController {
 
     private static final String SUCCESS = "success";

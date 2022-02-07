@@ -1,11 +1,9 @@
 import React , {useState} from "react";
 import {Container, Col, Row} from 'react-bootstrap'
 import './css/UserProfile.css';
-import SignupForm from "./SignupForm";
-import EmailForm from "./EmailForm";
 
 
-export const UserProfile = () => {
+export default function UserProfile() {
     
     // const[feed, setfeed] = useState(true)
     // const[follow, setfollow] = useState(false)
@@ -43,6 +41,3 @@ export const UserProfile = () => {
     </div>
   )
  } 
-
-
-export default UserProfile;

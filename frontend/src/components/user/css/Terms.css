@@ -1,3 +1,9 @@
+#Terms_navcolor {
+  border: 0;
+  background: #4b6b79;
+  height: 35px;
+}
+
 #Terms_ModalPadding {
   padding : 0;
 }
