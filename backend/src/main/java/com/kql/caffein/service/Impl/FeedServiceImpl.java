@@ -91,7 +91,7 @@ public class FeedServiceImpl implements FeedService {
 
         addFeedList(feed.getFeedNo(), feed.getUserNo()); //피드 목록에 추가
 
-        if(feedDto.getCafeName() != null){ //카페를 등록했다면
+        if(cafeId != null){ //카페를 등록했다면
             for(String category : feed.getCategoryList()){
                 CategoryLog categoryLog = CategoryLog.builder()
                         .cafeId(cafeId)
@@ -101,14 +101,12 @@ public class FeedServiceImpl implements FeedService {
 
                 categoryLogRepository.save(categoryLog); //카테고리 로그 추가
             }
-        }
 
-        //Redis 확인
-        if(redisTemplate.hasKey(String.valueOf(cafeId))){ //존재하면
-            categoryLogService.increaseCategoryCount(cafeId, feed.getCategoryList()); //카운트 증가
-        }
-        else{ //없으면
-            categoryLogService.registerCafeCategory(cafeId); //로그 데이터로 추가
+            //Redis 확인
+            if(redisTemplate.hasKey(String.valueOf(cafeId))) //존재하면
+                categoryLogService.increaseCategoryCount(cafeId, feed.getCategoryList()); //카운트 증가
+            else //없으면
+                categoryLogService.registerCafeCategory(cafeId); //로그 데이터로 추가
         }
     }
 
@@ -148,22 +146,20 @@ public class FeedServiceImpl implements FeedService {
 
         removeFeedList(feedNo, userNo); //피드 목록에서 삭제
 
-        //Redis 확인
-        if(redisTemplate.hasKey(String.valueOf(feed.get().getCafeId()))){ //존재하면
-            categoryLogService.decreaseCategoryCount(feed.get().getCafeId(), feed.get().getCategoryList()); //카운트 감소
-
-            //피드 & 로그 삭제
-            feedRepository.deleteById(feedNo); //피드 삭제
-            //카테고리 로그에서 삭제(cascade)
+        if(feed.get().getCafeId() != null){ //카페가 등록된 피드
+            //Redis 확인
+            if(redisTemplate.hasKey(String.valueOf(feed.get().getCafeId()))) { //존재하면
+                categoryLogService.decreaseCategoryCount(feed.get().getCafeId(), feed.get().getCategoryList()); //카운트 감소
+                feedRepository.deleteById(feedNo); //피드 & 로그 삭제(cascade)
+            }
+            else{ //없으면
+                feedRepository.deleteById(feedNo); //피드 & 로그 삭제(cascade)
+                categoryLogService.registerCafeCategory(feed.get().getCafeId()); //로그 데이터로 추가
+            }
+            return;
         }
-        else{ //없으면
-
-            //피드 & 로그 삭제
-            feedRepository.deleteById(feedNo); //피드 삭제
-            //카테고리 로그에서 삭제(cascade)
-
-            categoryLogService.registerCafeCategory(feed.get().getCafeId()); //로그 데이터로 추가
-        }
+        //카페가 등록되지 않은 피드
+        feedRepository.deleteById(feedNo); //피드 & 로그 삭제(cascade)
     }
 
     //유저의 피드 목록에서 피드 삭제
@@ -293,7 +289,7 @@ public class FeedServiceImpl implements FeedService {
         //카테고리 로그 재등록
         categoryLogRepository.deleteByFeedNo(feed.getFeedNo()); //기존 데이터 삭제
         if(cafeId != null){ //등록한 카페가 있는 경우에만
-            for(String category : feed.getCategoryList()){
+            for(String category : feedDto.getCategoryList()){
                 CategoryLog categoryLog = CategoryLog.builder()
                         .cafeId(cafeId)
                         .category(category)
@@ -304,12 +300,10 @@ public class FeedServiceImpl implements FeedService {
             }
 
             //Redis 확인
-            if(redisTemplate.hasKey(String.valueOf(cafeId))){ //수정 후 카페 존재하면
-                categoryLogService.increaseCategoryCount(cafeId, feed.getCategoryList()); //카운트 증가
-            }
-            else{ //없으면
+            if(redisTemplate.hasKey(String.valueOf(cafeId))) //수정 후 카페 존재하면
+                categoryLogService.increaseCategoryCount(cafeId, feedDto.getCategoryList()); //카운트 증가
+            else //없으면
                 categoryLogService.registerCafeCategory(cafeId); //로그 데이터로 추가
-            }
         }
     }
 
@@ -374,7 +368,8 @@ public class FeedServiceImpl implements FeedService {
     //개인 피드 목록(feeds 테이블)
     @Override
     @Transactional
-    public List feedListWithPaging(String feedUserNo, String userNo, String type, int lastFeedNo, int size) throws Exception{
+    public List feedListWithPaging(String feedUserNo, String userNo, String type, Integer lastFeedNo, int size) throws Exception{
+        if(lastFeedNo == null) lastFeedNo = Integer.MAX_VALUE;
 
         Optional<Feeds> feeds = feedsRepository.findById(feedUserNo);
         if(feeds.isEmpty()) //feedUser가 작성한 피드 없음
@@ -394,7 +389,8 @@ public class FeedServiceImpl implements FeedService {
     //북마크한 피드 목록
     @Override
     @Transactional
-    public List bookmarkListWithPaging(String userNo, String type, int lastFeedNo, int size) throws Exception{
+    public List bookmarkListWithPaging(String userNo, String type, Integer lastFeedNo, int size) throws Exception{
+        if(lastFeedNo == null) lastFeedNo = Integer.MAX_VALUE;
 
         Optional<List<Integer>> bookmarkList = bookmarkRepository.getBookmarkList(userNo);
 
@@ -409,7 +405,8 @@ public class FeedServiceImpl implements FeedService {
     //좋아요 누른 피드 목록
     @Override
     @Transactional
-    public List likeListWithPaging(String userNo, String type, int lastFeedNo, int size) throws Exception{
+    public List likeListWithPaging(String userNo, String type, Integer lastFeedNo, int size) throws Exception{
+        if(lastFeedNo == null) lastFeedNo = Integer.MAX_VALUE;
 
         Optional<List<Integer>> likeList = feedLikeRepository.getLikeList(userNo);
 
@@ -424,7 +421,8 @@ public class FeedServiceImpl implements FeedService {
     //메인 피드 목록
     @Override
     @Transactional
-    public List mainFeedListWithPaging(String userNo, String type, int lastFeedNo, int size) throws Exception{
+    public List mainFeedListWithPaging(String userNo, String type, Integer lastFeedNo, int size) throws Exception{
+        if(lastFeedNo == null) lastFeedNo = Integer.MAX_VALUE;
         
         List<Feed> mainFeedList = null;
         
@@ -437,15 +435,21 @@ public class FeedServiceImpl implements FeedService {
 
             //임시 관심사
             List<String> categoryList = new ArrayList<>();
-            categoryList.add("공부하기 좋은");
-            categoryList.add("테마카페");
+//            categoryList.add("공부하기 좋은");
+//            categoryList.add("테마카페");
 //            List<String> categoryList = userDetailRepository.findById(userNo).get().getCategoryList();
+
+            if(followingList.size() == 0 && categoryList.size() == 0)
+                System.out.println("본인 게시물도 없고 팔로잉도 없고 추천 게시물도 음슴");
 
             //CategoryDataConverter로 List<String> -> json 변환 필요!
             Page<Feed> f = feedRepository.getMainFeedList(new CategoryDataConverter().convertToDatabaseColumn(categoryList), followingList,
                                                 lastFeedNo, PageRequest.of(0,size));
             mainFeedList = f.getContent();
         }
+
+//        if(mainFeedList.size() == 0)
+//            System.out.println("본인 게시물도 없고 팔로잉도 없고 추천 게시물도 음슴");
 
         if(type.equals("blog"))
             return makeBlogDtoList(mainFeedList, userNo);

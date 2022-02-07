@@ -108,7 +108,7 @@ public class FeedController {
     public ResponseEntity feedListWithPaging(@ApiParam(value = "조회할 유저")@PathVariable String feedUserNo,
                                    @ApiParam(value = "조회하는 유저") @PathVariable(required = false) String userNo,
                                    @ApiParam(value = "타입(feed 또는 blog)")@RequestParam String type,
-                                   @RequestParam int lastFeedNo, @RequestParam int size) {
+                                   @RequestParam(required = false) Integer lastFeedNo, @RequestParam int size) {
         try{
             return new ResponseEntity<>(feedService.feedListWithPaging(feedUserNo, userNo,type, lastFeedNo, size), HttpStatus.OK);
         }catch (Exception e){
@@ -119,7 +119,7 @@ public class FeedController {
     @ApiOperation(value = "북마크 목록")
     @GetMapping("bookmarkList/{userNo}")
     public ResponseEntity bookmarkListWithPaging(@PathVariable String userNo, @ApiParam(value = "타입(feed 또는 blog)")@RequestParam String type,
-                                                 @RequestParam int lastFeedNo, @RequestParam int size) {
+                                                 @RequestParam(required = false) Integer lastFeedNo, @RequestParam int size) {
         try{
             return new ResponseEntity<>(feedService.bookmarkListWithPaging(userNo, type, lastFeedNo, size), HttpStatus.OK);
         }catch (Exception e){
@@ -130,7 +130,7 @@ public class FeedController {
     @ApiOperation(value = "좋아요 목록")
     @GetMapping("likeList/{userNo}")
     public ResponseEntity likeListWithPaging(@PathVariable String userNo, @ApiParam(value = "타입(feed 또는 blog)")@RequestParam String type,
-                                                 @RequestParam int lastFeedNo, @RequestParam int size) {
+                                             @RequestParam(required = false) Integer lastFeedNo, @RequestParam int size) {
         try{
             return new ResponseEntity<>(feedService.likeListWithPaging(userNo, type, lastFeedNo, size), HttpStatus.OK);
         }catch (Exception e){
@@ -142,7 +142,7 @@ public class FeedController {
     @GetMapping(value={"mainFeedList", "mainFeedList/{userNo}"})
     public ResponseEntity mainFeedListWithPaging(@PathVariable(required = false) String userNo,
                                                  @ApiParam(value = "타입(feed 또는 blog)")@RequestParam String type,
-                                                 @RequestParam int lastFeedNo, @RequestParam int size) {
+                                                 @RequestParam(required = false) Integer lastFeedNo, @RequestParam int size) {
         try{
             return new ResponseEntity<>(feedService.mainFeedListWithPaging(userNo, type, lastFeedNo, size), HttpStatus.OK);
         }catch (Exception e){
@@ -153,7 +153,7 @@ public class FeedController {
     @GetMapping("likeUserList")
     @ApiOperation(value = "피드 좋아요 누른 회원 목록")
     public ResponseEntity feedLikeUserList (@RequestParam(value = "userNo") String userNo, @RequestParam int feedNo,
-                                               @RequestParam(required = false) String lastUserNo, @RequestParam int size) {
+                                            @RequestParam(required = false) String lastUserNo, @RequestParam int size) {
         try {
             List<FollowDto> list = feedService.feedLikeUserList(userNo, feedNo, lastUserNo, size);
             return new ResponseEntity<>(list,HttpStatus.OK);
