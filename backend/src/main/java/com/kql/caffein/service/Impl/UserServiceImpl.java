@@ -64,6 +64,24 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public String getUserId() throws Exception {
+        //유저를 뜻하는 'U'를 맨 앞에 넣고 12자리 랜덤 문자열을 붙임)
+        int leftLimit = 48; // numeral '0'
+        int rightLimit = 122; // letter 'z'
+        int targetStringLength = 9;
+        Random random = new Random();
+        String userLetter = "U";
+
+        String generatedString = random.ints(leftLimit,rightLimit + 1)
+                .filter(i -> (i <= 57 || i >= 65) && (i <= 90 || i >= 97))
+                .limit(targetStringLength)
+                .collect(StringBuilder::new, StringBuilder::appendCodePoint, StringBuilder::append)
+                .toString();
+
+        return userLetter + generatedString;
+    }
+
+    @Override
     public String uploadPicture(MultipartFile multipartFile) throws Exception {
         String originFileName = multipartFile.getOriginalFilename();
         String extension = originFileName.substring(originFileName.length()-3);
@@ -100,11 +118,11 @@ public class UserServiceImpl implements UserService {
                     .build();
             userRepository.save(user);
 
-            //관심사 나중에 해야함
             UserDetail userDetail = UserDetail.builder()
                     .userNo(randomUserNo)
                     .userId(userDetailDto.getUserId())
                     .pass(passwordEncoder.encode(userDetailDto.getPass()))
+                    .categoryList(userDetailDto.getCategoryList())
                     .build();
             userDetailRepository.save(userDetail);
         } catch (Exception e){
@@ -143,6 +161,7 @@ public class UserServiceImpl implements UserService {
                     .userId(userDetailDto.getUserId())
                     .pass(passwordEncoder.encode(userDetailDto.getPass()))
                     .picture(imgRUL)
+                    .categoryList(userDetailDto.getCategoryList())
                     .build();
             userDetailRepository.save(userDetail);
         } catch (Exception e){
