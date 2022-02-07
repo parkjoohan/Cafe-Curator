@@ -4,7 +4,6 @@ import com.kql.caffein.jwt.JwtAccessDeniedHandler;
 import com.kql.caffein.jwt.JwtAuthenticationEntryPoint;
 import com.kql.caffein.jwt.JwtSecurityConfig;
 import com.kql.caffein.jwt.TokenProvider;
-import com.kql.caffein.service.CustomOAuth2UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
@@ -21,7 +20,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final TokenProvider tokenProvider;
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
-    private final CustomOAuth2UserService customOAuth2UserService;
+//    private final CustomOAuth2UserService customOAuth2UserService;
 
     @Bean
     public PasswordEncoder passwordEncoder(){
@@ -52,11 +51,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 // JwtFilter를 addFilterBefore로 등록했던 JwtSecurityConfig 클래스를 적용
                 .and()
-                .apply(new JwtSecurityConfig(tokenProvider))
+                .apply(new JwtSecurityConfig(tokenProvider));
 
-                .and()
-                .oauth2Login()
-                .userInfoEndpoint() //로그인 성공 후 사용자 정보를 가져온다.
-                .userService(customOAuth2UserService); // userInfoEndpoint()로 가져온 사용자 정보를 처리할 때 사용
+//                .and()
+//                .oauth2Login()
+//                .userInfoEndpoint() //로그인 성공 후 사용자 정보를 가져온다.
+//                .userService(customOAuth2UserService); // userInfoEndpoint()로 가져온 사용자 정보를 처리할 때 사용
     }
 }

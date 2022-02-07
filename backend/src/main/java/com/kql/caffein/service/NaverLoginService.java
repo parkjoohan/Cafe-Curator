@@ -1,6 +1,7 @@
 package com.kql.caffein.service;
 
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.kql.caffein.dto.Role;
 import com.kql.caffein.entity.EmailAuth;
@@ -17,6 +18,8 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.io.*;
 import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
 import java.net.URL;
 import java.util.Date;
 import java.util.HashMap;
@@ -24,8 +27,7 @@ import java.util.Map;
 import java.util.Optional;
 
 @Service
-public class GoogleLoginService {
-
+public class NaverLoginService {
     @Autowired
     private UserService userService;
 
@@ -44,38 +46,47 @@ public class GoogleLoginService {
     @Value("${oauth.pass}")
     private String basePass;
 
-    @Value("${api.google.clientId}")
+    @Value("${api.naver.clientId}")
     private String clientId;
 
-    @Value("${api.google.redirectURI}")
+    @Value("${api.naver.redirectURI}")
     private String redirectURI;
 
-    @Value("${api.google.clientSecret}")
+    @Value("${api.naver.state}")
+    private String state;
+
+    @Value("${api.naver.clientSecret}")
     private String clientSecret;
 
-    public String getAccessToken(String authorize_code) {
+    public String getAccessToken (String authorize_code) {
         String access_Token = "";
-        String id_Token = "";
-        String reqURL = "https://oauth2.googleapis.com/token";
+        String refresh_Token = "";
+        String reqURL = "https://nid.naver.com/oauth2.0/token";
 
         try {
             URL url = new URL(reqURL);
+
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
+            //POST 요청을 위해 기본값이 false인 setDoOutput을 true로
+
             conn.setRequestMethod("POST");
             conn.setDoOutput(true);
 
+            //POST 요청에 필요로 요구하는 파라미터 스트림을 통해 전송
             BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
             StringBuilder sb = new StringBuilder();
             sb.append("grant_type=authorization_code");
             sb.append("&client_id=" + clientId);
-            sb.append("&redirect_uri=" + redirectURI);
             sb.append("&client_secret=" + clientSecret);
             sb.append("&code=" + authorize_code);
+            sb.append("&state=" + state);
             bw.write(sb.toString());
-//            System.out.println(sb);
             bw.flush();
+
+            //    결과 코드가 200이라면 성공
             int responseCode = conn.getResponseCode();
-//            System.out.println("responseCode : " + responseCode);
+            System.out.println("responseCode : " + responseCode);
 
             BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
             String line = "";
@@ -84,25 +95,30 @@ public class GoogleLoginService {
             while ((line = br.readLine()) != null) {
                 result += line;
             }
-//            System.out.println("response body : " + result);
+            System.out.println("response body : " + result);
 
+            //Gson 라이브러리에 포함된 클래스로 JSON파싱 객체 생성
             JsonParser parser = new JsonParser();
             JsonElement element = parser.parse(result);
 
             access_Token = element.getAsJsonObject().get("access_token").getAsString();
-            id_Token = element.getAsJsonObject().get("id_token").getAsString();
+            refresh_Token = element.getAsJsonObject().get("refresh_token").getAsString();
 
             br.close();
             bw.close();
+        } catch (ProtocolException e) {
+            e.printStackTrace();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        return id_Token;
+        return access_Token;
     }
 
-    public String getUserInfo (String id_token) {
-        String reqURL = "https://oauth2.googleapis.com/tokeninfo?id_token=" + id_token;
+    public String getUserInfo (String access_Token) {
+        String reqURL = "https://openapi.naver.com/v1/nid/me";
         String email = "";
         try {
             URL url = new URL(reqURL);
@@ -110,8 +126,10 @@ public class GoogleLoginService {
             conn.setRequestMethod("GET");
             conn.setDoOutput(true);
 
+            //요청에 필요한 Header에 포함될 내용
+            conn.setRequestProperty("Authorization", "Bearer " + access_Token);
+
             int responseCode = conn.getResponseCode();
-//            System.out.println("responseCode : " + responseCode);
 
             BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
             String line = "";
@@ -120,11 +138,10 @@ public class GoogleLoginService {
             while ((line = br.readLine()) != null) {
                 result += line;
             }
-//            System.out.println("response body : " + result);
-
             JsonParser parser = new JsonParser();
             JsonElement element = parser.parse(result);
-            email = element.getAsJsonObject().get("email").getAsString();
+            JsonObject response = element.getAsJsonObject().get("response").getAsJsonObject();
+            email = response.get("email").getAsString();
 
             br.close();
 
@@ -135,7 +152,7 @@ public class GoogleLoginService {
     }
 
     @Transactional
-    public Map<String, String> googleRegister(String email) throws Exception {
+    public Map<String, String> naverRegister(String email) throws Exception {
         try{
             //userNo 생성
             String randomUserNo = userService.getUserNo();
@@ -160,7 +177,7 @@ public class GoogleLoginService {
                         .userNo(randomUserNo)
                         .emailAuth(emailAuth1)
                         .joinDate(new Date())
-                        .oauthType("google")
+                        .oauthType("naver")
                         .role(Role.USER)
                         .build();
                 userRepository.save(user);
@@ -176,7 +193,7 @@ public class GoogleLoginService {
             }
         } catch (Exception e){
             e.printStackTrace();
-            throw new RuntimeException("구글 가입 진행중 문제 발생");
+            throw new RuntimeException("네이버 가입 진행중 문제 발생");
         }
     }
 }

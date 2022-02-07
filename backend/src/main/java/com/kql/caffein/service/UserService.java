@@ -12,6 +12,8 @@ import java.util.Optional;
 public interface UserService {
     //userNo 생성
     public String getUserNo() throws Exception;
+    //userId 생성(Oauth 전용)
+    public String getUserId() throws Exception;
     //프로필 사진 업로드
     public String uploadPicture(MultipartFile multipartFile) throws Exception;
     //회원가입(사진X)
