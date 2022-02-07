@@ -107,7 +107,7 @@ public class CommentServiceImpl implements CommentService {
                     .userId(commentUserID)
                     .content(comment.getContent())
                     .regTime(comment.getRegTime())
-                    .parentNo(comment.getParentNo())
+                    .commentGroup(comment.getCommentGroup())
                     .parentId(parentID)
                     .likeCount(comment.getLikeCount())
                     .commentCount(comment.getCommentCount())
