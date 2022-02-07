@@ -20,6 +20,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final TokenProvider tokenProvider;
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
     private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
+//    private final CustomOAuth2UserService customOAuth2UserService;
 
     @Bean
     public PasswordEncoder passwordEncoder(){
@@ -39,12 +40,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authenticationEntryPoint(jwtAuthenticationEntryPoint) //인증 실패시 (Spring Security에서 인증되지 않은 사용자)
                 .accessDeniedHandler(jwtAccessDeniedHandler) //인가 실패시 (Spring Security에서 인증되었으나 권한이 없는 사용자)
 
+
                 // 시큐리티는 기본적으로 세션을 사용
                 // 토큰 기반 인증 방식을 사용하기 때문에 세션 off
                 .and()
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-
 
                 .and()
                 .authorizeRequests()
@@ -55,5 +56,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .apply(new JwtSecurityConfig(tokenProvider));
 
+//                .and()
+//                .oauth2Login()
+//                .userInfoEndpoint() //로그인 성공 후 사용자 정보를 가져온다.
+//                .userService(customOAuth2UserService); // userInfoEndpoint()로 가져온 사용자 정보를 처리할 때 사용
     }
 }
