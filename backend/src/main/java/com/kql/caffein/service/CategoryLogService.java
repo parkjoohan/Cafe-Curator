@@ -45,11 +45,15 @@ public class CategoryLogService {
     }
 
     public void increaseCategoryCount(int cafeId, List<String> categoryList){
+//        System.out.println("cafeId " + cafeId + " >> 추가 [" + categoryList.size() + "]" + categoryList);
+        if(categoryList.size() == 0) return;
         for(String category: categoryList)
             redisTemplate.opsForZSet().incrementScore(String.valueOf(cafeId), category, 1);
     }
 
     public void decreaseCategoryCount(int cafeId, List<String> categoryList){
+//        System.out.println("cafeId " + cafeId + " >> 삭제 [" + categoryList.size() + "]" + categoryList);
+        if(categoryList.size() == 0) return;
         for(String category: categoryList)
             redisTemplate.opsForZSet().incrementScore(String.valueOf(cafeId), category, -1);
     }
