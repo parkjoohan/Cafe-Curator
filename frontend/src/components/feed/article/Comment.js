@@ -16,7 +16,7 @@ export default function Comment() {
     useEffect(() => {
         axios.get(url, {
         params: {
-            "feedNo": 40,
+            "feedNo": 60,
             "size": 5,
             "userNo": "aa"
         }
@@ -32,7 +32,7 @@ export default function Comment() {
     function readComment() {
         axios.get(url, {
             params: {
-                "feedNo": 40,
+                "feedNo": 60,
                 "size": 5,
                 "userNo": "aa"
             }
@@ -47,7 +47,7 @@ export default function Comment() {
         console.log(props);
         axios.post("/comment", {
             "content": props,
-            "feedNo": 40,
+            "feedNo": 60,
             "userNo": "aa",
             // "parentNo": 
         },
@@ -60,7 +60,7 @@ export default function Comment() {
                     console.log(data2.data);
                     axios.get(url, {
                         params: {
-                            "feedNo": 40,
+                            "feedNo": 60,
                             "size": 5,
                             "userNo": "aa"
                         }
@@ -86,7 +86,7 @@ export default function Comment() {
 
         axios.post("/comment", {
             "content": props,
-            "feedNo": 40,
+            "feedNo": 60,
             "parentNo": `${parentNo}`,
             "userNo": "aa",
         },
@@ -99,7 +99,7 @@ export default function Comment() {
                     console.log(data2.data);
                     axios.get(url, {
                         params: {
-                            "feedNo": 40,
+                            "feedNo": 60,
                             "size": 5,
                             "userNo": "aa"
                         }
