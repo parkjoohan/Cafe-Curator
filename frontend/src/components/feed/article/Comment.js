@@ -146,32 +146,64 @@ export default function Comment() {
                     {    
                         <div>   
                         {comments.map((comment) => (   
-                            <div>
-                                <div id='article_comments'>
-                                    <h5 id='article_comments_user'>{comment.userId}</h5>
-                                    <h5 id='article_comments_content'>{comment.content}</h5>
-                                    <p onClick={() => setParentNo(comment.commentNo)}>답글달기 </p>    
-                                    <p onClick={() => showRecomment(comment.commentNo)}>더보기 </p>    
-                                    <p onClick={() => deleteComment(comment.commentNo)}>삭제</p>
-                                </div>
+                            <Container>
+                                <Row id='article_comments'>
+                                    <Col lg={9}>
+                                        <Row>
+                                            <Col lg={1}>
+                                                <h5 id='article_comments_user'>{comment.userId}</h5>
+                                            </Col>
+                                            <Col lg={11}>
+                                                <h5 id='article_comments_content'>{comment.content}</h5>
+                                            </Col>
+                                        </Row>
+                                    </Col>
+                                    <Col lg={3}>
+                                        <Row>
+                                            <Col lg={7}>
+                                                <h7 style={{fontSize: "12px"}} onClick={() => setParentNo(comment.commentNo)}>답글달기 </h7> 
+                                            </Col>
+                                            <Col lg={5}>
+                                                <h7 style={{fontSize: "12px"}} onClick={() => deleteComment(comment.commentNo)}>삭제</h7>
+                                            </Col>
+                                        </Row>
+                                    </Col>
+                                </Row>
+                                <Row>
+                                    <h7 id='article_commnets_more' onClick={() => showRecomment(comment.commentNo)}>더보기 </h7>
+                                </Row>
                                 
                                 {/* 대댓글 */}
                                 <div>
                                 {
                                     recomments.map((recomment) =>
                                     comment.commentGroup == recomment.commentGroup && (
-                                    <div id='article_recomments-frame'>  
-                                        <div id='article_comments'>
-                                        <h5 id='article_comments_user'>{recomment.userId}</h5>
-                                        <h5 id='article_comments_content'>{recomment.content}</h5>
-                                        <button onClick={() => showRecomment(comment.commentNo)} >더보기</button>    
-                                        <button onClick={() => deleteComment(recomment.commentNo)}>삭제
-                                        </button>
-                                        </div> 
-                                    </div>
-                                    ))}
+                                    // <div id='article_comments'>
+                                    <>
+                                        <Row id='article_recomments-frame'> 
+                                            <Col>
+                                                <Row>
+                                                    <Col lg={1}>
+                                                        <h5 id='article_comments_user'>{recomment.userId}</h5>
+                                                    </Col>
+                                                    <Col lg={8}>
+                                                        <h5 id='article_comments_content'>{recomment.content}</h5>
+                                                    </Col>
+                                                    <Col lg={2}>
+                                                        <h7 style={{fontSize: "12px"}} onClick={() => setParentNo(recomment.commentNo)}>답글달기 </h7>
+                                                    </Col>
+                                                    <Col lg={1}>
+                                                        <h7 style={{fontSize: "12px"}} onClick={() => deleteComment(recomment.commentNo)}>삭제</h7>
+                                                    </Col>
+                                                </Row>
+                                            </Col>     
+                                        </Row>                
+                                    </>
+                                    
+                                    ))/* </div>  */
+                                }
                                 </div>
-                            </div>
+                            </Container>
                         ))}
                         </div>  
                     }

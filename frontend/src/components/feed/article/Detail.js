@@ -36,28 +36,27 @@ export default function Detail() {
   // console.log(pk);
   
   return (
-    <Container >
+    <div style={{height: "1500px"}}>
       {/* 뒤로 가기 버튼 */}
-      <div>
+      <div style={{marginLeft: "2%"}}>
         <FiCornerUpLeft size="30" onClick={() => { history.goBack() }} />
       </div><br />
 
       {/* 게시물 컨테이너 */}
       <div id='article_con'>
-        <Row  style={{ justifyContent: "space-around"}}>
+        <Row style={{ justifyContent: "space-around", height: "1400px"}}>
           {/* 사진 창 */}
-
-          <Col>
+          <Col id='article_frame' lg={5}>
             <div class="slider">
               {
                 (data&&data.files)&&data.files.map((file,index)=>(
                   <input type="radio" name="slide" id={`slide${index+1}`}/>
                 ))
               }
-              <ul id="imgholder" class="imgs">
+              <ul id="article_picture_frame">
                   {
                     (data&&data.files)&&data.files.map((file,index)=>(
-                      <li><img src={file.filePath}/></li>
+                      <li><img id='article_picture' src={file.filePath}/></li>
                     ))  
                   }
               </ul>
@@ -72,7 +71,7 @@ export default function Detail() {
           </Col>
 
           {/* 게시물 창 */}
-          <Col id='article_frame' xs={12} md={7} lg={5}>
+          <Col id='article_frame' lg={6}>
             {/* 유저프로필,작성일 */}
             <div id='article_profile_info'>
               <div style={{display:"flex"}}>
@@ -127,6 +126,6 @@ export default function Detail() {
             </Col>
           </Row>
         </div>
-    </Container>
+    </div>
   )
 }
