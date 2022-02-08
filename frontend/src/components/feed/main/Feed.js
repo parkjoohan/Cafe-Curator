@@ -39,12 +39,14 @@ export default function Feed(props) {
     window.addEventListener('scroll',scroll)
 
     function scroll(e){
-      // e.preventDefault();
+
+      e.preventDefault();
       const getScrollTop = function () { return (window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop; }; 
       const getDocumentHeight = function () { const body = document.body; const html = document.documentElement; return Math.max( body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight ); };
-      if (getScrollTop() === getDocumentHeight() - window.innerHeight) {
+      // console.log(getScrollTop() == getDocumentHeight() - window.innerHeight)
+      if (getScrollTop() == getDocumentHeight() - window.innerHeight) {
         window.removeEventListener('scroll',scroll)
-        // console.log('스크롤이 맨 밑이다!')
+        console.log('스크롤이 맨 밑이다!')
         nextLoading()
       }
     }
@@ -230,7 +232,7 @@ export default function Feed(props) {
 
   function likeArticle(index){
     // console.log(url_arr)
-    const likeUrl = `http://i6c104.p.ssafy.io:8080/feed/like/${url_arr[index].feedNo}/a11`
+    const likeUrl = `http://i6c104.p.ssafy.io:8080/feed/like/${url_arr[index].feedNo}/a1`
     let heart = document.getElementById(`heart${index}`);
     let heart2 = document.getElementById(`heart2${index}`);
     axios.get(likeUrl).then(function(res){

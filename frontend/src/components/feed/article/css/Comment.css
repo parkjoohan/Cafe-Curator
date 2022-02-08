@@ -16,6 +16,8 @@
     flex-direction: column;
     padding: 3%;
     border-radius: 10px;
+    width: 600px;
+    margin-left: -14%;
 }
 
 #article_comments-frame {
