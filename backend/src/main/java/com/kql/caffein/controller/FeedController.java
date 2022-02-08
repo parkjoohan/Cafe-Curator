@@ -36,6 +36,7 @@ public class FeedController {
             feedService.feedRegister(feedDto, files);
             return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
         }catch (Exception e){
+            e.printStackTrace();
             return new ResponseEntity<>("FAIL : " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -48,6 +49,7 @@ public class FeedController {
             feedService.feedDelete(feedNo, userNo);
             return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
         } catch (Exception e){
+            e.printStackTrace();
             return new ResponseEntity<>("FAIL : " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -73,6 +75,7 @@ public class FeedController {
             feedService.feedModify(userNo, feedDto, files);
             return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
         }catch (Exception e){
+            e.printStackTrace();
             return new ResponseEntity<>("FAIL : " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
