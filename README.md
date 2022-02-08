@@ -196,4 +196,4 @@ ___
   ![와이어5](/uploads/2fafa3282621f0ff47cd99aec5d0e317/와이어5.JPG)
 
 * ERD <br>
-  ![ERD](/uploads/ea24a4e989a94793624131c075bd9c8c/ERD.png)
+  ![ERD](uploads/caffe_in_erd.png)
