@@ -216,3 +216,13 @@ ___
 
 ### ERD 
   ![ERD](uploads/caffe_in_erd.png)
+
+___
+
+### 참고사이트
+* 백엔드
+
+* 프론트엔드
+  * 무한 스크롤 : https://ghur2002.medium.com/react%EC%97%90%EC%84%9C-infinite-scroll-%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0-128d64ea24b5
+  * 스켈레톤 컴포넌트 : https://ui.toast.com/weekly-pick/ko_20201110
+  * axios, fetch : https://studyandwrite.tistory.com/368, https://dream-frontend.tistory.com/383
