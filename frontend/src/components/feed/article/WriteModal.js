@@ -4,10 +4,23 @@ import {TextField, Button} from '@material-ui/core';
 import { Row,Col } from 'react-bootstrap'
 import './css/WriteModal.css'
 import Search from './Search';
+import axios from 'axios'
 
 
 
 const WriteModal = ( {show, onHide}) => {
+  
+  const [form,setForm] = useState({
+    "feedDto":{}
+  })
+
+  const [files,setFiles] = useState([])
+
+  const [feeddto,setFeeddto] = useState({})
+
+  const [cafeinfo,setCafeinfo] = useState({})
+
+  const [content,setContent] = useState("")
 
   const [cnt,setCnt] = useState(0);
   
@@ -52,10 +65,11 @@ const WriteModal = ( {show, onHide}) => {
   };
 
   const onLoadFile = e => {
-    console.log('업로드!!')
+    // console.log('업로드!!')
     const newfilearr = fileImage;
     setFileImage([...fileImage,
       URL.createObjectURL(e.target.files[0])])
+    setFiles([...files, e.target.files[0]])
   }
 
   function deletePicture(e){
@@ -177,7 +191,7 @@ const WriteModal = ( {show, onHide}) => {
   // }
 
   function pictures(){
-    console.log('사진 올라간다!or 삭제했다.!')
+    // console.log('사진 올라간다!or 삭제했다.!')
     return (
       <>
       {
@@ -194,9 +208,56 @@ const WriteModal = ( {show, onHide}) => {
   }
 
   useEffect(()=>{
-    console.log('useeffect done!')
+    // console.log('useeffect done!')
     pictures();
   },[fileImage])
+
+  useEffect(()=>{
+    // console.log("content:",content)
+    // console.log("like:",like)
+    // console.log("like2:",like2)
+    // console.log("cafeinfo:",cafeinfo)
+    const newform = {
+      ...cafeinfo,
+      "content":content,
+      "categoryList":[],
+      "userNo":"a1",
+    }
+    for (let i = 0; i < like.length; i++) {
+      if(like[i][1]===true){
+        newform.categoryList = [...newform.categoryList,likename[i]]
+      }
+      if(like2[i][1]===true){
+        newform.categoryList = [...newform.categoryList,likename2[i]]
+      }
+    }
+    setFeeddto(newform)
+  },[like,like2,cafeinfo,content])
+
+  // useEffect(()=>{
+  //   console.log(feeddto)
+  // },[feeddto,files])
+
+  // useEffect(()=>{
+  //   console.log(form)
+  // },[form])
+
+  const write = () => {
+    console.log(feeddto)
+    const newForm = new FormData();
+    newForm.append("feedDto", new Blob([JSON.stringify(feeddto)], { type: "application/json" }))
+    for (let i = 0; i < files.length; i++) {
+      newForm.append("files",files[i])
+    }
+    const writeurl = "http://i6c104.p.ssafy.io:8080/feed"
+    axios({
+      method: "post",
+      url: writeurl,
+      data: newForm,
+      headers: { "Content-Type": "multipart/form-data" }
+    });
+    onHide()
+  }
 
 
   return (
@@ -212,7 +273,8 @@ const WriteModal = ( {show, onHide}) => {
 
       <Modal.Body>
         {/* 카페 검색 창 */}
-        <Search />
+        <h3>{form.formDto && form.formDto.place_name}</h3>
+        <Search setCafeinfo={setCafeinfo}/>
         {/* 카페 이름 출력창 */}
         {/* <TextField label="Cafe name" placeholder='카페 이름' fullWidth required/> */}
 
@@ -272,21 +334,22 @@ const WriteModal = ( {show, onHide}) => {
             <div style={{textAlign:"center"}}>사진은 최대 4장까지 첨부가 가능합니다.</div>
           </Col>
           <Col lg={5} md={7}>
-            {/* <Textarea
+            <TextField
                   id="outlined-multiline-flexible"
                   label="Review"
                   multiline
                   minRows={2}
                   margin='dense'
                   fullWidth required
-            ></Textarea>       */}
-            <textarea id='writemodal_reviewbox'></textarea>
+                  onChange={(e)=>setContent(e.target.value)}
+            ></TextField>
+            
           </Col>
         </Row>
       </Modal.Body>
 
       <Modal.Footer>
-        <Button id="writemodal_NoBgButton" onClick={onHide}>작성</Button>
+        <Button id="writemodal_NoBgButton" onClick={()=>write()}>작성</Button>
       </Modal.Footer>
     </Modal>
   )

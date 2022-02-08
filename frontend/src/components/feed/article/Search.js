@@ -6,18 +6,21 @@ import './css/Search.css'
 import axios from 'axios'
 import { Col, Row } from 'react-bootstrap';
 
-export default function Search() {
+export default function Search(props) {
 
   const [keyword,setKeyword] = useState("");
   const [results,setResults] = useState([]);
   const [select,setSelect] = useState({});
   const [form,setForm] = useState({
-    cafeName:"",
-    x:0,
-    y:0,
-    cafeId:0,
-    cafeAddress:"",
+    cafeName:null,
+    cafeX:null,
+    cafeY:null,
+    cafeAddress:null,
   })
+
+  useEffect(()=>{
+    props.setCafeinfo(form)
+  },[form])
 
   const onChange = e => {
     setKeyword(e.target.value)
@@ -81,7 +84,13 @@ export default function Search() {
       axios.get(url2).then(res=>{
         let beforex = res.data.results.juso[0].entX;
         let beforey = res.data.results.juso[0].entY;
-        console.log(beforex,beforey)
+        let newForm = {...form}
+        console.log(select)
+        newForm.cafeName = select.place_name
+        newForm.cafeAddress = select.address_name
+        newForm.cafeX = beforex
+        newForm.cafeY = beforey
+        setForm(newForm)
       })
     }).catch(err=>console.log('카페 위치가 등록돼있지 않아요 ㅜㅜ'))
   },[select])
