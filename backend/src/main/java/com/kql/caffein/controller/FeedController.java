@@ -19,6 +19,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("feed")
+@CrossOrigin(origins = {"*"}, maxAge = 6000)
 public class FeedController {
 
     @Autowired
