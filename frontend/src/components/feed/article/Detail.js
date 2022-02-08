@@ -44,7 +44,7 @@ export default function Detail() {
 
       {/* 게시물 컨테이너 */}
       <div id='article_con'>
-        <Row style={{ justifyContent: "space-around", height: "1400px"}}>
+        <Row style={{ justifyContent: "space-around", height: "1300px"}}>
           {/* 사진 창 */}
           <Col id='article_frame' lg={5}>
             <div class="slider">

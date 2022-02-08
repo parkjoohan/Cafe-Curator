@@ -12,19 +12,21 @@ export default function Comment() {
     const url = "http://i6c104.p.ssafy.io:8080/comment"
     const [parentNo, setParentNo] = useState([]);
 
+    let {pk} = useParams();
+
     // 댓글 불러오기
     useEffect(() => {
         axios.get(url, {
         params: {
-            "feedNo": 60,
+            "feedNo": `${pk}`,
             "size": 5,
             "userNo": "aa"
         }
         }).then((data1) => {
             console.log(data1.data);
             setComments(data1.data);
-        }).catch(() => {
-            console.log('불러오기 실패')
+        }).catch((error) => {
+            console.error(error)
         })
     }, []);
 

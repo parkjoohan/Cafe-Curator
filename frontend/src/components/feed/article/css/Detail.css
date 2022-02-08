@@ -4,12 +4,11 @@
 
 #article_picture_frame {
   vertical-align: middle;
-  margin-top: 15%;
-  margin-bottom: 30%;
 }
 
 #article_picture {
   width: 90%;
+  height: 50%;
 }
 
 #article_frame {
