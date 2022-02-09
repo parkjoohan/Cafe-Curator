@@ -15,13 +15,13 @@ const BookMarks = props => {
                 return (
                     <li key={item.id} id="bookmark_item">
                         <Col xs={7} md={9}>
-                            <img id="bookmark_img" src={item.avatar} alt="" />
-                            <strong style={{marginTop: "2%", marginLeft: "2%"}}>{item.first_name} {item.last_name}</strong>
-                            <p style={{marginTop: "2%"}}>{item.email}</p>
+                            <img id="bookmark_img" src={item.userPicture} alt="" />
+                            <strong style={{marginTop: "2%", marginLeft: "2%"}}>{item.userId}</strong>
+                            <p style={{marginTop: "2%"}}>{item.content}</p>
                         </Col>
-                        <Col xs={7} md={5}>
-                            <div id="bookmark_info">
-                                <img src='image/coffeecong.jpg' style={{width: "60%"}}/>
+                        <Col xs={7} md={5} style={{height:"100%"}}>
+                            <div id="bookmark_info" style={{height:"100%"}}>
+                                <img src={item.file.filePath} style={{width: "60%", height:"100%"}}/>
                             </div>
                         </Col>
                     </li>
