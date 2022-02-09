@@ -208,11 +208,11 @@
 ___
 
 ### 와이어프레임
-  ![와이어1](/uploads/808232cc248a1f22b7c50fded277ad9a/와이어1.JPG) 
-  ![와이어2](/uploads/a168143446bf5ca3a7efdf52f799b072/와이어2.JPG)
-  ![와이어3](/uploads/83b9d1a5bd97a7d04a261ff896c121fc/와이어3.JPG)
-  ![와이어4](/uploads/ec3125ef96cd73eb2be73cd8889781f3/와이어4.JPG)
-  ![와이어5](/uploads/2fafa3282621f0ff47cd99aec5d0e317/와이어5.JPG)
+  ![와이어1](uploads/와이어프레임1.png) 
+  ![와이어2](uploads/와이어프레임2.png)
+  ![와이어3](uploads/와이어프레임3.png)
+  ![와이어4](uploads/와이어프레임4.png)
+  ![와이어5](uploads/와이어프레임5.png)
 
 ### ERD 
   ![ERD](uploads/caffe_in_erd.png)
