@@ -14,23 +14,50 @@ export default function Detail() {
 
   const history = useHistory();
 
+  const [likearr,setlikearr] = useState([]);
+
+  const [isbookmark,setIsbookmark] = useState(true);
+
   let {pk} = useParams();
 
   useEffect(()=>{
     const url = `http://i6c104.p.ssafy.io:8080/feed/detail/${pk}/a1`
     axios.get(url).then(res=>{
+      console.log(res.data)
       setData(res.data);
-      // let newArray = new Array(res.data.files.length);
-      // for (let i = 0; i < newArray.length; i++) {
-      //   if(i == 0){
-      //     newArray[i] = true
-      //   }else{
-      //     newArray[i] = false
-      //   }
-      // }
-      // setIsselect(newArray)
+      let likearr = [res.data.likeCount,res.data.liked];
+      setlikearr(likearr);
+      setIsbookmark(res.data.marked)
     })
   },[])
+
+  const checkbookmark = () => {
+    const url = `http://i6c104.p.ssafy.io:8080/feed/bookmark/${pk}/a1`
+    axios.get(url).then(res=>{
+      console.log(res.data)
+      if (res.data == "SUCCESS : ADD BOOKMARK"){
+        setIsbookmark(true);
+      }else {
+        setIsbookmark(false);
+      }
+    })
+  }
+
+  const likearticle = () => {
+    const url = `http://i6c104.p.ssafy.io:8080/feed/like/${pk}/a1`
+    axios.get(url).then(res=>{
+      console.log(res.data)
+      let newlikearr = [...likearr]
+      if (res.data == "SUCCESS : ADD LIKE"){
+        newlikearr[0]++;
+        newlikearr[1] = true;
+      }else{
+        newlikearr[0]--;
+        newlikearr[1] = false;
+      }
+      setlikearr(newlikearr)
+    })
+  }
 
 
   // console.log(pk);
@@ -114,9 +141,17 @@ export default function Detail() {
 
             {/* 하트 & 북마크*/}
             <div id='article_heart_bookmark'>
-              <div style={{marginRight:"3%"}}>💓</div>
-              <p style={{marginRight:"3%"}}>{data.likeCount}</p>
-              <div style={{marginRight:"3%"}}>🔖</div>
+              {
+                likearr[1]?
+                <img src={`${process.env.PUBLIC_URL}/image/heart.png`} width="5%" height="auto" onClick={likearticle}/>:
+                <img src={`${process.env.PUBLIC_URL}/image/empty_heart.png`} width="5%" height="auto" onClick={likearticle}/>
+              }
+              <p style={{marginRight:"3%"}}>{likearr[[0]]}</p>
+              {
+                isbookmark?
+                <img src={`${process.env.PUBLIC_URL}/image/bookmark.png`} width="5%" height="auto" onClick={checkbookmark}/>:
+                <img src={`${process.env.PUBLIC_URL}/image/empty_bookmark.png`} width="5%" height="auto" onClick={checkbookmark}/>
+              }
               <p style={{marginRight:"3%"}}>북마크</p>
             </div>
 

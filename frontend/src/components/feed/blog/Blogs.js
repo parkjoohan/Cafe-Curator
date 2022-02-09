@@ -21,6 +21,7 @@ const Blogs = props => {
                         <Col xs={7} md={5} style={{height:"100%"}}>
                             <div id="blogs_info" style={{height:"100%"}}>
                                 <img src={item.file.filePath} style={{width: "60%", height:"100%"}}/>
+                                <div style={{border:"1px solid black"}}>ㅇㅇ</div>
                             </div>
                         </Col>
                     </li>
