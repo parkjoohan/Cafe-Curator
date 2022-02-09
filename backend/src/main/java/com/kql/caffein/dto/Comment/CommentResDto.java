@@ -10,6 +10,8 @@ public class CommentResDto {
     private int commentNo;
     @ApiModelProperty(example = "작성자 아이디")
     private String userId;
+    @ApiModelProperty(example = "댓글의 그룹 번호")
+    private int commentGroup;
     @ApiModelProperty(example = "대댓글인 경우 부모 댓글 작성자 아이디")
     private String parentId;
     @ApiModelProperty(example = "댓글 내용")
@@ -24,9 +26,10 @@ public class CommentResDto {
     private boolean checkLike;
 
     @Builder
-    public CommentResDto(int commentNo, String userId, String parentId, String content, String regTime, int likeCount, int commentCount, boolean checkLike) {
+    public CommentResDto(int commentNo, String userId, int commentGroup, String parentId, String content, String regTime, int likeCount, int commentCount, boolean checkLike) {
         this.commentNo = commentNo;
         this.userId = userId;
+        this.commentGroup = commentGroup;
         this.parentId = parentId;
         this.content = content;
         this.regTime = regTime;

@@ -6,8 +6,6 @@ import com.kql.caffein.dto.Feed.FeedDetailDto;
 import com.kql.caffein.dto.FollowDto;
 import com.kql.caffein.repository.FeedLikeRepository;
 import com.kql.caffein.service.Impl.FeedServiceImpl;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +19,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("feed")
+@CrossOrigin(origins = {"*"}, maxAge = 6000)
 public class FeedController {
 
     @Autowired
@@ -38,7 +37,8 @@ public class FeedController {
             feedService.feedRegister(feedDto, files);
             return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
         }catch (Exception e){
-            return new ResponseEntity<>("FAIL : " + e.getMessage(), HttpStatus.EXPECTATION_FAILED);
+            e.printStackTrace();
+            return new ResponseEntity<>("FAIL : " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -50,7 +50,8 @@ public class FeedController {
             feedService.feedDelete(feedNo, userNo);
             return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
         } catch (Exception e){
-            return new ResponseEntity<>("FAIL : " + e.getMessage(), HttpStatus.OK);
+            e.printStackTrace();
+            return new ResponseEntity<>("FAIL : " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -62,7 +63,7 @@ public class FeedController {
             FeedDetailDto feedDto = feedService.feedDetail(feedNo, userNo);
             return new ResponseEntity<>(feedDto, HttpStatus.OK);
         }catch (Exception e){
-            return new ResponseEntity<>("FAIL : " + e.getMessage(), HttpStatus.OK);
+            return new ResponseEntity<>("FAIL : " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -75,7 +76,8 @@ public class FeedController {
             feedService.feedModify(userNo, feedDto, files);
             return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
         }catch (Exception e){
-            return new ResponseEntity<>("FAIL : " + e.getMessage(), HttpStatus.OK);
+            e.printStackTrace();
+            return new ResponseEntity<>("FAIL : " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -87,7 +89,7 @@ public class FeedController {
             String msg = feedService.feedLikeControl(feedNo, userNo);
             return new ResponseEntity<>("SUCCESS : " + msg, HttpStatus.OK);
         }catch (Exception e){
-            return new ResponseEntity<>("FAIL : " + e.getMessage(), HttpStatus.OK);
+            return new ResponseEntity<>("FAIL : " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -99,7 +101,7 @@ public class FeedController {
             String msg = feedService.feedBookmarkControl(feedNo, userNo);
             return new ResponseEntity<>("SUCCESS : " + msg, HttpStatus.OK);
         }catch (Exception e){
-            return new ResponseEntity<>("FAIL : " + e.getMessage(), HttpStatus.OK);
+            return new ResponseEntity<>("FAIL : " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
     
@@ -112,7 +114,7 @@ public class FeedController {
         try{
             return new ResponseEntity<>(feedService.feedListWithPaging(feedUserNo, userNo,type, lastFeedNo, size), HttpStatus.OK);
         }catch (Exception e){
-            return new ResponseEntity<>("FAIL : " + e.getMessage(), HttpStatus.OK);
+            return new ResponseEntity<>("FAIL : " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -123,7 +125,7 @@ public class FeedController {
         try{
             return new ResponseEntity<>(feedService.bookmarkListWithPaging(userNo, type, lastFeedNo, size), HttpStatus.OK);
         }catch (Exception e){
-            return new ResponseEntity<>("FAIL : " + e.getMessage(), HttpStatus.OK);
+            return new ResponseEntity<>("FAIL : " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -134,7 +136,7 @@ public class FeedController {
         try{
             return new ResponseEntity<>(feedService.likeListWithPaging(userNo, type, lastFeedNo, size), HttpStatus.OK);
         }catch (Exception e){
-            return new ResponseEntity<>("FAIL : " + e.getMessage(), HttpStatus.OK);
+            return new ResponseEntity<>("FAIL : " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -146,7 +148,7 @@ public class FeedController {
         try{
             return new ResponseEntity<>(feedService.mainFeedListWithPaging(userNo, type, lastFeedNo, size), HttpStatus.OK);
         }catch (Exception e){
-            return new ResponseEntity<>("FAIL : " + e.getMessage(), HttpStatus.OK);
+            return new ResponseEntity<>("FAIL : " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

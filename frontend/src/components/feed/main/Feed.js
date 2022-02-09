@@ -6,26 +6,11 @@ import Map from './Map'
 
 
 export default function Feed(props) {
+  const [newdata,setNewdata] = useState([]);
   // 서버에서 받아올 데이터 중 이미지의 url이 저장됨 Array
-  const [url_arr,setUrl] = useState([
-    // "/test/1.1.png",// => 3:3
-    // "/test/3.2.png",// => 4:3
-    // "/test/4.3.png",// => 4:3
-    // "/test/4.3(2).png",// => 4:3
-    // "/test/5.3.png",// => 5:3
-    // "/test/5.4.png",//0.8 => 4:3
-    // "/test/16.9.png",// => 5:3
-    // "/test/16.10.png",//0.625 => 5:3
-    // "/test/16.11.png",//0.6875 => 4:3
-    // "/test/17.10.png",//0.588 => 5:3
-    // "/test/1.1.png",// => 3:3
-    // "/test/3.2.png",// => 4:3
-    // "/test/4.3.png",// => 4:3
-    // "/test/4.3(2).png",// => 4:3
-  ])
+  const [url_arr,setUrl] = useState([])
 
   const [like, setLike] = useState([]);
-
 
   // 이미지 프리로드가 완료됐는가? boolean
   const [isload,setload] = useState(false);
@@ -50,8 +35,47 @@ export default function Feed(props) {
 
   //url_arr생성,업데이트시 이미지 preload
   useEffect(() => {
-    if (url_arr) {
 
+    window.addEventListener('scroll',scroll)
+
+    function scroll(e){
+
+      e.preventDefault();
+      const getScrollTop = function () { return (window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop; }; 
+      const getDocumentHeight = function () { const body = document.body; const html = document.documentElement; return Math.max( body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight ); };
+      // console.log(getScrollTop() == getDocumentHeight() - window.innerHeight)
+      if (getScrollTop() == getDocumentHeight() - window.innerHeight) {
+        window.removeEventListener('scroll',scroll)
+        console.log('스크롤이 맨 밑이다!')
+        nextLoading()
+      }
+    }
+  
+    //로딩함수(콜백)
+    function nextLoading(){
+      console.log('@@@',url_arr[url_arr.length-1].feedNo)
+      const url = "http://i6c104.p.ssafy.io:8080/feed/mainFeedList/a1"
+        axios.get(url,{
+          params:{
+            "size":5,
+            "type":"feed",
+            "lastFeedNo": url_arr[url_arr.length-1].feedNo
+          }
+        }).then(function(res){
+          // console.log('응답',res.data)
+          update(res.data)
+        }).catch(function(err){
+          console.log(err)
+        })
+    }
+  
+    //업데이트
+    const update = (data) => {
+      setNewdata(data);
+    }
+
+    if(url_arr.length != 0){
+      console.log('url_arr가 바뀌었다!',url_arr)
       let newLikearr = new Array(url_arr.length)
 
       for (let i = 0; i < newLikearr.length; i++) {
@@ -62,26 +86,19 @@ export default function Feed(props) {
 
       setload(false);
 
-    // console.log('url_arr생성!')
-      console.log(url_arr)
+      // console.log('url_arr생성!')
+      // console.log(url_arr)
 
-    //생성,새로업데이트 된 이미지가 들어갈 배열길이 추가.
-    //cnt부터하는 이유는. 무한스크롤이라고 가정했을 시,
-    //지금까지 로드된 이미지 수가 cnt이기 때문.
-    let newimages = new Array(url_arr.length-cnt);
-    for (let i = cnt; i < url_arr.length; i++) {
-      newimages[i]=""
+      //생성,새로업데이트 된 이미지가 들어갈 배열길이 추가.
+      //cnt부터하는 이유는. 무한스크롤이라고 가정했을 시,
+      //지금까지 로드된 이미지 수가 cnt이기 때문.
+      // console.log('현재 url_arr',url_arr)
+      for (let i = cnt; i < url_arr.length; i++) {
+        const image = new Image();
+        image.onload = ()=>imageupload(image,i);
+        image.src = url_arr[i].file.filePath
+      }
     }
-    setImages([...images,newimages])
-
-
-    for (let i = 0; i < url_arr.length; i++) {
-      const image = new Image();
-      image.onload = ()=>imageupload(image,i);
-      image.src = url_arr[i].file.filePath
-    }
-    }
-    
   },[url_arr]);
 
   //이미지낱개 로드시 콜백함수
@@ -91,15 +108,16 @@ export default function Feed(props) {
     //업로드된 이미지를 저장.
     let newimages = images;
     newimages[i] = image;
-    // console.log(newimages,newimages.length)
     setImages(newimages)
   }
+
 
   //이미지낱개 로드 성공한 수가 url_arr길이하고 같은가?
   useEffect(()=>{
     // console.log(cnt)
     if (cnt == url_arr.length && url_arr.length != 0) {
       //프리로드 전부 완료!
+      // console.log('cnt와 url_arr가 같은가?',cnt,url_arr.length);
       setload(true);
       // console.log("url 전부 로드 완료!")
     }
@@ -109,36 +127,79 @@ export default function Feed(props) {
   //리사이즈 될때 이벤트 추가.
   useEffect(()=>{
     // console.log('이게 가장 먼저 실행되겠지?')
-    let container = document.getElementById("feedcontainer");
+    let container = document.getElementById("feedcontainer")
+    let lastNo = 0
     setContainerWidth(container.offsetWidth);
     setRows(parseInt(container.offsetWidth/300))
     window.addEventListener('resize',handleResize);
+    
     props.setFootershow(false)
+  
 
-    const data = {
-      "size":20,
-      "type":"feed",
-      "lastFeedNo":100,
-    }
-
-    const url = "http://localhost:8080/feed/mainFeedList"
+    // const url = "http://localhost:8080/feed/mainFeedList/U003"
+    const url = "http://i6c104.p.ssafy.io:8080/feed/mainFeedList/a1"
 
     axios.get(url,{
       params:{
-        "size":10,
+        "size":5,
         "type":"feed",
-        "lastFeedNo":100
+        "lastFeedNo": null,
       }
     }).then(function(res){
-      console.log(res.data,'사고다')
-      setUrl(res.data)
+      let newUrl = res.data
+      // console.log('첫 데이터 받기 전 url_arr(빈 어레이여야함)',url_arr)
+      setUrl(newUrl)
+      lastNo = newUrl[newUrl.length-1].feedNo
     }).catch(console.log("DD"))
 
     return ()=>{
       window.removeEventListener('resize',handleResize);
+
       props.setFootershow(true)
     }
   },[])
+
+  // function scroll(lastNo){
+  //   const getScrollTop = function () { return (window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop; }; 
+  //   const getDocumentHeight = function () { const body = document.body; const html = document.documentElement; return Math.max( body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight ); };
+  //   if (getScrollTop() === getDocumentHeight() - window.innerHeight) {
+  //     // console.log('스크롤이 맨 밑이다!')
+  //     nextLoading(lastNo)
+  //   }
+  // }
+
+  // //로딩함수(콜백)
+  // function nextLoading(lastNo){
+  //   console.log('@@@',lastNo)
+  //   const url = "http://localhost:8080/feed/mainFeedList/U003"
+  //     axios.get(url,{
+  //       params:{
+  //         "size":5,
+  //         "type":"feed",
+  //         "lastFeedNo": null
+  //       }
+  //     }).then(function(res){
+  //       // console.log('응답',res.data)
+  //       update(res.data)
+  //       lastNo = res.data[res.data.length-1].feedNo
+  //     }).catch(function(err){
+  //       console.log(err)
+  //     })
+  // }
+
+  // //업데이트
+  // const update = (data) => {
+  //   setNewdata(data);
+  // }
+
+  useEffect(()=>{
+    if(newdata.length!=0){
+      // console.log('url_arr',url_arr)
+      // console.log('새로 받은 데이터',newdata)
+      let concaturl = url_arr.concat(newdata);
+      setUrl(concaturl);
+    }
+  },[newdata])
 
   //리사이즈될때, 실행되는 콜백함수
   const handleResize = () => {
@@ -169,9 +230,30 @@ export default function Feed(props) {
     history.push(`/article/${num}`)
   }
 
+  function likeArticle(index){
+    // console.log(url_arr)
+    const likeUrl = `http://i6c104.p.ssafy.io:8080/feed/like/${url_arr[index].feedNo}/a1`
+    let heart = document.getElementById(`heart${index}`);
+    let heart2 = document.getElementById(`heart2${index}`);
+    axios.get(likeUrl).then(function(res){
+      let newLike = [...like];
+      if(res.data=="SUCCESS : DELETE LIKE"){
+        newLike[index] = false;
+        heart.style.display="none";
+        heart2.style.display="block"
+      }
+      else {
+        newLike[index] = true;
+        heart.style.display="block";
+        heart2.style.display="none";
+      }
+      setLike(newLike)
+    }).catch(err=>console.log(err))
+  }
+
   //쌓는함수
   function block(percent){
-    console.log(like,'like!!')
+    // console.log(like,'like!!')
     // console.log("이건 block함수",containerWidth,rows,percent,heightArr)
 
     // console.log('block함수 시작')
@@ -193,7 +275,7 @@ export default function Feed(props) {
     // console.log(images)
     //이제 이미지 차곡차곡 쌓을거임.
     images.map((image,index)=>{
-      console.log(index)
+
       image.removeAttribute("width","100%");
       image.removeAttribute("height","100%");
 
@@ -213,16 +295,24 @@ export default function Feed(props) {
       var heart = new Image();
       heart.src = `${process.env.PUBLIC_URL}/image/heart.png`;
       heart.style.position="absolute";
+      heart.id = `heart${index}`
       if(like[index]==false){
         heart.style.display="none"
+      }else{
+        heart.style.display="block"
       }
+
 
       var heart2 = new Image();
       heart2.src = `${process.env.PUBLIC_URL}/image/empty_heart.png`;
       heart2.style.position="absolute";
+      heart2.id = `heart2${index}`
       if(like[index]==true){
         heart2.style.display="none"
+      }else{
+        heart2.style.display="block"
       }
+
 
       const imageHeight = ((container.offsetWidth * (percent/100) * image.height) / image.width);
       box.style.position="absolute";
@@ -246,17 +336,15 @@ export default function Feed(props) {
       heart2.style.zIndex = 1
       heart2.style.right = "3%";
       heart2.style.bottom = "3%";
-      box.addEventListener("click",()=>gotoDetail(url_arr[index].feedNo))
+      image.addEventListener("click",()=>gotoDetail(url_arr[index].feedNo))
+      heart.addEventListener("click",()=>likeArticle(index))
+      heart2.addEventListener("click",()=>likeArticle(index))
       image.setAttribute("width","100%");
       image.setAttribute("height","100%");
       division.appendChild(box);
       heightArr[min_idx] += imageHeight+20;
     })
     // console.log('block함수 끝')
-  }
-
-  const style = {
-    color : 'black',
   }
   
   return (
@@ -273,14 +361,6 @@ export default function Feed(props) {
       </div>
       <div id="container" style={{display:'flex',position:'relative'}}>
       </div>
-      {
-        url_arr.map((url,index)=>(
-          <div>
-            {index}번째 좋아요는?{url.liked}
-            <br></br>
-          </div>
-        ))
-      }
     </Container>
   )
 }
