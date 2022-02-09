@@ -3,7 +3,7 @@ import React,{useState,useEffect} from 'react'
 import {Container,Row,Col,Button} from 'react-bootstrap'
 import { useHistory } from 'react-router-dom'
 import Map from './Map'
-
+import $ from "jquery";
 
 export default function Feed(props) {
   const [newdata,setNewdata] = useState([]);
@@ -71,7 +71,7 @@ export default function Feed(props) {
     const getScrollTop = function () { return (window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop; }; 
     const getDocumentHeight = function () { const body = document.body; const html = document.documentElement; return Math.max( body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight ); };
     // console.log(getScrollTop() == getDocumentHeight() - window.innerHeight)
-    if (getScrollTop() == getDocumentHeight() - window.innerHeight) {
+    if (Math.round( $(window).scrollTop()) == $(document).height() - $(window).height()) {
       window.removeEventListener('scroll',scroll)
       // console.log('스크롤이 맨 밑이다!')
       // console.log('현재 스크롤 위치',window.scrollY);
