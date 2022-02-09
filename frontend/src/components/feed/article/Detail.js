@@ -63,7 +63,7 @@ export default function Detail() {
               <div class="bullets">
                 {
                   (data&&data.files)&&data.files.map((file,index)=>(
-                    <label for={`slide${index+1}`}>&nbsp;</label>
+                    <label htmlFor={`slide${index+1}`}>&nbsp;</label>
                   ))
                 }
               </div>
