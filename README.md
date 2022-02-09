@@ -220,7 +220,7 @@ ___
 ___
 
 ### 참고사이트
-* 백엔드
+* 백엔드 [링크 모음 Notion](https://zany-perigee-3ef.notion.site/Backend-05bdeded90ed49098dc7956267d71195)
 
 * 프론트엔드
   * 무한 스크롤 : https://ghur2002.medium.com/react%EC%97%90%EC%84%9C-infinite-scroll-%EA%B5%AC%ED%98%84%ED%95%98%EA%B8%B0-128d64ea24b5
