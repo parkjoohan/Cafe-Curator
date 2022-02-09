@@ -28,9 +28,10 @@
   - React
   - JWT Authentication
   - REST API
-* 참조 리소스
+  - Jenkins CI/CD
+* [참조 리소스](#참고사이트)
 * 배포 환경
-  - URL: 
+  - URL: http://i6c104.p.ssafy.io/
   - 테스트 계정: 
 
 <!-- 자유 양식 -->
