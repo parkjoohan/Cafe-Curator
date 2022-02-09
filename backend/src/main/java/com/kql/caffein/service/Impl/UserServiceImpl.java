@@ -11,6 +11,7 @@ import com.kql.caffein.repository.EmailAuthRepository;
 import com.kql.caffein.repository.FeedsRepository;
 import com.kql.caffein.repository.UserDetailRepository;
 import com.kql.caffein.repository.UserRepository;
+import com.kql.caffein.service.FeedService;
 import com.kql.caffein.service.S3Service;
 import com.kql.caffein.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -44,6 +45,7 @@ public class UserServiceImpl implements UserService {
     private final RedisTemplate redisTemplate;
     private final PasswordEncoder passwordEncoder;
     private final FeedsRepository feedsRepository;
+    private final FeedService feedService;
 
     @Override
     public String getUserNo() throws Exception {
@@ -198,11 +200,18 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public void deleteByUserNo(String userNo) {
+    public void deleteByUserNo(String userNo) { //회원 탈퇴
+
         User user = userRepository.findByUserNo(userNo);
+
+        //회원과 연결된 게시글, 댓글, feeds, 팔로우, 좋아요, 북마크, 카테고리 로그 삭제(cascade)
+        feedService.deleteUser(userNo);  //S3는 직접 지우고 레디스도 갱신해야 함
+
         String email = user.getEmailAuth().getEmail();
         emailAuthRepository.deleteByEmail(email);
         userRepository.deleteByUserNo(userNo);
+
+        //oauth 연동 해제?
     }
 
     @Override

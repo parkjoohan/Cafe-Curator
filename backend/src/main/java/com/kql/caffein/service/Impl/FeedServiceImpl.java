@@ -519,6 +519,7 @@ public class FeedServiceImpl implements FeedService {
         return list;
     }
 
+    //카페 좌표 변환 후 DB 저장
     @Override
     public int addCafe(double cafeX, double cafeY, String cafeName, String cafeAddress){
         CRSFactory factory = new CRSFactory();
@@ -547,5 +548,34 @@ public class FeedServiceImpl implements FeedService {
         }
         else
             return cafe.get().getCafeId();
+    }
+
+    //회원 탈퇴 시 피드 관련 데이터들 삭제
+    public void deleteUser(String userNo){
+        //S3는 직접 지우고 레디스도 갱신해야 함
+
+        Optional<Feeds> feeds = feedsRepository.findById(userNo);
+        if(feeds.isEmpty()) //게시글이 없다면
+            return;
+
+        List<Integer> feedList  = feeds.get().getFeedList(); //유저의 피드 목록
+
+//        List<Integer> cafeList = new ArrayList<>(); //유저가 등록한 카페 목록
+//        이걸 리턴하고 회원 삭제 후에 로그도 삭제되면 CategoryLogService에서 레디스 갱신하는 게 나은가..
+
+        for(Integer feedNo : feedList){
+
+            Feed feed = feedRepository.findById(feedNo).get();
+            for(File file : feed.getFiles()) //S3에서 파일 삭제
+                s3Service.delete(file.getFilePath());
+
+            if(feed.getCafeId() != null && feed.getCategoryList().size()!=0) { //카페&카테고리가 등록된 피드
+//                cafeList.add(feed.getCafeId());
+                //Redis 확인
+                if(redisTemplate.hasKey(String.valueOf(feed.getCafeId()))) //존재하면
+                    categoryLogService.decreaseCategoryCount(feed.getCafeId(), feed.getCategoryList()); //카운트 감소
+                //존재하지 않을 때 로그 데이터로 추가하면 안됨! 아직 회원 삭제(+로그 삭제) 전 이므로
+            }
+        }
     }
 }
