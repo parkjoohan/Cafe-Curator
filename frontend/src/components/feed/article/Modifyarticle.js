@@ -1,4 +1,4 @@
-import React,{useState,useEffect,useRef} from 'react';
+import React,{useState,useEffect,useRef, useImperativeHandle, forwardRef} from 'react';
 import  { Container, Modal } from 'react-bootstrap';
 import {TextField, Button} from '@material-ui/core';
 import { Row,Col } from 'react-bootstrap'
@@ -7,15 +7,19 @@ import axios from 'axios'
 
 
 
-const Modifyarticle = ( {show, onHide, data}) => {
+const Modifyarticle = forwardRef(({show, onHide, data},ref) => {
+
+  useImperativeHandle(ref,()=>({
+    setDetaildata,
+  }))
+
+  const [detaildata,setDetaildata] = useState({});
   
   const [form,setForm] = useState({
     "feedDto":{}
   })
 
   const [files,setFiles] = useState([])
-
-  const [feeddto,setFeeddto] = useState({})
 
   const [cafeinfo,setCafeinfo] = useState({})
 
@@ -30,6 +34,12 @@ const Modifyarticle = ( {show, onHide, data}) => {
     [3,false],
     [4,false],
   ])
+
+  const [defaultfile, setDefaultfile] = useState([]);
+
+  const [defaultcafe,setDefaultcafe] = useState("")
+
+  const [deletedefaultfile,setDeletedefaultfile] = useState([])
 
   let likename = ['커피','케이크','마카롱/쿠키','브런치','차'];
 
@@ -55,11 +65,6 @@ const Modifyarticle = ( {show, onHide, data}) => {
 
   const photoInput = useRef();
 
-  useEffect(()=>{
-    console.log('!!!')
-    console.log(data)
-  },[])
-
   const handleClick = ()=>{
     if(fileImage.length>=4){
       alert("사진은 최대 4장까지 가능합니다.")
@@ -77,6 +82,16 @@ const Modifyarticle = ( {show, onHide, data}) => {
   }
 
   function deletePicture(e){
+
+    let newdeletedefaultfile = [...deletedefaultfile]
+    for (let i = 0; i < defaultfile.length; i++) {
+      if(defaultfile[i][1]==fileImage[e]){
+        newdeletedefaultfile = newdeletedefaultfile.concat([defaultfile[i][0]])
+        break
+      }
+    }
+    setDeletedefaultfile(newdeletedefaultfile);
+
     const newfilearr = [...fileImage];
     newfilearr.splice(e,1);
     setFileImage(newfilearr);
@@ -217,49 +232,107 @@ const Modifyarticle = ( {show, onHide, data}) => {
   },[fileImage])
 
   useEffect(()=>{
-    // console.log("content:",content)
-    // console.log("like:",like)
-    // console.log("like2:",like2)
-    // console.log("cafeinfo:",cafeinfo)
-    const newform = {
-      ...cafeinfo,
-      "content":content,
-      "categoryList":[],
-      "userNo":"a1",
+
+    // console.log('함수호출성공!',detaildata)
+    try{
+    // console.log(detaildata.cafeName)
+    setDefaultcafe(detaildata.cafeName);
+    // console.log('ㅇㅇ1')
+    let newdefaultfilearr = new Array(detaildata.files.length)
+    for (let i = 0; i < detaildata.files.length; i++) {
+      newdefaultfilearr[i] = [detaildata.files[i].fileNo,detaildata.files[i].filePath]
+    }
+    setDefaultfile(newdefaultfilearr);
+    // console.log('ㅇㅇ2')
+    setCnt(detaildata.categoryList.length);
+    // console.log('ㅇㅇ3')
+    setContent(detaildata.content);
+    // console.log('ㅇㅇ4')
+    // console.log(detaildata.categoryList)
+    let newlikearr = [...like];
+    let newlikearr2 = [...like2];
+    for (let i = 0; i < likename.length; i++) {
+      if (detaildata.categoryList.includes(likename[i])){
+        // console.log('true?')
+        newlikearr[i] = [i,true]
+      }
+    }
+    setlike(newlikearr)
+    for (let i = 0; i < likename2.length; i++) {
+      if (detaildata.categoryList.includes(likename2[i])){
+        // console.log('true?')
+        newlikearr2[i] = [i,true]
+      }
+    }
+    setlike2(newlikearr2)
+
+    let newfileImage = new Array(detaildata.files.length)
+    for (let i = 0; i < detaildata.files.length; i++) {
+      let src = detaildata.files[i].filePath;
+      newfileImage[i] = src;
+    }
+    setFileImage(newfileImage)
+
+    }catch{
+      console.log('errorㅜㅜ')
+    }
+  },[detaildata])
+
+  useEffect(()=>{
+    // console.log(like,like2)
+  },[like,like2])
+
+  useEffect(()=>{
+    // console.log(defaultcafe)
+  },[defaultcafe])
+
+  useEffect(()=>{
+    // console.log(cafeinfo)
+    // console.log(defaultcafe)
+  },[cafeinfo])
+
+  const write = () => {
+    let modifyDto = {
+      feedNo:detaildata.feedNo,
+      content:content,
+      cafeName:null,
+      cafeAddress:null,
+      cafeX:null,
+      cafeY:null,
+      categoryList:[],
+      deleteFileList:deletedefaultfile,
+      cafeModified:null,
     }
     for (let i = 0; i < like.length; i++) {
       if(like[i][1]===true){
-        newform.categoryList = [...newform.categoryList,likename[i]]
+        modifyDto.categoryList = [...modifyDto.categoryList,likename[i]]
       }
       if(like2[i][1]===true){
-        newform.categoryList = [...newform.categoryList,likename2[i]]
+        modifyDto.categoryList = [...modifyDto.categoryList,likename2[i]]
       }
     }
-    setFeeddto(newform)
-  },[like,like2,cafeinfo,content])
-
-  // useEffect(()=>{
-  //   console.log(feeddto)
-  // },[feeddto,files])
-
-  // useEffect(()=>{
-  //   console.log(form)
-  // },[form])
-
-  const write = () => {
-    console.log(feeddto)
+    if(cafeinfo.cafeName==null){
+      modifyDto.cafeModified = false;
+    }else{
+      modifyDto.cafeModified = true;
+      modifyDto.cafeName = cafeinfo.cafeName;
+      modifyDto.cafeX = cafeinfo.cafeX;
+      modifyDto.cafeY = cafeinfo.cafeY;
+      modifyDto.cafeAddress = cafeinfo.cafeAddress;
+    }
+    console.log(modifyDto)
     const newForm = new FormData();
-    newForm.append("feedDto", new Blob([JSON.stringify(feeddto)], { type: "application/json" }))
+    newForm.append("feedDto", new Blob([JSON.stringify(modifyDto)], { type: "application/json" }))
     for (let i = 0; i < files.length; i++) {
       newForm.append("files",files[i])
     }
-    const writeurl = "http://i6c104.p.ssafy.io:8080/feed"
+    const modifyurl = `http://i6c104.p.ssafy.io:8080/feed/aa/`
     axios({
-      method: "post",
-      url: writeurl,
+      method: "put",
+      url: modifyurl,
       data: newForm,
       headers: { "Content-Type": "multipart/form-data" }
-    });
+    }).then().catch(err=>console.log)
     onHide()
   }
 
@@ -345,6 +418,7 @@ const Modifyarticle = ( {show, onHide, data}) => {
                   minRows={2}
                   margin='dense'
                   fullWidth required
+                  value={content}
                   onChange={(e)=>setContent(e.target.value)}
             ></TextField>
             
@@ -357,5 +431,5 @@ const Modifyarticle = ( {show, onHide, data}) => {
       </Modal.Footer>
     </Modal>
   )
-}
+})
 export default Modifyarticle

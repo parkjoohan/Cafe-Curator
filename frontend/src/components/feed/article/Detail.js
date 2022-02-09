@@ -1,4 +1,4 @@
-import React,{useEffect,useState} from 'react'
+import React,{useEffect,useRef,useState} from 'react'
 import { useParams, useHistory } from 'react-router-dom'
 import { Container, Row, Col } from 'react-bootstrap'
 import { FiCornerUpLeft } from 'react-icons/fi';
@@ -8,6 +8,8 @@ import axios from 'axios';
 import Modifyarticle from './Modifyarticle';
 
 export default function Detail() {
+
+  const childRef = useRef();
 
   const [data,setData] = useState({})
 
@@ -22,6 +24,12 @@ export default function Detail() {
   const [modifymodalshow, setModifymodalshow] = useState(false);
 
   let {pk} = useParams();
+
+  useEffect(()=>{
+    if(childRef.current){
+      childRef.current.setDetaildata(data)
+    }
+  },[modifymodalshow])
 
   useEffect(()=>{
     const url = `http://i6c104.p.ssafy.io:8080/feed/detail/${pk}/a1`
@@ -168,6 +176,7 @@ export default function Detail() {
         <Modifyarticle
         show={modifymodalshow}
         onHide={() => setModifymodalshow(false)}
+        ref = {childRef}
         data={data}
         />
     </div>
