@@ -5,6 +5,7 @@ import { FiCornerUpLeft } from 'react-icons/fi';
 import './css/Detail.css'
 import Comment from "./Comment";
 import axios from 'axios';
+import Modifyarticle from './Modifyarticle';
 
 export default function Detail() {
 
@@ -17,6 +18,8 @@ export default function Detail() {
   const [likearr,setlikearr] = useState([]);
 
   const [isbookmark,setIsbookmark] = useState(true);
+
+  const [modifymodalshow, setModifymodalshow] = useState(false);
 
   let {pk} = useParams();
 
@@ -153,6 +156,7 @@ export default function Detail() {
                 <img src={`${process.env.PUBLIC_URL}/image/empty_bookmark.png`} width="5%" height="auto" onClick={checkbookmark}/>
               }
               <p style={{marginRight:"3%"}}>북마크</p>
+              <button onClick={()=>setModifymodalshow(true)}>수정</button>
             </div>
 
             <div id='article_comment'>
@@ -161,6 +165,11 @@ export default function Detail() {
             </Col>
           </Row>
         </div>
+        <Modifyarticle
+        show={modifymodalshow}
+        onHide={() => setModifymodalshow(false)}
+        data={data}
+        />
     </div>
   )
 }
