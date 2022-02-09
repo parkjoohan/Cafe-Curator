@@ -330,7 +330,7 @@ export default function Feed(props) {
       box.style.borderRadius="10px"
       box.style.overflow = "hidden"
       box.appendChild(image);
-      box.appendChild(하트);
+      box.appendChild(heart);
       box.appendChild(heart2);
       image.style.objectFit = "cover"
       heart.style.width = "10%"
