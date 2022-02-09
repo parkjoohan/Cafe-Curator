@@ -6,6 +6,8 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+import { useHistory } from "react-router-dom";
 
 function temp_pw_issuance() {
 	let ranValue1 = ['1','2','3','4','5','6','7','8','9','0'];
@@ -27,7 +29,7 @@ function temp_pw_issuance() {
 }
 
 export default function LoginForm() {
-
+  let history = useHistory();
   const paperStyle = {
     padding: 20,
     height: "600px",
@@ -42,7 +44,8 @@ export default function LoginForm() {
   const btnStyle = {
     margin: "8px, "
   }
-  
+  const [loginEmail, setloginEmail] = useState(null);
+  const [loginPw, setloginPw] = useState(null);
   const [show, setShow] = useState(false);
   const [emailforfind, setEmailforfind] = useState("")  
   const handleShow = () => setShow(true);
@@ -54,6 +57,29 @@ export default function LoginForm() {
     let pw = temp_pw_issuance();
     alert(`\"${emailforfind}\"로 임시 비밀번호가 발급됐습니다.\n메일함을 확인해주세요.\n서버의 상황에 따라 수신이 지연될 수 있습니다. \n임시비밀번호는 ${pw}입니다.`)
   }
+  
+  const onChangeEmail = e => {
+    setloginEmail(e.target.value);
+  }
+  const onChangePassword = e => {
+    setloginPw(e.target.value);
+  }
+
+  const onClickLogin = async () => {
+    try {
+      console.log(loginEmail)
+      console.log(loginPw)
+      const response = await axios.post('http://i6c104.p.ssafy.io:8080/api/users/login',{
+        email : loginEmail,
+        pass : loginPw
+      });
+      console.log(response.data)
+      history.push("/")
+    }
+   catch (error) {
+    alert("사건발생");
+  }
+  }
 
   return (
     <div>
@@ -64,8 +90,8 @@ export default function LoginForm() {
               <Avatar style={avatarStyle}><LockOutlinedIcon /></Avatar>
               <h2>Login</h2>
             </Grid><br />
-            <TextField label="Email" placeholder='Enter email' fullWidth required/><br /><br/>
-            <TextField label="Password" placeholder='Enter password' type="password" fullWidth required/>
+            <TextField onChange={onChangeEmail} label="Email" placeholder='Enter email' fullWidth required/><br /><br/>
+            <TextField onChange={onChangePassword} label="Password" placeholder='Enter password' type="password" fullWidth required/>
             <FormControlLabel
               control={
                 <Checkbox
@@ -75,7 +101,7 @@ export default function LoginForm() {
                 }
                 label="아이디 기억하기"
             /><br /><br/>
-            <Button type="submit" color="primary" variant='contained' style={btnStyle} fullWidth>Login In</Button><br /><br/>
+            <Button type="submit" onClick={onClickLogin} color="primary" variant='contained' style={btnStyle} fullWidth>Login In</Button><br /><br/>
 
             {/* 소셜 회원가입 */}
             <div id="login_divider">

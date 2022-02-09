@@ -5,18 +5,93 @@ import { Grid, Paper, Avatar, TextField, Button } from '@material-ui/core';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-import { Link } from 'react-router-dom';
+import { Link, useParams} from 'react-router-dom';
 import Profile from './Profile';
 import EmailModal from './EmailModal';
 import TermsModal from './TermsModal';
 import LikeCategoryModal from './LikeCategoryModal';
+import axios from "axios";
+import { useHistory } from "react-router-dom";
 
-export default function SignupForm () {
-
+export default function SignupForm (props) {
+  let history = useHistory();
   const [ProfilemodalShow, ProfilesetModalShow] = React.useState(false);
   const [EmailmodalShow, EmailsetModalShow] = React.useState(false);
   const [TermsmodalShow, TermssetModalShow] = React.useState(false);
   const [LikeCategorymodalShow, LikeCategoryModalShow] = React.useState(false);
+
+
+  // 회원가입 정보부분
+    // 이메일 받아오기
+  // const location = useLocation()
+  // const email = location.state.email
+  // console.log(email)
+  const [form, setForm] = useState({
+    id: '',
+    password: '',
+    repassword:''
+  })
+
+  // id paswword repassword값 받기!
+  const onChangeId = e => {  
+  let newform = {...form}
+  newform.id = e.target.value
+  setForm(newform)
+  }
+  const onChangePw = e => {  
+    let newform = {...form}
+  newform.password = e.target.value
+  setForm(newform)
+  }
+  const onChangeRePw = e => {  
+    let newform = {...form}
+  newform.repassword = e.target.value
+  setForm(newform)
+  }
+
+
+
+
+  const [email,setEmail] = useState("");
+
+  const emailparams = useParams();
+
+  useEffect(()=>{
+    setEmail(emailparams)
+  },[])
+  
+  
+  const signup = async() => {
+    let signupForm = new FormData();
+      {
+      signupForm.append("userDetailDto",new Blob([JSON.stringify({
+        pass : form.password,
+        userId: form.id
+      })], { type: "application/json"})
+      )
+    }
+      signupForm.append("userDto", new Blob([JSON.stringify(email)], { type: "application/json"}))
+      // signupform.append("file",{file});
+      const signupurl = "http://i6c104.p.ssafy.io:8080/api/users/"
+      axios ({
+        method : "post",
+        url : signupurl,
+        data : signupForm,
+        headers: { "Content-Type" : "multipart/form-data"}
+    }).then(function(res){
+      console.log(res.data)
+      if (res.data = "succces")
+      
+        history.push("/login");
+    })
+    }
+  // 회원가입 성공-> 이전페이지로 돌아가서 -> 로그인페이지로 다시 가짐.
+  // 로그인 성공하면? 이전페이지로, 결국 회원가입하고 이전페이지로 가질수있음
+  
+
+  
+
+
 
   const paperStyle = {
     padding: 20,
@@ -56,18 +131,18 @@ export default function SignupForm () {
 
             {/* 이메일 */}
             <div id="singup_content">
-              <TextField label="Email" placeholder='Enter email' type="email" fullWidth required />
+              <TextField label="Email" value={email.email} type="email" fullWidth required />
             </div>
 
             {/* 비밀번호 & 아이디 */}
             <div id="singup_content">
-            <TextField  label="Password" placeholder='Enter password' type="password" fullWidth required/>
+            <TextField  label="Password"  onChange={onChangePw} placeholder='Enter password' type="password" fullWidth required/>
             </div>
             <div id="singup_content">
-            <TextField label="Re-Password" placeholder='Enter password' type="password" fullWidth required />
+            <TextField label="Re-Password"   onChange={onChangeRePw} placeholder='Enter password' type="password" fullWidth required />
             </div>
             <div id="singup_content">
-              <TextField label="Username" placeholder='Enter username' type="password" fullWidth required />
+              <TextField label="Username"   onChange={onChangeId} placeholder='Enter username' type="text" fullWidth required />
             </div>
             
             
@@ -93,8 +168,21 @@ export default function SignupForm () {
             </div>
 
             {/* 회원가입 버튼 */}
-            <Button type="submit" color="primary" variant='contained' style={btnStyle} fullWidth>Sign Up</Button><br /><br/>
+            { (form.password === form.repassword && form.password) ?
+            <div>
+            <Button type="submit" color="primary" onClick={signup} variant='contained' style={btnStyle} fullWidth>Sign Up</Button>
+            <br />
+            <br />
+            </div>
+            : 
+            <div>
+            <Button type="submit" color="primary" onClick={signup} variant='contained' style={btnStyle} fullWidth disabled>Sign Up</Button>
+            <br />
+            <br />
+            </div>
+            }
 
+            
             {/* 소셜 회원가입 */}
             <div id="signup_divider">
               <hr id="signup_line" />
