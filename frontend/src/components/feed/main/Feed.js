@@ -38,44 +38,8 @@ export default function Feed(props) {
 
     window.addEventListener('scroll',scroll)
 
-    function scroll(e){
-
-      e.preventDefault();
-      const getScrollTop = function () { return (window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop; }; 
-      const getDocumentHeight = function () { const body = document.body; const html = document.documentElement; return Math.max( body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight ); };
-      // console.log(getScrollTop() == getDocumentHeight() - window.innerHeight)
-      if (getScrollTop() == getDocumentHeight() - window.innerHeight) {
-        window.removeEventListener('scroll',scroll)
-        console.log('스크롤이 맨 밑이다!')
-        nextLoading()
-      }
-    }
-  
-    //로딩함수(콜백)
-    function nextLoading(){
-      console.log('@@@',url_arr[url_arr.length-1].feedNo)
-      const url = "http://i6c104.p.ssafy.io:8080/feed/mainFeedList/a1"
-        axios.get(url,{
-          params:{
-            "size":5,
-            "type":"feed",
-            "lastFeedNo": url_arr[url_arr.length-1].feedNo
-          }
-        }).then(function(res){
-          // console.log('응답',res.data)
-          update(res.data)
-        }).catch(function(err){
-          console.log(err)
-        })
-    }
-  
-    //업데이트
-    const update = (data) => {
-      setNewdata(data);
-    }
-
     if(url_arr.length != 0){
-      console.log('url_arr가 바뀌었다!',url_arr)
+      // console.log('url_arr가 바뀌었다!',url_arr)
       let newLikearr = new Array(url_arr.length)
 
       for (let i = 0; i < newLikearr.length; i++) {
@@ -100,6 +64,44 @@ export default function Feed(props) {
       }
     }
   },[url_arr]);
+
+  function scroll(e){
+
+    e.preventDefault();
+    const getScrollTop = function () { return (window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop; }; 
+    const getDocumentHeight = function () { const body = document.body; const html = document.documentElement; return Math.max( body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight ); };
+    // console.log(getScrollTop() == getDocumentHeight() - window.innerHeight)
+    if (getScrollTop() == getDocumentHeight() - window.innerHeight) {
+      window.removeEventListener('scroll',scroll)
+      // console.log('스크롤이 맨 밑이다!')
+      // console.log('현재 스크롤 위치',window.scrollY);
+      nextLoading()
+    }
+  }
+
+  //로딩함수(콜백)
+  function nextLoading(){
+    // console.log('@@@',url_arr[url_arr.length-1].feedNo)
+    const url = "http://i6c104.p.ssafy.io:8080/feed/mainFeedList/a1"
+      axios.get(url,{
+        params:{
+          "size":5,
+          "type":"feed",
+          "lastFeedNo": url_arr[url_arr.length-1].feedNo
+        }
+      }).then(function(res){
+        // console.log('응답',res.data)
+        update(res.data)
+      }).catch(function(err){
+        console.log(err)
+      })
+  }
+
+  //업데이트
+  const update = (data) => {
+    setNewdata(data);
+  }
+
 
   //이미지낱개 로드시 콜백함수
   function imageupload(image,i){
@@ -126,6 +128,7 @@ export default function Feed(props) {
 
   //리사이즈 될때 이벤트 추가.
   useEffect(()=>{
+    // console.log('현재 스크롤 위치',window.scrollY);
     // console.log('이게 가장 먼저 실행되겠지?')
     let container = document.getElementById("feedcontainer")
     let lastNo = 0
@@ -154,7 +157,6 @@ export default function Feed(props) {
 
     return ()=>{
       window.removeEventListener('resize',handleResize);
-
       props.setFootershow(true)
     }
   },[])
@@ -252,7 +254,8 @@ export default function Feed(props) {
   }
 
   //쌓는함수
-  function block(percent){
+  async function block(percent){
+    // console.log('현재 스크롤 위치',window.scrollY);
     // console.log(like,'like!!')
     // console.log("이건 block함수",containerWidth,rows,percent,heightArr)
 
@@ -268,13 +271,17 @@ export default function Feed(props) {
     const division = document.getElementById("container");
 
     let container = document.getElementById("feedcontainer");
-
+    // console.log('현재 스크롤 위치',window.scrollY);
+    let nowscroll = window.scrollY
+    console.log('이전 스크롤 위치',nowscroll)
     while (division.hasChildNodes()) {
       division.removeChild(division.firstChild);
     }
+    console.log('여기서 스크롤이 바뀌네',window.scrollY)
+    // console.log('현재 스크롤 위치',window.scrollY);
     // console.log(images)
     //이제 이미지 차곡차곡 쌓을거임.
-    images.map((image,index)=>{
+    await images.map((image,index)=>{
 
       image.removeAttribute("width","100%");
       image.removeAttribute("height","100%");
@@ -323,7 +330,7 @@ export default function Feed(props) {
       box.style.borderRadius="10px"
       box.style.overflow = "hidden"
       box.appendChild(image);
-      box.appendChild(heart);
+      box.appendChild(하트);
       box.appendChild(heart2);
       image.style.objectFit = "cover"
       heart.style.width = "10%"
@@ -344,7 +351,19 @@ export default function Feed(props) {
       division.appendChild(box);
       heightArr[min_idx] += imageHeight+20;
     })
+    console.log('다 쌓았다!')
+    // console.log('현재 스크롤 위치',window.scrollY,'이동해야할 스크롤 위치',nowscroll,'height',document.body.scrollHeight)
+    go(nowscroll)
     // console.log('block함수 끝')
+    // console.log('현재 스크롤 위치',window.scrollY);
+  }
+
+  const go = scroll => {
+    console.log('콜백함수 실행')
+    console.log(scroll)
+    setTimeout(()=>{
+      window.scrollTo({top:scroll,left:0,behavior:"instant"})
+    },0.1)
   }
   
   return (
