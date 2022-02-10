@@ -9,12 +9,12 @@ import CafeSearch from "./CafeSearch";
 import AccountSearch from "./AccountSearch";
 import './css/MainFeed3.css'
 
-
-
 export default function Mainfeed(props) {
+
     
     const [currentClick, setCurrentClick] = React.useState(null);
     const [prevClick, setPrevClick] = React.useState(null);
+    const [cafeinfo,setCafeinfo] = useState({})
 
     const GetClick = (e) => {
         setCurrentClick(e.target.id);
@@ -42,7 +42,7 @@ export default function Mainfeed(props) {
     );
 
     return (
-
+        
         <Container id='search_button_form'>
             <Router>
                 <header style={{textAlign: "-webkit-center"}}>
@@ -52,15 +52,7 @@ export default function Mainfeed(props) {
                         <Link to="/locationsearch"><Button variant="light" id='search_locationsearch' onClick={GetClick}>장소</Button></Link>
                         <Link to="/cafesearch"><Button variant="light" id='search_cafesearch' onClick={GetClick}>카페</Button></Link>
                         <Link to="/accountsearch"><Button variant="light" id='search_accountsearch' onClick={GetClick}>계정</Button></Link>
-                    </ButtonGroup>
-                    <Row>
-                        <Col>
-                            <input id='search_input' placeholder='검색 내용을 입력하세요...'></input>
-                            <Button id='search_button'>검색</Button>
-                        </Col>
-                        
-                    </Row>
-                    
+                    </ButtonGroup>  
                 </header>
                 <div>
                     <Switch>
@@ -72,7 +64,9 @@ export default function Mainfeed(props) {
                     </Switch>
                 </div>
             </Router>
+            
         </Container>            
-
+       
     );
 }
+

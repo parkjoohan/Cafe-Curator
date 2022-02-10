@@ -1,0 +1,27 @@
+#search_searchbar {
+    width: 80%;
+  }
+  
+  #search_card {
+    width:97%;
+    margin-left: 1%;
+  }
+  
+  #search_marker {
+    width: 50%;
+    margin-left: 40%;
+  }
+  
+  #search_cafe_name {
+    font-size:18px;
+    font-weight: bold;
+  }
+  
+  #search_cafe_address {
+    font-size:15px;
+  }
+  
+  #search_hr {
+    width:97%;
+    margin-left: 1%;
+  }

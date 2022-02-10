@@ -302,11 +302,11 @@ export default function Comment() {
                                 onKeyPress={(e) => {
                                     if (e.key === 'Enter') {
                                         console.log(parentNo);
-                                       if (parentNo != "") {
+                                        if (parentNo != "") {
                                             writeRecomment(e.target.value);
-                                       } else {
-                                           writeComment(e.target.value);
-                                       }
+                                        } else {
+                                            writeComment(e.target.value);
+                                        }
                                     }
                                 }}
                                 style={{width: "100%", height: "40px", border: "none"}}
