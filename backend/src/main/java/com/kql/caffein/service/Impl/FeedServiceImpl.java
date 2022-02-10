@@ -376,7 +376,7 @@ public class FeedServiceImpl implements FeedService {
 
         Optional<Feeds> feeds = feedsRepository.findById(feedUserNo);
         if(feeds.isEmpty()) //feedUser가 작성한 피드 없음
-            return null;
+            return new ArrayList<>();
 
         List<Integer> feedList  = feeds.get().getFeedList(); //feedUser의 피드 목록
 
@@ -435,24 +435,24 @@ public class FeedServiceImpl implements FeedService {
         else{ //본인 게시물 + 팔로잉 게시물 + 추천 게시물
             List<String> followingList = followRepository.getFollowingList(userNo); //해당 유저의 팔로잉 리스트
             followingList.add(userNo); //본인 게시물 포함
+//            System.out.println(userNo + "의 팔로잉 리스트" + followingList.toString());
 
-            //임시 관심사
-            List<String> categoryList = new ArrayList<>();
-//            categoryList.add("공부하기 좋은");
-//            categoryList.add("테마카페");
-//            List<String> categoryList = userDetailRepository.findById(userNo).get().getCategoryList();
+            List<String> categoryList = userDetailRepository.findById(userNo).get().getCategoryList();
+//            System.out.println(userNo + "의 관심사 " + categoryList.toString());
 
-            if(followingList.size() == 0 && categoryList.size() == 0)
-                System.out.println("본인 게시물도 없고 팔로잉도 없고 추천 게시물도 음슴");
-
-            //CategoryDataConverter로 List<String> -> json 변환 필요!
-            Page<Feed> f = feedRepository.getMainFeedList(new CategoryDataConverter().convertToDatabaseColumn(categoryList), followingList,
-                                                lastFeedNo, PageRequest.of(0,size));
-            mainFeedList = f.getContent();
+            //본인 게시물, 팔로잉, 추천 게시물 모두 없음
+            Optional<Feeds> feedList = feedsRepository.findById(userNo);
+            if((!feedList.isPresent() || feedList.get().getFeedList().size()==0) && followingList.size() == 1 && categoryList.size() == 0){
+//                System.out.println("랜덤 조회");
+                mainFeedList = feedRepository.getRandomFeedList(lastFeedNo, size); //랜덤하게 조회
+            }
+            else{
+                //CategoryDataConverter로 List<String> -> json 변환 필요!
+                Page<Feed> f = feedRepository.getMainFeedList(new CategoryDataConverter().convertToDatabaseColumn(categoryList), followingList,
+                        lastFeedNo, PageRequest.of(0,size));
+                mainFeedList = f.getContent();
+            }
         }
-
-//        if(mainFeedList.size() == 0)
-//            System.out.println("본인 게시물도 없고 팔로잉도 없고 추천 게시물도 음슴");
 
         if(type.equals("blog"))
             return makeBlogDtoList(mainFeedList, userNo);
