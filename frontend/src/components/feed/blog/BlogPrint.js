@@ -73,12 +73,7 @@ function BlogPrint() {
       }).catch(err=>console.log(err))
     }
   }
-
   
-
-
-
-
     return (
         <div>
           <WriteModal

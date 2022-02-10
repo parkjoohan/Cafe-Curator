@@ -9,17 +9,16 @@ import CafeSearch from "./CafeSearch";
 import AccountSearch from "./AccountSearch";
 import './css/MainFeed3.css'
 
-
-
 export default function Mainfeed(props) {
+
     
     const [currentClick, setCurrentClick] = React.useState(null);
     const [prevClick, setPrevClick] = React.useState(null);
+    const [cafeinfo,setCafeinfo] = useState({})
 
     const GetClick = (e) => {
         setCurrentClick(e.target.id);
     };
-
 
     React.useEffect(
         (e) => {
@@ -42,26 +41,28 @@ export default function Mainfeed(props) {
     );
 
     return (
-
+        
         <Container id='search_button_form'>
             <Router>
-                <header style={{textAlign: "-webkit-center"}}>
-                    <ButtonGroup>
-                        <Link to="/popularsearch"><Button variant="light" id='search_popularsearch' onClick={GetClick}>인기순</Button></Link>
-                        <Link to="/recentsearch"><Button variant="light" id='search_recentsearch' onClick={GetClick}>최신순</Button></Link>
-                        <Link to="/locationsearch"><Button variant="light" id='search_locationsearch' onClick={GetClick}>장소</Button></Link>
-                        <Link to="/cafesearch"><Button variant="light" id='search_cafesearch' onClick={GetClick}>카페</Button></Link>
-                        <Link to="/accountsearch"><Button variant="light" id='search_accountsearch' onClick={GetClick}>계정</Button></Link>
-                    </ButtonGroup>
-                    <Row>
-                        <Col>
-                            <input id='search_input' placeholder='검색 내용을 입력하세요...'></input>
-                            <Button id='search_button'>검색</Button>
+                <div id='search_button_div' style={{textAlign: "-webkit-center" }}>
+                    <Row id='search_button_group'>
+                        <Col lg={2}>
+                            <Link to="/popularsearch"><Button variant="light" id='search_popularsearch' onClick={GetClick}>인기순</Button></Link>
                         </Col>
-                        
-                    </Row>
-                    
-                </header>
+                        <Col lg={2}>
+                            <Link to="/recentsearch"><Button variant="light" id='search_recentsearch' onClick={GetClick}>최신순</Button></Link>
+                        </Col>
+                        <Col lg={2}>
+                            <Link to="/locationsearch"><Button variant="light" id='search_locationsearch' onClick={GetClick}>장소</Button></Link>
+                        </Col>
+                        <Col lg={2}>
+                            <Link to="/cafesearch"><Button variant="light" id='search_cafesearch' onClick={GetClick}>카페</Button></Link>
+                        </Col>
+                        <Col lg={2}>
+                            <Link to="/accountsearch"><Button variant="light" id='search_accountsearch' onClick={GetClick}>계정</Button></Link>
+                        </Col>
+                    </Row>  
+                </div>
                 <div>
                     <Switch>
                         <Route exact path="/popularsearch" component={PopularSearch} />
@@ -72,7 +73,9 @@ export default function Mainfeed(props) {
                     </Switch>
                 </div>
             </Router>
+            
         </Container>            
-
+       
     );
 }
+
