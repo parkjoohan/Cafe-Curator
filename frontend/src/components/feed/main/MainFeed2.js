@@ -28,14 +28,14 @@ export default function Mainfeed2(props) {
     <Row>
       <div id='MainFeed2_buttons'>
         <Container>
-          <Row>
-              <Col xs={11}>
+          <Row style={{marginLeft: "20%"}}>
+              <Col xs={10}>
               <div style={{textAlign: "-webkit-right"}}>
                 <Toggle onChange={(e)=>Changotogle(e)} />
                 <p style={style}>{toggled ? "북마크" : "좋아요"}</p>
               </div>
             </Col>
-            <Col xs={1}>
+            <Col xs={2}>
               <Button id="MainFeed2_Write_button" variant="outline-success" onClick={() => WritesetModalShow(true)}>
                   <h6 style={{margin: "1px"}}>게시글 작성</h6>
               </Button> 
