@@ -49,7 +49,7 @@ const style = {
       <Col id='header_left' xs={5}>
         <Nav className="me-auto">
           <Nav.Link><Link to="/" id="header_link">Home</Link></Nav.Link>
-          <Nav.Link><Link to="/feed" id="header_link">Map & Feed</Link></Nav.Link>
+          <Nav.Link><Link to="/feed" id="header_link">Feed & Blog</Link></Nav.Link>
           <Nav.Link><Link to="/feed2" id="header_link">BookMark & Like</Link></Nav.Link>
           <Nav.Link><Link to="/feed3" id="header_link">Search</Link></Nav.Link>
         </Nav>
