@@ -7,28 +7,29 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 
-function temp_pw_issuance() {
-	let ranValue1 = ['1','2','3','4','5','6','7','8','9','0'];
-	let ranValue2 = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
-	let ranValue3 = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'];
-	let ranValue4 = ['!','@','#','$','%','^','&','*','(',')'];
+// function temp_pw_issuance() {
+// 	let ranValue1 = ['1','2','3','4','5','6','7','8','9','0'];
+// 	let ranValue2 = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z'];
+// 	let ranValue3 = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'];
+// 	let ranValue4 = ['!','@','#','$','%','^','&','*','(',')'];
 	
-	var temp_pw = "";
+// 	var temp_pw = "";
 	
-	for(let i=0 ; i<2; i++) {
-		let ranPick1 = Math.floor(Math.random() * ranValue1.length);
-		let ranPick2 = Math.floor(Math.random() * ranValue2.length);
-		let ranPick3 = Math.floor(Math.random() * ranValue3.length);
-		let ranPick4 = Math.floor(Math.random() * ranValue4.length);
-		temp_pw = temp_pw + ranValue1[ranPick1] + ranValue2[ranPick2] + ranValue3[ranPick3] + ranValue4[ranPick4];
-	}
+// 	for(let i=0 ; i<2; i++) {
+// 		let ranPick1 = Math.floor(Math.random() * ranValue1.length);
+// 		let ranPick2 = Math.floor(Math.random() * ranValue2.length);
+// 		let ranPick3 = Math.floor(Math.random() * ranValue3.length);
+// 		let ranPick4 = Math.floor(Math.random() * ranValue4.length);
+// 		temp_pw = temp_pw + ranValue1[ranPick1] + ranValue2[ranPick2] + ranValue3[ranPick3] + ranValue4[ranPick4];
+// 	}
 
-  return temp_pw
-}
+//   return temp_pw
+// }
 
 export default function LoginForm() {
+  let location = useLocation();
   let history = useHistory();
   const paperStyle = {
     padding: 20,
@@ -44,6 +45,11 @@ export default function LoginForm() {
   const btnStyle = {
     margin: "8px, "
   }
+  const [pw, setpw] = useState(null);
+  const [Repw, setRepw] = useState(null);
+  const [hideinput, setHideInput] = useState(false);
+  const [pwshow, setPwshow] = useState(false);
+  const [doorLock, setDoorLock] = useState(false);
   const [loginEmail, setloginEmail] = useState(null);
   const [loginPw, setloginPw] = useState(null);
   const [show, setShow] = useState(false);
@@ -54,8 +60,10 @@ export default function LoginForm() {
   };
   const handleCloseandSend = async() => {
     await handleClose();
-    let pw = temp_pw_issuance();
-    alert(`\"${emailforfind}\"로 임시 비밀번호가 발급됐습니다.\n메일함을 확인해주세요.\n서버의 상황에 따라 수신이 지연될 수 있습니다. \n임시비밀번호는 ${pw}입니다.`)
+    setHideInput(false)
+    setDoorLock(false)
+    setPwshow(true)
+    
   }
   
   const onChangeEmail = e => {
@@ -74,13 +82,72 @@ export default function LoginForm() {
         pass : loginPw
       });
       console.log(response.data)
-      history.push("/")
+      localStorage.setItem("userNo", response.data.userNo);
+      history.goBack();
     }
    catch (error) {
     alert("사건발생");
   }
   }
+  
+  const onClickSend = async (e) => {
+    e.preventDefault()
+    try {
+      //응답 성공 
+      
+      const response = await axios.post(`http://i6c104.p.ssafy.io:8080/api/users/findPassSendEmail/${emailforfind}`,{
+          //보내고자 하는 데이터 
+          email : emailforfind
+      });
+      console.log(response);
+      console.log(response.email)
+      setHideInput(true)
+    } catch (error) {
+      //응답 실패
+      console.error(error);
+    }
+  } 
 
+  const [validate, setValidate] = useState(null);
+  
+    const onChangeCode = e => {
+      
+      setValidate(e.target.value);
+        
+    }
+    
+    const onClickCheck = async () => {
+      try {
+        //응답 성공
+        console.log(emailforfind)
+        console.log(validate) 
+        const response = await axios.post('http://i6c104.p.ssafy.io:8080/api/users/verifyCode',{
+            //보내고자 하는 데이터
+            code : validate,
+            email : emailforfind
+        });
+        
+        // console.log(response.data);
+        setDoorLock(response.data)
+      } catch (error) {
+        //응답 실패
+        console.error(error);
+      }
+    } 
+    const passwordChange = async () => {
+      console.log(emailforfind)
+      console.log(pw)
+      const response = await axios.post('http://i6c104.p.ssafy.io:8080/api/users/updatePass',{
+        email: emailforfind,
+        pass : pw
+      });
+      if(response.data) {
+        setPwshow(false)
+      } else {
+        alert("뭔가 오류가있는듯합니다.")
+      }
+      
+    }
   return (
     <div>
       <Grid>
@@ -123,7 +190,7 @@ export default function LoginForm() {
             </Typography>
             <Typography> 비밀번호가 생각나지 않으세요? &nbsp;
               <Link className="link" onClick={handleShow}>
-                임시비밀번호 발송
+                비밀번호 변경
               </Link>
             </Typography><br/>
           </Paper>
@@ -135,14 +202,16 @@ export default function LoginForm() {
       </Modal.Header>
       <Modal.Body>
         <p className="passwordchangemessage">입력한 주소로 임시 비밀번호를 보냅니다.</p>
-        <Form.Control
-          className="input"
-          placeholder="가입시 입력한 이메일 주소"
-          type="email"
-          name="email"
-          id="email"
-          onChange={(e)=>{setEmailforfind(e.target.value)}}
-        />
+        <input id="input" type="email" onChange={(e)=>{setEmailforfind(e.target.value)}} name="email" placeholder="이메일을 입력하세요.." style={{ marginBottom: "3%" }} />
+        <Button onClick={onClickSend} id="email_validate_submit">전송</Button>
+        { hideinput ? 
+        <div>
+          <input id="input" type="validate" onChange={onChangeCode} name="validate" placeholder="인증코드를 입력하세요.." style={{marginBottom: "8%", marginTop: "3%"}} />
+          <Button onClick={onClickCheck} id="email_validate_submit">확인</Button>
+        </div>
+        : null       
+        }
+        
         <p className="passwordchangemessage">
           서버 상황에 따라 5분정도 늦어질 수 있습니다.
           <br/>
@@ -150,9 +219,37 @@ export default function LoginForm() {
         </p>
       </Modal.Body>
       <Modal.Footer>
+        {doorLock ?
         <Button variant="primary" onClick={handleCloseandSend}>
-          임시 비밀번호 발급
+          비밀번호 수정하기
         </Button>
+        :
+        <Button variant="primary" onClick={handleCloseandSend} disabled>
+          비밀번호 수정하기
+        </Button>
+        }
+      </Modal.Footer>
+    </Modal>
+
+    <Modal show={pwshow} onHide={handleClose} className="Modal">
+      <Modal.Header id="loginform_Modalhead" closeButton >
+      </Modal.Header>
+      <Modal.Body>
+        <p className="passwordchangemessage">비밀번호 변경</p>
+        <input id="input" type="password" onChange={(e)=>{setpw(e.target.value)}} name="pw" placeholder="비밀번호를 입력하세요.." style={{ marginBottom: "3%" }} />
+        <input id="input" type="password" onChange={(e)=>{setRepw(e.target.value)}} name="Repw" placeholder="비밀번호 확인.." style={{marginBottom: "8%", marginTop: "3%"}} />
+
+      </Modal.Body>
+      <Modal.Footer>
+        {pw === Repw ?
+        <Button variant="primary" onClick={passwordChange}>
+          비밀번호 수정하기
+        </Button>
+        :
+        <Button variant="primary" onClick={handleCloseandSend} disabled>
+          비밀번호 수정하기
+        </Button>
+        }
       </Modal.Footer>
     </Modal>
     </div>

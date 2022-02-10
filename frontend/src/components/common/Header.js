@@ -1,4 +1,5 @@
 import React from "react";
+import { useLocation } from "react-router";
 import { Link, useHistory } from 'react-router-dom'
 import {Navbar,Nav,Col,Row, NavDropdown, Button, Container} from "react-bootstrap";
 import './css/Header.css'
@@ -6,7 +7,10 @@ import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Grid from '@mui/material/Grid';
 
-function Header() {
+function Header({user}) {
+  const userCheck = localStorage.getItem('userNo')
+  console.log(userCheck)
+  
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -61,8 +65,14 @@ const style = {
       </Col>
       <Col  xs={4}>
         <Nav id='header_right'>
+          { !userCheck ?
+          <div>
           <Nav.Link><Link to="/login" id="header_link">Login</Link></Nav.Link>
           <Nav.Link><Link to="/email" id="header_link">Signup</Link></Nav.Link>
+          </div>
+          : null
+            }
+          
           <div id="header_profile">
           <NavDropdown align="end" title={<img id="header_prof_img" style={{width: "40px"}}
             src={process.env.PUBLIC_URL + "/image/hello.png"}
@@ -70,7 +80,7 @@ const style = {
             <NavDropdown.Item onClick={gotoProfile}>Profile</NavDropdown.Item>
             <NavDropdown.Item onClick={profileModal}>My account</NavDropdown.Item>
             <NavDropdown.Divider />
-            <NavDropdown.Item>Logout</NavDropdown.Item>
+            <NavDropdown.Item onClick={() => localStorage.removeItem('userNo')}>Logout</NavDropdown.Item>
           </NavDropdown>
             <Modal open={profileopen} onClose={modalHandleClose} aria-labelledby="parent-modal-title" aria-describedby="parent-modal-description">
               <Box sx={{ ...style, width: 600, padding: 0 }}>

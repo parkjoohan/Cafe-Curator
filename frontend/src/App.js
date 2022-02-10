@@ -10,6 +10,7 @@ export default function App() {
   //git test
   const [user,setUser] = useState("")
   const [footershow,setFootershow] = useState(true)
+  
 
   return (
     <div className="App">
