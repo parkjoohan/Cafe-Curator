@@ -212,6 +212,9 @@ public class FeedServiceImpl implements FeedService {
     @Override
     @Transactional
     public void feedModify(String userNo, FeedModifyDto feedDto, MultipartFile[] files) throws Exception{
+        System.out.println(feedDto);
+        if(feedDto.getDeletedFileList() == null)
+            feedDto.setDeletedFileList(new ArrayList<>());
 
         Optional<Feed> obj = feedRepository.findById(feedDto.getFeedNo());
         if(obj.isEmpty())
