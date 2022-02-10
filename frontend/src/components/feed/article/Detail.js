@@ -6,10 +6,13 @@ import './css/Detail.css'
 import Comment from "./Comment";
 import axios from 'axios';
 import Modifyarticle from './Modifyarticle';
+import Likelist from './Likelist';
 
 export default function Detail() {
 
   const childRef = useRef();
+
+  const likeRef = useRef();
 
   const [data,setData] = useState({})
 
@@ -23,6 +26,8 @@ export default function Detail() {
 
   const [modifymodalshow, setModifymodalshow] = useState(false);
 
+  const [likemodalshow,setLikemodalshow] = useState(false);
+
   let {pk} = useParams();
 
   useEffect(()=>{
@@ -30,6 +35,18 @@ export default function Detail() {
       childRef.current.setDetaildata(data)
     }
   },[modifymodalshow])
+
+  useEffect(()=>{
+    if(likeRef.current){
+      let newdata={
+        feedNo:data.feedNo,
+        userNo:"a1",
+        islike:likearr[1],
+      }
+      likeRef.current.setDetaildata(newdata)
+    }
+  },[likemodalshow])
+  
 
   useEffect(()=>{
     const url = `http://i6c104.p.ssafy.io:8080/feed/detail/${pk}/a1`
@@ -157,7 +174,7 @@ export default function Detail() {
                 <img src={`${process.env.PUBLIC_URL}/image/heart.png`} width="5%" height="auto" onClick={likearticle}/>:
                 <img src={`${process.env.PUBLIC_URL}/image/empty_heart.png`} width="5%" height="auto" onClick={likearticle}/>
               }
-              <p style={{marginRight:"3%"}}>{likearr[[0]]}</p>
+              <p style={{marginRight:"3%",marginLeft:"3%"}} onClick={()=>setLikemodalshow(true)}>{likearr[[0]]}</p>
               {
                 isbookmark?
                 <img src={`${process.env.PUBLIC_URL}/image/bookmark.png`} width="5%" height="auto" onClick={checkbookmark}/>:
@@ -178,6 +195,11 @@ export default function Detail() {
         onHide={() => setModifymodalshow(false)}
         ref = {childRef}
         data={data}
+        />
+        <Likelist
+        show={likemodalshow}
+        onHide={() => setLikemodalshow(false)}
+        ref = {likeRef}
         />
     </div>
   )
