@@ -6,9 +6,11 @@ import com.kql.caffein.dto.FollowDto;
 import com.kql.caffein.entity.Comment.Comment;
 import com.kql.caffein.entity.Comment.CommentLike;
 import com.kql.caffein.entity.Comment.CommentLikeId;
+import com.kql.caffein.entity.Feed.Feed;
 import com.kql.caffein.entity.User.UserDetail;
 import com.kql.caffein.repository.CommentLikeRepository;
 import com.kql.caffein.repository.CommentRepository;
+import com.kql.caffein.repository.FeedRepository;
 import com.kql.caffein.repository.UserDetailRepository;
 import com.kql.caffein.service.CommentService;
 import com.kql.caffein.service.FollowService;
@@ -29,13 +31,15 @@ public class CommentServiceImpl implements CommentService {
     private final CommentLikeRepository commentLikeRepository;
     private final UserDetailRepository userDetailRepository;
     private final FollowService followService;
+    private final FeedRepository feedRepository;
 
     @Autowired
-    public CommentServiceImpl(CommentRepository commentRepository, CommentLikeRepository commentLikeRepository, UserDetailRepository userDetailRepository, FollowService followService) {
+    public CommentServiceImpl(CommentRepository commentRepository, CommentLikeRepository commentLikeRepository, UserDetailRepository userDetailRepository, FollowService followService, FeedRepository feedRepository) {
         this.commentRepository = commentRepository;
         this.commentLikeRepository = commentLikeRepository;
         this.userDetailRepository = userDetailRepository;
         this.followService = followService;
+        this.feedRepository = feedRepository;
     }
 
     @Override
@@ -81,8 +85,11 @@ public class CommentServiceImpl implements CommentService {
                 .parentNo(parentNo)
                 .content(commentDto.getContent())
                 .userNo(commentDto.getUserNo()).build();
-
         commentRepository.save(comment);
+
+        Feed feed = feedRepository.findById(feedNo).get();
+        feed.setCommentCount(feed.getCommentCount()+1);
+        feedRepository.save(feed);
     }
 
     @Override
@@ -146,8 +153,13 @@ public class CommentServiceImpl implements CommentService {
     public void deleteComment(String userNo, int commentNo) {
         //작성자인지 확인
         Optional<Comment> comment = commentRepository.findById(commentNo);
-        if(userNo.equals(comment.get().getUserNo()))
+        if(userNo.equals(comment.get().getUserNo())) {
+            Feed feed = feedRepository.findById(comment.get().getFeedNo()).get();
+            feed.setCommentCount(feed.getCommentCount()-1);
+            feedRepository.save(feed);
+
             commentRepository.deleteById(commentNo);
+        }
     }
 
     @Override
