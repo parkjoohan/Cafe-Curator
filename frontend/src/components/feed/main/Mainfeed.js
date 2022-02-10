@@ -36,7 +36,7 @@ export default function Mainfeed(props) {
               </div>
             </Col>
             <Col xs={2}>
-              <Button id="MainFeed_Write_button" style={{width: "115px"}} variant="outline-success" onClick={() => WritesetModalShow(true)}>
+              <Button id="MainFeed_Write_button" style={{width: "120px"}} variant="outline-success" onClick={() => WritesetModalShow(true)}>
                   <h6 style={{margin: "1px "}}>게시글 작성</h6>
               </Button> 
             </Col>
