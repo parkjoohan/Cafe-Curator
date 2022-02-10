@@ -479,6 +479,7 @@ public class FeedServiceImpl implements FeedService {
                     .userPicture(feedUser.getPicture())
                     .file(new FileDto(file.getFileNo(), file.getFilePath()))
                     .liked(feedLikeState(feed.getFeedNo(), userNo))
+                    .marked(BookmarkState(feed.getFeedNo(), userNo))
                     .build();
             feedDtoList.add(feedDto);
         }
