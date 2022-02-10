@@ -46,6 +46,8 @@ const Likelist = forwardRef(({show, onHide, data},ref) => {
 
   const morelike=(e)=>{
     if(e.target.scrollTop === e.target.scrollHeight - e.target.clientHeight){
+      let container = document.getElementById('likelist_container');
+      container.removeEventListener('scroll',morelike)
       console.log('맨 밑이다!')
       console.log(likeperson)
       if(likeperson){
