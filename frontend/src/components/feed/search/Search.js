@@ -62,8 +62,8 @@ export default function Search(props) {
   };
 
   return (
-    <div>
-      <TextField label="Cafe name" placeholder='카페 이름' onChange={e => onChange(e)} style={{width:"79%", marginBottom: "2%"}}></TextField>
+    <div id="search_textField_div">
+      <TextField  label="Cafe name" placeholder='카페 이름' onChange={e => onChange(e)}></TextField>
     </div>
   )
 }

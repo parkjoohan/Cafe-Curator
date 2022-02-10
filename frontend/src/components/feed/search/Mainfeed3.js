@@ -20,7 +20,6 @@ export default function Mainfeed(props) {
         setCurrentClick(e.target.id);
     };
 
-
     React.useEffect(
         (e) => {
         if (currentClick !== null) {
@@ -45,15 +44,25 @@ export default function Mainfeed(props) {
         
         <Container id='search_button_form'>
             <Router>
-                <header style={{textAlign: "-webkit-center"}}>
-                    <ButtonGroup>
-                        <Link to="/popularsearch"><Button variant="light" id='search_popularsearch' onClick={GetClick}>인기순</Button></Link>
-                        <Link to="/recentsearch"><Button variant="light" id='search_recentsearch' onClick={GetClick}>최신순</Button></Link>
-                        <Link to="/locationsearch"><Button variant="light" id='search_locationsearch' onClick={GetClick}>장소</Button></Link>
-                        <Link to="/cafesearch"><Button variant="light" id='search_cafesearch' onClick={GetClick}>카페</Button></Link>
-                        <Link to="/accountsearch"><Button variant="light" id='search_accountsearch' onClick={GetClick}>계정</Button></Link>
-                    </ButtonGroup>  
-                </header>
+                <div id='search_button_div' style={{textAlign: "-webkit-center" }}>
+                    <Row id='search_button_group'>
+                        <Col lg={2}>
+                            <Link to="/popularsearch"><Button variant="light" id='search_popularsearch' onClick={GetClick}>인기순</Button></Link>
+                        </Col>
+                        <Col lg={2}>
+                            <Link to="/recentsearch"><Button variant="light" id='search_recentsearch' onClick={GetClick}>최신순</Button></Link>
+                        </Col>
+                        <Col lg={2}>
+                            <Link to="/locationsearch"><Button variant="light" id='search_locationsearch' onClick={GetClick}>장소</Button></Link>
+                        </Col>
+                        <Col lg={2}>
+                            <Link to="/cafesearch"><Button variant="light" id='search_cafesearch' onClick={GetClick}>카페</Button></Link>
+                        </Col>
+                        <Col lg={2}>
+                            <Link to="/accountsearch"><Button variant="light" id='search_accountsearch' onClick={GetClick}>계정</Button></Link>
+                        </Col>
+                    </Row>  
+                </div>
                 <div>
                     <Switch>
                         <Route exact path="/popularsearch" component={PopularSearch} />
