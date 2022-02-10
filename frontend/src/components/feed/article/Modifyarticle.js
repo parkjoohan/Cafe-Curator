@@ -300,7 +300,7 @@ const Modifyarticle = forwardRef(({show, onHide, data},ref) => {
       cafeX:null,
       cafeY:null,
       categoryList:[],
-      deleteFileList:deletedefaultfile,
+      deletedFileList:deletedefaultfile,
       cafeModified:null,
     }
     for (let i = 0; i < like.length; i++) {
@@ -320,19 +320,20 @@ const Modifyarticle = forwardRef(({show, onHide, data},ref) => {
       modifyDto.cafeY = cafeinfo.cafeY;
       modifyDto.cafeAddress = cafeinfo.cafeAddress;
     }
-    console.log(modifyDto)
+    console.log('수정 dto',modifyDto)
+    console.log(files)
     const newForm = new FormData();
     newForm.append("feedDto", new Blob([JSON.stringify(modifyDto)], { type: "application/json" }))
     for (let i = 0; i < files.length; i++) {
       newForm.append("files",files[i])
     }
-    const modifyurl = `http://i6c104.p.ssafy.io:8080/feed/aa/`
+    const modifyurl = `http://i6c104.p.ssafy.io:8080/feed/a1/`
     axios({
       method: "put",
       url: modifyurl,
       data: newForm,
       headers: { "Content-Type": "multipart/form-data" }
-    }).then().catch(err=>console.log)
+    }).then(res=>console.log('응답받았다',res)).catch(err=>console.log('실패했다',err))
     onHide()
   }
 
