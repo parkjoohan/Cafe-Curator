@@ -1,5 +1,5 @@
 #mapContainer {
-    width: 93%;
+    width: 92%;
     height: 556px;
     align-items: center;
     justify-content: center;
@@ -8,4 +8,9 @@
     border-style: solid;
     border-width: medium;
     border-color: #D8D8D8;
-  }
+    border-radius: 2%;
+}
+
+#map {
+  border-radius: 2%;
+}

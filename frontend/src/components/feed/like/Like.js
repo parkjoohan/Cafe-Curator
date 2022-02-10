@@ -3,13 +3,13 @@ import React from 'react';
 
 const Like = () => {
     return (
-        <li id="like-item">
+        <li id="like_item">
             <div>
-                <div id="like-img" />
+                <div id="like_img" />
             </div>
-            <div id="like-info">
-                <p id="like-name" />
-                <p id="like-email" />
+            <div id="like_info">
+                <p id="like_name" />
+                <p id="like_email" />
             </div>
         </li>
     );
