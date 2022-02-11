@@ -14,7 +14,7 @@ export default function LocationSearch(props) {
     useEffect(()=>{
         props.setFootershow(false);
         return () => {
-            props.setFootershow(true)
+            props.setFootershow(true);
         }
     },[])
 
@@ -41,12 +41,11 @@ export default function LocationSearch(props) {
                 axios.get(url2).then(res=>{
                     let beforex = res.data.results.juso[0].entX;
                     let beforey = res.data.results.juso[0].entY;
-                    newlocationarr.push([beforex,beforey])
-                    feedRef.current.setLocationarr(newlocationarr);
-
+                    newlocationarr.push([Number(beforex),Number(beforey)])
                 })
                 })
             }
+            setTimeout(()=>{feedRef.current.setLocationarr(newlocationarr)},1000);
         }
     },[data])
 

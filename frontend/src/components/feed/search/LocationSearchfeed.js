@@ -13,9 +13,6 @@ const LocationSearchfeed = forwardRef((props,ref) => {
     setLocationarr,
   }))
 
-  useEffect(()=>{
-    console.log('!!')
-  },[locationarr])
 
   const [newdata,setNewdata] = useState([]);
   // 서버에서 받아올 데이터 중 이미지의 url이 저장됨 Array
@@ -139,68 +136,39 @@ const LocationSearchfeed = forwardRef((props,ref) => {
 
   //리사이즈 될때 이벤트 추가.
   useEffect(()=>{
-    // console.log('현재 스크롤 위치',window.scrollY);
-    // console.log('이게 가장 먼저 실행되겠지?')
     let container = document.getElementById("feedcontainer")
     let lastNo = 0
     setContainerWidth(container.offsetWidth);
     setRows(parseInt(container.offsetWidth/300))
     window.addEventListener('resize',handleResize);
-
-    // const url = "http://localhost:8080/feed/mainFeedList/U003"
-    const url = "http://i6c104.p.ssafy.io:8080/feed/mainFeedList/a1"
-
-    axios.get(url,{
-      params:{
-        "size":5,
-        "type":"feed",
-        "lastFeedNo": null,
-      }
-    }).then(function(res){
-      let newUrl = res.data
-      // console.log('첫 데이터 받기 전 url_arr(빈 어레이여야함)',url_arr)
-      setUrl(newUrl)
-      lastNo = newUrl[newUrl.length-1].feedNo
-    }).catch(console.log("DD"))
-
     return ()=>{
       window.removeEventListener('resize',handleResize);
     }
   },[])
 
-  // function scroll(lastNo){
-  //   const getScrollTop = function () { return (window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop; }; 
-  //   const getDocumentHeight = function () { const body = document.body; const html = document.documentElement; return Math.max( body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight ); };
-  //   if (getScrollTop() === getDocumentHeight() - window.innerHeight) {
-  //     // console.log('스크롤이 맨 밑이다!')
-  //     nextLoading(lastNo)
-  //   }
-  // }
+  useEffect(()=>{
+    if(locationarr.length>0){
+      console.log(locationarr.length)
+      console.log(locationarr)
+      const url = "http://i6c104.p.ssafy.io:8080/search/cafeList"
 
-  // //로딩함수(콜백)
-  // function nextLoading(lastNo){
-  //   console.log('@@@',lastNo)
-  //   const url = "http://localhost:8080/feed/mainFeedList/U003"
-  //     axios.get(url,{
-  //       params:{
-  //         "size":5,
-  //         "type":"feed",
-  //         "lastFeedNo": null
-  //       }
-  //     }).then(function(res){
-  //       // console.log('응답',res.data)
-  //       update(res.data)
-  //       lastNo = res.data[res.data.length-1].feedNo
-  //     }).catch(function(err){
-  //       console.log(err)
-  //     })
-  // }
+      axios.get(url,{
+        data:{
+          "cafeLngAndLat": locationarr,
+          "feedNo": null,
+          "size": 5,
+          "userNo": "a1"
+        }
+      }).then(function(res){
+        console.log(res)
+        // let newUrl = res.data
+        // // console.log('첫 데이터 받기 전 url_arr(빈 어레이여야함)',url_arr)
+        // setUrl(newUrl)
+      }).catch(err=>console.log(err))
+    }
 
-  // //업데이트
-  // const update = (data) => {
-  //   setNewdata(data);
-  // }
-
+  },[locationarr])
+  
   useEffect(()=>{
     if(newdata.length!=0){
       // console.log('url_arr',url_arr)

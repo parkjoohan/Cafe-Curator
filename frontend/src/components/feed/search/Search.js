@@ -74,7 +74,8 @@ export default function Search(props) {
 
   return (
     <div id="search_textField_div">
-      <TextField  label="Cafe name" placeholder='카페 이름' onChange={e => onChange(e)}></TextField>
+      <TextField  label="Cafe name" placeholder='카페 이름' onChange={e => onChange(e)} onKeyDown={e=>search(e)}></TextField>
+      <button onClick={e=>search(e)}>검색</button>
     </div>
   )
 }
