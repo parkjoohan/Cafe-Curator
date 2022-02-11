@@ -66,9 +66,15 @@ const style = {
       <Col  xs={4}>
         <Nav id='header_right'>
           { !userCheck ?
-          <div>
-          <Nav.Link><Link to="/login" id="header_link">Login</Link></Nav.Link>
-          <Nav.Link><Link to="/email" id="header_link">Signup</Link></Nav.Link>
+            <div>
+              <Row>
+                <Col>
+                  <Nav.Link><Link to="/login" id="header_link">Login</Link></Nav.Link>
+                </Col>
+                <Col>
+                  <Nav.Link><Link to="/email" id="header_link">Signup</Link></Nav.Link>
+                </Col>
+              </Row>
           </div>
           : null
             }
