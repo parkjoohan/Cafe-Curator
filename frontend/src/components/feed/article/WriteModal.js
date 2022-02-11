@@ -194,15 +194,15 @@ const WriteModal = ( {show, onHide}) => {
     // console.log('사진 올라간다!or 삭제했다.!')
     return (
       <>
-      {
-        fileImage.map((url,index)=>(
-          <img
-          key={index} 
-          src={url}
-          style={{width:"7%",height:"auto",borderStyle:"groove"}}
-          onClick={()=>deletePicture(index)}/>
-        ))
-      }
+        {
+          <div>
+            <Row style={{width: "400%"}}>
+              {fileImage.map((url, index) => (
+                <img key={index} src={url} id='writemodal_minipicture' onClick={() => deletePicture(index)} />
+              ))}
+            </Row>
+          </div>
+        }
       </>
     )
   }
@@ -262,9 +262,11 @@ const WriteModal = ( {show, onHide}) => {
 
   return (
     <Modal
-      size='xl'
-      show = {show}
-      onHide = {onHide}
+      size="lg"
+      aria-labelledby="contained-modal-title-vcenter"
+      centered
+      show={show}
+      onHide={onHide}
     >
       <div id="writemodal_navcolor"></div>
       <Modal.Header>
@@ -272,80 +274,77 @@ const WriteModal = ( {show, onHide}) => {
       </Modal.Header>
 
       <Modal.Body>
+      {/* 사진 선택 */}
+      <div id='writemodal_pictureinput'>
+          <Row>
+              <Col>
+              <div style={{textAlign: "-webkit-right"}}>
+                <img style={{ width: "50%" }} src="/image/pic_upload.png" onClick={handleClick}></img>
+                <input type="file" style={{ display: "none" }} ref={photoInput} onChange={onLoadFile} ></input>
+              </div>
+              </Col>
+              <Col>
+                <div id='writemodal_minipicture'>{pictures()}</div>
+              </Col>
+          </Row>
+        </div>
+        <div style={{ textAlign: "center" }}>사진은 최대 4장까지 첨부가 가능합니다.</div>
+
+        <br />
+
+        <div id='writemodal_cafe_search'>
         {/* 카페 검색 창 */}
         <h3>{form.formDto && form.formDto.place_name}</h3>
         <Search setCafeinfo={setCafeinfo}/>
         {/* 카페 이름 출력창 */}
         {/* <TextField label="Cafe name" placeholder='카페 이름' fullWidth required/> */}
+        </div>  
+        
+        <div writemodal_content>
+          <TextField
+            label="내용을 입력하세요"
+            multiline
+            rows={3}
+            onChange={(e) => setContent(e.target.value)}
+            style={{ width: "90%", marginLeft: "5%"}}
+            ></TextField>
+        </div>
+
+        <br />
 
         {/* 관심사 선택 */}
-        <Container id='writemodal_cate'>
+        <div id='writemodal_cate'>
           <div>
-            <Row>
+            <Row style={{height: "20px", marginBottom: "5%"}}>
               {/* 선택된 카테고리 */}
-              <Col md={3}>
+              <Col md={3} style={{height: "20px"}}>
                 <p id='writemodal_selected_cate'>선택된 카테고리</p>
               </Col>
-              <Col md={9}>
-              <Row>{selected}{selected2}</Row>
+              <Col md={9} style={{height: "20px"}}>
+                <Row style={{height: "20px"}}>{selected}{selected2}</Row>
               </Col>
             </Row>
 
             <hr />
 
-            <Row id='writemodal_cate_select'>
-              <Col id='writemodal_cate_air' md={6}>
+              <div id='writemodal_cate_air'>
                 {/* 분위기 카테고리 */}
-                <p style={{fontWeight: "bold"}}>분위기 카테고리</p>
+                <p style={{fontWeight: "bold", textAlign: "-webkit-left", marginBottom: "5%"}}>분위기 카테고리</p>
                 <Row>{defaultlike2}</Row>
-              </Col>
-              <Col id='writemodal_cate_menu' md={6}>
-                {/* 메뉴 카테고리 */}
-                <p style={{fontWeight: "bold"}}>메뉴 카테고리</p>
-                <Row>{defaultlike}</Row>
-              </Col>
-            </Row>
-          </div>
-        </Container>
-
-        {/* 사진 선택 */}
-        <Row>
-          <Col lg={5} md={7}>
-            <div id='writemodal_pictureinput'>
-              <p>이전</p>
-              <div 
-              style={{width:"50%", 
-              paddingBottom:"50%", 
-              borderStyle:"groove",
-              position:"ralative"}}
-              onClick={handleClick}>
-                <input
-                type="file"
-                style={{display:"none"}}
-                ref={photoInput}
-                onChange={onLoadFile}
-                ></input>
-              </div>
-              <p>이후</p>
             </div>
-            <div id='minipicture'>
-              {pictures()}
-            </div>
-            <div style={{textAlign:"center"}}>사진은 최대 4장까지 첨부가 가능합니다.</div>
-          </Col>
-          <Col lg={5} md={7}>
-            <TextField
-                  id="outlined-multiline-flexible"
-                  label="Review"
-                  multiline
-                  minRows={2}
-                  margin='dense'
-                  fullWidth required
-                  onChange={(e)=>setContent(e.target.value)}
-            ></TextField>
             
-          </Col>
-        </Row>
+            <hr />
+
+              <div id='writemodal_cate_menu'>
+                {/* 메뉴 카테고리 */}
+                <p style={{fontWeight: "bold", textAlign: "-webkit-left", marginBottom: "5%"}}>메뉴 카테고리</p>
+                <Row>{defaultlike}</Row>
+              </div>
+
+          </div>
+        </div>
+
+
       </Modal.Body>
 
       <Modal.Footer>
