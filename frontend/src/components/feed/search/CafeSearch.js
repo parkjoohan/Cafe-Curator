@@ -1,11 +1,29 @@
-import React from 'react';
-import './css/Location.css'
-import Map from '../main/Map'
+import React,{useState,useEffect,useRef} from 'react';
+import './css/CafeSearch.css'
+import Blog from '../blog/BlogPrint'
+import { Container } from 'react-bootstrap'
+import Search from './Search';
+import Map from './Map';
 
-export default function CafeSearch(props) {
+export default function LocationSearch(props) {
+    const mapRef = useRef();
+    const [data,setData] = useState([]);
+
+    useEffect(()=>{
+        if(mapRef.current){
+            mapRef.current.setMarkerdata(data)
+        }
+    },[data])
+
     return (
-        <div>
-            <Map />
-        </div>
+        <Container>
+            <Search setData={setData}/>
+            <div>
+                <Map id="CafeSearch_map" ref={mapRef}/>
+            </div>
+            <div id='CafeSearch_blog'>
+                <Blog />
+            </div>
+        </Container>
     );
 }

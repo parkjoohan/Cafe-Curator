@@ -212,6 +212,9 @@ public class FeedServiceImpl implements FeedService {
     @Override
     @Transactional
     public void feedModify(String userNo, FeedModifyDto feedDto, MultipartFile[] files) throws Exception{
+        System.out.println(feedDto);
+        if(feedDto.getDeletedFileList() == null)
+            feedDto.setDeletedFileList(new ArrayList<>());
 
         Optional<Feed> obj = feedRepository.findById(feedDto.getFeedNo());
         if(obj.isEmpty())
@@ -373,7 +376,7 @@ public class FeedServiceImpl implements FeedService {
 
         Optional<Feeds> feeds = feedsRepository.findById(feedUserNo);
         if(feeds.isEmpty()) //feedUser가 작성한 피드 없음
-            return null;
+            return new ArrayList<>();
 
         List<Integer> feedList  = feeds.get().getFeedList(); //feedUser의 피드 목록
 
@@ -432,24 +435,24 @@ public class FeedServiceImpl implements FeedService {
         else{ //본인 게시물 + 팔로잉 게시물 + 추천 게시물
             List<String> followingList = followRepository.getFollowingList(userNo); //해당 유저의 팔로잉 리스트
             followingList.add(userNo); //본인 게시물 포함
+//            System.out.println(userNo + "의 팔로잉 리스트" + followingList.toString());
 
-            //임시 관심사
-            List<String> categoryList = new ArrayList<>();
-//            categoryList.add("공부하기 좋은");
-//            categoryList.add("테마카페");
-//            List<String> categoryList = userDetailRepository.findById(userNo).get().getCategoryList();
+            List<String> categoryList = userDetailRepository.findById(userNo).get().getCategoryList();
+//            System.out.println(userNo + "의 관심사 " + categoryList.toString());
 
-            if(followingList.size() == 0 && categoryList.size() == 0)
-                System.out.println("본인 게시물도 없고 팔로잉도 없고 추천 게시물도 음슴");
-
-            //CategoryDataConverter로 List<String> -> json 변환 필요!
-            Page<Feed> f = feedRepository.getMainFeedList(new CategoryDataConverter().convertToDatabaseColumn(categoryList), followingList,
-                                                lastFeedNo, PageRequest.of(0,size));
-            mainFeedList = f.getContent();
+            //본인 게시물, 팔로잉, 추천 게시물 모두 없음
+            Optional<Feeds> feedList = feedsRepository.findById(userNo);
+            if((!feedList.isPresent() || feedList.get().getFeedList().size()==0) && followingList.size() == 1 && categoryList.size() == 0){
+//                System.out.println("랜덤 조회");
+                mainFeedList = feedRepository.getRandomFeedList(lastFeedNo, size); //랜덤하게 조회
+            }
+            else{
+                //CategoryDataConverter로 List<String> -> json 변환 필요!
+                Page<Feed> f = feedRepository.getMainFeedList(new CategoryDataConverter().convertToDatabaseColumn(categoryList), followingList,
+                        lastFeedNo, PageRequest.of(0,size));
+                mainFeedList = f.getContent();
+            }
         }
-
-//        if(mainFeedList.size() == 0)
-//            System.out.println("본인 게시물도 없고 팔로잉도 없고 추천 게시물도 음슴");
 
         if(type.equals("blog"))
             return makeBlogDtoList(mainFeedList, userNo);
@@ -476,6 +479,7 @@ public class FeedServiceImpl implements FeedService {
                     .userPicture(feedUser.getPicture())
                     .file(new FileDto(file.getFileNo(), file.getFilePath()))
                     .liked(feedLikeState(feed.getFeedNo(), userNo))
+                    .marked(BookmarkState(feed.getFeedNo(), userNo))
                     .build();
             feedDtoList.add(feedDto);
         }
@@ -519,6 +523,7 @@ public class FeedServiceImpl implements FeedService {
         return list;
     }
 
+    //카페 좌표 변환 후 DB 저장
     @Override
     public int addCafe(double cafeX, double cafeY, String cafeName, String cafeAddress){
         CRSFactory factory = new CRSFactory();
@@ -547,5 +552,34 @@ public class FeedServiceImpl implements FeedService {
         }
         else
             return cafe.get().getCafeId();
+    }
+
+    //회원 탈퇴 시 피드 관련 데이터들 삭제
+    public void deleteUser(String userNo){
+        //S3는 직접 지우고 레디스도 갱신해야 함
+
+        Optional<Feeds> feeds = feedsRepository.findById(userNo);
+        if(feeds.isEmpty()) //게시글이 없다면
+            return;
+
+        List<Integer> feedList  = feeds.get().getFeedList(); //유저의 피드 목록
+
+//        List<Integer> cafeList = new ArrayList<>(); //유저가 등록한 카페 목록
+//        이걸 리턴하고 회원 삭제 후에 로그도 삭제되면 CategoryLogService에서 레디스 갱신하는 게 나은가..
+
+        for(Integer feedNo : feedList){
+
+            Feed feed = feedRepository.findById(feedNo).get();
+            for(File file : feed.getFiles()) //S3에서 파일 삭제
+                s3Service.delete(file.getFilePath());
+
+            if(feed.getCafeId() != null && feed.getCategoryList().size()!=0) { //카페&카테고리가 등록된 피드
+//                cafeList.add(feed.getCafeId());
+                //Redis 확인
+                if(redisTemplate.hasKey(String.valueOf(feed.getCafeId()))) //존재하면
+                    categoryLogService.decreaseCategoryCount(feed.getCafeId(), feed.getCategoryList()); //카운트 감소
+                //존재하지 않을 때 로그 데이터로 추가하면 안됨! 아직 회원 삭제(+로그 삭제) 전 이므로
+            }
+        }
     }
 }

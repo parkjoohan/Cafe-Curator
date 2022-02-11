@@ -1,15 +1,15 @@
-import './css/Blog.css';
+import './css/BlogPrint.css';
 import React from 'react';
 
 const Blog = () => {
     return (
-        <li id="blog-item">
+        <li id="blog_item">
             <div>
-                <div id="blog-img" />
+                <div id="blog_img" />
             </div>
-            <div id="blog-info">
-                <p id="blog-name" />
-                <p id="blog-email" />
+            <div id="blog_info">
+                <p id="blog_name" />
+                <p id="blog_email" />
             </div>
         </li>
     );

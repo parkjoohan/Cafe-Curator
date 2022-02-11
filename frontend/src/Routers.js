@@ -27,7 +27,7 @@ export default function Routers(props) {
       <Route exact path="/"><Home user={props.user}/></Route>
       <Route path="/login"><LoginForm setUser={props.setUser}/></Route>
       <Route path="/email" component={EmailForm}></Route>
-      <Route path="/signup" component={SignupForm}></Route>
+      <Route path="/signup/:email" component={SignupForm}></Route>
       <Route exact path="/feed"><Mainfeed setFootershow={props.setFootershow}/></Route>
       <Route exact path="/feed2"><Mainfeed2 setFootershow={props.setFootershow}/></Route>
       <Route exact path="/feed3"><Mainfeed3 setFootershow={props.setFootershow}/></Route>

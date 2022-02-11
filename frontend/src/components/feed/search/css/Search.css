@@ -1,0 +1,43 @@
+#search_searchbar {
+    width: 80%;
+  }
+  
+  #search_card {
+    width:97%;
+    margin-left: 1%;
+  }
+  
+  #search_marker {
+    width: 50%;
+    margin-left: 40%;
+  }
+  
+  #search_cafe_name {
+    font-size:18px;
+    font-weight: bold;
+  }
+  
+  #search_cafe_address {
+    font-size:15px;
+  }
+  
+  #search_hr {
+    width:97%;
+    margin-left: 1%;
+  }
+
+  #search_textField_div {
+    margin-bottom: 1%;
+  }
+
+  .MuiFormControl-root {
+    width: 80%;
+    border: 0;
+    margin: 0;
+    display: inline-flex;
+    padding: 0;
+    position: relative;
+    min-width: 0;
+    flex-direction: column;
+    vertical-align: top;
+}

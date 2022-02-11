@@ -197,6 +197,18 @@ public class UserController {
     public ResponseEntity findPass(@ApiParam(value = "email") @PathVariable String email) throws Exception{
         log.info("findPass called!! userNo: {}", email);
         try{
+            Optional<User> user = userService.findByEmail(email);
+            //회원이 존재하지 않을 때
+            if(!user.isPresent()){
+                return new ResponseEntity<String>("가입된 회원이 아닙니다.", HttpStatus.BAD_REQUEST);
+            }
+            //유저의 oauth_type
+            String oauth_type = user.get().getOauthType();
+
+            //자체 회원가입으로 가입한 유저가 아닐 때
+            if(!oauth_type.equals("kql")){
+                return new ResponseEntity<String>("자체 회원가입으로 가입한 유저가 아닙니다.", HttpStatus.BAD_REQUEST);
+            }
             emailAuthService.findPassSendEmail(email);
             return new ResponseEntity<String>("success", HttpStatus.OK);
         }catch (Exception e){
