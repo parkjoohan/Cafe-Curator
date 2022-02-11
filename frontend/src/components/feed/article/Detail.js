@@ -1,6 +1,6 @@
 import React,{useEffect,useRef,useState} from 'react'
 import { useParams, useHistory } from 'react-router-dom'
-import { Container, Row, Col } from 'react-bootstrap'
+import { Container, Row, Col, Button } from 'react-bootstrap'
 import { FiCornerUpLeft } from 'react-icons/fi';
 import './css/Detail.css'
 import Comment from "./Comment";
@@ -91,45 +91,42 @@ export default function Detail() {
   // console.log(pk);
   
   return (
-    <div style={{height: "1500px"}}>
+    <div style={{ height: "1500px" }}>
       {/* 뒤로 가기 버튼 */}
       <div style={{marginLeft: "2%"}}>
         <FiCornerUpLeft size="30" onClick={() => { history.goBack() }} />
       </div><br />
 
       {/* 게시물 컨테이너 */}
-      <div id='article_con'>
-        <Row style={{ justifyContent: "space-around", height: "1300px"}}>
-          {/* 사진 창 */}
-          <Col id='article_frame' lg={5}>
-            <div class="slider">
-              {
-                (data&&data.files)&&data.files.map((file,index)=>(
-                  <input type="radio" name="slide" id={`slide${index+1}`}/>
-                ))
-              }
+      <Row id='article_frame_row'>
+        <Col id='article_frame_col' lg={5}>
+          <div class="slider">
+            {
+              (data&&data.files)&&data.files.map((file,index)=>(
+                <input type="radio" name="slide" id={`slide${index+1}`}/>
+              ))
+            }
               <ul id="article_picture_frame">
-                  {
-                    (data&&data.files)&&data.files.map((file,index)=>(
-                      <li><img id='article_picture' src={file.filePath}/></li>
-                    ))  
-                  }
-              </ul>
-              <div class="bullets">
                 {
                   (data&&data.files)&&data.files.map((file,index)=>(
-                    <label htmlFor={`slide${index+1}`}>&nbsp;</label>
-                  ))
+                    <li><img id='article_picture' src={file.filePath}/></li>
+                  ))  
                 }
-              </div>
+            </ul>
+            <div class="bullets">
+              {
+                (data&&data.files)&&data.files.map((file,index)=>(
+                  <label htmlFor={`slide${index+1}`}>&nbsp;</label>
+                ))
+              }
             </div>
-          </Col>
-
-          {/* 게시물 창 */}
-          <Col id='article_frame' lg={6}>
+          </div>
+        </Col>
+        <Col id='article_frame_col' lg={6}>
+          <Row>
             {/* 유저프로필,작성일 */}
             <div id='article_profile_info'>
-              <div style={{display:"flex"}}>
+              <div style={{display:"flex",alignItems: "center"}}>
                 <div id="article_profile_frame">
                   <img id="article_profile_prof_img" 
                   src={process.env.PUBLIC_URL + "/image/hello.png"}
@@ -143,12 +140,13 @@ export default function Detail() {
                 <h5>{data.regTime}</h5>
               </div>
             </div>
-            
+
             {/* 카페이름 */}
             <div id='article_cafe_name'>
               <a href="#">{data.cafeName}</a>
             </div>
-
+          </Row>
+          <Row>
             {/* 본문내용, 카페관심사태그 */}
             <div id='article_body'>
               {/* 본문 내용  */}
@@ -171,36 +169,31 @@ export default function Detail() {
             <div id='article_heart_bookmark'>
               {
                 likearr[1]?
-                <img src={`${process.env.PUBLIC_URL}/image/heart.png`} width="5%" height="auto" onClick={likearticle}/>:
-                <img src={`${process.env.PUBLIC_URL}/image/empty_heart.png`} width="5%" height="auto" onClick={likearticle}/>
+                <img src={`${process.env.PUBLIC_URL}/image/heart.png`} width="30px%" height="40px" onClick={likearticle}/>:
+                <img src={`${process.env.PUBLIC_URL}/image/empty_heart.png`} width="30px%" height="40px" onClick={likearticle}/>
               }
-              <p style={{marginRight:"3%",marginLeft:"3%"}} onClick={()=>setLikemodalshow(true)}>{likearr[[0]]}</p>
+              <div style={{width:"50px", textAlignLast: "center", textAlignLast: "center"}}>
+                <p style={{marginLeft:"3%"}} onClick={()=>setLikemodalshow(true)}>{likearr[[0]]}</p>
+              </div>
               {
                 isbookmark?
-                <img src={`${process.env.PUBLIC_URL}/image/bookmark.png`} width="5%" height="auto" onClick={checkbookmark}/>:
-                <img src={`${process.env.PUBLIC_URL}/image/empty_bookmark.png`} width="5%" height="auto" onClick={checkbookmark}/>
+                <img src={`${process.env.PUBLIC_URL}/image/bookmark.png`} width="30px" height="40px" onClick={checkbookmark}/>:
+                <img src={`${process.env.PUBLIC_URL}/image/empty_bookmark.png`} width="30px" height="40px" onClick={checkbookmark}/>
               }
-              <p style={{marginRight:"3%"}}>북마크</p>
+              <div style={{width:"70px"}}>
+                <p style={{marginRight:"3%", marginLeft:"8%"}}>북마크</p>
+              </div>
               <button onClick={()=>setModifymodalshow(true)}>수정</button>
             </div>
-
+          </Row>
+          <Row>
             <div id='article_comment'>
               <Comment />
             </div>
-            </Col>
           </Row>
-        </div>
-        <Modifyarticle
-        show={modifymodalshow}
-        onHide={() => setModifymodalshow(false)}
-        ref = {childRef}
-        data={data}
-        />
-        <Likelist
-        show={likemodalshow}
-        onHide={() => setLikemodalshow(false)}
-        ref = {likeRef}
-        />
+        
+        </Col>
+      </Row>
     </div>
   )
 }

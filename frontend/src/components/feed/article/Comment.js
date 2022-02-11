@@ -187,7 +187,7 @@ export default function Comment() {
     return (
         <Container > 
             <div id='article_comment'>
-                <p style={{ marginLeft: "-12%" }}>총 {comments.length}개의 댓글이 있습니다.</p>
+                <p style={{ marginLeft: "-12%" }}>총 <strong style={{fontSize:"20px"}}>{comments.length}</strong>개의 댓글이 있습니다.</p>
                 <div id='article_comment_frame'>
                     {/* 댓글 */}
                     <div id='article_comments-frame'>
@@ -252,7 +252,7 @@ export default function Comment() {
                                                         <h5 id='article_comments_user'>{recomment.userId}</h5>
                                                     </Col>
                                                     <Col lg={6}>
-                                                        <h5 id='article_comments_content'>@{recomment.parentId}{recomment.content}</h5>
+                                                        <h5 id='article_comments_content'>@{recomment.parentId}&nbsp;&nbsp;{recomment.content}</h5>
                                                     </Col>
                                                     <Col lg={2}>
                                                         <h5 style={{fontSize: "12px"}} onClick={() => setParentNo(recomment.commentNo)}>답글달기 </h5>
@@ -292,7 +292,7 @@ export default function Comment() {
                     </div> 
                 </div>
                 <div style={{marginLeft: "-14%"}}>
-                    <Row style={{borderBottom: "1px solid black", width: "110%", marginLeft: "1%"}}>
+                    <Row style={{borderBottom: "1px solid black", width: "108%", marginLeft: "1.5%"}}>
                         <Col lg={2} style={{fontSize: "20px", marginTop: "1%"}}>
                             <strong>@{parentNo}</strong>
                         </Col>
