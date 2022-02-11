@@ -1,6 +1,6 @@
 package com.kql.caffein.service.Impl;
 
-import com.kql.caffein.dto.CafeSearchDto;
+import com.kql.caffein.dto.Search.CafeSearchResDto;
 import com.kql.caffein.dto.Feed.FeedResDto;
 import com.kql.caffein.entity.Cafe;
 import com.kql.caffein.entity.Feed.Feed;
@@ -17,7 +17,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 @Service
@@ -63,7 +62,7 @@ public class SearchServiceImpl implements SearchService {
 
     @Override
     @Transactional
-    public CafeSearchDto cafeSearchWithPaging(String userNo, Cafe cafe, Integer lastFeedNo, int size) {
+    public CafeSearchResDto cafeSearchWithPaging(String userNo, Cafe cafe, Integer lastFeedNo, int size) {
         int cafeId = cafe.getCafeId();
         Set<String> category = redisTemplate.opsForZSet().reverseRange(String.valueOf(cafeId),0,1);
         if(category.size()==0) {
@@ -78,7 +77,7 @@ public class SearchServiceImpl implements SearchService {
 
         List<FeedResDto> feedResDtoList = feedService.makeFeedDtoList(feedList.getContent(), userNo);
 
-        CafeSearchDto cafeSearchDto = CafeSearchDto.builder()
+        CafeSearchResDto cafeSearchDto = CafeSearchResDto.builder()
                 .categoryList(category)
                 .feedList(feedResDtoList).build();
         return cafeSearchDto;
