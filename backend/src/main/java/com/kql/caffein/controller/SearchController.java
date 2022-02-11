@@ -58,31 +58,29 @@ public class SearchController {
         }
     }
 
-//    @GetMapping("/category/recent")
-//    @ApiOperation(value = "카테고리 검색 - 최신순")
-//    @ApiImplicitParams({
-//            @ApiImplicitParam(name = "userNo", value = "회원 고유 번호", required = true,
-//                    dataType = "string", paramType = "query"),
-//            @ApiImplicitParam(name = "category", value = "카테고리", required = true,
-//                    dataType = "string", paramType = "query"),
-//            @ApiImplicitParam(name = "lastFeedNo", value = "화면에 보여진 마지막 피드 번호", required = false,
-//                    dataType = "Integer", paramType = "query"),
-//            @ApiImplicitParam(name = "size", value = "화면에 보여질 사이즈", required = true,
-//                    dataType = "int", paramType = "query")
-//    })
-//    public ResponseEntity categoryRecentController (@RequestParam(value = "userNo") String userNo,
-//                                                 @RequestParam(value = "category") String category,
-//                                                 @RequestParam(required = false) Integer lastFeedNo,
-//                                                 @RequestParam int size) {
-//        try {
-//            return new ResponseEntity<>(searchService.categorySearchRecentWithPaging(userNo, category, lastFeedNo, size), HttpStatus.OK);
-//        }catch (Exception e) {
-//            e.printStackTrace();
-//            return new ResponseEntity<>(FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
-//        }
-//    }
-
-
+    @GetMapping("/category/recent")
+    @ApiOperation(value = "카테고리 검색 - 최신순")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "userNo", value = "회원 고유 번호", required = true,
+                    dataType = "string", paramType = "query"),
+            @ApiImplicitParam(name = "category", value = "카테고리", required = true,
+                    dataType = "string", paramType = "query"),
+            @ApiImplicitParam(name = "lastFeedNo", value = "화면에 보여진 마지막 피드 번호", required = false,
+                    dataType = "Integer", paramType = "query"),
+            @ApiImplicitParam(name = "size", value = "화면에 보여질 사이즈", required = true,
+                    dataType = "int", paramType = "query")
+    })
+    public ResponseEntity categoryRecentController (@RequestParam(value = "userNo") String userNo,
+                                                 @RequestParam(value = "category") String category,
+                                                 @RequestParam(required = false) Integer lastFeedNo,
+                                                 @RequestParam int size) {
+        try {
+            return new ResponseEntity<>(searchService.categorySearchRecentWithPaging(userNo, category, lastFeedNo, size), HttpStatus.OK);
+        }catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 
     @GetMapping("/cafe")
     @ApiOperation(value = "카페 아이디로 검색")
