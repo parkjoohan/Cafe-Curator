@@ -14,14 +14,14 @@ public class BlogResDto {
 
     @ApiModelProperty(value="피드 번호")
     private int feedNo;
-    @ApiModelProperty(value="피드 내용")
-    private String content;
+    @ApiModelProperty(value="카페 id")
+    private Integer cafeId;
     @ApiModelProperty(value="카페 이름")
     private String cafeName;
-    @ApiModelProperty(value="피드 카테고리 목록")
-    private List<String> categoryList;
     @ApiModelProperty(value="피드 좋아요 수")
     private int likeCount;
+    @ApiModelProperty(value="피드 댓글 수")
+    private int commentCount;
     @ApiModelProperty(value="피드 작성자 아이디")
     private String userId;
     @ApiModelProperty(value="피드 작성자 사진")
@@ -34,13 +34,13 @@ public class BlogResDto {
     private boolean marked;
 
     @Builder
-    public BlogResDto(int feedNo, String content, String cafeName, List<String> categoryList,
-                      int likeCount, String userId, String userPicture, FileDto file, boolean liked, boolean marked){
+    public BlogResDto(int feedNo, Integer cafeId, String cafeName, int likeCount, int commentCount,
+                      String userId, String userPicture, FileDto file, boolean liked, boolean marked){
         this.feedNo = feedNo;
-        this.content = content;
+        this.cafeId = cafeId;
         this.cafeName = cafeName;
-        this.categoryList = categoryList;
         this.likeCount = likeCount;
+        this.commentCount = commentCount;
         this.userId = userId;
         this.userPicture = userPicture;
         this.file = file;

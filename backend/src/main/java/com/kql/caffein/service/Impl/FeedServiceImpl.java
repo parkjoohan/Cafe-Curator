@@ -471,10 +471,10 @@ public class FeedServiceImpl implements FeedService {
 
             BlogResDto feedDto = BlogResDto.builder()
                     .feedNo(feed.getFeedNo())
-                    .content(feed.getContent())
+                    .cafeId(feed.getCafeId())
                     .cafeName(feed.getCafeName())
-                    .categoryList(feed.getCategoryList())
                     .likeCount(feed.getLikeCount())
+                    .commentCount(feed.getCommentCount())
                     .userId(feedUser.getUserId())
                     .userPicture(feedUser.getPicture())
                     .file(new FileDto(file.getFileNo(), file.getFilePath()))
