@@ -12,11 +12,12 @@
 } 
 
 #likelist_container {
-
+    overflow-y: auto;
+    height: 800px;
 }
 
 #likelist_my {
-    height: 20%;
+    height: 50px;
     display: flex; 
     justify-content: space-between;
     align-items: center;

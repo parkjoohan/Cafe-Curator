@@ -83,12 +83,13 @@ const Likelist = forwardRef(({show, onHide, data},ref) => {
       </Modal.Header>
 
       <Modal.Body >
-        <Container id='likelist_container' style={{overflowY: 'auto',height:"500px"}}>
+        <Container id='likelist_container'>
           {
             islike && <div id='likelist_my'>
                 <strong id='likelist_my_id'>나</strong>
               </div>
           }
+          <hr />
           {likeperson.map((ppl,index)=>(
             <div id='likelist_people'>
               {
@@ -101,7 +102,7 @@ const Likelist = forwardRef(({show, onHide, data},ref) => {
                 !ppl.status&&<span id='likelist_people_follow'>팔로우</span>
               }
               {
-                ppl.status&&<span id='likelist_people_follow'>팔로우중</span>
+                ppl.status&&<span id='likelist_people_unfollow'>팔로우중</span>
               }
             </div>
           ))}

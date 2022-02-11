@@ -183,7 +183,7 @@ export default function Detail() {
               <div style={{width:"70px"}}>
                 <p style={{marginRight:"3%", marginLeft:"8%"}}>북마크</p>
               </div>
-              <button onClick={()=>setModifymodalshow(true)}>수정</button>
+              <Button onClick={()=>setModifymodalshow(true)}>수정</Button>
             </div>
           </Row>
           <Row>
