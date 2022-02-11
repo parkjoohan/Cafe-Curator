@@ -4,6 +4,7 @@ import {TextField, Button} from '@material-ui/core';
 import { Row,Col } from 'react-bootstrap'
 import axios from 'axios'
 import $ from "jquery";
+import "./css/Likelist.css";
 
 
 
@@ -31,6 +32,7 @@ const Likelist = forwardRef(({show, onHide, data},ref) => {
         userNo:detaildata.userNo,
       }}).then(res=>{
         setLikeperson(res.data)
+        console.log(likeperson)
       }).catch(err=>{
         console.log(err)
       })
@@ -75,26 +77,31 @@ const Likelist = forwardRef(({show, onHide, data},ref) => {
       show = {show}
       onHide = {onHide}
     >
-      <div id="writemodal_navcolor"></div>
+      <div id="likelist_navcolor"></div>
       <Modal.Header>
-      <h3 id="writemodal_Margin_Underline">좋아요 한 사람</h3>
+      <h3 id="likelist_Margin_Underline">좋아요 한 사람</h3>
       </Modal.Header>
 
       <Modal.Body >
         <Container id='likelist_container' style={{overflowY: 'auto',height:"500px"}}>
           {
-            islike&&<div style={{height:"20%",border:"1px solid black",display:"flex",justifyContent:"space-between",alignItems:"center"}}>
-              <span style={{fontSize:"20px"}}>나</span>
+            islike && <div id='likelist_my'>
+                <strong id='likelist_my_id'>나</strong>
               </div>
           }
           {likeperson.map((ppl,index)=>(
-            <div style={{height:"100px",border:"1px solid black",display:"flex",justifyContent:"space-between",alignItems:"center"}}>
-              <span style={{fontSize:"20px"}}>{ppl.userId}</span>
+            <div id='likelist_people'>
               {
-                !ppl.status&&<span style={{fontSize:"20px"}}>팔로우하기</span>
+                ppl.picture != null ?
+                <img id="blogs_img2" src={ppl.picture} alt="" /> :
+                <img id="blogs_img2" src='../image/Profileimage.png'/>
+              }
+              <strong id='likelist_people_userid'>{ppl.userId}</strong>
+              {
+                !ppl.status&&<span id='likelist_people_follow'>팔로우</span>
               }
               {
-                ppl.status&&<span style={{fontSize:"20px"}}>팔로우중</span>
+                ppl.status&&<span id='likelist_people_follow'>팔로우중</span>
               }
             </div>
           ))}
@@ -102,7 +109,7 @@ const Likelist = forwardRef(({show, onHide, data},ref) => {
       </Modal.Body>
 
       <Modal.Footer>
-        <Button id="writemodal_NoBgButton" onClick={()=>onHide()}>작성</Button>
+        <Button id="likelist_NoBgButton" onClick={()=>onHide()}>작성</Button>
       </Modal.Footer>
     </Modal>
   )
