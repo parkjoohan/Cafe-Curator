@@ -58,86 +58,88 @@ const style = {
           <Nav.Link><Link to="/feed3" id="header_link">Search</Link></Nav.Link>
         </Nav>
       </Col>
-      <Col id='header_center' xs={3} >
+      <Col id='header_center' xs={2} >
         <Navbar.Brand id='header_link_img'>
           <Link to="/" id="header_link_img">Cafe Curator </Link>
         </Navbar.Brand>
       </Col>
-      <Col  xs={4}>
-        <Nav id='header_right'>
-          { !userCheck ?
-            <div>
-              <Row>
-                <Col>
-                  <Nav.Link><Link to="/login" id="header_link">Login</Link></Nav.Link>
-                </Col>
-                <Col>
-                  <Nav.Link><Link to="/email" id="header_link">Signup</Link></Nav.Link>
-                </Col>
-              </Row>
-          </div>
-          : null
-            }
-          
-          <div id="header_profile">
-          <NavDropdown align="end" title={<img id="header_prof_img" style={{width: "40px"}}
-            src={process.env.PUBLIC_URL + "/image/hello.png"}
-            />} id="dropdown-menu-align-end">
-            <NavDropdown.Item onClick={gotoProfile}>Profile</NavDropdown.Item>
-            <NavDropdown.Item onClick={profileModal}>My account</NavDropdown.Item>
-            <NavDropdown.Divider />
-            <NavDropdown.Item onClick={() => localStorage.removeItem('userNo')}>Logout</NavDropdown.Item>
-          </NavDropdown>
-            <Modal open={profileopen} onClose={modalHandleClose} aria-labelledby="parent-modal-title" aria-describedby="parent-modal-description">
-              <Box sx={{ ...style, width: 600, padding: 0 }}>
-                <div id="fix_profile_navcolor"></div>
+      <Col id='header_right' xs={5}>
+        <Row style={{float: "right"}}>
+          <Nav>
+            { !userCheck ?
+              <div style={{alignSelf: "center"}}>
+                <Row>
+                  <Col>
+                    <Nav.Link><Link to="/login" id="header_link">Login</Link></Nav.Link>
+                  </Col>
+                  <Col>
+                    <Nav.Link><Link to="/email" id="header_link">Signup</Link></Nav.Link>
+                  </Col>
+                </Row>
+            </div>
+            : null
+              }
+            
+            <div id="header_profile">
+            <NavDropdown align="end" title={<img id="header_prof_img" style={{width: "40px"}}
+              src={process.env.PUBLIC_URL + "/image/hello.png"}
+              />} id="dropdown-menu-align-end">
+              <NavDropdown.Item onClick={gotoProfile}>Profile</NavDropdown.Item>
+              <NavDropdown.Item onClick={profileModal}>My account</NavDropdown.Item>
+              <NavDropdown.Divider />
+              <NavDropdown.Item onClick={() => localStorage.removeItem('userNo')}>Logout</NavDropdown.Item>
+            </NavDropdown>
+              <Modal open={profileopen} onClose={modalHandleClose} aria-labelledby="parent-modal-title" aria-describedby="parent-modal-description">
+                <Box sx={{ ...style, width: 600, padding: 0 }}>
+                  <div id="fix_profile_navcolor"></div>
+                  
+                  <p id="parent-modal-description">
+                    <Container id='fix_profile_con' >
+                      <h1 id='modal_title'>회원 정보 수정</h1>
+                      
+                        <Grid id="fix_profile_center" container>
+                        <Grid id="fix_profile_left" item xs={8}>
+                          <Row>
+                            <a>변경할 이름</a>
+                            <input id='fix_info' placeholder="Name" />
+                          </Row>
+                          <Row>
+                            <a>변경할 비밀번호</a>
+                            <input id="fix_info" placeholder="Password" />
+                          </Row>
+                          <Row>
+                            <a>비밀번호 재확인</a>
+                            <input id="fix_info" placeholder="PasswordConfirm" />
+                          </Row>
+                          </Grid>
                 
-                <p id="parent-modal-description">
-                  <Container id='fix_profile_con' >
-                    <h1 id='modal_title'>회원 정보 수정</h1>
-                    
-                      <Grid id="fix_profile_center" container>
-                      <Grid id="fix_profile_left" item xs={8}>
-                        <Row>
-                          <a>변경할 이름</a>
-                          <input id='fix_info' placeholder="Name" />
-                        </Row>
-                        <Row>
-                          <a>변경할 비밀번호</a>
-                          <input id="fix_info" placeholder="Password" />
-                        </Row>
-                        <Row>
-                          <a>비밀번호 재확인</a>
-                          <input id="fix_info" placeholder="PasswordConfirm" />
-                        </Row>
+                        <Grid id="fix_profile_right" item xs={4}>
+                          <Row>
+                            <img id ="fix_profile_pic" src={process.env.PUBLIC_URL + "/image/map.png"}></img>
+                            <Button id='fix_profile_select_pic' variant="outline-light">변경하기</Button> 
+                          </Row>
                         </Grid>
-              
-                      <Grid id="fix_profile_right" item xs={4}>
-                        <Row>
-                          <img id ="fix_profile_pic" src={process.env.PUBLIC_URL + "/image/map.png"}></img>
-                          <Button id='fix_profile_select_pic' variant="outline-light">변경하기</Button> 
-                        </Row>
+                        
                       </Grid>
-                      
-                    </Grid>
-                  </Container>
-                  <hr id='fix_profile_hr'/>
-                  <div>
-                    <Row xs={5} md={5}>
-                      <Button id='fix_profile_cate' variant="outline-light">관심사선택</Button>
-                      <Button id='fix_profile_delete' variant="outline-light">회원탈퇴</Button>
-                      </Row>
-                      
+                    </Container>
+                    <hr id='fix_profile_hr'/>
+                    <div>
                       <Row xs={5} md={5}>
-                        <Button id='fix_profile_goback' variant="outline-light">뒤로가기</Button>
-                        <Button id='fix_profile_apply' variant="outline-light">적용하기</Button>
-                      </Row>
-                  </div>
-                </p>
-              </Box>
-            </Modal>
-          </div>
-        </Nav>
+                        <Button id='fix_profile_cate' variant="outline-light">관심사선택</Button>
+                        <Button id='fix_profile_delete' variant="outline-light">회원탈퇴</Button>
+                        </Row>
+                        
+                        <Row xs={5} md={5}>
+                          <Button id='fix_profile_goback' variant="outline-light">뒤로가기</Button>
+                          <Button id='fix_profile_apply' variant="outline-light">적용하기</Button>
+                        </Row>
+                    </div>
+                  </p>
+                </Box>
+              </Modal>
+            </div>
+          </Nav>
+        </Row>
       </Col >
     </Navbar>
   );
