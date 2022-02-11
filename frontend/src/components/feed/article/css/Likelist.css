@@ -1,0 +1,51 @@
+#likelist_navcolor {
+    border: 0;
+    background: #4b6b79;
+    height: 35px;
+}
+
+#likelist_Margin_Underline {
+    margin-top: 0%;
+    margin-left : 20px;
+    text-decoration: underline;
+    text-underline-position:under;
+} 
+
+#likelist_container {
+
+}
+
+#likelist_my {
+    height: 20%;
+    display: flex; 
+    justify-content: space-between;
+    align-items: center;
+}
+
+#likelist_my_id {
+    font-size: 20px;
+    padding: 3%;
+}
+
+#likelist_people {
+    height: 100px; 
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#likelist_people_userid {
+    font-size: 20px;
+    margin-left: 5%;
+    margin-right: auto;
+}
+
+#likelist_people_follow {
+    font-size: 20px;
+    color: blue;
+}
+
+#likelist_people_unfollow {
+    font-size: 20px;
+    color: red;
+}
