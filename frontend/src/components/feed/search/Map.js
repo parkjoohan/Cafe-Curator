@@ -4,7 +4,7 @@ import "./css/Map.css";
 const Map = forwardRef((props,ref)=>{
 
   const [markerdata,setMarkerdata] = useState([]);
-  const [nowmarkers,setNowmarkers] = useState([]);
+  const [nowinfos,setNowinfos] = useState([]);
 
   useImperativeHandle(ref,()=>({
     setMarkerdata,
@@ -20,8 +20,8 @@ const Map = forwardRef((props,ref)=>{
   },[])
   
   useEffect(()=>{
-    console.log(markerdata)
     if(markerdata.length>0){
+      console.log(markerdata)
 
       var mapContainer = document.getElementById('map')
 
@@ -35,12 +35,14 @@ const Map = forwardRef((props,ref)=>{
       };
       var map = new kakao.maps.Map(mapContainer, mapOption);
 
-      var imageSrc = "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png"; 
+      var imageSrc = `${process.env.PUBLIC_URL}/image/marker.png`; 
 
       var bounds = new kakao.maps.LatLngBounds();
       
+      let newinfoarr = new Array(markerdata.length);
       for (let i = 0; i < markerdata.length; i++) {
         var imageSize = new kakao.maps.Size(24, 35); 
+
         var markerImage = new kakao.maps.MarkerImage(imageSrc, imageSize); 
         var marker = new kakao.maps.Marker({
           map:map,
@@ -48,7 +50,28 @@ const Map = forwardRef((props,ref)=>{
           position:new kakao.maps.LatLng(markerdata[i].y, markerdata[i].x),
           image:markerImage
         })
+
+        var content = `
+        <div style="padding:10px; background-color:lightgray; border:1px solid black">
+        <h6 style="font-weight:bold">${markerdata[i].place_name}</h6>
+        <p style="font-size:80%">${markerdata[i].address_name}</p>
+        <p style="font-size:80%">${markerdata[i].phone}</p>
+        <p style="font-size:80%" onclick="console.log(${markerdata[i].place_name})">검색</p>
+        </div>
+        `
+        var infowindow = new kakao.maps.InfoWindow({
+          content : content,
+          removable : true,
+        });
+
+        newinfoarr[i] = [marker,infowindow]
+
         bounds.extend(new kakao.maps.LatLng(markerdata[i].y, markerdata[i].x))
+      }
+      for (let i = 0; i < newinfoarr.length; i++) {
+        kakao.maps.event.addListener(newinfoarr[i][0],'click',function(){
+          newinfoarr[i][1].open(map,newinfoarr[i][0])
+        })
       }
       map.setBounds(bounds)
     }

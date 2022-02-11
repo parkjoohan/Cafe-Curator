@@ -41,7 +41,7 @@ export default function Routers(props) {
       <Route path="/search" component = {Mainfeed3}></Route>
       <Route path="/popularsearch" component = {PopularSearch}></Route>
       <Route path="/recentsearch" component = {RecentSearch}></Route>
-      <Route path="/locationsearch" component = {LocationSearch}></Route>
+      <Route path="/locationsearch"><LocationSearch setFootershow={props.setFootershow}/></Route>
       <Route path="/cafesearch" component = {CafeSearch}></Route>
       <Route path="/accountsearch" component = {AccountSearch}></Route>
     </Switch>

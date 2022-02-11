@@ -9,6 +9,7 @@ import { Col, Row } from 'react-bootstrap';
 export default function Search(props) {
 
   const [keyword,setKeyword] = useState("");
+  const [searchkeyword,setSearchkeyword] = useState("")
   const [results,setResults] = useState([]);
   const [select,setSelect] = useState({});
   const [form,setForm] = useState({
@@ -22,8 +23,18 @@ export default function Search(props) {
     setKeyword(e.target.value)
   }
 
+  const search = e => {
+    if(e._reactName=="onKeyDown"){
+      if(e.code=="Enter"){
+        setSearchkeyword(keyword);
+      }
+    }else{
+      setSearchkeyword(keyword)
+    }
+  }
+
   useEffect(()=>{
-    if (!keyword) {
+    if (!searchkeyword) {
       setResults([]);
     }else{
     var options = {
@@ -33,7 +44,7 @@ export default function Search(props) {
 
     var ps = new kakao.maps.services.Places(); 
 
-    ps.keywordSearch(keyword, placesSearchCB); 
+    ps.keywordSearch(searchkeyword, placesSearchCB); 
 
     function placesSearchCB (data, status, pagination) {
       if (status === kakao.maps.services.Status.OK) {
@@ -51,7 +62,7 @@ export default function Search(props) {
       } 
     }
   }
-  },[keyword]);
+  },[searchkeyword]);
 
   useEffect(()=>{
     props.setData(results)
@@ -62,8 +73,9 @@ export default function Search(props) {
   };
 
   return (
-    <div>
-      <TextField label="Cafe name" placeholder='카페 이름' onChange={e => onChange(e)} style={{width:"79%", marginBottom: "2%"}}></TextField>
+    <div style={{display:"flex"}}>
+      <TextField label="Cafe name" placeholder='카페 이름' onChange={e => onChange(e)} onKeyDown={(e)=>search(e)} style={{width:"79%", marginBottom: "2%"}}></TextField>
+      <button onClick={e=>search(e)}>찾기</button>
     </div>
   )
 }

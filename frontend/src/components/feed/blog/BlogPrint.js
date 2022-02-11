@@ -26,8 +26,6 @@ function BlogPrint() {
 
 
   useEffect(() => {
-
-
     setIsLoading(true);
     let user = "a1"
     const url = `http://i6c104.p.ssafy.io:8080/feed/mainFeedList/${user}`
