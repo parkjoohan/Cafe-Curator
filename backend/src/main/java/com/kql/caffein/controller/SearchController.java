@@ -1,5 +1,6 @@
 package com.kql.caffein.controller;
 
+import com.kql.caffein.dto.Search.CafeSearchReqDto;
 import com.kql.caffein.entity.Cafe;
 import com.kql.caffein.service.CafeService;
 import com.kql.caffein.service.SearchService;
@@ -86,30 +87,14 @@ public class SearchController {
         }
     }
 
-    @GetMapping("/cafe")
+    @PostMapping("/cafe")
     @ApiOperation(value = "카페 검색")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "userNo", value = "회원 고유 번호", required = true,
-                    dataType = "string", paramType = "query"),
-            @ApiImplicitParam(name = "cafeX", value = "카페 위도", required = true,
-                    dataType = "double", paramType = "query"),
-            @ApiImplicitParam(name = "cafeY", value = "카페 경도", required = true,
-                    dataType = "double", paramType = "query"),
-            @ApiImplicitParam(name = "lastFeedNo", value = "화면에 보여진 마지막 피드 번호", required = false,
-                    dataType = "Integer", paramType = "query"),
-            @ApiImplicitParam(name = "size", value = "화면에 보여질 사이즈", required = true,
-                    dataType = "int", paramType = "query")
-    })
-    public ResponseEntity cafeSearchController (@RequestParam(value = "userNo") String userNo,
-                                                    @RequestParam(value = "cafeX") double cafeX,
-                                                    @RequestParam(value = "cafeY") double cafeY,
-                                                    @RequestParam(required = false) Integer lastFeedNo,
-                                                    @RequestParam int size) {
+    public ResponseEntity cafeSearchController (@RequestBody CafeSearchReqDto cafeSearch) {
         try {
-            Map<String,String> cageLngAngLat = cafeService.lenAndLatConversion(cafeX,cafeY);
+            Map<String,String> cageLngAngLat = cafeService.lenAndLatConversion(cafeSearch.getCafeX(),cafeSearch.getCafeY());
             Optional<Cafe> cafe = cafeService.getCafe(cageLngAngLat);
             if(cafe.isPresent())
-                return new ResponseEntity<>(searchService.cafeSearchWithPaging(userNo, cafe.get(), lastFeedNo, size), HttpStatus.OK);
+                return new ResponseEntity<>(searchService.cafeSearchWithPaging(cafeSearch.getUserNo(), cafe.get(), cafeSearch.getFeedNo(), cafeSearch.getSize()), HttpStatus.OK);
              else
                 return new ResponseEntity<>("empty",HttpStatus.OK);
         }catch (Exception e) {
