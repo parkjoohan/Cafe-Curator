@@ -89,12 +89,12 @@ public class SearchServiceImpl implements SearchService {
     @Transactional
     public List<FeedResDto> cafeListSearchWithPaging(CafeSearchReqDto cafeSearchReqDto) {
 
-        String[][] cafeReq = cafeSearchReqDto.getCafeLngAndLat();
+        Double[][] cafeReq = cafeSearchReqDto.getCafeLngAndLat();
 
         //카페 아이디 찾기
         List<Integer> cafeIds = new ArrayList<>();
-        for(String[] c : cafeReq) {
-            Optional<Cafe> cafe = cafeService.getCafe(c[0],c[1]);
+        for(Double[] c : cafeReq) {
+            Optional<Cafe> cafe = cafeService.getCafe(String.valueOf(c[0]),String.valueOf(c[1]));
             if(cafe.isPresent()) { //카페가 존재하면
                 cafeIds.add(cafe.get().getCafeId());
             }
