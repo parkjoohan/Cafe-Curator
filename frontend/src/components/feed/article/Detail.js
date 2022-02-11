@@ -191,9 +191,19 @@ export default function Detail() {
               <Comment />
             </div>
           </Row>
-        
         </Col>
       </Row>
+      <Modifyarticle
+        show={modifymodalshow}
+        onHide={() => setModifymodalshow(false)}
+        ref = {childRef}
+        data={data}
+        />
+      <Likelist
+        show={likemodalshow}
+        onHide={() => setLikemodalshow(false)}
+        ref = {likeRef}
+      />
     </div>
   )
 }
