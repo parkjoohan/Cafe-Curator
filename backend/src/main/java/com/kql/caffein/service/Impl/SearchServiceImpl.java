@@ -2,6 +2,7 @@ package com.kql.caffein.service.Impl;
 
 import com.kql.caffein.dto.CafeSearchDto;
 import com.kql.caffein.dto.Feed.FeedResDto;
+import com.kql.caffein.entity.Cafe;
 import com.kql.caffein.entity.Feed.Feed;
 import com.kql.caffein.repository.CafeRepository;
 import com.kql.caffein.repository.FeedRepository;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 @Service
@@ -61,8 +63,8 @@ public class SearchServiceImpl implements SearchService {
 
     @Override
     @Transactional
-    public CafeSearchDto cafeSearchWithPaging(String userNo, String cafeName, Integer lastFeedNo, int size) {
-        int cafeId = cafeRepository.findByCafeName(cafeName).get().getCafeId();
+    public CafeSearchDto cafeSearchWithPaging(String userNo, Cafe cafe, Integer lastFeedNo, int size) {
+        int cafeId = cafe.getCafeId();
         Set<String> category = redisTemplate.opsForZSet().reverseRange(String.valueOf(cafeId),0,1);
         if(category.size()==0) {
             //redis 에 존재 하지 않음
