@@ -1,11 +1,13 @@
 package com.kql.caffein.service.Impl;
 
+import com.kql.caffein.dto.Search.CafeSearchReqDto;
 import com.kql.caffein.dto.Search.CafeSearchResDto;
 import com.kql.caffein.dto.Feed.FeedResDto;
 import com.kql.caffein.entity.Cafe;
 import com.kql.caffein.entity.Feed.Feed;
 import com.kql.caffein.repository.CafeRepository;
 import com.kql.caffein.repository.FeedRepository;
+import com.kql.caffein.service.CafeService;
 import com.kql.caffein.service.CategoryLogService;
 import com.kql.caffein.service.FeedService;
 import com.kql.caffein.service.SearchService;
@@ -16,8 +18,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class SearchServiceImpl implements SearchService {
@@ -27,14 +28,16 @@ public class SearchServiceImpl implements SearchService {
     private final CafeRepository cafeRepository;
     private final RedisTemplate redisTemplate;
     private final CategoryLogService categoryLogService;
+    private final CafeService cafeService;
 
     @Autowired
-    public SearchServiceImpl(FeedRepository feedRepository, FeedService feedService, CafeRepository cafeRepository, RedisTemplate redisTemplate, CategoryLogService categoryLogService) {
+    public SearchServiceImpl(FeedRepository feedRepository, FeedService feedService, CafeRepository cafeRepository, RedisTemplate redisTemplate, CategoryLogService categoryLogService, CafeService cafeService) {
         this.feedRepository = feedRepository;
         this.feedService = feedService;
         this.cafeRepository = cafeRepository;
         this.redisTemplate = redisTemplate;
         this.categoryLogService = categoryLogService;
+        this.cafeService = cafeService;
     }
 
     @Override
@@ -80,5 +83,31 @@ public class SearchServiceImpl implements SearchService {
                 .categoryList(category)
                 .feedList(feedResDtoList).build();
         return cafeSearchDto;
+    }
+
+    @Override
+    @Transactional
+    public List<FeedResDto> cafeListSearchWithPaging(CafeSearchReqDto cafeSearchReqDto) {
+
+        String[][] cafeReq = cafeSearchReqDto.getCafeLngAndLat();
+
+        //카페 아이디 찾기
+        List<String> cafeIds = new ArrayList<>();
+        for(String[] c : cafeReq) {
+            Optional<Cafe> cafe = cafeService.getCafe(c[0],c[1]);
+            if(cafe.isPresent()) { //카페가 존재하면
+                cafeIds.add(String.valueOf(cafe.get().getCafeId()));
+            }
+        }
+
+        Integer lastFeedNo = cafeSearchReqDto.getFeedNo();
+        if (lastFeedNo == null) lastFeedNo = Integer.MAX_VALUE;
+
+        PageRequest pageRequest = PageRequest.of(0, cafeSearchReqDto.getSize());
+        Page<Feed> feedList = feedRepository.findByCafeIdInAndFeedNoLessThanOrderByFeedNoDesc(cafeIds, lastFeedNo, pageRequest);
+
+        List<FeedResDto> feedResDtoList = feedService.makeFeedDtoList(feedList.getContent(), cafeSearchReqDto.getUserNo());
+
+        return feedResDtoList;
     }
 }

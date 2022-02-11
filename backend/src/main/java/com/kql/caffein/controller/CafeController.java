@@ -43,8 +43,7 @@ public class CafeController {
     public ResponseEntity getCafeId (@RequestParam(value = "cafeX") double cafeX,
                                      @RequestParam(value = "cafeY") double cafeY) {
         try {
-            Map<String,String> cageLngAngLat = cafeService.lenAndLatConversion(cafeX,cafeY);
-            Optional<Cafe> cafe = cafeService.getCafe(cageLngAngLat);
+            Optional<Cafe> cafe = cafeService.getCafe(String.valueOf(cafeX), String.valueOf(cafeY));
             if(cafe.isPresent())
                 return new ResponseEntity<>(cafe.get().getCafeId(), HttpStatus.OK);
             else

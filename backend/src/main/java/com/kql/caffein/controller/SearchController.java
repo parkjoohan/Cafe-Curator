@@ -1,5 +1,6 @@
 package com.kql.caffein.controller;
 
+import com.kql.caffein.dto.Search.CafeSearchReqDto;
 import com.kql.caffein.service.CafeService;
 import com.kql.caffein.service.SearchService;
 import io.swagger.annotations.Api;
@@ -11,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @Api(value = "팔로우")
 @Slf4j
@@ -100,6 +103,17 @@ public class SearchController {
                                                     @RequestParam int size) {
         try {
             return new ResponseEntity<>(searchService.cafeSearchWithPaging(userNo, cafeId, lastFeedNo, size), HttpStatus.OK);
+        }catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+    
+    @GetMapping("/cafeList")
+    @ApiOperation(value = "카테 목록으로 검색")
+    public ResponseEntity cafeListSearch(@RequestBody CafeSearchReqDto cafeSearchReqDto) {
+        try {
+            return new ResponseEntity<>(searchService.cafeListSearchWithPaging(cafeSearchReqDto), HttpStatus.OK);
         }catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>(FAIL, HttpStatus.INTERNAL_SERVER_ERROR);

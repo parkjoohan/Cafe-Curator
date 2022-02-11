@@ -7,12 +7,10 @@ import java.util.Optional;
 
 public interface CafeService {
 
-    //카페 위경도 변환
-    Map<String,String> lenAndLatConversion(double cafeX, double cafeY);
-
     //카페 조회
-    Optional<Cafe> getCafe(Map<String,String> cafeLngAndLat);
+    Optional<Cafe> getCafe(String cafeLng, String cafeLat);
 
     //카페 저장
-    int addCafe(Map<String,String> cafeLngAndLat, String cafeName, String cafeAddress);
+    int addCafe(String cafeLng, String cafeLat, String cafeName, String cafeAddress);
+
 }

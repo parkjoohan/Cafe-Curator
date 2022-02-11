@@ -23,34 +23,17 @@ public class CafeServiceImpl implements CafeService {
     }
 
     @Override
-    public Map<String,String> lenAndLatConversion(double cafeX, double cafeY) {
-        CRSFactory factory = new CRSFactory();
-        CoordinateReferenceSystem srcCrs = factory.createFromName("EPSG:5179");
-        CoordinateReferenceSystem dstCrs = factory.createFromName("EPSG:4326");
-        BasicCoordinateTransform transform = new BasicCoordinateTransform(srcCrs, dstCrs);
-        ProjCoordinate srcCoord = new ProjCoordinate(cafeX, cafeY);
-        ProjCoordinate dstCoord = new ProjCoordinate();
-        transform.transform(srcCoord, dstCoord); //좌표계 변환
-//        System.out.println(cafeX + " " + cafeY + " 좌표 변환 >> " + dstCoord.x + " " + dstCoord.y);
-
-        Map<String,String> cafeLngAndLat = new HashMap<>();
-        cafeLngAndLat.put("cafeLng",String.valueOf(dstCoord.x));
-        cafeLngAndLat.put("cafeLat",String.valueOf(dstCoord.y));
-        return cafeLngAndLat;
+    public Optional<Cafe> getCafe(String cafeLng, String cafeLat) {
+        return cafeRepository.findByCafeLngAndCafeLat(cafeLng, cafeLat);
     }
 
     @Override
-    public Optional<Cafe> getCafe(Map<String,String> cafeLngAndLat) {
-        return cafeRepository.findByCafeLngAndCafeLat(cafeLngAndLat.get("cafeLng"), cafeLngAndLat.get("cafeLat"));
-    }
-
-    @Override
-    public int addCafe(Map<String,String> cafeLngAndLat, String cafeName, String cafeAddress) {
+    public int addCafe(String cafeLng, String cafeLat, String cafeName, String cafeAddress) {
         Cafe cafeEntity = Cafe.builder()
                 .cafeName(cafeName)
                 .cafeAddress(cafeAddress)
-                .cafeLng(cafeLngAndLat.get("cafeLng"))
-                .cafeLat(cafeLngAndLat.get("cafeLat"))
+                .cafeLng(cafeLng)
+                .cafeLat(cafeLat)
                 .build();
         cafeRepository.save(cafeEntity);
         return cafeEntity.getCafeId();

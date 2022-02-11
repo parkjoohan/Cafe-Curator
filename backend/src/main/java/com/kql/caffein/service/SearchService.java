@@ -1,6 +1,7 @@
 package com.kql.caffein.service;
+import com.kql.caffein.dto.Feed.FeedResDto;
+import com.kql.caffein.dto.Search.CafeSearchReqDto;
 import com.kql.caffein.dto.Search.CafeSearchResDto;
-import com.kql.caffein.entity.Cafe;
 
 import java.util.List;
 
@@ -13,4 +14,7 @@ public interface SearchService {
     
     //카페 검색
     CafeSearchResDto cafeSearchWithPaging(String userNo, int cafeId, Integer lastFeedNo, int size);
+
+    //카페 목록 검색
+    List<FeedResDto> cafeListSearchWithPaging(CafeSearchReqDto cafeSearchReqDto);
 }

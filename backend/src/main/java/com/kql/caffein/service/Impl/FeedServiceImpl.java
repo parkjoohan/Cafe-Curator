@@ -75,10 +75,14 @@ public class FeedServiceImpl implements FeedService {
         Integer cafeId = null;
         if(feedDto.getCafeName() != null){ //카페를 등록했다면
 
-            Map<String,String> cageLngAngLat = cafeService.lenAndLatConversion(feedDto.getCafeX(), feedDto.getCafeY());
-            Optional<Cafe> cafe = cafeService.getCafe(cageLngAngLat);
+            //Map<String,String> cageLngAngLat = cafeService.lenAndLatConversion(feedDto.getCafeX(), feedDto.getCafeY());
+            //Optional<Cafe> cafe = cafeService.getCafe(cageLngAngLat);
+
+            String cafeLng = String.valueOf(feedDto.getCafeX());
+            String cafeLat = String.valueOf(feedDto.getCafeY());
+            Optional<Cafe> cafe = cafeService.getCafe(cafeLng, cafeLat);
             if(cafe.isEmpty()){
-                cafeId = cafeService.addCafe(cageLngAngLat, feedDto.getCafeName(), feedDto.getCafeAddress());
+                cafeId = cafeService.addCafe(cafeLng, cafeLat, feedDto.getCafeName(), feedDto.getCafeAddress());
             }
             else
                 cafeId = cafe.get().getCafeId();
@@ -286,11 +290,11 @@ public class FeedServiceImpl implements FeedService {
                 feed.setCafeName(null);
             }
             else{ //3,4번
-
-                Map<String,String> cageLngAngLat = cafeService.lenAndLatConversion(feedDto.getCafeX(), feedDto.getCafeY());
-                Optional<Cafe> cafe = cafeService.getCafe(cageLngAngLat);
+                String cafeLng = String.valueOf(feedDto.getCafeX());
+                String cafeLat = String.valueOf(feedDto.getCafeY());
+                Optional<Cafe> cafe = cafeService.getCafe(cafeLng, cafeLat);
                 if(cafe.isEmpty()){
-                    cafeId = cafeService.addCafe(cageLngAngLat, feedDto.getCafeName(), feedDto.getCafeAddress());
+                    cafeId = cafeService.addCafe(cafeLng, cafeLat, feedDto.getCafeName(), feedDto.getCafeAddress());
                 }
                 else
                     cafeId = cafe.get().getCafeId();
