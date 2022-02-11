@@ -62,8 +62,7 @@ public class SearchServiceImpl implements SearchService {
 
     @Override
     @Transactional
-    public CafeSearchResDto cafeSearchWithPaging(String userNo, Cafe cafe, Integer lastFeedNo, int size) {
-        int cafeId = cafe.getCafeId();
+    public CafeSearchResDto cafeSearchWithPaging(String userNo, int cafeId, Integer lastFeedNo, int size) {
         Set<String> category = redisTemplate.opsForZSet().reverseRange(String.valueOf(cafeId),0,1);
         if(category.size()==0) {
             //redis 에 존재 하지 않음

@@ -12,5 +12,5 @@ public interface SearchService {
     List categorySearchRecentWithPaging(String userNo, String category, Integer lastFeedNo, int size);
     
     //카페 검색
-    CafeSearchResDto cafeSearchWithPaging(String userNo, Cafe cafe, Integer lastFeedNo, int size);
+    CafeSearchResDto cafeSearchWithPaging(String userNo, int cafeId, Integer lastFeedNo, int size);
 }
