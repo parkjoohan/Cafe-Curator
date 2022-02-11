@@ -28,7 +28,7 @@ import { useHistory, useLocation } from "react-router-dom";
 //   return temp_pw
 // }
 
-export default function LoginForm() {
+export default function LoginForm({setUser}) {
   let location = useLocation();
   let history = useHistory();
   const paperStyle = {
@@ -82,7 +82,8 @@ export default function LoginForm() {
         pass : loginPw
       });
       console.log(response.data)
-      localStorage.setItem("userNo", response.data.userNo);
+      localStorage.setItem('userNo', response.data.userNo);
+      setUser(response.data.userNo)
       history.goBack();
     }
    catch (error) {

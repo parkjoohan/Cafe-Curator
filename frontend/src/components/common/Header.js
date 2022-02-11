@@ -1,5 +1,4 @@
 import React from "react";
-import { useLocation } from "react-router";
 import { Link, useHistory } from 'react-router-dom'
 import {Navbar,Nav,Col,Row, NavDropdown, Button, Container} from "react-bootstrap";
 import './css/Header.css'
@@ -7,10 +6,7 @@ import Box from '@mui/material/Box';
 import Modal from '@mui/material/Modal';
 import Grid from '@mui/material/Grid';
 
-function Header({user}) {
-  const userCheck = localStorage.getItem('userNo')
-  console.log(userCheck)
-  
+function Header({user, setUser}) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -34,19 +30,24 @@ function Header({user}) {
     setAnchorEl(null);
     history.push('/profile/0')
   }
-const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 400,
-  bgcolor: 'background.paper',
-  border: '0.1px solid #000',
-  boxShadow: 24,
-  pt: 2,
-  px: 4,
-  pb: 3,
-};
+
+  const logoutfunction = () => {
+    localStorage.removeItem('userNo')
+    setUser(null)
+  }
+  const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'background.paper',
+    border: '0.1px solid #000',
+    boxShadow: 24,
+    pt: 2,
+    px: 4,
+    pb: 3,
+  };
 
   return (
     <Navbar id='header_nav' expand="sm" bg="light">
@@ -66,7 +67,7 @@ const style = {
       <Col id='header_right' xs={5}>
         <Row style={{float: "right"}}>
           <Nav>
-            { !userCheck ?
+            { !user ?
               <div style={{alignSelf: "center"}}>
                 <Row>
                   <Col>
@@ -87,7 +88,7 @@ const style = {
               <NavDropdown.Item onClick={gotoProfile}>Profile</NavDropdown.Item>
               <NavDropdown.Item onClick={profileModal}>My account</NavDropdown.Item>
               <NavDropdown.Divider />
-              <NavDropdown.Item onClick={() => localStorage.removeItem('userNo')}>Logout</NavDropdown.Item>
+              <NavDropdown.Item onClick={logoutfunction}>Logout</NavDropdown.Item>
             </NavDropdown>
               <Modal open={profileopen} onClose={modalHandleClose} aria-labelledby="parent-modal-title" aria-describedby="parent-modal-description">
                 <Box sx={{ ...style, width: 600, padding: 0 }}>
