@@ -105,7 +105,7 @@ export default function Search(props) {
               <div id='search_card' key={index} onClick={()=>selectcafe(d)}>
                 <Row>
                   <Col md={1}>
-                    <img id='search_marker' src="image/marker.png"/>
+                    <img id='search_marker' src={process.env.PUBLIC_URL + "/image/marker.png"}/>
                   </Col>
                   <Col md={11}>
                       <div id='search_cafe_name'>{d.place_name}</div>

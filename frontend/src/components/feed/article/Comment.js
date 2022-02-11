@@ -11,8 +11,13 @@ export default function Comment() {
     const [recomments, setRecomments] = useState([]); 
     const url = "http://i6c104.p.ssafy.io:8080/comment"
     const [parentNo, setParentNo] = useState([]);
+    const [commentNo, setCommentNo] = useState([]);
+    const [heart, setHeart] = useState();
+    const [like, setLike] = useState([]);
+    const [mylike, setMyLike] = useState([]);
 
-    let {pk} = useParams();
+    let { pk } = useParams();
+    
 
     // 댓글 불러오기
     useEffect(() => {
@@ -20,13 +25,22 @@ export default function Comment() {
         params: {
             "feedNo": `${pk}`,
             "size": 5,
-            "userNo": "aa"
+            "userNo": "a1"
         }
         }).then((data1) => {
             console.log(data1.data);
-            setComments(data1.data);
+            if(data1.data != "댓글이 존재하지 않습니다.")
+                setComments(data1.data);
+                let newArray = new Array(data1.data.length)
+                let newArray2 = new Array(data1.data.length)
+                for (let i = 0; i < newArray.length; i++) {
+                    newArray[i] = data1.data[i].likeCount;
+                    newArray2[i] = data1.data[i].checkLike;
+                }
+                setLike(newArray);
+                setMyLike(newArray2);
         }).catch((error) => {
-            console.error(error)
+            // console.error(error) 댓글 없을 떄 수행되는 코드 작성하기
         })
     }, []);
 
@@ -36,7 +50,7 @@ export default function Comment() {
             params: {
                 "feedNo": 60,
                 "size": 5,
-                "userNo": "aa"
+                "userNo": "a1"
             }
         }).then((data1) => {
             console.log(data1.data);
@@ -50,7 +64,7 @@ export default function Comment() {
         axios.post("/comment", {
             "content": props,
             "feedNo": 60,
-            "userNo": "aa",
+            "userNo": "a1",
             // "parentNo": 
         },
         {
@@ -89,8 +103,8 @@ export default function Comment() {
         axios.post("/comment", {
             "content": props,
             "feedNo": 60,
-            "parentNo": `${parentNo}`,
-            "userNo": "aa",
+            "parentNo": parentNo,
+            "userNo": "a1",
         },
         {
             headers: {
@@ -103,7 +117,7 @@ export default function Comment() {
                         params: {
                             "feedNo": 60,
                             "size": 5,
-                            "userNo": "aa"
+                            "userNo": "a1"
                         }
                     }).then((data1) => {
                         console.log(data1.data);
@@ -121,7 +135,7 @@ export default function Comment() {
             params: {
                 "parentNo": props, 
                 "size": 5,
-                "userNo": "aa"
+                "userNo": "a1"
             }
         }).then((data3) => {
             console.log(data3.data);
@@ -135,8 +149,40 @@ export default function Comment() {
     // 댓글 삭제
     function deleteComment(props) {
         console.log(props);
-        axios.delete(url + `/a4/${props}`).then(window.location.reload())
+        axios.delete(url + `/a1/${props}`).then(window.location.reload())
     }
+
+    // 좋아요
+    function likeArticle(props, index) {
+        console.log(props);
+        axios.get(url + `/like/a1/${props}`)
+            .then((data) => {
+                if (mylike[index] == true) {
+                    let newArray3 = [...mylike];
+                    newArray3[index] = false;
+                    setMyLike(newArray3);
+                    let newArray5 = [...like];
+                    newArray5[index]--;
+                    setLike(newArray5);
+                } else {
+                    let newArray4 = [...mylike];
+                    newArray4[index] = true;
+                    setMyLike(newArray4);
+                    let newArray6 = [...like];
+                    newArray6[index]++;
+                    setLike(newArray6);
+                }
+                console.log(data.data);
+            })
+            //.then(setHeart(!heart))
+            // if (props.likeCount == 0) {
+            //     props.likeCount++;
+            // } else {
+            //     props.likeCount--;
+            // }
+           // .then(console.log("성공"))
+    }
+
 
     return (
         <Container > 
@@ -147,7 +193,7 @@ export default function Comment() {
                     <div id='article_comments-frame'>
                     {    
                         <div>   
-                        {comments.map((comment) => (   
+                        {comments.map((comment, index) => (   
                             <Container>
                                 <Row id='article_comments'>
                                     <Col lg={9}>
@@ -162,17 +208,34 @@ export default function Comment() {
                                     </Col>
                                     <Col lg={3}>
                                         <Row>
-                                            <Col lg={7}>
-                                                <h7 style={{fontSize: "12px"}} onClick={() => setParentNo(comment.commentNo)}>답글달기 </h7> 
-                                            </Col>
                                             <Col lg={5}>
-                                                <h7 style={{fontSize: "12px"}} onClick={() => deleteComment(comment.commentNo)}>삭제</h7>
+                                                <h5 style={{fontSize: "12px"}} onClick={() => setParentNo(comment.commentNo)}>답글달기 </h5> 
+                                            </Col>
+                                            <Col lg={3}>
+                                                <h5 style={{fontSize: "12px"}} onClick={() => deleteComment(comment.commentNo)}>삭제</h5>
+                                            </Col>
+                                            <Col lg={2}>
+                                                {/* <h5 style={{ fontSize: "12px" }} onClick={() => likeArticle(recomment.commentNo)}> */}
+                                                <h5 style={{ fontSize: "12px" }} >
+                                                    { mylike[index]==true ? <img
+                                                        style={{ width: "20px" }}
+                                                        onClick={() => likeArticle(comment.commentNo, index)}
+                                                        src="/image/heart.png"
+                                                    /> : <img
+                                                    style={{ width: "20px" }}
+                                                    onClick={() => likeArticle(comment.commentNo, index)}
+                                                    src="/image/empty_heart.png"
+                                                />}
+                                                </h5>
+                                            </Col>
+                                            <Col lg={2}>
+                                                <p style={{ fontSize: "12px" }} >{ like[index] }</p>
                                             </Col>
                                         </Row>
                                     </Col>
                                 </Row>
                                 <Row>
-                                    <h7 id='article_commnets_more' onClick={() => showRecomment(comment.commentNo)}>더보기 </h7>
+                                    <h5 style={{ fontSize: "12px" }} id='article_commnets_more' onClick={() => showRecomment(comment.commentNo)}>더보기 </h5>
                                 </Row>
                                 
                                 {/* 대댓글 */}
@@ -188,14 +251,31 @@ export default function Comment() {
                                                     <Col lg={1}>
                                                         <h5 id='article_comments_user'>{recomment.userId}</h5>
                                                     </Col>
-                                                    <Col lg={8}>
-                                                        <h5 id='article_comments_content'>{recomment.content}</h5>
+                                                    <Col lg={6}>
+                                                        <h5 id='article_comments_content'>@{recomment.parentId}{recomment.content}</h5>
                                                     </Col>
                                                     <Col lg={2}>
-                                                        <h7 style={{fontSize: "12px"}} onClick={() => setParentNo(recomment.commentNo)}>답글달기 </h7>
+                                                        <h5 style={{fontSize: "12px"}} onClick={() => setParentNo(recomment.commentNo)}>답글달기 </h5>
                                                     </Col>
                                                     <Col lg={1}>
-                                                        <h7 style={{fontSize: "12px"}} onClick={() => deleteComment(recomment.commentNo)}>삭제</h7>
+                                                        <h5 style={{fontSize: "12px"}} onClick={() => deleteComment(recomment.commentNo)}>삭제</h5>
+                                                    </Col>
+                                                    <Col lg={1}>
+                                                        {/* <h5 style={{ fontSize: "12px" }} onClick={() => likeArticle(recomment.commentNo)}> */}
+                                                        <h5 style={{ fontSize: "12px" }} >
+                                                            { comment.checkLike==true ? <img
+                                                                style={{ width: "20px" }}
+                                                                onClick={() => likeArticle(recomment.commentNo)}
+                                                                src="/image/heart.png"
+                                                            /> : <img
+                                                            style={{ width: "20px" }}
+                                                            onClick={() => likeArticle(recomment.commentNo)}
+                                                            src="/image/empty_heart.png"
+                                                            />}
+                                                        </h5>
+                                                    </Col>
+                                                    <Col lg={1}>
+                                                        <p style={{ fontSize: "12px" }} >{ recomment.likeCount }</p>
                                                     </Col>
                                                 </Row>
                                             </Col>     
@@ -221,10 +301,11 @@ export default function Comment() {
                                 type="text"
                                 onKeyPress={(e) => {
                                     if (e.key === 'Enter') {
-                                        writeComment(e.target.value);
                                         console.log(parentNo);
                                         if (parentNo != "") {
-                                            writeRecomment(e.target.value, parentNo);
+                                            writeRecomment(e.target.value);
+                                        } else {
+                                            writeComment(e.target.value);
                                         }
                                     }
                                 }}
@@ -235,7 +316,6 @@ export default function Comment() {
                     </Row>
                 </div>
             </div>
-            
         </Container>
     )
 }

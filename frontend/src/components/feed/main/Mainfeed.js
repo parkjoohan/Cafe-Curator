@@ -28,15 +28,15 @@ export default function Mainfeed(props) {
     <Row>
       <div id='MainFeed_buttons'>
         <Container>
-          <Row>
-              <Col xs={11}>
+          <Row style={{marginLeft: "20%"}}>
+              <Col xs={10}>
               <div style={{textAlign: "-webkit-right"}}>
                 <Toggle onChange={(e)=>Changotogle(e)} />
                 <p style={style}>{toggled ? "피드형" : "블로그형"}</p>
               </div>
             </Col>
-            <Col xs={1}>
-              <Button id="MainFeed_Write_button" variant="outline-success" onClick={() => WritesetModalShow(true)}>
+            <Col xs={2}>
+              <Button id="MainFeed_Write_button" style={{width: "120px"}} variant="outline-success" onClick={() => WritesetModalShow(true)}>
                   <h6 style={{margin: "1px "}}>게시글 작성</h6>
               </Button> 
             </Col>
