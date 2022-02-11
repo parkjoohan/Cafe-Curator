@@ -8,14 +8,11 @@ import com.kql.caffein.entity.CategoryLog;
 import com.kql.caffein.entity.Feed.*;
 import com.kql.caffein.entity.User.UserDetail;
 import com.kql.caffein.repository.*;
+import com.kql.caffein.service.CafeService;
 import com.kql.caffein.service.CategoryLogService;
 import com.kql.caffein.service.FeedService;
 import com.kql.caffein.service.S3Service;
 import org.apache.tomcat.util.http.fileupload.FileUploadException;
-import org.locationtech.proj4j.BasicCoordinateTransform;
-import org.locationtech.proj4j.CRSFactory;
-import org.locationtech.proj4j.CoordinateReferenceSystem;
-import org.locationtech.proj4j.ProjCoordinate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -55,6 +52,8 @@ public class FeedServiceImpl implements FeedService {
     RedisTemplate redisTemplate;
     @Autowired
     CategoryLogService categoryLogService;
+    @Autowired
+    CafeService cafeService;
 
 
     //피드 등록
@@ -74,8 +73,16 @@ public class FeedServiceImpl implements FeedService {
         }
 
         Integer cafeId = null;
-        if(feedDto.getCafeName() != null) //카페를 등록했다면
-            cafeId = addCafe(feedDto.getCafeX(), feedDto.getCafeY(), feedDto.getCafeName(), feedDto.getCafeAddress());
+        if(feedDto.getCafeName() != null){ //카페를 등록했다면
+
+            Map<String,String> cageLngAngLat = cafeService.lenAndLatConversion(feedDto.getCafeX(), feedDto.getCafeY());
+            Optional<Cafe> cafe = cafeService.getCafe(cageLngAngLat);
+            if(cafe.isEmpty()){
+                cafeId = cafeService.addCafe(cageLngAngLat, feedDto.getCafeName(), feedDto.getCafeAddress());
+            }
+            else
+                cafeId = cafe.get().getCafeId();
+        }
 
         Feed feed = feedDto.toEntity();
         feed.setCafeId(cafeId);
@@ -279,7 +286,15 @@ public class FeedServiceImpl implements FeedService {
                 feed.setCafeName(null);
             }
             else{ //3,4번
-                cafeId = addCafe(feedDto.getCafeX(), feedDto.getCafeY(), feedDto.getCafeName(), feedDto.getCafeAddress());
+
+                Map<String,String> cageLngAngLat = cafeService.lenAndLatConversion(feedDto.getCafeX(), feedDto.getCafeY());
+                Optional<Cafe> cafe = cafeService.getCafe(cageLngAngLat);
+                if(cafe.isEmpty()){
+                    cafeId = cafeService.addCafe(cageLngAngLat, feedDto.getCafeName(), feedDto.getCafeAddress());
+                }
+                else
+                    cafeId = cafe.get().getCafeId();
+
                 feed.setCafeId(cafeId);
                 feed.setCafeName(feedDto.getCafeName());
             }
@@ -521,37 +536,6 @@ public class FeedServiceImpl implements FeedService {
             list.add(new FollowDto(no, userDetail.getUserId(), userDetail.getPicture(), followService.checkFollow(userNo,no)));
         }
         return list;
-    }
-
-    //카페 좌표 변환 후 DB 저장
-    @Override
-    public int addCafe(double cafeX, double cafeY, String cafeName, String cafeAddress){
-        CRSFactory factory = new CRSFactory();
-        CoordinateReferenceSystem srcCrs = factory.createFromName("EPSG:5179");
-        CoordinateReferenceSystem dstCrs = factory.createFromName("EPSG:4326");
-        BasicCoordinateTransform transform = new BasicCoordinateTransform(srcCrs, dstCrs);
-        ProjCoordinate srcCoord = new ProjCoordinate(cafeX, cafeY);
-        ProjCoordinate dstCoord = new ProjCoordinate();
-        transform.transform(srcCoord, dstCoord); //좌표계 변환
-//        System.out.println("좌표 변환 >> " + dstCoord.x + " " + dstCoord.y);
-
-        String cafeLng = String.valueOf(dstCoord.x);
-        String cafeLat = String.valueOf(dstCoord.y);
-
-        int cafeId = 0;
-        Optional<Cafe> cafe = cafeRepository.findByCafeLngAndCafeLat(cafeLng, cafeLat);
-        if(cafe.isEmpty()){
-            Cafe cafeEntity = Cafe.builder()
-                    .cafeName(cafeName)
-                    .cafeAddress(cafeAddress)
-                    .cafeLng(cafeLng)
-                    .cafeLat(cafeLat)
-                    .build();
-            cafeRepository.save(cafeEntity); //카페 테이블에 존재하지 않는다면 추가
-            return cafeEntity.getCafeId();
-        }
-        else
-            return cafe.get().getCafeId();
     }
 
     //회원 탈퇴 시 피드 관련 데이터들 삭제

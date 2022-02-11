@@ -31,7 +31,7 @@ public class CafeServiceImpl implements CafeService {
         ProjCoordinate srcCoord = new ProjCoordinate(cafeX, cafeY);
         ProjCoordinate dstCoord = new ProjCoordinate();
         transform.transform(srcCoord, dstCoord); //좌표계 변환
-//        System.out.println("좌표 변환 >> " + dstCoord.x + " " + dstCoord.y);
+//        System.out.println(cafeX + " " + cafeY + " 좌표 변환 >> " + dstCoord.x + " " + dstCoord.y);
 
         Map<String,String> cafeLngAndLat = new HashMap<>();
         cafeLngAndLat.put("cafeLng",String.valueOf(dstCoord.x));
