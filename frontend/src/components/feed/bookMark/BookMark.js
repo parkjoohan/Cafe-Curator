@@ -1,15 +1,15 @@
-import './css/BookMark.css';
+import './css/BookMarkPrint.css';
 import React from 'react';
 
 const BookMark = () => {
     return (
-        <li id="bookmark-item">
+        <li id="bookmark_item">
             <div>
-                <div id="bookmark-img" />
+                <div id="bookmark_img" />
             </div>
-            <div id="bookmark-info">
-                <p id="bookmark-name" />
-                <p id="bookmark-email" />
+            <div id="bookmark_info">
+                <p id="bookmark_name" />
+                <p id="bookmark_email" />
             </div>
         </li>
     );

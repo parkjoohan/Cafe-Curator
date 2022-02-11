@@ -1,6 +1,6 @@
 package com.kql.caffein.controller;
 
-import com.kql.caffein.dto.Feed.FeedResDto;
+import com.kql.caffein.service.CafeService;
 import com.kql.caffein.service.SearchService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -11,8 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @Api(value = "팔로우")
 @Slf4j
@@ -25,10 +23,12 @@ public class SearchController {
     private static final String FAIL = "fail";
 
     private final SearchService searchService;
+    private final CafeService cafeService;
 
     @Autowired
-    public SearchController(SearchService searchService) {
+    public SearchController(SearchService searchService, CafeService cafeService) {
         this.searchService = searchService;
+        this.cafeService = cafeService;
     }
 
     @GetMapping("/category/top")
@@ -83,23 +83,23 @@ public class SearchController {
     }
 
     @GetMapping("/cafe")
-    @ApiOperation(value = "카페 검색")
+    @ApiOperation(value = "카페 아이디로 검색")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "userNo", value = "회원 고유 번호", required = true,
                     dataType = "string", paramType = "query"),
-            @ApiImplicitParam(name = "cafeName", value = "카페명", required = true,
-                    dataType = "string", paramType = "query"),
+            @ApiImplicitParam(name = "cafeId", value = "카페 고유 번호", required = true,
+                    dataType = "int", paramType = "query"),
             @ApiImplicitParam(name = "lastFeedNo", value = "화면에 보여진 마지막 피드 번호", required = false,
                     dataType = "Integer", paramType = "query"),
             @ApiImplicitParam(name = "size", value = "화면에 보여질 사이즈", required = true,
                     dataType = "int", paramType = "query")
     })
     public ResponseEntity cafeSearchController (@RequestParam(value = "userNo") String userNo,
-                                                    @RequestParam(value = "cafeName") String cafeName,
+                                                    @RequestParam(value = "cafeId") int cafeId,
                                                     @RequestParam(required = false) Integer lastFeedNo,
                                                     @RequestParam int size) {
         try {
-            return new ResponseEntity<>(searchService.cafeSearchWithPaging(userNo, cafeName, lastFeedNo, size), HttpStatus.OK);
+            return new ResponseEntity<>(searchService.cafeSearchWithPaging(userNo, cafeId, lastFeedNo, size), HttpStatus.OK);
         }catch (Exception e) {
             e.printStackTrace();
             return new ResponseEntity<>(FAIL, HttpStatus.INTERNAL_SERVER_ERROR);

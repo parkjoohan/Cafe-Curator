@@ -1,4 +1,4 @@
-package com.kql.caffein.dto;
+package com.kql.caffein.dto.Search;
 
 import com.kql.caffein.dto.Feed.FeedResDto;
 import io.swagger.annotations.ApiModelProperty;
@@ -10,7 +10,7 @@ import java.util.Set;
 
 @Getter
 @Builder
-public class CafeSearchDto {
+public class CafeSearchResDto {
     @ApiModelProperty(example = "상위 키워드 2개")
     private Set<String> categoryList;
 

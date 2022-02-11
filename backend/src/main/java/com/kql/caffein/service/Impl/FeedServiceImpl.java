@@ -8,14 +8,11 @@ import com.kql.caffein.entity.CategoryLog;
 import com.kql.caffein.entity.Feed.*;
 import com.kql.caffein.entity.User.UserDetail;
 import com.kql.caffein.repository.*;
+import com.kql.caffein.service.CafeService;
 import com.kql.caffein.service.CategoryLogService;
 import com.kql.caffein.service.FeedService;
 import com.kql.caffein.service.S3Service;
 import org.apache.tomcat.util.http.fileupload.FileUploadException;
-import org.locationtech.proj4j.BasicCoordinateTransform;
-import org.locationtech.proj4j.CRSFactory;
-import org.locationtech.proj4j.CoordinateReferenceSystem;
-import org.locationtech.proj4j.ProjCoordinate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -55,6 +52,8 @@ public class FeedServiceImpl implements FeedService {
     RedisTemplate redisTemplate;
     @Autowired
     CategoryLogService categoryLogService;
+    @Autowired
+    CafeService cafeService;
 
 
     //피드 등록
@@ -74,8 +73,16 @@ public class FeedServiceImpl implements FeedService {
         }
 
         Integer cafeId = null;
-        if(feedDto.getCafeName() != null) //카페를 등록했다면
-            cafeId = addCafe(feedDto.getCafeX(), feedDto.getCafeY(), feedDto.getCafeName(), feedDto.getCafeAddress());
+        if(feedDto.getCafeName() != null){ //카페를 등록했다면
+
+            Map<String,String> cageLngAngLat = cafeService.lenAndLatConversion(feedDto.getCafeX(), feedDto.getCafeY());
+            Optional<Cafe> cafe = cafeService.getCafe(cageLngAngLat);
+            if(cafe.isEmpty()){
+                cafeId = cafeService.addCafe(cageLngAngLat, feedDto.getCafeName(), feedDto.getCafeAddress());
+            }
+            else
+                cafeId = cafe.get().getCafeId();
+        }
 
         Feed feed = feedDto.toEntity();
         feed.setCafeId(cafeId);
@@ -279,7 +286,15 @@ public class FeedServiceImpl implements FeedService {
                 feed.setCafeName(null);
             }
             else{ //3,4번
-                cafeId = addCafe(feedDto.getCafeX(), feedDto.getCafeY(), feedDto.getCafeName(), feedDto.getCafeAddress());
+
+                Map<String,String> cageLngAngLat = cafeService.lenAndLatConversion(feedDto.getCafeX(), feedDto.getCafeY());
+                Optional<Cafe> cafe = cafeService.getCafe(cageLngAngLat);
+                if(cafe.isEmpty()){
+                    cafeId = cafeService.addCafe(cageLngAngLat, feedDto.getCafeName(), feedDto.getCafeAddress());
+                }
+                else
+                    cafeId = cafe.get().getCafeId();
+
                 feed.setCafeId(cafeId);
                 feed.setCafeName(feedDto.getCafeName());
             }
@@ -376,7 +391,7 @@ public class FeedServiceImpl implements FeedService {
 
         Optional<Feeds> feeds = feedsRepository.findById(feedUserNo);
         if(feeds.isEmpty()) //feedUser가 작성한 피드 없음
-            return null;
+            return new ArrayList<>();
 
         List<Integer> feedList  = feeds.get().getFeedList(); //feedUser의 피드 목록
 
@@ -435,24 +450,24 @@ public class FeedServiceImpl implements FeedService {
         else{ //본인 게시물 + 팔로잉 게시물 + 추천 게시물
             List<String> followingList = followRepository.getFollowingList(userNo); //해당 유저의 팔로잉 리스트
             followingList.add(userNo); //본인 게시물 포함
+//            System.out.println(userNo + "의 팔로잉 리스트" + followingList.toString());
 
-            //임시 관심사
-            List<String> categoryList = new ArrayList<>();
-//            categoryList.add("공부하기 좋은");
-//            categoryList.add("테마카페");
-//            List<String> categoryList = userDetailRepository.findById(userNo).get().getCategoryList();
+            List<String> categoryList = userDetailRepository.findById(userNo).get().getCategoryList();
+//            System.out.println(userNo + "의 관심사 " + categoryList.toString());
 
-            if(followingList.size() == 0 && categoryList.size() == 0)
-                System.out.println("본인 게시물도 없고 팔로잉도 없고 추천 게시물도 음슴");
-
-            //CategoryDataConverter로 List<String> -> json 변환 필요!
-            Page<Feed> f = feedRepository.getMainFeedList(new CategoryDataConverter().convertToDatabaseColumn(categoryList), followingList,
-                                                lastFeedNo, PageRequest.of(0,size));
-            mainFeedList = f.getContent();
+            //본인 게시물, 팔로잉, 추천 게시물 모두 없음
+            Optional<Feeds> feedList = feedsRepository.findById(userNo);
+            if((!feedList.isPresent() || feedList.get().getFeedList().size()==0) && followingList.size() == 1 && categoryList.size() == 0){
+//                System.out.println("랜덤 조회");
+                mainFeedList = feedRepository.getRandomFeedList(lastFeedNo, size); //랜덤하게 조회
+            }
+            else{
+                //CategoryDataConverter로 List<String> -> json 변환 필요!
+                Page<Feed> f = feedRepository.getMainFeedList(new CategoryDataConverter().convertToDatabaseColumn(categoryList), followingList,
+                        lastFeedNo, PageRequest.of(0,size));
+                mainFeedList = f.getContent();
+            }
         }
-
-//        if(mainFeedList.size() == 0)
-//            System.out.println("본인 게시물도 없고 팔로잉도 없고 추천 게시물도 음슴");
 
         if(type.equals("blog"))
             return makeBlogDtoList(mainFeedList, userNo);
@@ -471,14 +486,15 @@ public class FeedServiceImpl implements FeedService {
 
             BlogResDto feedDto = BlogResDto.builder()
                     .feedNo(feed.getFeedNo())
-                    .content(feed.getContent())
+                    .cafeId(feed.getCafeId())
                     .cafeName(feed.getCafeName())
-                    .categoryList(feed.getCategoryList())
                     .likeCount(feed.getLikeCount())
+                    .commentCount(feed.getCommentCount())
                     .userId(feedUser.getUserId())
                     .userPicture(feedUser.getPicture())
                     .file(new FileDto(file.getFileNo(), file.getFilePath()))
                     .liked(feedLikeState(feed.getFeedNo(), userNo))
+                    .marked(BookmarkState(feed.getFeedNo(), userNo))
                     .build();
             feedDtoList.add(feedDto);
         }
@@ -520,37 +536,6 @@ public class FeedServiceImpl implements FeedService {
             list.add(new FollowDto(no, userDetail.getUserId(), userDetail.getPicture(), followService.checkFollow(userNo,no)));
         }
         return list;
-    }
-
-    //카페 좌표 변환 후 DB 저장
-    @Override
-    public int addCafe(double cafeX, double cafeY, String cafeName, String cafeAddress){
-        CRSFactory factory = new CRSFactory();
-        CoordinateReferenceSystem srcCrs = factory.createFromName("EPSG:5179");
-        CoordinateReferenceSystem dstCrs = factory.createFromName("EPSG:4326");
-        BasicCoordinateTransform transform = new BasicCoordinateTransform(srcCrs, dstCrs);
-        ProjCoordinate srcCoord = new ProjCoordinate(cafeX, cafeY);
-        ProjCoordinate dstCoord = new ProjCoordinate();
-        transform.transform(srcCoord, dstCoord); //좌표계 변환
-//        System.out.println("좌표 변환 >> " + dstCoord.x + " " + dstCoord.y);
-
-        String cafeLng = String.valueOf(dstCoord.x);
-        String cafeLat = String.valueOf(dstCoord.y);
-
-        int cafeId = 0;
-        Optional<Cafe> cafe = cafeRepository.findByCafeLngAndCafeLat(cafeLng, cafeLat);
-        if(cafe.isEmpty()){
-            Cafe cafeEntity = Cafe.builder()
-                    .cafeName(cafeName)
-                    .cafeAddress(cafeAddress)
-                    .cafeLng(cafeLng)
-                    .cafeLat(cafeLat)
-                    .build();
-            cafeRepository.save(cafeEntity); //카페 테이블에 존재하지 않는다면 추가
-            return cafeEntity.getCafeId();
-        }
-        else
-            return cafe.get().getCafeId();
     }
 
     //회원 탈퇴 시 피드 관련 데이터들 삭제

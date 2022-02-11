@@ -73,9 +73,8 @@ export default function Search(props) {
   };
 
   return (
-    <div style={{display:"flex"}}>
-      <TextField label="Cafe name" placeholder='카페 이름' onChange={e => onChange(e)} onKeyDown={(e)=>search(e)} style={{width:"79%", marginBottom: "2%"}}></TextField>
-      <button onClick={e=>search(e)}>찾기</button>
+    <div id="search_textField_div">
+      <TextField  label="Cafe name" placeholder='카페 이름' onChange={e => onChange(e)}></TextField>
     </div>
   )
 }

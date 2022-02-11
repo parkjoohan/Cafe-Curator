@@ -80,7 +80,7 @@ export default function SignupForm (props) {
         headers: { "Content-Type" : "multipart/form-data"}
     }).then(function(res){
       console.log(res.data)
-      if (res.data = "succces")
+      if (res.data = "success")
       
         history.push("/login");
     })

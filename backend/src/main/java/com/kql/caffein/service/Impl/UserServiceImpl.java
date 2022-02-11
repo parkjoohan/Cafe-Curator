@@ -4,6 +4,7 @@ import com.kql.caffein.dto.Role;
 import com.kql.caffein.dto.Token;
 import com.kql.caffein.dto.User.*;
 import com.kql.caffein.entity.EmailAuth;
+import com.kql.caffein.entity.Feed.Feeds;
 import com.kql.caffein.entity.User.User;
 import com.kql.caffein.entity.User.UserDetail;
 import com.kql.caffein.jwt.TokenProvider;
@@ -218,7 +219,11 @@ public class UserServiceImpl implements UserService {
     public UserAccountDto getUserAccount(String userNo) throws Exception {
         UserDetail userDetail = userDetailRepository.findByUserNo(userNo);
 
-        int feedCount = feedsRepository.findById(userNo).get().getFeedList().size();
+        int feedCount = 0;
+
+        Optional<Feeds> feeds = feedsRepository.findById(userNo);
+        if(feeds.isPresent())
+            feedCount = feeds.get().getFeedList().size();
 
         UserAccountDto user = UserAccountDto.builder()
                 .userNo(userDetail.getUserNo())

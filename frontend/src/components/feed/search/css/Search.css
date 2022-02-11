@@ -25,3 +25,19 @@
     width:97%;
     margin-left: 1%;
   }
+
+  #search_textField_div {
+    margin-bottom: 1%;
+  }
+
+  .MuiFormControl-root {
+    width: 80%;
+    border: 0;
+    margin: 0;
+    display: inline-flex;
+    padding: 0;
+    position: relative;
+    min-width: 0;
+    flex-direction: column;
+    vertical-align: top;
+}

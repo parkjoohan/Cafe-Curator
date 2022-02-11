@@ -10,7 +10,8 @@
 }
 
 #header_center {
-  text-align: start;
+  text-align: center;
+    text-align-last: center;
 }
 
 #header_link {
@@ -29,9 +30,9 @@
 }
 
 #header_right {
-  float: right;
-  margin-right: 3vh;
-  align-items: center;
+  text-align: right;
+  text-align-last: right;
+  padding-right: 1%;
 }
 
 #header_profile {
