@@ -3,8 +3,6 @@ package com.kql.caffein.dto.Search;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 
-import java.util.Map;
-
 @Getter
 public class CafeSearchReqDto {
     @ApiModelProperty(example = "회원 번호", required = true)

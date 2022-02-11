@@ -13,8 +13,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Map;
-
 @Api(value = "팔로우")
 @Slf4j
 @RestController
@@ -109,7 +107,7 @@ public class SearchController {
         }
     }
     
-    @GetMapping("/cafeList")
+    @PostMapping(value = "/cafeList")
     @ApiOperation(value = "카테 목록으로 검색")
     public ResponseEntity cafeListSearch(@RequestBody CafeSearchReqDto cafeSearchReqDto) {
         try {

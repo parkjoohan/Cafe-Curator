@@ -37,5 +37,5 @@ public interface FeedRepository extends JpaRepository<Feed, Integer> {
   Page<Feed> findByCafeIdAndFeedNoLessThanOrderByFeedNoDesc(int cafeId, Integer lastFeedNo, Pageable pageRequest);
 
   //해당 카페를 등록한 피드 목록
-  Page<Feed> findByCafeIdInAndFeedNoLessThanOrderByFeedNoDesc(List<String> cafeId, Integer lastFeedNo, Pageable pageRequest);
+  Page<Feed> findByCafeIdInAndFeedNoLessThanOrderByFeedNoDesc(List<Integer> cafeId, Integer lastFeedNo, Pageable pageRequest);
 }

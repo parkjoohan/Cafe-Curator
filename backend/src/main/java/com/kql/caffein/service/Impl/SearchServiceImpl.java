@@ -92,11 +92,11 @@ public class SearchServiceImpl implements SearchService {
         String[][] cafeReq = cafeSearchReqDto.getCafeLngAndLat();
 
         //카페 아이디 찾기
-        List<String> cafeIds = new ArrayList<>();
+        List<Integer> cafeIds = new ArrayList<>();
         for(String[] c : cafeReq) {
             Optional<Cafe> cafe = cafeService.getCafe(c[0],c[1]);
             if(cafe.isPresent()) { //카페가 존재하면
-                cafeIds.add(String.valueOf(cafe.get().getCafeId()));
+                cafeIds.add(cafe.get().getCafeId());
             }
         }
 
