@@ -13,7 +13,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@Api(value = "팔로우")
+@Api(value = "검색")
 @Slf4j
 @RestController
 @RequestMapping("/search")
