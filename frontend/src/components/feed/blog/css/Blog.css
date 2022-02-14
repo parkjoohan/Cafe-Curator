@@ -8,15 +8,8 @@
   }
 }
 
+
 #blog_item {
-  /* display: flex;
-  align-items: center;
-  margin: 15px 0;
-  padding: 20px;
-  height: 200px;
-  border: 1px solid #ccc;
-  border-radius: 15px;
-  position: relative; */
   align-items: center;
   border-radius: 15px;
   border: 1px solid #ccc;
@@ -116,8 +109,9 @@
 .blogs_detail {
   margin-bottom: auto;
   margin-top: 1%;
-  margin-left: 4%;
+  margin-left: 100px;
 }
+
 #blogs_content{
   font-size: 20px;
 }

@@ -1,32 +1,56 @@
-import React , {useState} from "react";
-import {Container, Col, Row} from 'react-bootstrap'
+import React, { useEffect, useState } from "react";
+import { useParams, useHistory } from 'react-router-dom'
+import { Container, Col, Row } from 'react-bootstrap'
+import axios from 'axios';
 import './css/UserProfile.css';
 
 
 export default function UserProfile() {
     
-    // const[feed, setfeed] = useState(true)
-    // const[follow, setfollow] = useState(false)
+  const [userId, setUserId] = useState([])
+  const [user, setUser] = useState([]);
+  const [data, setData] = useState({});
+  let {id} = useParams();
+    
+  // 계정 정보 불러오기
+  useEffect(() => {
+    axios.get(`http://i6c104.p.ssafy.io:8080/api/users/account/${id}`)
+      .then((data2) => {
+        console.log(data2.data);
+        setData(data2.data);
+      })
+  }, []);
 
-    // const SelectFeed = () => {
-    //   alert('hi')
-    //   document.getElementById('feed').style.backgroundColor = 'black'
-    //   document.getElementById('feed').style.color = 'white'
-    // }
-    // const SelectFollow = () => {
-    //   document.getElementById('follow').style.backgroundColor = 'black'
-    //   document.getElementById('follow').style.color = 'white'
-    // }
+  useEffect(() => {
+    console.log(data.userNo);
+    axios.get(`http://i6c104.p.ssafy.io:8080/feed/feedList/${data.userNo}`, {
+      param: {
+        // "feedUserNo" : data.userNo,
+        "size": 3,
+        "type" : "feed",
+      }
+    })
+  })
+
   
   return (
     <div>
       <Container id="userfile_Container">
         <Row>
-          <Col sm={4}><img id ="userfile_ImgPreview" src={process.env.PUBLIC_URL + "/image/map.png"}></img></Col>
+          {/* 프로필 사진 */}
           <Col sm={4}>
-            <h2>커피나라 주한대사</h2>
-            <a>게시물 42</a><a id="userfile_aMarginleft">팔로워 269</a><a id="userfile_aMarginleft">팔로우 242</a>
-            <h5 id="userfile_explain"> 맛집킬러</h5>
+            {
+              data.picture != null ?
+              <img id="userfile_ImgPreview" src={data.picture} /> :
+              <img id="userfile_ImgPreview" src='../image/Profileimage.png'/>
+            }
+            {/* <img id="userfile_ImgPreview" src={process.env.PUBLIC_URL + "/image/map.png"}></img> */}
+          </Col>
+          {/* 개인 프로필 정보 */}
+          <Col sm={4}>
+            <h2>{data.userId}</h2>
+            <a>게시물 {data.feedCount}</a><a id="userfile_aMarginleft">팔로워 {data.followerCount}</a><a id="userfile_aMarginleft">팔로우 {data.followingCount}</a>
+            <h5 id="userfile_explain">{data.introduction}</h5>
           </Col>
         </Row>
 

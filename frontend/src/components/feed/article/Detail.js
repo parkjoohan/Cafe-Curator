@@ -1,5 +1,5 @@
 import React,{useEffect,useRef,useState} from 'react'
-import { useParams, useHistory } from 'react-router-dom'
+import { useParams, useHistory, Link } from 'react-router-dom'
 import { Container, Row, Col, Button } from 'react-bootstrap'
 import { FiCornerUpLeft } from 'react-icons/fi';
 import './css/Detail.css'
@@ -11,23 +11,14 @@ import Likelist from './Likelist';
 export default function Detail() {
 
   const childRef = useRef();
-
   const likeRef = useRef();
-
   const [data,setData] = useState({})
-
   const [isselect,setIsselect] = useState([]);
-
   const history = useHistory();
-
   const [likearr,setlikearr] = useState([]);
-
   const [isbookmark,setIsbookmark] = useState(true);
-
   const [modifymodalshow, setModifymodalshow] = useState(false);
-
   const [likemodalshow,setLikemodalshow] = useState(false);
-
   let {pk} = useParams();
 
   useEffect(()=>{
@@ -87,6 +78,10 @@ export default function Detail() {
     })
   }
 
+  function gotoProfile(userno) {
+    console.log(localStorage);
+    history.push(`/profile/${userno}`)
+  }
 
   // console.log(pk);
   
@@ -133,7 +128,7 @@ export default function Detail() {
                   />
                 </div>
                 <div id='article_username'>
-                  <p>{data.userId}</p>
+                  <p onClick={gotoProfile(data.userId)}>{data.userId}</p>
                 </div>
               </div>
               <div id='article_profile_date'>

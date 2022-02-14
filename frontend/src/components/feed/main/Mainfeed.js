@@ -27,7 +27,7 @@ export default function Mainfeed(props) {
   <Container id='MainFeed_container'>
     <Row>
       <div id='MainFeed_buttons'>
-        <Container>
+        <Container style={{width: "1200px"}}>
           <Row style={{marginLeft: "20%"}}>
               <Col xs={10}>
               <div style={{textAlign: "-webkit-right"}}>

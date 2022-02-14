@@ -1,4 +1,4 @@
-import "./css/BlogPrint.css";
+  import "./css/BlogPrint.css";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Blogs from "./Blogs";
@@ -79,13 +79,13 @@ function BlogPrint() {
               onHide={() => WritesetModalShow(false)}
           />
           <div id='blog'>
-              <Container>
+              <div>
                   <div id="App">
                       <ul id="blog_contentWrapper">
                       <Blogs isLoading={isLoading} data={data} />
                       </ul>
                   </div>
-              </Container>
+              </div>
           </div>
         </div>
   )
