@@ -85,7 +85,7 @@
   #signup_paperStyle {
     padding: 20px;
     height: 880px;
-    width: 100%;
+    width: 105%;
   }
   
   #signup_content {
@@ -96,7 +96,7 @@
     border-radius: 1rem;
     align-items: initial;
     text-align: -webkit-center;
-    padding-left: 3%
+    padding-left: 0.1%;
   }
   
   #signup_profilePic {
@@ -138,7 +138,7 @@
     border: 1px solid black;
     font-size: 7px;
     font-weight: bold;
-    width: 35px;
+    width: 30px;
     color: black;
     margin-top: 1%;
     margin-bottom: 1%;
