@@ -33,7 +33,6 @@ export default function Mainfeed(props) {
                 <div style={{width: "80%"}}>
                   <Toggle onChange={(e) => Changotogle(e)} />
                 </div>
-                
               <div style={{textAlign: "-webkit-right"}}>
                 <p id='MainFeed_toggle_font' style={style}>{toggled ? "피드형" : "블로그형"}</p>
               </div>
