@@ -4,7 +4,6 @@ import "./css/Map.css";
 const Map = forwardRef((props,ref)=>{
 
   const [markerdata,setMarkerdata] = useState([]);
-  const [nowinfos,setNowinfos] = useState([]);
 
   useImperativeHandle(ref,()=>({
     setMarkerdata,
@@ -18,6 +17,7 @@ const Map = forwardRef((props,ref)=>{
     };
     var map = new kakao.maps.Map(mapContainer, mapOption);
   },[])
+
   
   useEffect(()=>{
     if(markerdata.length>0){
@@ -71,6 +71,7 @@ const Map = forwardRef((props,ref)=>{
       for (let i = 0; i < newinfoarr.length; i++) {
         kakao.maps.event.addListener(newinfoarr[i][0],'click',function(){
           newinfoarr[i][1].open(map,newinfoarr[i][0])
+          props.setSelected(i)
 
           for (let j = 0; j < newinfoarr.length; j++) {
             if(i!==j){

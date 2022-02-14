@@ -17,9 +17,9 @@ import StoreProfile from './components/store/StoreProfile';
 import Search from './components/feed/article/Search'
 import PopularSearch from './components/feed/search/PopularSearch'
 import RecentSearch from './components/feed/search/RecentSearch'
-import LocationSearch from './components/feed/search/LocationSearch'
-import CafeSearch from './components/feed/search/CafeSearch'
-import AccountSearch from './components/feed/search/AccountSearch'
+import LocationSearch from './components/feed/search/KeywordSearch/LocationSearch'
+import CafeSearch from './components/feed/search/KeywordSearch/CafeSearch'
+import AccountSearch from './components/feed/search/AccountSearch/AccountSearch'
 
 export default function Routers(props) {
   return (

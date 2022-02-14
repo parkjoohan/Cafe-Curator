@@ -47,7 +47,7 @@ const LocationSearchfeed = forwardRef((props,ref) => {
     window.addEventListener('scroll',scroll)
 
     if(url_arr.length != 0){
-      // console.log('url_arr가 바뀌었다!',url_arr)
+      console.log('url_arr가 바뀌었다!',url_arr)
       let newLikearr = new Array(url_arr.length)
 
       for (let i = 0; i < newLikearr.length; i++) {
@@ -90,14 +90,16 @@ const LocationSearchfeed = forwardRef((props,ref) => {
   //로딩함수(콜백)
   function nextLoading(){
     // console.log('@@@',url_arr[url_arr.length-1].feedNo)
-    const url = "http://i6c104.p.ssafy.io:8080/feed/mainFeedList/a1"
-      axios.get(url,{
-        params:{
-          "size":5,
-          "type":"feed",
-          "lastFeedNo": url_arr[url_arr.length-1].feedNo
-        }
-      }).then(function(res){
+    const url = "http://i6c104.p.ssafy.io:8080/search/cafeList"
+    const data = {
+      "cafeLngAndLat": [locationarr],
+      "feedNo": url_arr[url_arr.length-1].feedNo,
+      "size": 5,
+      "userNo": "a1"
+    }
+    axios.post(url,data,{
+      headers: { "Content-Type" : "application/json" }
+    }).then(function(res){
         // console.log('응답',res.data)
         update(res.data)
       }).catch(function(err){
@@ -148,25 +150,41 @@ const LocationSearchfeed = forwardRef((props,ref) => {
 
   useEffect(()=>{
     if(locationarr.length>0){
-      console.log(locationarr.length)
-      console.log(locationarr)
+      setCnt(0)
+      console.log('선택한거의 좌표다!',locationarr)
       const url = "http://i6c104.p.ssafy.io:8080/search/cafeList"
-
-      axios.get(url,{
-        data:{
-          "cafeLngAndLat": locationarr,
-          "feedNo": null,
-          "size": 5,
-          "userNo": "a1"
-        }
+      const data = {
+        "cafeLngAndLat": [locationarr],
+        "feedNo": null,
+        "size": 5,
+        "userNo": "a1"
+      }
+      console.log(data)
+      // const newForm = new FormData();
+      // newForm.append("cafeSearchReqDto",data)
+      axios.post(url,data,{
+        headers: { "Content-Type" : "application/json" }
       }).then(function(res){
-        console.log(res)
-        // let newUrl = res.data
-        // // console.log('첫 데이터 받기 전 url_arr(빈 어레이여야함)',url_arr)
-        // setUrl(newUrl)
+        console.log(res.data)
+        if(res.data.length == 0) {
+          const division = document.getElementById("container");
+          while (division.hasChildNodes()) {
+            division.removeChild(division.firstChild);
+          }
+          let newUrl = res.data
+          setUrl(newUrl)
+        }else{
+          let newUrl = res.data
+          setUrl(newUrl)
+        }
       }).catch(err=>console.log(err))
+    }else{
+      const division = document.getElementById("container");
+      while (division.hasChildNodes()) {
+            console.log('비워야하는데?')
+            division.removeChild(division.firstChild);
+      }
     }
-
   },[locationarr])
   
   useEffect(()=>{
@@ -250,6 +268,7 @@ const LocationSearchfeed = forwardRef((props,ref) => {
     let nowscroll = window.scrollY
     console.log('이전 스크롤 위치',nowscroll)
     while (division.hasChildNodes()) {
+      console.log('비워야하는데?')
       division.removeChild(division.firstChild);
     }
     console.log('여기서 스크롤이 바뀌네',window.scrollY)
@@ -343,6 +362,7 @@ const LocationSearchfeed = forwardRef((props,ref) => {
   
   return (
     <Container id="feedcontainer">
+      <></>
       <div id="container" style={{display:'flex',position:'relative'}}>
       </div>
     </Container>

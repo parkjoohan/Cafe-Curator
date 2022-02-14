@@ -4,9 +4,9 @@ import { Col, Row, Button, ButtonGroup, Container } from 'react-bootstrap'
 import { Link, Route, Switch, BrowserRouter as Router } from "react-router-dom";
 import PopularSearch from "./PopularSearch";
 import RecentSearch from "./RecentSearch";
-import LocationSearch from "./LocationSearch";
-import CafeSearch from "./CafeSearch";
-import AccountSearch from "./AccountSearch";
+import LocationSearch from "./KeywordSearch/LocationSearch";
+// import CafeSearch from "./CafeSearch";
+import AccountSearch from "./AccountSearch/AccountSearch";
 import './css/MainFeed3.css'
 
 export default function Mainfeed(props) {
@@ -19,6 +19,13 @@ export default function Mainfeed(props) {
     const GetClick = (e) => {
         setCurrentClick(e.target.id);
     };
+
+    useEffect(()=>{
+        props.setFootershow(false);
+        return () => {
+            props.setFootershow(true);
+        }
+    },[])
 
     React.useEffect(
         (e) => {
@@ -55,9 +62,9 @@ export default function Mainfeed(props) {
                         <Col lg={2}>
                             <Link to="/locationsearch"><Button variant="light" id='search_locationsearch' onClick={GetClick}>장소</Button></Link>
                         </Col>
-                        <Col lg={2}>
+                        {/* <Col lg={2}>
                             <Link to="/cafesearch"><Button variant="light" id='search_cafesearch' onClick={GetClick}>카페</Button></Link>
-                        </Col>
+                        </Col> */}
                         <Col lg={2}>
                             <Link to="/accountsearch"><Button variant="light" id='search_accountsearch' onClick={GetClick}>계정</Button></Link>
                         </Col>
@@ -68,7 +75,7 @@ export default function Mainfeed(props) {
                         <Route exact path="/popularsearch" component={PopularSearch} />
                         <Route path="/recentsearch" component={RecentSearch} />
                         <Route path="/locationsearch" component={LocationSearch} />
-                        <Route path="/cafesearch" component={CafeSearch} />
+                        {/* <Route path="/cafesearch" component={CafeSearch} /> */}
                         <Route path="/accountsearch" component={AccountSearch} />
                     </Switch>
                 </div>
