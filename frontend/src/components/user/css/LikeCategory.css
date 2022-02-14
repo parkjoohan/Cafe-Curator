@@ -52,3 +52,161 @@
     text-align: -webkit-center;
 }
 
+#LikeCategory_cate {
+    margin-top: 3%;
+    width: 600px;
+    height: 300px;
+}
+
+#LikeCategory_cate_air_menu {
+    text-align-last: center;
+    font-weight: bold;
+    font-size: 15px;
+    width: 520px;
+    margin-bottom: 9%;
+}
+
+#LikeCategory_cate {
+    margin-bottom: 2%;
+    border: 2px solid;
+    border-color: black;
+    height: 550px;
+    width: 90%;
+    padding: 3%;
+    border-radius: 3%;
+    margin-left: 4.5%;
+  }
+
+#LikeCategory_selected_cate {
+    text-align-last: center;
+    font-weight: bold;
+    font-size: 18px;
+    margin-bottom: 9%;
+  }
+
+#LikeCategory_cate_air {
+    text-align: -webkit-center;
+    padding: 1%;
+    width: 80%;
+    height: 200px;
+    margin-left: 10%;
+}
+
+#LikeCategory_cate_menu {
+    text-align: -webkit-center;
+    padding: 1%;
+    width: 80%;
+    height: 200px;
+    margin-left: 10%;
+}
+
+@media screen and (max-width: 412px) {
+    #navcolor_cate {
+        border: 0;
+        background: #4b6b79;
+        height: 35px;
+    }
+    
+    
+    #LikeCategory_Margin_Underline {
+        margin-top: 0%;
+        margin-left : 5px;
+        font-size: 15px;
+        text-decoration: underline;
+        text-underline-position:under;
+    }
+    
+    #LikeCategory_If {
+        margin-top: 5%;
+        font-size: 10px;
+    }
+    
+    #NoBgButton {
+        background-color : white;
+        border: none;
+        color : black;
+        font-weight:bold;
+    }
+    
+    .likecate_likebutton {
+        background-color: skyblue;
+        padding: 5px;
+        margin-top: 10px;
+        border-radius: 30px;
+        font-weight: 700;
+        text-align: center;
+    }
+    
+    #selected_cate {
+        margin-top: 7%;
+        text-align-last: center;
+        font-weight: bold;
+    }
+    
+    #cate_select {
+        margin-top: 5%;
+        margin-bottom: 5%;
+        height: 150px;
+    }
+    
+    #cate_air {
+        text-align: -webkit-center;
+    }
+    
+    #cate_menu {
+        text-align: -webkit-center;
+    }
+
+    #LikeCategory_cate {
+        margin-bottom: 2%;
+        border: 2px solid;
+        border-color: black;
+        height: 100%;
+        width: 50%;
+        border-radius: 3%;
+    }
+
+    #LikeCategory_cate p {
+        font-size: 12px;
+    }
+
+    #LikeCategory_cate {
+        margin-top: 3%;
+        width: 100%;
+        height: 100%;
+        margin-left: auto;
+    }
+
+    #LikeCategory_selected_cate {
+        text-align-last: center;
+        font-weight: bold;
+        font-size: 5px;
+        width: 31%;
+        height: 100%;
+        /* margin-bottom: 9%; */
+    }
+
+    #LikeCategory_cate_air_menu {
+        text-align: -webkit-center;
+        padding: 1%;
+        font-size: 10px;
+        width: 100%;
+        height: 20%;
+    }
+
+    #LikeCategory_cate_air {
+        text-align: -webkit-center;
+        padding: 1%;
+        font-size: 10px;
+        width: 35%;
+        height: 10%;
+    }
+
+    #LikeCategory_cate_menu {
+        text-align: -webkit-center;
+        padding: 1%;
+        font-size: 10px;
+        width: 35%;
+        height: 10%;
+    }
+}

@@ -167,29 +167,31 @@ const LikeCategoryModal = ({ show, onHide,likearr, setLikearr }) => {
       </Modal.Header>
       
       <Modal.Body>  
-        <Row>
+      <div id='LikeCategory_cate'>
+        <Row style={{height: "20px", marginBottom: "5%"}}>
           {/* 선택된 카테고리 */}
-          <Col md={3}>
-            <p id='selected_cate'>선택된 카테고리</p>
+          <Col md={3} style={{height: "20px"}}>
+            <p id='LikeCategory_selected_cate'>선택된 카테고리</p>
           </Col>
-          <Col md={9}>
-            <Row>{selected}{selected2}</Row>
-            
+          <Col md={9} style={{height: "20px"}}>
+            <Row id='LikeCategory_cate_air_menu'>{selected}{selected2}</Row>
           </Col>
         </Row>
         <hr />
-        <Row id='cate_select'>
-          <Col id='cate_air' md={6}>
+          <div id='LikeCategory_cate_air'>
             {/* 분위기 카테고리 */}
-            <p style={{fontWeight: "bold"}}>분위기 카테고리</p>
+            <p style={{fontWeight: "bold", textAlign: "-webkit-left", marginLeft: "-13%", marginBottom: "5%"}}>분위기 카테고리</p>
             <Row>{defaultlike2}</Row>
-          </Col>
-          <Col id='cate_menu' md={6}>
+          </div>
+          
+          <hr />
+
+          <div id='LikeCategory_cate_menu'>
             {/* 메뉴 카테고리 */}
-            <p style={{fontWeight: "bold"}}>메뉴 카테고리</p>
+            <p style={{fontWeight: "bold", textAlign: "-webkit-left", marginLeft: "-13%", marginBottom: "5%"}}>메뉴 카테고리</p>
             <Row>{defaultlike}</Row>
-          </Col>
-        </Row>
+          </div>
+        </div>
       </Modal.Body>
       <Modal.Footer style={{ height: "50px", alignContent: "center" }}>
       <Button id="NoBgButton" onClick={onHide}>뒤로가기</Button> {/*추후 구현*/}
