@@ -170,24 +170,24 @@ const LikeCategoryModal = ({ show, onHide,likearr, setLikearr }) => {
         <div id='LikeCategory_cate'>
           <div id='LikeCategory_cate_air_menu'>
             {/* 선택된 카테고리 */}
-              <p style={{fontWeight: "bold", textAlign: "-webkit-left", marginLeft: "-11%", marginBottom: "5%"}}>선택된 카테고리</p>
-              <Row>{selected}{selected2}</Row>
+              <p id='LikeCategory_cate_air_menu_selected'>선택된 카테고리</p>
+              <Row style={{justifyContent: "left", width:"200%", marginLeft: "-12%"}}>{selected}{selected2}</Row>
           </div>
 
           <hr />
 
           <div id='LikeCategory_cate_air'>
             {/* 분위기 카테고리 */}
-            <p style={{fontWeight: "bold", textAlign: "-webkit-left", marginLeft: "-13%", marginBottom: "5%"}}>분위기 카테고리</p>
-            <Row>{defaultlike2}</Row>
+            <h5 id='LikeCategory_cate_air_menu_p'>분위기 카테고리</h5>
+            <Row style={{justifyContent: "left", width:"60%"}}>{defaultlike2}</Row>
           </div>
           
           <hr />
 
           <div id='LikeCategory_cate_menu'>
             {/* 메뉴 카테고리 */}
-            <p style={{fontWeight: "bold", textAlign: "-webkit-left", marginLeft: "-13%", marginBottom: "5%"}}>메뉴 카테고리</p>
-            <Row>{defaultlike}</Row>
+            <h5 id='LikeCategory_cate_air_menu_p'>메뉴 카테고리</h5>
+            <Row style={{justifyContent: "left", width:"60%"}}>{defaultlike}</Row>
           </div>
         </div>
       </Modal.Body>
