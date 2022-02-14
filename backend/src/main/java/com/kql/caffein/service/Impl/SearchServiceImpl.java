@@ -3,14 +3,14 @@ package com.kql.caffein.service.Impl;
 import com.kql.caffein.dto.Search.CafeSearchReqDto;
 import com.kql.caffein.dto.Search.CafeSearchResDto;
 import com.kql.caffein.dto.Feed.FeedResDto;
+import com.kql.caffein.dto.Search.UserSearchDto;
 import com.kql.caffein.entity.Cafe;
 import com.kql.caffein.entity.Feed.Feed;
+import com.kql.caffein.entity.User.UserDetail;
 import com.kql.caffein.repository.CafeRepository;
 import com.kql.caffein.repository.FeedRepository;
-import com.kql.caffein.service.CafeService;
-import com.kql.caffein.service.CategoryLogService;
-import com.kql.caffein.service.FeedService;
-import com.kql.caffein.service.SearchService;
+import com.kql.caffein.repository.UserDetailRepository;
+import com.kql.caffein.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -29,15 +29,17 @@ public class SearchServiceImpl implements SearchService {
     private final RedisTemplate redisTemplate;
     private final CategoryLogService categoryLogService;
     private final CafeService cafeService;
+    private final UserDetailRepository userDetailRepository;
 
     @Autowired
-    public SearchServiceImpl(FeedRepository feedRepository, FeedService feedService, CafeRepository cafeRepository, RedisTemplate redisTemplate, CategoryLogService categoryLogService, CafeService cafeService) {
+    public SearchServiceImpl(FeedRepository feedRepository, FeedService feedService, CafeRepository cafeRepository, RedisTemplate redisTemplate, CategoryLogService categoryLogService, CafeService cafeService, UserDetailRepository userDetailRepository) {
         this.feedRepository = feedRepository;
         this.feedService = feedService;
         this.cafeRepository = cafeRepository;
         this.redisTemplate = redisTemplate;
         this.categoryLogService = categoryLogService;
         this.cafeService = cafeService;
+        this.userDetailRepository = userDetailRepository;
     }
 
     @Override
@@ -109,5 +111,22 @@ public class SearchServiceImpl implements SearchService {
         List<FeedResDto> feedResDtoList = feedService.makeFeedDtoList(feedList.getContent(), cafeSearchReqDto.getUserNo());
 
         return feedResDtoList;
+    }
+
+    @Override
+    @Transactional
+    public List<UserSearchDto> userSearch(String userId) {
+        List<UserDetail> list = userDetailRepository.findByUserIdContaining(userId);
+
+        List<UserSearchDto> userList = new ArrayList<>();
+        for(UserDetail u : list) {
+            UserSearchDto user = UserSearchDto.builder()
+                    .userId(u.getUserId())
+                    .picture(u.getPicture())
+                    .followerCount(u.getFollowerCount())
+                    .followingCount(u.getFollowingCount()).build();
+            userList.add(user);
+        }
+        return userList;
     }
 }
