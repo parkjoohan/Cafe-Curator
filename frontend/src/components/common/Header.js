@@ -57,7 +57,7 @@ function Header({user, setUser}) {
         <Link to="/" id="header_link_img">Cafe Curator </Link>
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
-          <Nav style={{ width: "90%", marginLeft: "3%" }} navbarScroll>
+          <Nav style={{ width: "125%", marginLeft: "3%" }} navbarScroll>
             <Nav.Link><Link to="/" id="header_link">Home</Link></Nav.Link>
             <Nav.Link><Link to="/feed" id="header_link">Feed & Blog</Link></Nav.Link>
             <Nav.Link><Link to="/feed2" id="header_link">BookMark & Like</Link></Nav.Link>
