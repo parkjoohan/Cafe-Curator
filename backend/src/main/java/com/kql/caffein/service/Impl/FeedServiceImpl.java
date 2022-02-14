@@ -457,6 +457,7 @@ public class FeedServiceImpl implements FeedService {
 //            System.out.println(userNo + "의 팔로잉 리스트" + followingList.toString());
 
             List<String> categoryList = userDetailRepository.findById(userNo).get().getCategoryList();
+            if(categoryList == null) categoryList = new ArrayList<>();
 //            System.out.println(userNo + "의 관심사 " + categoryList.toString());
 
             //본인 게시물, 팔로잉, 추천 게시물 모두 없음
