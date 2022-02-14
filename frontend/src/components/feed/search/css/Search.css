@@ -27,6 +27,8 @@
   }
 
   #search_textField_div {
+    width: 105%;
+    margin-left: -2%;
     margin-bottom: 1%;
   }
 

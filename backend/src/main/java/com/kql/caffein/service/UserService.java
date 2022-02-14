@@ -14,6 +14,10 @@ public interface UserService {
     public String getUserNo() throws Exception;
     //userId 생성(Oauth 전용)
     public String getUserId() throws Exception;
+
+    //userId 중복 검사
+    Boolean checkUserId(String userId) throws Exception;
+
     //프로필 사진 업로드
     public String uploadPicture(MultipartFile multipartFile) throws Exception;
     //회원가입(사진X)
@@ -30,7 +34,7 @@ public interface UserService {
     public void deleteByUserNo(String userNo);
 
     //유저 계정 상단 조회
-    public UserAccountDto getUserAccount(String userNo) throws Exception;
+    public UserAccountDto getUserAccount(String userId) throws Exception;
 
     //유저 상세조회
     public UserUpdateDto getUser(String userNo) throws Exception;
@@ -47,8 +51,6 @@ public interface UserService {
     //토큰 재발급
     public Token reissue(Token token) throws Exception;
 
-    public UserDetail findByUserNo(String userNo);
-    public Optional<UserDetail> findByUserId(String userId);
     public Optional<User> findByEmail(String email) throws Exception;
     public List<UserDetail> findAll();
 }

@@ -52,11 +52,11 @@ const Map = forwardRef((props,ref)=>{
         })
 
         var content = `
-        <div style="padding:10px; background-color:lightgray; border:1px solid black">
-        <h6 style="font-weight:bold">${markerdata[i].place_name}</h6>
-        <p style="font-size:80%">${markerdata[i].address_name}</p>
-        <p style="font-size:80%">${markerdata[i].phone}</p>
-        <p style="font-size:80%" onclick="console.log(${markerdata[i].place_name})">검색</p>
+        <div id='mape_modal'>
+          <h6 id='map_modal_cafename'>${markerdata[i].place_name}</h6>
+          <p id='map_modal_content'>${markerdata[i].address_name}</p>
+          <p id='map_modal_content'>${markerdata[i].phone}</p>
+          <p id='map_modal_content' onclick="console.log(${markerdata[i].place_name})">검색</p>
         </div>
         `
         var infowindow = new kakao.maps.InfoWindow({

@@ -67,7 +67,7 @@ public class FeedController {
         }
     }
 
-    @ApiOperation(value = "피드 수정", notes="삭제한 파일 번호를 deleteList에 포함해서 요청, 삭제하는 파일이 없는 경우 빈 리스트로")
+    @ApiOperation(value = "피드 수정", notes="삭제한 파일 번호를 feedDto의 deleteList에 포함해서 요청, 삭제하는 파일이 없는 경우 빈 리스트로")
     @PutMapping("{userNo}")
     public ResponseEntity<String> feedModify(@PathVariable String userNo, @RequestPart FeedModifyDto feedDto,
                                              @RequestPart(value = "files", required = false) MultipartFile[] files) throws IOException{
@@ -105,11 +105,11 @@ public class FeedController {
         }
     }
     
-    @ApiOperation(value = "개인 피드 목록(feeds 테이블)", notes = "비회원도 조회 가능")
+    @ApiOperation(value = "개인 피드 목록", notes = "비회원도 조회 가능")
     @GetMapping(value={"feedList/{feedUserNo}","feedList/{feedUserNo}/{userNo}"})
-    public ResponseEntity feedListWithPaging(@ApiParam(value = "조회할 유저")@PathVariable String feedUserNo,
+    public ResponseEntity feedListWithPaging(@ApiParam(value = "조회할 유저", required = true)@PathVariable String feedUserNo,
                                    @ApiParam(value = "조회하는 유저") @PathVariable(required = false) String userNo,
-                                   @ApiParam(value = "타입(feed 또는 blog)")@RequestParam String type,
+                                   @ApiParam(value = "타입(feed 또는 blog)", required = true)@RequestParam String type,
                                    @RequestParam(required = false) Integer lastFeedNo, @RequestParam int size) {
         try{
             return new ResponseEntity<>(feedService.feedListWithPaging(feedUserNo, userNo,type, lastFeedNo, size), HttpStatus.OK);
@@ -120,7 +120,7 @@ public class FeedController {
 
     @ApiOperation(value = "북마크 목록")
     @GetMapping("bookmarkList/{userNo}")
-    public ResponseEntity bookmarkListWithPaging(@PathVariable String userNo, @ApiParam(value = "타입(feed 또는 blog)")@RequestParam String type,
+    public ResponseEntity bookmarkListWithPaging(@PathVariable String userNo, @ApiParam(value = "타입(feed 또는 blog)", required = true)@RequestParam String type,
                                                  @RequestParam(required = false) Integer lastFeedNo, @RequestParam int size) {
         try{
             return new ResponseEntity<>(feedService.bookmarkListWithPaging(userNo, type, lastFeedNo, size), HttpStatus.OK);
@@ -131,7 +131,7 @@ public class FeedController {
 
     @ApiOperation(value = "좋아요 목록")
     @GetMapping("likeList/{userNo}")
-    public ResponseEntity likeListWithPaging(@PathVariable String userNo, @ApiParam(value = "타입(feed 또는 blog)")@RequestParam String type,
+    public ResponseEntity likeListWithPaging(@PathVariable String userNo, @ApiParam(value = "타입(feed 또는 blog)", required = true)@RequestParam String type,
                                              @RequestParam(required = false) Integer lastFeedNo, @RequestParam int size) {
         try{
             return new ResponseEntity<>(feedService.likeListWithPaging(userNo, type, lastFeedNo, size), HttpStatus.OK);
@@ -140,10 +140,10 @@ public class FeedController {
         }
     }
 
-    @ApiOperation(value = "메인 피드 목록(팔로잉 게시물)", notes = "비회원은 전체 게시물")
+    @ApiOperation(value = "메인 피드 목록", notes = "본인 게시물 + 팔로잉 게시물 + 관심사 게시물 / 비회원은 랜덤 게시물")
     @GetMapping(value={"mainFeedList", "mainFeedList/{userNo}"})
     public ResponseEntity mainFeedListWithPaging(@PathVariable(required = false) String userNo,
-                                                 @ApiParam(value = "타입(feed 또는 blog)")@RequestParam String type,
+                                                 @ApiParam(value = "타입(feed 또는 blog)", required = true)@RequestParam String type,
                                                  @RequestParam(required = false) Integer lastFeedNo, @RequestParam int size) {
         try{
             return new ResponseEntity<>(feedService.mainFeedListWithPaging(userNo, type, lastFeedNo, size), HttpStatus.OK);

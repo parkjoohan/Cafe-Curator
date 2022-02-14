@@ -14,3 +14,23 @@
 #map {
   border-radius: 2%;
 }
+
+#mape_modal {
+  width: 221px;
+  height: 160px;
+  padding-top:15%;
+  margin-top: -3%;
+  background-color:rgb(214, 214, 214); 
+  border:1px solid black;
+  border-radius: 5%
+}
+
+#map_modal_cafename {
+  font-weight: bold;
+  font-size: 17px;
+}
+
+#map_modal_content {
+  font-size: 13px;
+}
+

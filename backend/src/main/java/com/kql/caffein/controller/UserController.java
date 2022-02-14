@@ -67,6 +67,17 @@ public class UserController {
         }
     }
 
+    @ApiOperation(value = "아이디 중복 검사")
+    @GetMapping("/checkUserId/{userId}")
+    public ResponseEntity checkUserId(@PathVariable String userId) {
+        log.info("checkUserId called!!  userId : {}", userId);
+        try {
+            return new ResponseEntity(userService.checkUserId(userId) == true ? false : true, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity("fail", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @ApiOperation(value = "회원 가입", response = String.class)
     @PostMapping()
     public ResponseEntity register(@Valid @RequestPart(value = "userDto") UserDto userDto,
@@ -89,11 +100,11 @@ public class UserController {
     }
 
     @ApiOperation(value = "계정 - 회원 부분 조회")
-    @GetMapping("/account/{userNo}")
-    public ResponseEntity getUserAccount(@PathVariable @ApiParam(value = "유저 고유번호", required = true) String userNo) throws Exception {
-        log.info("getUser called!! userNo : {}", userNo);
+    @GetMapping("/account/{userId}")
+    public ResponseEntity getUserAccount(@PathVariable @ApiParam(value = "유저 아이디", required = true) String userId) throws Exception {
+        log.info("getUser called!! userId : {}", userId);
         try{
-            return new ResponseEntity<UserAccountDto>(userService.getUserAccount(userNo), HttpStatus.OK);
+            return new ResponseEntity<UserAccountDto>(userService.getUserAccount(userId), HttpStatus.OK);
         } catch (Exception e){
             return new ResponseEntity<String>("fail", HttpStatus.INTERNAL_SERVER_ERROR);
         }
