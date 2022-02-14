@@ -216,12 +216,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserAccountDto getUserAccount(String userNo) throws Exception {
-        UserDetail userDetail = userDetailRepository.findByUserNo(userNo);
+    public UserAccountDto getUserAccount(String userId) throws Exception {
+        UserDetail userDetail = userDetailRepository.findByUserId(userId).get();
 
         int feedCount = 0;
 
-        Optional<Feeds> feeds = feedsRepository.findById(userNo);
+        Optional<Feeds> feeds = feedsRepository.findById(userDetail.getUserNo());
         if(feeds.isPresent())
             feedCount = feeds.get().getFeedList().size();
 

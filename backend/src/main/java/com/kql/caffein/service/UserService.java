@@ -30,7 +30,7 @@ public interface UserService {
     public void deleteByUserNo(String userNo);
 
     //유저 계정 상단 조회
-    public UserAccountDto getUserAccount(String userNo) throws Exception;
+    public UserAccountDto getUserAccount(String userId) throws Exception;
 
     //유저 상세조회
     public UserUpdateDto getUser(String userNo) throws Exception;

@@ -89,11 +89,11 @@ public class UserController {
     }
 
     @ApiOperation(value = "계정 - 회원 부분 조회")
-    @GetMapping("/account/{userNo}")
-    public ResponseEntity getUserAccount(@PathVariable @ApiParam(value = "유저 고유번호", required = true) String userNo) throws Exception {
-        log.info("getUser called!! userNo : {}", userNo);
+    @GetMapping("/account/{userId}")
+    public ResponseEntity getUserAccount(@PathVariable @ApiParam(value = "유저 아이디", required = true) String userId) throws Exception {
+        log.info("getUser called!! userId : {}", userId);
         try{
-            return new ResponseEntity<UserAccountDto>(userService.getUserAccount(userNo), HttpStatus.OK);
+            return new ResponseEntity<UserAccountDto>(userService.getUserAccount(userId), HttpStatus.OK);
         } catch (Exception e){
             return new ResponseEntity<String>("fail", HttpStatus.INTERNAL_SERVER_ERROR);
         }
