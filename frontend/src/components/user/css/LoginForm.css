@@ -1,9 +1,17 @@
+#paperStyle {
+  padding: 20px;
+  height: 600px;
+  width: 500px;
+  margin: 20px;
+}
+
 #login_content {
     font-family: system-ui, serif;
     font-size: 1rem;
     padding: 3rem;
     border-radius: 1rem;
     align-items: initial;
+    text-align: -webkit-center;
   }
 
   #login_divider {
@@ -24,21 +32,79 @@
     color:dimgrey;
   }
   
-#login_oauthlist{
-    width:100%;
-    height:auto;
-    text-align: -webkit-center;
-}
-  
 #login_oauthimage {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 60%;
+    width: 80%;
 }
 
 #loginform_Modalhead {
   border: 0;
   background: #4b6b79;
   height: 35px;
+}
+
+#login_function {
+  font-size: 10px;
+}
+
+@media screen and (max-width: 412px){
+
+  #paperStyle {
+    padding: 20px;
+    height: 600px;
+    width: 100%;
+  }  
+
+  #login_content {
+    width: 100%;
+    font-family: system-ui, serif;
+    font-size: 1rem;
+    padding: 3rem;
+    border-radius: 1rem;
+    align-items: initial;
+    padding-left: 5%;
+  }
+
+  #login_divider {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+  
+  #login_line {
+      width:30%;
+    }
+    
+  #login_sociallogin {
+      font-size:90%;
+      margin:auto;
+      font-weight: 700;
+      color:dimgrey;
+    }
+    
+  #login_oauthimage {
+      width: 80%;
+  }
+
+  #loginform_Modalhead {
+    border: 0;
+    background: #4b6b79;
+    height: 35px;
+  }
+
+  #login_gosignup {
+    font-size: 12px;
+  }
+
+  #login_gosignup2 {
+    font-size: 10px;
+  }
+
+  #login_findpw {
+    font-size: 12px;
+  }
+  
+  #login_findpw2 {
+    font-size: 10px;
+  }
 }
