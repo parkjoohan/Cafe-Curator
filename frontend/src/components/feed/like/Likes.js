@@ -44,10 +44,8 @@ const Likes = props => {
                             </div>
                         </Col>
 
-                        <Col style={{ height: "100%" }}>
-                            <div id="likes_info">
-                                <img id="likes_img3" src={item.file.filePath}/>
-                            </div>
+                        <Col style={{width: "300px", height: "265px"}}>
+                            <img id="likes_img3" src={item.file.filePath}/>
                         </Col>
                     </li>
                 );

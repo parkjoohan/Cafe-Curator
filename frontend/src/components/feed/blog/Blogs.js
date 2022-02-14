@@ -12,7 +12,7 @@ const Blogs = props => {
                     return <Blog key={i} />;
             })
                 : props.data.map(item => {
-                return (
+                    return (
                     <li key={item.id} id="blogs_item">
                         <Col style={{marginLeft: "3%", marginTop: "1%"}}>
                             <div style={{marginBottom: "40%" }}>
@@ -44,10 +44,8 @@ const Blogs = props => {
                             </div>
                         </Col>
                         
-                        <Col style={{ height: "100%"}}>
-                            <div id="blogs_info">
-                                <img id="blogs_img3" src={item.file.filePath}/>
-                            </div>
+                        <Col style={{width: "300px", height: "265px"}}>
+                            <img id="blogs_img3" src={item.file.filePath}/>
                         </Col>
                     </li>
                 );

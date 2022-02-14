@@ -44,10 +44,8 @@ const BookMarks = props => {
                             </div>
                         </Col>
 
-                        <Col style={{ height: "100%" }}>
-                            <div id="bookmarks_info">
-                                <img id="bookmarks_img3" src={item.file.filePath}/>
-                            </div>
+                        <Col style={{width: "300px", height: "265px"}}>
+                            <img id="bookmarks_img3" src={item.file.filePath}/>
                         </Col>
                     </li>
                 );
