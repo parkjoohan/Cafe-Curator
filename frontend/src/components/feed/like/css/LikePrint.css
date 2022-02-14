@@ -40,6 +40,7 @@ background: aliceblue;
   #like_contentWrapper {
     list-style-type: none;
     width: 100%;
+    margin-left: -5%;
   }
   
   #likes_item {
