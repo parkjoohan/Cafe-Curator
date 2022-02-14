@@ -67,6 +67,17 @@ public class UserController {
         }
     }
 
+    @ApiOperation(value = "아이디 중복 검사")
+    @GetMapping("/checkUserId/{userId}")
+    public ResponseEntity checkUserId(@PathVariable String userId) {
+        log.info("checkUserId called!!  userId : {}", userId);
+        try {
+            return new ResponseEntity(userService.checkUserId(userId) == true ? false : true, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity("fail", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
     @ApiOperation(value = "회원 가입", response = String.class)
     @PostMapping()
     public ResponseEntity register(@Valid @RequestPart(value = "userDto") UserDto userDto,

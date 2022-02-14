@@ -85,6 +85,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Boolean checkUserId(String userId) throws Exception {
+        return userDetailRepository.findByUserId(userId).isPresent();
+    }
+
+    @Override
     public String uploadPicture(MultipartFile multipartFile) throws Exception {
         String originFileName = multipartFile.getOriginalFilename();
         String extension = originFileName.substring(originFileName.length()-3);
@@ -321,17 +326,6 @@ public class UserServiceImpl implements UserService {
         redisTemplate.opsForValue().set(authentication.getName(), newToken.getRefreshToken(), newToken.getRefreshTokenExpirationTime(), TimeUnit.MILLISECONDS);
 
         return newToken;
-    }
-
-    @Override
-    public UserDetail findByUserNo(String userNo) {
-        return userDetailRepository.findByUserNo(userNo);
-    }
-
-    @Override
-    public Optional<UserDetail> findByUserId(String userId) {
-        Optional<UserDetail> userDetail = userDetailRepository.findByUserId(userId);
-        return userDetail;
     }
 
     @Override
