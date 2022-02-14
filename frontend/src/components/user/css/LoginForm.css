@@ -1,4 +1,4 @@
-#paperStyle {
+#login_paperStyle {
   padding: 20px;
   height: 600px;
   width: 500px;
@@ -48,9 +48,9 @@
 
 @media screen and (max-width: 412px){
 
-  #paperStyle {
+  #login_paperStyle {
     padding: 20px;
-    height: 600px;
+    height: 550px;
     width: 100%;
   }  
 
@@ -61,7 +61,7 @@
     padding: 3rem;
     border-radius: 1rem;
     align-items: initial;
-    padding-left: 5%;
+    padding-left: 3%
   }
 
   #login_divider {

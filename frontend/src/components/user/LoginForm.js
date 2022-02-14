@@ -151,7 +151,7 @@ export default function LoginForm({setUser}) {
     <div>
       <Grid style={{width: "100%"}}>
         <div id='login_content'>
-          <Paper elevation={10} id='paperStyle'>
+          <Paper elevation={10} id='login_paperStyle'>
             <Grid align="center">
               <Avatar style={avatarStyle}><LockOutlinedIcon /></Avatar>
               <h2>Login</h2>
@@ -178,11 +178,10 @@ export default function LoginForm({setUser}) {
 
             <img id="login_oauthimage" src={process.env.PUBLIC_URL + "/image/kakaooauthimage.png"}/>
 
-
             <hr />
 
               <Typography id='login_gosignup'> 회원가입하기 &nbsp;
-              <Link className="link" to="/signup" id='login_gosignup2'>
+              <Link className="link" to="/email" id='login_gosignup2'>
                 Sign Up
               </Link>
             </Typography>
