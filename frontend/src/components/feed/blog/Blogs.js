@@ -34,7 +34,7 @@ const Blogs = props => {
                         </Col>
 
                         <Col className='blogs_detail'>
-                            <div style={{textAlign: "right", textAlignLast: "right",}}>
+                            <div style={{textAlign: "right", textAlignLast: "right"}}>
                                 <strong id="blogs_cafeName" >{item.cafeName}</strong>
                                 {
                                     item.marked == true ?

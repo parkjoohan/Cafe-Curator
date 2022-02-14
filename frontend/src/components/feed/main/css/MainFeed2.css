@@ -1,7 +1,43 @@
 #MainFeed2_container {
-    margin-top: 3%;
+    margin-top: 15%;
+    width: 1000px;
+    float: right;
 }
 
-#MainFeed2_Write_button2 {
+#MainFeed2_Write_button {
     width: 120px;
+}
+
+#mainfeed2_Write_button_font {
+    font-size: 15px;
+}
+
+#MainFeed2_buttons {
+    text-align: -webkit-right;
+}
+
+
+
+@media screen and (max-width: 412px){
+    #MainFeed2_container {
+        margin-top: 20%;
+        width: 1000px;
+        float: right;
+    }
+    
+    #MainFeed2_Write_button {
+        width: 85px;
+    }
+
+    #mainfeed2_Write_button_font {
+        font-size: 10px;
+    }
+    #MainFeed2_buttons {
+        text-align: -webkit-right;
+    }
+
+    #MainFeed2_toggle_font{
+        font-size: 10px;
+        margin-right: 10px;
+    }
 }

@@ -1,4 +1,4 @@
-  import "./css/BlogPrint.css";
+import "./css/BlogPrint.css";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Blogs from "./Blogs";
@@ -13,17 +13,6 @@ function BlogPrint() {
   const [isLoading, setIsLoading] = useState(true);
   const [WritemodalShow, WritesetModalShow] = React.useState(false);
   // const [toggled, setToggled] = useState(false);
-  const history = useHistory();
-
-  const style = {
-    color : 'black',
-  }
-
-  let Writebutton = {
-    fontSize: 13,
-    width: 95,
-  }
-
 
   useEffect(() => {
     setIsLoading(true);
@@ -42,12 +31,9 @@ function BlogPrint() {
     })
   }, []);
 
-
-
   useEffect(()=>{
     window.addEventListener("scroll",moredata)
   },[data])
-
 
   const moredata = () => {
     // window.removeEventListener("scroll",moredata)

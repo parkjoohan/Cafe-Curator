@@ -60,23 +60,19 @@ function BookMarksPrint() {
 
     return (
       <div>
-          <Container>
-              <Row>
-              <WriteModal
-                  show={WritemodalShow}
-                  onHide={() => WritesetModalShow(false)}
-              />
-              <div id='bookmark'>
-                  <Container>
-                      <div id="App">
-                          <ul id="bookmark_contentWrapper">
-                          <BookMarks isLoading={isLoading} data={data} />
-                          </ul>
-                      </div>
-                  </Container>
-              </div>
-              </Row>
-          </Container>
+        <WriteModal
+            show={WritemodalShow}
+            onHide={() => WritesetModalShow(false)}
+        />
+        <div id='bookmark'>
+            <div>
+                <div id="App">
+                    <ul id="bookmark_contentWrapper">
+                    <BookMarks isLoading={isLoading} data={data} />
+                    </ul>
+                </div>
+            </div>
+        </div>
       </div>
   );
 }
