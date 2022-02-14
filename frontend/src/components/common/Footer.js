@@ -28,9 +28,8 @@ function Footer(props) {
           </div>
         </Col>
             
-            <hr id="footer_hr" />
-          </Row>
-
+      </Row>
+        <hr id="footer_hr" />
           <div md={12} sm={12} id="footer_social">
             <hr id="footer_social_hr" />
             <div id="footer_social_tags">
