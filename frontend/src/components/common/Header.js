@@ -33,6 +33,8 @@ function Header({user, setUser}) {
 
   const logoutfunction = () => {
     localStorage.removeItem('userNo')
+    localStorage.removeItem('userPic')
+    localStorage.removeItem('userId')
     setUser(null)
   }
   const style = {
@@ -78,7 +80,7 @@ function Header({user, setUser}) {
                   </Col>
                 </Row>
             </div>
-            : null
+            : <a style={{marginTop : "7%"}}>{localStorage.getItem('userId')}님 어서오세요.</a>
               }
             
             <div id="header_profile">

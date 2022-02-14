@@ -1,8 +1,8 @@
-import React, {useState} from 'react';
+import React, {useState,useEffect} from 'react';
 import  { Modal, Button, Col, Row } from 'react-bootstrap';
 import './css/LikeCategory.css'
 
-const LikeCategoryModal = ({ show, onHide }) => {
+const LikeCategoryModal = ({ show, onHide,likearr, setLikearr }) => {
 
   const [cnt,setCnt] = useState(0);
   
@@ -15,6 +15,11 @@ const LikeCategoryModal = ({ show, onHide }) => {
   ])
 
   let likename = ['커피','케이크','마카롱/쿠키','브런치','차'];
+
+
+  useEffect(()=>{
+    console.log(likearr)
+  },[likearr])
 
   const selectlike = (n) => {
     if(cnt==3){
@@ -128,6 +133,19 @@ const LikeCategoryModal = ({ show, onHide }) => {
       }
     </>
   ))
+
+  useEffect(()=>{
+    let newlikearr = []
+    for (let i = 0; i < like.length; i++) {
+      if(like[i][1]==true){
+        newlikearr.push(likename[i]);
+      }
+      if(like2[i][1]==true){
+        newlikearr.push(likename2[i])
+      }
+    }
+    setLikearr(newlikearr)
+  },[like,like2])
 
   return (
     <Modal

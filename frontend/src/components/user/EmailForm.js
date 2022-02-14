@@ -10,7 +10,7 @@ import SignupForm from "./SignupForm";
 
 const EmailForm = () => {
   const [doorLock, setDoorLock] = useState(false)
-  
+  const [sendText, setSendText] = useState('전송')
   let history = useHistory();
   
 
@@ -41,6 +41,7 @@ const EmailForm = () => {
         });
         console.log(response);
         console.log(response.email)
+        setSendText('전송완료')
       } catch (error) {
         //응답 실패
         console.error(error);
@@ -95,14 +96,14 @@ const EmailForm = () => {
                 <Row >
                   <Col>
                   <input id="input" type="email" onChange={onChangeEmail} name="email" placeholder="이메일을 입력하세요.." style={{ marginBottom: "3%" }} />
-                  <Button onClick={onClickSend} id="email_validate_submit">전송</Button>
+                  <Button variant="primary" onClick={onClickSend} id="email_validate_submit">{sendText}</Button>
                   </Col>
                 </Row>
                 
                 <Row>
                   <Col>
                     <input id="input" type="validate" onChange={onChangeCode} name="validate" placeholder="인증코드를 입력하세요.." style={{marginBottom: "8%", marginTop: "3%"}} />
-                    <Button onClick={onClickCheck} id="email_validate_submit">확인</Button>
+                    <Button onClick={onClickCheck} id="email_validate_submit" variant="primary">확인</Button>
                   </Col>
                 </Row>
                 

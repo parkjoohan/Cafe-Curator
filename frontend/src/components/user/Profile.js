@@ -1,10 +1,15 @@
 import { buildQueries } from '@testing-library/react';
-import React from 'react';
+import React, { useState } from 'react';
 import  { Modal, Button, Container, Row, Col } from 'react-bootstrap';
 import './css/Profile.css'
 
-const Profile = ({ show, onHide }) => {
-
+const Profile = ({ show, onHide, fileUrl, setFileUrl, file, setFile }) => {
+  function processImage(event){
+    const imageFile = event.target.files[0];
+    const imageUrl = URL.createObjectURL(imageFile);
+    setFileUrl(imageUrl)
+    setFile(imageFile)
+  }
   // //파일 미리볼 url을 저장해줄 state const 
   // [fileImage, setFileImage] = useState("");
 
@@ -26,9 +31,19 @@ const Profile = ({ show, onHide }) => {
           <Row>
             {/* 이미지 경로 */}
             <Col>
+            {!fileUrl ?
+            <div>
               <img id='profile_image' src={process.env.PUBLIC_URL + "/image/Profileimage.png"}/>
-              <input id='profile_upload_pic' type='file'/>
+              <input type="file" accept="image/*" onChange={processImage}></input>
               <br></br>
+            </div>
+            :
+            <div>
+              <img id='profile_image' src={fileUrl}/>
+              <input type="file" accept="image/*" onChange={processImage}></input>
+              <br></br>
+            </div>
+            }
             </Col>
           </Row>
         </Container>

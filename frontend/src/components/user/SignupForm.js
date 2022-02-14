@@ -19,8 +19,9 @@ export default function SignupForm (props) {
   const [EmailmodalShow, EmailsetModalShow] = React.useState(false);
   const [TermsmodalShow, TermssetModalShow] = React.useState(false);
   const [LikeCategorymodalShow, LikeCategoryModalShow] = React.useState(false);
-
-
+  const [likearr, setLikearr] = useState([]);
+  const [fileUrl, setFileUrl] = useState(null);
+  const [file, setFile] = useState(null);
   // 회원가입 정보부분
     // 이메일 받아오기
   // const location = useLocation()
@@ -66,12 +67,13 @@ export default function SignupForm (props) {
       {
       signupForm.append("userDetailDto",new Blob([JSON.stringify({
         pass : form.password,
-        userId: form.id
+        userId: form.id,
+        categoryList : likearr
       })], { type: "application/json"})
       )
     }
       signupForm.append("userDto", new Blob([JSON.stringify(email)], { type: "application/json"}))
-      // signupform.append("file",{file});
+      signupForm.append("file",{file});
       const signupurl = "http://i6c104.p.ssafy.io:8080/api/users/"
       axios ({
         method : "post",
@@ -123,11 +125,32 @@ export default function SignupForm (props) {
               <Avatar style={avatarStyle}><LockOutlinedIcon /></Avatar>
               <h2>Sign Up</h2>
             </Grid><br />
-            <img style={Profileimage} src={process.env.PUBLIC_URL + "/image/Profileimage.png"} id="signup_profilePic" onClick={() => ProfilesetModalShow(true)}/>
-            <Profile
-              show={ProfilemodalShow}
-              onHide={() => ProfilesetModalShow(false)}
-            />
+            {!fileUrl ?
+            <div>
+              <img style={Profileimage} src={process.env.PUBLIC_URL + "/image/Profileimage.png"} id="signup_profilePic" onClick={() => ProfilesetModalShow(true)}/>
+              <Profile
+                fileUrl = {fileUrl} 
+                setFileUrl = {setFileUrl}
+                file = {file}
+                setFile = {setFile}
+                show={ProfilemodalShow}
+                onHide={() => ProfilesetModalShow(false)}
+              />
+            </div>
+            :
+            <div>
+            <img style={Profileimage} id='profile_image' src={fileUrl} onClick={() => ProfilesetModalShow(true)}/>
+              <Profile
+                  fileUrl = {fileUrl} 
+                  setFileUrl = {setFileUrl}
+                  file = {file}
+                  setFile = {setFile}
+                  show={ProfilemodalShow}
+                  onHide={() => ProfilesetModalShow(false)}
+                />
+              </div>
+            
+            }
 
             {/* 이메일 */}
             <div id="singup_content">
@@ -153,7 +176,7 @@ export default function SignupForm (props) {
                   <Button id="signup_cate" variant="secondary" size="sm" onClick={() => LikeCategoryModalShow(true)}>
                     관심사 선택
                   </Button>
-                  <LikeCategoryModal show={LikeCategorymodalShow} onHide={() => LikeCategoryModalShow(false)}/>
+                  <LikeCategoryModal likearr={likearr} setLikearr={setLikearr} show={LikeCategorymodalShow} onHide={() => LikeCategoryModalShow(false)}/>
                 </Col>
 
                 <Col sm={6}>
@@ -168,7 +191,7 @@ export default function SignupForm (props) {
             </div>
 
             {/* 회원가입 버튼 */}
-            { (form.password === form.repassword && form.password) ?
+            { (form.password === form.repassword && form.password && form.id) ?
             <div>
             <Button type="submit" color="primary" onClick={signup} variant='contained' style={btnStyle} fullWidth>Sign Up</Button>
             <br />

@@ -83,6 +83,9 @@ export default function LoginForm({setUser}) {
       });
       console.log(response.data)
       localStorage.setItem('userNo', response.data.userNo);
+      localStorage.setItem('userPic', response.data.picture);
+      localStorage.setItem('userId', response.data.userId);
+
       setUser(response.data.userNo)
       history.goBack();
     }
