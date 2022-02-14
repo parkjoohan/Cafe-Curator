@@ -37,7 +37,7 @@ export default function Mainfeed(props) {
             </Col>
             <Col xs={2}>
               <Button id="MainFeed_Write_button" variant="outline-success" onClick={() => WritesetModalShow(true)}>
-                  <h6 style={{margin: "1px "}}>게시글 작성</h6>
+                  <h6 id="mainfeed_Write_button_font" style={{margin: "1px "}}>게시글 작성</h6>
               </Button> 
             </Col>
           </Row>
