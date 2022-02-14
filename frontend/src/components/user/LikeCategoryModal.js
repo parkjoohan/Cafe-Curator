@@ -16,7 +16,6 @@ const LikeCategoryModal = ({ show, onHide,likearr, setLikearr }) => {
 
   let likename = ['커피','케이크','마카롱/쿠키','브런치','차'];
 
-
   useEffect(()=>{
     console.log(likearr)
   },[likearr])
@@ -73,7 +72,6 @@ const LikeCategoryModal = ({ show, onHide,likearr, setLikearr }) => {
   ))
 
   // 여기까지는 메뉴관심사코드
-
   const [like2,setlike2] = useState([
     [0,false],
     [1,false],
