@@ -12,7 +12,7 @@ function Footer(props) {
     console.log(props)
   })
   return (
-        <div id="footer_container">
+      <div id="footer_container">
       <Row>
         <Col>
           <img

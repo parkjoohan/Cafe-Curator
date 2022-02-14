@@ -30,9 +30,12 @@ export default function Mainfeed(props) {
         <Container id='MainFeed_container'>
           <Row style={{marginLeft: "20%"}}>
               <Col xs={10}>
+                <div style={{width: "80%"}}>
+                  <Toggle onChange={(e) => Changotogle(e)} />
+                </div>
+                
               <div style={{textAlign: "-webkit-right"}}>
-                <Toggle onChange={(e)=>Changotogle(e)} />
-                <p style={style}>{toggled ? "피드형" : "블로그형"}</p>
+                <p id='MainFeed_toggle_font' style={style}>{toggled ? "피드형" : "블로그형"}</p>
               </div>
             </Col>
             <Col xs={2}>
