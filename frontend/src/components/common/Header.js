@@ -84,14 +84,18 @@ function Header({user, setUser}) {
               }
             
             <div id="header_profile">
+            { !localStorage.getItem('userPic') ?
+            null 
+            :
             <NavDropdown align="end" title={<img id="header_prof_img" style={{width: "40px"}}
-              src={process.env.PUBLIC_URL + "/image/hello.png"}
+              src={localStorage.getItem('userPic')}
               />} id="dropdown-menu-align-end">
               <NavDropdown.Item onClick={gotoProfile}>Profile</NavDropdown.Item>
               <NavDropdown.Item onClick={profileModal}>My account</NavDropdown.Item>
               <NavDropdown.Divider />
               <NavDropdown.Item onClick={logoutfunction}>Logout</NavDropdown.Item>
             </NavDropdown>
+              }
               <Modal open={profileopen} onClose={modalHandleClose} aria-labelledby="parent-modal-title" aria-describedby="parent-modal-description">
                 <Box sx={{ ...style, width: 600, padding: 0 }}>
                   <div id="fix_profile_navcolor"></div>

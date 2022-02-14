@@ -73,7 +73,7 @@ export default function SignupForm (props) {
       )
     }
       signupForm.append("userDto", new Blob([JSON.stringify(email)], { type: "application/json"}))
-      signupForm.append("file",{file});
+      signupForm.append("multipartFile",file);
       const signupurl = "http://i6c104.p.ssafy.io:8080/api/users/"
       axios ({
         method : "post",
