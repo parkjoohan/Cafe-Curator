@@ -34,7 +34,7 @@ const BookMarks = props => {
                         </Col>
 
                         <Col className='bookmarks_detail'>
-                            <div style={{textAlign: "right", textAlignLast: "right", width:"130px"}}>
+                            <div id='bookmarks_detail_form'>
                                 <strong id="bookmarks_cafeName" >{item.cafeName}</strong>
                                 {
                                     item.marked == true ?
@@ -48,7 +48,6 @@ const BookMarks = props => {
                             <div style={{width: "300px", height: "265px", paddingTop: "3%", paddingBottom: "3%"}}>
                                 <img id="bookmarks_img3" src={item.file.filePath}/>
                             </div>
-                            
                         </Col>
                     </li>
                 );

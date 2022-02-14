@@ -94,7 +94,14 @@
 .likes_detail {
   margin-bottom: auto;
   margin-top: 1%;
-  margin-left: 100px;
+  margin-left: 250px;
+  text-align: -webkit-right;
+}
+
+#likes_detail_form {
+  text-align: right;
+  text-align-last: right; 
+  width: 200px;
 }
 
 #likes_content{
@@ -180,10 +187,9 @@
   }
 
   #likes_img3 {
-    width: 70px;
-    height: 85px;
-    margin-top: 120%;
-    border-radius: 15%;
+    width: 30%;
+    height: 30%;
+    padding-right: 5%;
   }
   
   #likes_info {
@@ -200,17 +206,22 @@
   }
   
   .likes_detail {
-    
     margin-bottom: auto;
     margin-top: 1%;
-    margin-left: 70px;
+    margin-left: 30px;
+  }
+
+  #likes_detail_form {
+    text-align: right;
+    text-align-last: right; 
+    width: 130px;
   }
   
   #likes_cafeName {
     color: blue;
     margin-left: 2%;
     margin-right: 2%;
-    font-size: 9px;
+    font-size: 8px;
     vertical-align: top;
   }
 

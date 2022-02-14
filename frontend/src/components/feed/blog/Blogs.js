@@ -34,7 +34,7 @@ const Blogs = props => {
                         </Col>
 
                         <Col className='blogs_detail'>
-                            <div style={{textAlign: "right", textAlignLast: "right"}}>
+                            <div id='blogs_detail_form'>
                                 <strong id="blogs_cafeName" >{item.cafeName}</strong>
                                 {
                                     item.marked == true ?
@@ -44,8 +44,10 @@ const Blogs = props => {
                             </div>
                         </Col>
                         
-                        <Col style={{width: "300px", height: "265px"}}>
-                            <img id="blogs_img3" src={item.file.filePath}/>
+                        <Col style={{ width: "80px", height: "100%" }}>
+                            <div style={{width: "300px", height: "265px", paddingTop: "3%", paddingBottom: "3%"}}>
+                                <img id="blogs_img3" src={item.file.filePath} />
+                            </div>
                         </Col>
                     </li>
                 );
