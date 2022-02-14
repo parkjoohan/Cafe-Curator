@@ -15,7 +15,7 @@ const Blogs = props => {
                 return (
                     <li key={item.id} id="blogs_item">
                         <Col style={{marginLeft: "3%", marginTop: "1%"}}>
-                            <div style={{marginBottom: "10%" }}>
+                            <div style={{marginBottom: "40%" }}>
                                 {
                                     item.userPicture != null ?
                                     <img id="blogs_img2" src={item.userPicture} alt="" /> :
@@ -24,34 +24,29 @@ const Blogs = props => {
                                 <strong id="blogs_userId">{item.userId}</strong>
                                 <strong id="blogs_follow_button">팔로우</strong>
                             </div>
-                            <div id='blogs_content_form'>
-                                <div><p id='blogs_content'>{ item.content }</p></div>
-                            </div>
                             <div style={{marginBottom: "5%" }}>{
                                     item.liked == true ?
-                                    <img src='../image/heart.png' style={{ width: "30px" }}></img> :
-                                    <img src='../image/empty_heart.png' style={{ width: "30px" }}></img>
+                                    <img src='../image/heart.png' id='blogs_heart'></img> :
+                                    <img src='../image/empty_heart.png' id='blogs_heart'></img>
                                 }
-                                <strong style={{ marginLeft: "2%" }}>{item.likeCount}</strong>
-                                <strong style={{ marginLeft: "5%" }}>댓글</strong>
-                                {/* <strong style={{ marginLeft: "2%" }}>{item.comment_count}</strong>  댓글 수도 받아올 수 있게 만들어야함 */}
+                                <strong id='blogs_heart_count'>{item.likeCount}</strong>
                             </div>
                         </Col>
 
                         <Col className='blogs_detail'>
                             <div style={{textAlign: "right", textAlignLast: "right",}}>
-                                <strong id="blogs_cafeName" >{item.cafeName}(링크)</strong>
+                                <strong id="blogs_cafeName" >{item.cafeName}</strong>
                                 {
                                     item.marked == true ?
-                                    <img id="blogs_img2" style={{width: "35px", height: "35px"}} src='../image/bookmark.png'/> :
-                                    <img id="blogs_img2" style={{width: "35px", height: "35px"}} src='../image/empty_bookmark.png'/>
+                                    <img id="blogs_bookmark" src='../image/bookmark.png'/> :
+                                    <img id="blogs_bookmark" src='../image/empty_bookmark.png'/>
                                 }
                             </div>
                         </Col>
                         
                         <Col style={{ height: "100%"}}>
                             <div id="blogs_info">
-                                <img id="blogks_img2" src={item.file.filePath}/>
+                                <img id="blogs_img3" src={item.file.filePath}/>
                             </div>
                         </Col>
                     </li>

@@ -1,7 +1,27 @@
 #MainFeed_container {
     margin-top: 3%;
+    width: 1200px;
 }
 
 #MainFeed_Write_button {
     width: 120px;
+}
+
+#mainfeed_Write_button_font {
+    font-size: 10px;
+}
+
+@media screen and (max-width: 412px){
+    #MainFeed_container {
+        margin-top: 3%;
+        width: 55%;
+    }
+    
+    #MainFeed_Write_button {
+        width: 120px;
+    }
+
+    #mainfeed_Write_button_font {
+        font-size: 10px;
+    }
 }

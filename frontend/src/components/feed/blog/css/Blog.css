@@ -8,7 +8,6 @@
   }
 }
 
-
 #blog_item {
   align-items: center;
   border-radius: 15px;
@@ -49,9 +48,14 @@
 }
 
 #blogs_img2 {
-  width: 80px;
+  width: 100px;
   height: 80px;
   border-radius: 5%;
+}
+
+#blogs_img3 {
+  width: 300px;
+  height: 270px;
 }
 
 #blogs_info {
@@ -71,26 +75,6 @@
 }
 
 #blog-name::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 30px;
-  height: 100%;
-  background: linear-gradient(to right, #f2f2f2, #ddd, #f2f2f2);
-  animation: loading 2s infinite linear;
-}
-
-#blog-email {
-  width: 85%;
-  height: 18px;
-  background: #f2f2f2;
-  margin-top: 3px;
-  position: relative;
-  overflow: hidden;
-}
-
-#blog-email::before {
   content: "";
   position: absolute;
   top: 0;
@@ -122,4 +106,123 @@
   margin-right: 2%;
   font-size: 20px;
   vertical-align: top;
+}
+
+#blogs_bookmark {
+  width: 35px;
+  height: 35px;
+}
+
+#blogs_heart {
+  width: 30px;
+}
+
+#blogs_heart_count {
+  margin-left: 10px;
+}
+
+@media screen and (max-width: 412px){
+  @keyframes loading {
+    0% {
+      transform: translateX(0);
+    }
+    50%,
+    100% {
+      transform: translateX(1000px);
+    }
+  }
+  
+  
+  #blog_item {
+    align-items: center;
+    border-radius: 15px;
+    border: 1px solid #ccc;
+  }
+  
+  #blog-img::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right, #f2f2f2, #ddd, #f2f2f2);
+    animation: loading 2s infinite linear;
+  }
+  
+  #blog_img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background: #f2f2f2;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  #blogs_userId {
+    margin-left: 2%;
+    font-size: 15px;
+    vertical-align: middle;
+  }
+  
+  #blogs_follow_button {
+    color: blue;
+    margin-left: 2%;
+    font-size: 5px;
+    vertical-align: middle;
+  }
+  
+  #blogs_img2 {
+    width: 20px;
+    height: 20px;
+    border-radius: 5%;
+  }
+
+  #blogs_img3 {
+    width: 70px;
+    height: 80px;
+  }
+  
+  #blogs_info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-left: 5%;
+    padding-bottom: 1%;
+  }
+  
+  #blogs_content_form {
+    margin-bottom: 3%;
+    height: 10px;
+  }
+  
+  .blogs_detail {
+    
+    margin-bottom: auto;
+    margin-top: 1%;
+    margin-left: 70px;
+  }
+  
+  #blogs_cafeName {
+    color: blue;
+    margin-left: 2%;
+    margin-right: 2%;
+    font-size: 3px;
+    vertical-align: top;
+  }
+
+  #blogs_bookmark {
+    width: 13px;
+    height: 13px;
+    margin-bottom: 50px;
+  }
+
+  #blogs_heart {
+    width: 15px;
+  }
+
+  #blogs_heart_count {
+    margin-left: 5px;
+    font-size: 10px;
+  }
 }
