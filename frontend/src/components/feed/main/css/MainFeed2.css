@@ -1,5 +1,5 @@
 #MainFeed2_container {
-    margin-top: 15%;
+    margin-top: 5%;
     width: 1000px;
     float: right;
 }
@@ -20,7 +20,7 @@
 
 @media screen and (max-width: 412px){
     #MainFeed2_container {
-        margin-top: 20%;
+        margin-top: 5%;
         width: 1000px;
         float: right;
     }

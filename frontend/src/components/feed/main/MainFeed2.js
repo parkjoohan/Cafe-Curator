@@ -34,7 +34,7 @@ export default function Mainfeed2(props) {
                   <Toggle onChange={(e) => Changotogle(e)} />
                 </div>
               <div style={{textAlign: "-webkit-right"}}>
-                <p id='MainFeed2_toggle_font' style={style}>{toggled ? "피드형" : "블로그형"}</p>
+                <p id='MainFeed2_toggle_font' style={style}>{toggled ? "북마크" : "좋아요"}</p>
               </div>
             </Col>
             <Col xs={2}>
