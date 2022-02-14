@@ -52,23 +52,18 @@ function Header({user, setUser}) {
   };
 
   return (
-    <Navbar id='header_nav' expand="sm" bg="light">
-      <Col id='header_left' xs={5}>
-        <Nav className="me-auto">
-          <Nav.Link><Link to="/" id="header_link">Home</Link></Nav.Link>
-          <Nav.Link><Link to="/feed" id="header_link">Feed & Blog</Link></Nav.Link>
-          <Nav.Link><Link to="/feed2" id="header_link">BookMark & Like</Link></Nav.Link>
-          <Nav.Link><Link to="/feed3" id="header_link">Search</Link></Nav.Link>
-        </Nav>
-      </Col>
-      <Col id='header_center' xs={2} >
-        <Navbar.Brand id='header_link_img'>
-          <Link to="/" id="header_link_img">Cafe Curator </Link>
-        </Navbar.Brand>
-      </Col>
-      <Col id='header_right' xs={5}>
-        <Row style={{float: "right"}}>
-          <Nav>
+    <Navbar bg="light" expand="lg">
+      <Container fluid>
+        <Link to="/" id="header_link_img">Cafe Curator </Link>
+        <Navbar.Toggle aria-controls="navbarScroll" />
+        <Navbar.Collapse id="navbarScroll">
+          <Nav style={{ width: "90%", marginLeft: "3%" }} navbarScroll>
+            <Nav.Link><Link to="/" id="header_link">Home</Link></Nav.Link>
+            <Nav.Link><Link to="/feed" id="header_link">Feed & Blog</Link></Nav.Link>
+            <Nav.Link><Link to="/feed2" id="header_link">BookMark & Like</Link></Nav.Link>
+            <Nav.Link><Link to="/feed3" id="header_link">Search</Link></Nav.Link>
+          </Nav>
+          <Nav style={{ width: "100%", justifyContent: "right", marginRight: "2%", placeItems: "center" }}>
             { !user ?
               <div style={{alignSelf: "center"}}>
                 <Row>
@@ -79,9 +74,8 @@ function Header({user, setUser}) {
                     <Nav.Link><Link to="/email" id="header_link">Signup</Link></Nav.Link>
                   </Col>
                 </Row>
-
-            </div>
-            : <a style={{marginTop : "7%"}}>{localStorage.getItem('userId')}님 어서오세요.</a>
+              </div>
+              : <a>{localStorage.getItem('userId')}님<br/> 어서오세요.</a>
             }
             
             {
@@ -89,10 +83,9 @@ function Header({user, setUser}) {
               null 
               :
               <div id="header_profile">
-              
-                <NavDropdown align="end" title={<img id="header_prof_img" style={{width: "40px"}}
-                  src={localStorage.getItem('userPic')}
-                  />} id="dropdown-menu-align-end">
+                  <NavDropdown align="end" title={
+                    <img id="header_prof_img" src={localStorage.getItem('userPic')}/>
+                  } id="dropdown-menu-align-end">
                   <NavDropdown.Item onClick={gotoProfile}>Profile</NavDropdown.Item>
                   <NavDropdown.Item onClick={profileModal}>My account</NavDropdown.Item>
                   <NavDropdown.Divider />
@@ -150,8 +143,8 @@ function Header({user, setUser}) {
               </div>
             }
           </Nav>
-        </Row>
-      </Col >
+        </Navbar.Collapse>
+      </Container>
     </Navbar>
   );
 }
