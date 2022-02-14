@@ -35,7 +35,7 @@ const BookMarks = props => {
 
                         <Col className='bookmarks_detail'>
                             <div style={{textAlign: "right", textAlignLast: "right"}}>
-                                <strong id="bookmarks_cafeName" >{item.cafeName}(링크)</strong>
+                                <strong id="bookmarks_cafeName" >{item.cafeName}</strong>
                                 {
                                     item.marked == true ?
                                     <img id="bookmarks_bookmark" src='../image/bookmark.png'/> :

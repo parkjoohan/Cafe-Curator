@@ -35,7 +35,7 @@ const Likes = props => {
 
                         <Col className='likes_detail'>
                             <div style={{textAlign: "right", textAlignLast: "right"}}>
-                                <strong id="likes_cafeName" >{item.cafeName}(링크)</strong>
+                                <strong id="likes_cafeName" >{item.cafeName}</strong>
                                 {
                                     item.marked == true ?
                                     <img id="likes_bookmark" src='../image/bookmark.png'/> :
