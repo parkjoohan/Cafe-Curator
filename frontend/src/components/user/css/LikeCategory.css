@@ -81,7 +81,7 @@
     padding: 1%;
     width: 50%;
     height: 130px;
-    margin-left: 5%;
+    margin-left: 20%;
 }
 
 #LikeCategory_cate_air {
@@ -102,8 +102,9 @@
 
 #LikeCategory_cate_air_menu_selected {
     font-weight: bold;
+    font-size: 20px;
     text-align: -webkit-left; 
-    margin-left: -11%;
+    margin-left: -45%;
     margin-bottom: 5%;
 }
 
