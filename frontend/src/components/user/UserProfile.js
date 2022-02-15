@@ -21,14 +21,17 @@ export default function UserProfile() {
       })
   }, []);
 
+  //피드 불러오기
   useEffect(() => {
     console.log(data.userNo);
-    axios.get(`http://i6c104.p.ssafy.io:8080/feed/feedList/${data.userNo}`, {
-      param: {
-        // "feedUserNo" : data.userNo,
-        "size": 3,
-        "type" : "feed",
+    axios.get(`http://localhost:8080/feed/feedList/${data.userNo}/${localStorage.getItem('userNo')}`, {
+      params: {
+        "size":5,
+        "type":"feed",
+        "lastFeedNo": null,
       }
+    }).then(function(res){
+      console.log(res.data);
     })
   })
 

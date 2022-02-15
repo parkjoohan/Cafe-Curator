@@ -78,9 +78,10 @@ export default function Detail() {
     })
   }
 
-  function gotoProfile(userno) {
-    console.log(localStorage);
-    history.push(`/profile/${userno}`)
+  function gotoProfile(userId) {
+    // console.log(localStorage);
+    console.log(userId + "의 프로필로 갑시다");
+    history.push(`/profile/${userId}`)
   }
 
   // console.log(pk);
@@ -128,7 +129,7 @@ export default function Detail() {
                   />
                 </div>
                 <div id='article_username'>
-                  <p onClick={gotoProfile(data.userId)}>{data.userId}</p>
+                  <p onClick={()=>gotoProfile(data.userId)}>{data.userId}</p>
                 </div>
               </div>
               <div id='article_profile_date'>
