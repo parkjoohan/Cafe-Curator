@@ -7,6 +7,10 @@ const Map = forwardRef((props,ref)=>{
 
   const [select,setSelect] = useState(null);
 
+  useEffect(()=>{
+    console.log(select)
+  },[select])
+
   useImperativeHandle(ref,()=>({
     setMarkerdata,
   }))
@@ -57,7 +61,7 @@ const Map = forwardRef((props,ref)=>{
           <h6 id='map_modal_cafename'>${markerdata[i].place_name}</h6>
           <p id='map_modal_content'>${markerdata[i].address_name}</p>
           <p id='map_modal_content'>${markerdata[i].phone}</p>
-          <p id='map_modal_content' onclick="setSelect(${markerdata})">검색</p>
+          <p id='map_modal_content ${markerdata[i].id}'>검색</p>
         </div>
         `
         var infowindow = new kakao.maps.InfoWindow({
@@ -73,6 +77,11 @@ const Map = forwardRef((props,ref)=>{
         kakao.maps.event.addListener(newinfoarr[i][0],'click',function(){
           newinfoarr[i][1].open(map,newinfoarr[i][0])
           props.setSelected(i)
+          const searchtag = document.getElementById(`map_modal_content ${markerdata[i].id}`);
+          const id = Number(document.getElementById(`map_modal_content ${markerdata[i].id}`).id.split(' ')[1]);
+          searchtag.addEventListener("click",()=>{
+            console.log(markerdata[i])
+          })
 
           for (let j = 0; j < newinfoarr.length; j++) {
             if(i!==j){
