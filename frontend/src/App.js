@@ -8,7 +8,7 @@ import Footer from "./components/common/Footer";
 export default function App() {
 
   //git test
-  const [user,setUser] = useState(localStorage.getItem('userId'))
+  const [user,setUser] = useState([localStorage.getItem('userId'),localStorage.getItem('userNo')])
   const [footershow,setFootershow] = useState(true)
   console.log(user)
 
@@ -18,6 +18,7 @@ export default function App() {
       <Header user={user} setUser={setUser} />
       <Routers user={user} setUser={setUser} setFootershow={setFootershow}/>
       {footershow && <Footer />}
+
     </div>
   );
 }

@@ -24,7 +24,7 @@ export default function Home(props) {
             <h1 id='home_hometitle'>나만의 카페를 찾아보세요!</h1>
             <h3 id='home_introduce'>
               자신의 관심사를 선택하세요!<br/>
-              {props.user}님을 위한 카페를 추천해드립니다!<br/>
+              {props.user[0]}님을 위한 카페를 추천해드립니다!<br/>
             </h3>
           </div>
           {/* </div> */}
@@ -38,7 +38,7 @@ export default function Home(props) {
             <div id="content">
               <h1 id="subheading">지도 중심 찾기</h1>
               <h2 id="heading">내 위치를 중심으로 찾아보세요.</h2>
-              <h2 id="link">더 알아보기 ></h2>
+              <h2 id="link">더 알아보기 &gt;</h2>
             </div>
           </div>
         </section>
@@ -49,7 +49,7 @@ export default function Home(props) {
             <div id="content">
               <h1 id="subheading">원두 중심 찾기</h1>
               <h2 id="heading">원두를 중심으로 찾아보세요.</h2>
-              <h2 id="link">더 알아보기 ></h2>
+              <h2 id="link">더 알아보기 &gt;</h2>
             </div>
           </div>
         </section>
@@ -60,7 +60,7 @@ export default function Home(props) {
             <div id="content">
               <h1 id="subheading">전망 중심 찾기</h1>
               <h2 id="heading">전망 좋은 카페를 찾아보세요.</h2>
-              <h2 id="link">더 알아보기 ></h2>
+              <h2 id="link">더 알아보기 &gt;</h2>
             </div>
           </div>
         </section>
@@ -71,7 +71,7 @@ export default function Home(props) {
             <div id="content">
               <h1 id="subheading">스터디 카페 찾기</h1>
               <h2 id="heading">공부하기 좋은 카페를 찾아보세요.</h2>
-              <h2 id="link">더 알아보기 ></h2>
+              <h2 id="link">더 알아보기 &gt;</h2>
             </div>
           </div>
         </section>

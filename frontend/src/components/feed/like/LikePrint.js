@@ -7,7 +7,7 @@ import { useHistory } from 'react-router-dom'
 import WriteModal from '../article/WriteModal';
 import $ from "jquery";
 
-function BookMarksPrint() {
+function BookMarksPrint(props) {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [WritemodalShow, WritesetModalShow] = React.useState(false);
@@ -15,7 +15,7 @@ function BookMarksPrint() {
 
   useEffect(() => {
     setIsLoading(true);
-    let user = "a1"
+    let user = `${props.user[1]}`
     const url = `http://i6c104.p.ssafy.io:8080/feed/likeList/${user}`
     axios.get(url,{
       params:{
@@ -41,7 +41,7 @@ function BookMarksPrint() {
     if (Math.round( $(window).scrollTop()) == $(document).height() - $(window).height()) {
       window.removeEventListener("scroll",moredata)
       console.log('밑이다!')
-      let user = "a1"
+      let user = `${props.user[1]}`
       let lastNo = data[data.length-1].feedNo
       const url = `http://i6c104.p.ssafy.io:8080/feed/likeList/${user}`
       axios.get(url,{

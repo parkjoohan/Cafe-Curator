@@ -5,7 +5,7 @@ import { FiCornerUpLeft } from 'react-icons/fi';
 import './css/Comment.css'
 import axios from 'axios';
 
-export default function Comment() {
+export default function Comment({user}) {
     const history = useHistory();
     const [comments, setComments] = useState([]);
     const [recomments, setRecomments] = useState([]); 
@@ -25,7 +25,7 @@ export default function Comment() {
         params: {
             "feedNo": `${pk}`,
             "size": 5,
-            "userNo": "a1"
+            "userNo": `${user[1]}`
         }
         }).then((data1) => {
             console.log(data1.data);
@@ -48,9 +48,9 @@ export default function Comment() {
     function readComment() {
         axios.get(url, {
             params: {
-                "feedNo": 60,
+                "feedNo": `${pk}`,
                 "size": 5,
-                "userNo": "a1"
+                "userNo": `${user[1]}`
             }
         }).then((data1) => {
             console.log(data1.data);
@@ -63,8 +63,8 @@ export default function Comment() {
         console.log(props);
         axios.post("/comment", {
             "content": props,
-            "feedNo": 60,
-            "userNo": "a1",
+            "feedNo": `${pk}`,
+            "userNo": `${user[1]}`
             // "parentNo": 
         },
         {
@@ -76,9 +76,9 @@ export default function Comment() {
                     console.log(data2.data);
                     axios.get(url, {
                         params: {
-                            "feedNo": 60,
+                            "feedNo": `${pk}`,
                             "size": 5,
-                            "userNo": "aa"
+                            "userNo": `${user[1]}`
                         }
                     }).then((data1) => {
                         console.log(data1.data);
@@ -102,9 +102,9 @@ export default function Comment() {
 
         axios.post("/comment", {
             "content": props,
-            "feedNo": 60,
+            "feedNo": `${pk}`,
             "parentNo": parentNo,
-            "userNo": "a1",
+            "userNo": `${user[1]}`
         },
         {
             headers: {
@@ -115,9 +115,9 @@ export default function Comment() {
                     console.log(data2.data);
                     axios.get(url, {
                         params: {
-                            "feedNo": 60,
+                            "feedNo": `${pk}`,
                             "size": 5,
-                            "userNo": "a1"
+                            "userNo": `${user[1]}`
                         }
                     }).then((data1) => {
                         console.log(data1.data);
@@ -135,7 +135,7 @@ export default function Comment() {
             params: {
                 "parentNo": props, 
                 "size": 5,
-                "userNo": "a1"
+                "userNo": `${user[1]}`
             }
         }).then((data3) => {
             console.log(data3.data);
@@ -149,13 +149,13 @@ export default function Comment() {
     // 댓글 삭제
     function deleteComment(props) {
         console.log(props);
-        axios.delete(url + `/a1/${props}`).then(window.location.reload())
+        axios.delete(url + `/${user[1]}/${props}`).then(window.location.reload())
     }
 
     // 좋아요
     function likeArticle(props, index) {
         console.log(props);
-        axios.get(url + `/like/a1/${props}`)
+        axios.get(url + `/like/${user[1]}/${props}`)
             .then((data) => {
                 if (mylike[index] == true) {
                     let newArray3 = [...mylike];

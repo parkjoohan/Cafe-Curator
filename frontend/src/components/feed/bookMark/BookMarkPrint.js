@@ -8,7 +8,7 @@ import WriteModal from '../article/WriteModal';
 import $ from "jquery";
 // import Toggle from '../main/Toggle';
 
-function BookMarksPrint() {
+function BookMarksPrint(props) {
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [WritemodalShow, WritesetModalShow] = React.useState(false);
@@ -16,7 +16,7 @@ function BookMarksPrint() {
 
   useEffect(() => {
     setIsLoading(true);
-    let user = "a1"
+    let user = props.user[1];
     const url = `http://i6c104.p.ssafy.io:8080/feed/bookmarkList/${user}`
     axios.get(url,{
       params:{

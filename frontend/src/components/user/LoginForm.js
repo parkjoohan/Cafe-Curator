@@ -81,7 +81,7 @@ export default function LoginForm({setUser}) {
       localStorage.setItem('userId', response.data.userId);
       
 
-      setUser(response.data.userNo)
+      setUser([response.data.userId, response.data.userNo])
       history.goBack();
     }
    catch (error) {

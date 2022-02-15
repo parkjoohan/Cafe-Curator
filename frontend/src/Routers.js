@@ -28,13 +28,13 @@ export default function Routers(props) {
       <Route path="/login"><LoginForm setUser={props.setUser}/></Route>
       <Route path="/email" component={EmailForm}></Route>
       <Route path="/signup/:email" component={SignupForm}></Route>
-      <Route exact path="/feed"><Mainfeed setFootershow={props.setFootershow}/></Route>
-      <Route exact path="/feed2"><Mainfeed2 setFootershow={props.setFootershow}/></Route>
-      <Route exact path="/feed3"><Mainfeed3 setFootershow={props.setFootershow}/></Route>
+      <Route exact path="/feed"><Mainfeed setFootershow={props.setFootershow} user={props.user} /></Route>
+      <Route exact path="/feed2"><Mainfeed2 setFootershow={props.setFootershow} user={props.user} /></Route>
+      <Route exact path="/feed3"><Mainfeed3 setFootershow={props.setFootershow} user={props.user} /></Route>
       <Route path="/bookmark" component={BookMarkPrint}></Route>
       <Route path="/like" component={LikePrint}></Route>
-      <Route path="/article/:pk" component={Detail}></Route>
-      <Route path="/profile/:id" component = {UserProfile}></Route>
+      <Route path="/article/:pk"><Detail user={props.user}/></Route>
+      <Route path="/profile/:id"><UserProfile user={props.user} setFootershow={props.setFootershow}/></Route>
       <Route path="/store/:pk" component = {StoreProfile}></Route>
       <Route path="/termmodal" component = {TermsModal}></Route>
       {/* searchtest용입니다. 테스트 끝나면 지울거임 */}

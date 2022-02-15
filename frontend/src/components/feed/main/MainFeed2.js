@@ -9,6 +9,16 @@ import './css/MainFeed2.css'
 
 export default function Mainfeed2(props) {
 
+  //1. useEffect찾는다. 그중 맨뒤 [] 있는로
+
+  useEffect(()=>{
+    console.log(props.user)
+    if(props.user[0]==null){
+      alert('로그인이 필요합니다!')
+      history.goBack();  
+    }
+  },[])
+
   const history = useHistory();
 
   const [WritemodalShow, WritesetModalShow] = React.useState(false);
@@ -49,8 +59,9 @@ export default function Mainfeed2(props) {
       <WriteModal
         show={WritemodalShow}
         onHide={() => WritesetModalShow(false)}
+        user={props.user}
       />
-      {toggled? <BookMarkPrint setFootershow={props.setFootershow}/>:<LikePrint/>}
+      {toggled? <BookMarkPrint setFootershow={props.setFootershow} user={props.user}/>:<LikePrint user={props.user}/>}
     </Row>
   </Container>
   );

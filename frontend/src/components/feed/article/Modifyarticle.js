@@ -7,7 +7,7 @@ import axios from 'axios'
 
 
 
-const Modifyarticle = forwardRef(({show, onHide, data},ref) => {
+const Modifyarticle = forwardRef(({show, onHide, data, user,pk},ref) => {
 
   useImperativeHandle(ref,()=>({
     setDetaildata,
@@ -327,13 +327,20 @@ const Modifyarticle = forwardRef(({show, onHide, data},ref) => {
     for (let i = 0; i < files.length; i++) {
       newForm.append("files",files[i])
     }
-    const modifyurl = `http://i6c104.p.ssafy.io:8080/feed/a1/`
+    const modifyurl = `http://i6c104.p.ssafy.io:8080/feed/${user[1]}/`
     axios({
       method: "put",
       url: modifyurl,
       data: newForm,
       headers: { "Content-Type": "multipart/form-data" }
-    }).then(res=>console.log('응답받았다',res)).catch(err=>console.log('실패했다',err))
+    }).then(
+      res=>
+      {console.log('응답받았다',res)
+      document.location.reload();
+      }
+      ).catch(
+        err=>console.log('실패했다',err)
+        )
     onHide()
   }
 

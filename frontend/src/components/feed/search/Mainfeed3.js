@@ -1,7 +1,7 @@
 import React,{useState,useEffect} from 'react';
 import SkeletonPrint from '../blog/BlogPrint'
 import { Col, Row, Button, ButtonGroup, Container } from 'react-bootstrap'
-import { Link, Route, Switch, BrowserRouter as Router } from "react-router-dom";
+import { Link, Route, Switch, BrowserRouter as Router ,useHistory} from "react-router-dom";
 import PopularSearch from "./PopularSearch";
 import RecentSearch from "./RecentSearch";
 import LocationSearch from "./KeywordSearch/LocationSearch";
@@ -10,7 +10,7 @@ import './css/MainFeed3.css'
 
 export default function Mainfeed(props) {
 
-    
+    const history = useHistory();
     const [currentClick, setCurrentClick] = React.useState(null);
     const [prevClick, setPrevClick] = React.useState(null);
     const [cafeinfo,setCafeinfo] = useState({})
@@ -20,6 +20,12 @@ export default function Mainfeed(props) {
     };
 
     useEffect(()=>{
+        console.log(props.user)
+        if(props.user[0]==null){
+            alert('로그인이 필요합니다!')
+            history.goBack();  
+        }
+
         props.setFootershow(false);
         return () => {
             props.setFootershow(true);

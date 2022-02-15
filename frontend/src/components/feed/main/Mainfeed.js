@@ -11,6 +11,9 @@ export default function Mainfeed(props) {
 
   const history = useHistory();
 
+  //mainfeed는 뭐냐? 네브바에서 feed&blog눌렀을때 나오는 그 화면
+  //
+
   const [WritemodalShow, WritesetModalShow] = React.useState(false);
 
   const style = {
@@ -23,6 +26,15 @@ export default function Mainfeed(props) {
     setToggled(toggled=>!toggled);
   }
 
+  const onClick = () => {
+    if(props.user[0]==null){
+      if(WritemodalShow==false){
+        alert('로그인이 필요합니다!')
+      }
+    }else{
+      WritesetModalShow(prev=>!prev);
+    }
+  }
   return (
   <Container>
     <Row>
@@ -38,9 +50,11 @@ export default function Mainfeed(props) {
               </div>
             </Col>
             <Col xs={2}>
-              <Button id="MainFeed_Write_button" variant="outline-success" onClick={() => WritesetModalShow(true)}>
+              {props.user[0]&&
+              <Button id="MainFeed_Write_button" variant="outline-success" onClick={() => onClick()}>
                   <h6 id="mainfeed_Write_button_font" style={{margin: "1px "}}>게시글 작성</h6>
               </Button> 
+              }
             </Col>
           </Row>
         </Container>
@@ -49,8 +63,9 @@ export default function Mainfeed(props) {
       <WriteModal
         show={WritemodalShow}
         onHide={() => WritesetModalShow(false)}
+        user={props.user}
       />
-      {toggled? <Feed setFootershow={props.setFootershow}/>:<Blog/>}
+      {toggled? <Feed setFootershow={props.setFootershow} user={props.user}/>:<Blog/>}
     </Row>
   </Container>
   );

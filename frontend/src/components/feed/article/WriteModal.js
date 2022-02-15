@@ -8,7 +8,7 @@ import axios from 'axios'
 
 
 
-const WriteModal = ( {show, onHide}) => {
+const WriteModal = ( {show, onHide,user}) => {
   
   const [form,setForm] = useState({
     "feedDto":{}
@@ -213,25 +213,31 @@ const WriteModal = ( {show, onHide}) => {
   },[fileImage])
 
   useEffect(()=>{
+    console.log(user)
+  },[])
+
+  useEffect(()=>{
     // console.log("content:",content)
     // console.log("like:",like)
     // console.log("like2:",like2)
     // console.log("cafeinfo:",cafeinfo)
-    const newform = {
-      ...cafeinfo,
-      "content":content,
-      "categoryList":[],
-      "userNo":"a1",
-    }
-    for (let i = 0; i < like.length; i++) {
-      if(like[i][1]===true){
-        newform.categoryList = [...newform.categoryList,likename[i]]
+    if(user){
+      const newform = {
+        ...cafeinfo,
+        "content":content,
+        "categoryList":[],
+        "userNo":user[1],
       }
-      if(like2[i][1]===true){
-        newform.categoryList = [...newform.categoryList,likename2[i]]
+      for (let i = 0; i < like.length; i++) {
+        if(like[i][1]===true){
+          newform.categoryList = [...newform.categoryList,likename[i]]
+        }
+        if(like2[i][1]===true){
+          newform.categoryList = [...newform.categoryList,likename2[i]]
+        }
       }
+      setFeeddto(newform)
     }
-    setFeeddto(newform)
   },[like,like2,cafeinfo,content])
 
   // useEffect(()=>{

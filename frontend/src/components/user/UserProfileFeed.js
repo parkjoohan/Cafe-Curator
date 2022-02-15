@@ -1,11 +1,17 @@
 import axios from 'axios'
-import React,{useState,useEffect} from 'react'
+import React,{useState,useEffect,useImperativeHandle,forwardRef} from 'react'
 import {Container,Row,Col,Button} from 'react-bootstrap'
 import { useHistory } from 'react-router-dom'
-import Map from './Map'
 import $ from "jquery";
 
-export default function Feed(props) {
+const UserProfileFeed = forwardRef((props,ref) => {
+
+  const [youme,setYoume] = useState([null,null])
+  useImperativeHandle(ref,()=>({
+    setYoume,
+  }))
+
+
   const [newdata,setNewdata] = useState([]);
   // 서버에서 받아올 데이터 중 이미지의 url이 저장됨 Array
   const [url_arr,setUrl] = useState([])
@@ -37,6 +43,7 @@ export default function Feed(props) {
   useEffect(() => {
 
     window.addEventListener('scroll',scroll)
+    console.log(url_arr)
 
     if(url_arr.length != 0){
       // console.log('url_arr가 바뀌었다!',url_arr)
@@ -73,7 +80,7 @@ export default function Feed(props) {
     // console.log(getScrollTop() == getDocumentHeight() - window.innerHeight)
     if (Math.round( $(window).scrollTop()) == $(document).height() - $(window).height()) {
       window.removeEventListener('scroll',scroll)
-      // console.log('스크롤이 맨 밑이다!')
+      console.log('스크롤이 맨 밑이다!')
       // console.log('현재 스크롤 위치',window.scrollY);
       nextLoading()
     }
@@ -82,11 +89,11 @@ export default function Feed(props) {
   //로딩함수(콜백)
   function nextLoading(){
     // console.log('@@@',url_arr[url_arr.length-1].feedNo)
-    let user = ""
-    if (props.user[1]!==null){
-      user = props.user[1]
+    let url = `http://i6c104.p.ssafy.io:8080/feed/feedList/${youme[0]}`
+    if(youme[1]!==null){
+      url += `/${youme[1]}`
     }
-    const url = `http://i6c104.p.ssafy.io:8080/feed/mainFeedList/${user}`
+    console.log(url_arr[url_arr.length-1].feedNo,'마지막 피드 넘버')
       axios.get(url,{
         params:{
           "size":5,
@@ -134,41 +141,36 @@ export default function Feed(props) {
   useEffect(()=>{
     // console.log('현재 스크롤 위치',window.scrollY);
     // console.log('이게 가장 먼저 실행되겠지?')
-    let container = document.getElementById("feedcontainer")
-    let lastNo = 0
-    setContainerWidth(container.offsetWidth);
-    setRows(parseInt(container.offsetWidth/300))
-    window.addEventListener('resize',handleResize);
-    
-    props.setFootershow(false)
-  
+    if(youme[0]!==null){
 
-    // const url = "http://localhost:8080/feed/mainFeedList/U003"
-    let user = ""
-    if (props.user[1]!==null){
-      user = props.user[1]
-    }
-    console.log(user,props.user,'!!')
-    const url = `http://i6c104.p.ssafy.io:8080/feed/mainFeedList/${user}`
-
-    axios.get(url,{
-      params:{
-        "size":5,
-        "type":"feed",
-        "lastFeedNo": null,
+      let container = document.getElementById("feedcontainer")
+      let lastNo = 0
+      setContainerWidth(container.offsetWidth);
+      setRows(parseInt(container.offsetWidth/300))
+      window.addEventListener('resize',handleResize);
+      
+      let url = `http://i6c104.p.ssafy.io:8080/feed/feedList/${youme[0]}`
+      if(youme[1]!==null){
+        url += `/${youme[1]}`
       }
-    }).then(function(res){
-      let newUrl = res.data
-      // console.log('첫 데이터 받기 전 url_arr(빈 어레이여야함)',url_arr)
-      setUrl(newUrl)
-      lastNo = newUrl[newUrl.length-1].feedNo
-    }).catch(console.log("DD"))
+      console.log(url)
+      axios.get(url,{
+        params:{
+          "size":5,
+          "type":"feed",
+          "lastFeedNo": null,
+        }
+      }).then(function(res){
+        console.log(res.data)
+        let newUrl = res.data
+        // console.log('첫 데이터 받기 전 url_arr(빈 어레이여야함)',url_arr)
+        setUrl(newUrl)
+        lastNo = newUrl[newUrl.length-1].feedNo
+      }).catch(console.log("DD"))
 
-    return ()=>{
-      window.removeEventListener('resize',handleResize);
-      props.setFootershow(true)
     }
-  },[])
+    
+  },[youme])
 
   // function scroll(lastNo){
   //   const getScrollTop = function () { return (window.pageYOffset !== undefined) ? window.pageYOffset : (document.documentElement || document.body.parentNode || document.body).scrollTop; }; 
@@ -242,10 +244,14 @@ export default function Feed(props) {
   }
 
   function likeArticle(index){
-    if(props.user[1]==null){
+    // if(props.user[1]==null){
+    //   return;
+    // }
+    if(youme[1]==null){
       return;
     }
-    const likeUrl = `http://i6c104.p.ssafy.io:8080/feed/like/${url_arr[index].feedNo}/${props.user[1]}`
+    const likeUrl = `http://i6c104.p.ssafy.io:8080/feed/like/${url_arr[index].feedNo}/${youme[1]}`
+
     let heart = document.getElementById(`heart${index}`);
     let heart2 = document.getElementById(`heart2${index}`);
     axios.get(likeUrl).then(function(res){
@@ -387,10 +393,11 @@ export default function Feed(props) {
         paddingRight:0,
         paddingLeft:0,
         }}>
-        <Map />
       </div>
       <div id="container" style={{display:'flex',position:'relative'}}>
       </div>
     </Container>
   )
-}
+})
+
+export default UserProfileFeed

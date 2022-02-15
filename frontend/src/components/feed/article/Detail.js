@@ -8,8 +8,8 @@ import axios from 'axios';
 import Modifyarticle from './Modifyarticle';
 import Likelist from './Likelist';
 
-export default function Detail() {
-
+export default function Detail(props) {
+  
   const childRef = useRef();
   const likeRef = useRef();
   const [data,setData] = useState({})
@@ -31,7 +31,7 @@ export default function Detail() {
     if(likeRef.current){
       let newdata={
         feedNo:data.feedNo,
-        userNo:"a1",
+        userNo:props.user[1],
         islike:likearr[1],
       }
       likeRef.current.setDetaildata(newdata)
@@ -40,7 +40,11 @@ export default function Detail() {
   
 
   useEffect(()=>{
-    const url = `http://i6c104.p.ssafy.io:8080/feed/detail/${pk}/a1`
+    if(props.user[0]==null){
+      alert('로그인이 필요합니다!')
+      history.goBack();  
+    }
+    const url = `http://i6c104.p.ssafy.io:8080/feed/detail/${pk}/${props.user[1]}`
     axios.get(url).then(res=>{
       console.log(res.data)
       setData(res.data);
@@ -51,7 +55,7 @@ export default function Detail() {
   },[])
 
   const checkbookmark = () => {
-    const url = `http://i6c104.p.ssafy.io:8080/feed/bookmark/${pk}/a1`
+    const url = `http://i6c104.p.ssafy.io:8080/feed/bookmark/${pk}/${props.user[1]}`
     axios.get(url).then(res=>{
       console.log(res.data)
       if (res.data == "SUCCESS : ADD BOOKMARK"){
@@ -63,7 +67,8 @@ export default function Detail() {
   }
 
   const likearticle = () => {
-    const url = `http://i6c104.p.ssafy.io:8080/feed/like/${pk}/a1`
+    console.log(props.user[1])
+    const url = `http://i6c104.p.ssafy.io:8080/feed/like/${pk}/${props.user[1]}`
     axios.get(url).then(res=>{
       console.log(res.data)
       let newlikearr = [...likearr]
@@ -179,12 +184,14 @@ export default function Detail() {
               <div style={{width:"70px"}}>
                 <p style={{marginRight:"3%", marginLeft:"8%"}}>북마크</p>
               </div>
+              {data.userId==props.user[0]&&
               <Button onClick={()=>setModifymodalshow(true)}>수정</Button>
+              }
             </div>
           </Row>
           <Row>
             <div id='article_comment'>
-              <Comment />
+              <Comment user={props.user}/>
             </div>
           </Row>
         </Col>
@@ -194,6 +201,8 @@ export default function Detail() {
         onHide={() => setModifymodalshow(false)}
         ref = {childRef}
         data={data}
+        user={props.user}
+        pk={pk}
         />
       <Likelist
         show={likemodalshow}

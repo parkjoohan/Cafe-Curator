@@ -35,7 +35,7 @@ function Header({user, setUser}) {
     localStorage.removeItem('userNo')
     localStorage.removeItem('userPic')
     localStorage.removeItem('userId')
-    setUser(null)
+    setUser([null,null])
   }
   const style = {
     position: 'absolute',
@@ -64,7 +64,7 @@ function Header({user, setUser}) {
             <Nav.Link><Link to="/feed3" id="header_link">Search</Link></Nav.Link>
           </Nav>
           <Nav style={{ width: "100%", justifyContent: "right", marginRight: "2%", placeItems: "center" }}>
-            { !user ?
+            { !user[0] ?
               <div style={{alignSelf: "center"}}>
                 <Row>
                   <Col>

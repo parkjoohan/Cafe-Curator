@@ -2,7 +2,9 @@ import React,{useState,useEffect} from 'react';
 import './css/Account.css';
 import Search from './Search';
 import axios from 'axios'
-
+import { Link } from 'react-router-dom';
+import { Switch,Route } from '@mui/material';
+import UserProfile from '../../../user/UserProfile';
 export default function AccountSearch() {
     const [keyword,setKeyword] = useState("")
     const [data,setData] = useState([])
@@ -20,6 +22,10 @@ export default function AccountSearch() {
             })
         }
     },[keyword])
+
+    const onClick = (e)=>{
+        document.location.href=`/profile/${e}`
+    }
     return (
         <div>
             <Search setKeyword={setKeyword}/>
@@ -35,7 +41,7 @@ export default function AccountSearch() {
                                 }
                             </div>
                         </div>
-                        <p className='account_userId'>{account.userId}</p>
+                        <p className='account_userId' onClick={()=>onClick(account.userId)}>{account.userId}</p>
                         <span className='account_follow'>팔로워{account.followerCount}</span>
                         <span className='account_follow'>팔로잉{account.followingCount}</span>
                         <hr/>

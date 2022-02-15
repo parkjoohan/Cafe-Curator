@@ -5,6 +5,8 @@ const Map = forwardRef((props,ref)=>{
 
   const [markerdata,setMarkerdata] = useState([]);
 
+  const [select,setSelect] = useState(null);
+
   useImperativeHandle(ref,()=>({
     setMarkerdata,
   }))
@@ -18,7 +20,6 @@ const Map = forwardRef((props,ref)=>{
     var map = new kakao.maps.Map(mapContainer, mapOption);
   },[])
 
-  
   useEffect(()=>{
     if(markerdata.length>0){
       console.log(markerdata)
@@ -56,7 +57,7 @@ const Map = forwardRef((props,ref)=>{
           <h6 id='map_modal_cafename'>${markerdata[i].place_name}</h6>
           <p id='map_modal_content'>${markerdata[i].address_name}</p>
           <p id='map_modal_content'>${markerdata[i].phone}</p>
-          <p id='map_modal_content' onclick="console.log(${markerdata[i].place_name})">검색</p>
+          <p id='map_modal_content' onclick="setSelect(${markerdata})">검색</p>
         </div>
         `
         var infowindow = new kakao.maps.InfoWindow({
