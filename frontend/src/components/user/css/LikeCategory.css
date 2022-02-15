@@ -79,15 +79,15 @@
 #LikeCategory_cate_air_menu {
     text-align: -webkit-center;
     padding: 1%;
-    width: 90%;
+    width: 50%;
     height: 130px;
-    margin-left: 10%;
+    margin-left: 5%;
 }
 
 #LikeCategory_cate_air {
     text-align: -webkit-center;
     padding: 1%;
-    width: 80%;
+    width: 90%;
     height: 200px;
     margin-left: 10%;
 }
@@ -198,6 +198,7 @@
         font-size: 10px;
         width: 300px;
         height: 80px;
+        margin-left: 10%;
     }
 
     #LikeCategory_cate_air {
