@@ -5,7 +5,6 @@ import { Link, Route, Switch, BrowserRouter as Router } from "react-router-dom";
 import PopularSearch from "./PopularSearch";
 import RecentSearch from "./RecentSearch";
 import LocationSearch from "./KeywordSearch/LocationSearch";
-// import CafeSearch from "./CafeSearch";
 import AccountSearch from "./AccountSearch/AccountSearch";
 import './css/MainFeed3.css'
 
@@ -32,15 +31,15 @@ export default function Mainfeed(props) {
         if (currentClick !== null) {
             let current = document.getElementById(currentClick);
             console.log(current);
-            current.style.backgroundColor = "gray";
-            current.style.color = "white";
+            current.style.color = "#06c";
+            // current.style.textDecoration="underline"
             
         }
 
         if (prevClick !== null) {
             let prev = document.getElementById(prevClick);
-            prev.style.color = "black";
-            prev.style.backgroundColor = "white";
+            prev.style.color = "#666";
+            // prev.style.textDecoration="none"
         } 
         setPrevClick(currentClick);
         },
@@ -54,19 +53,16 @@ export default function Mainfeed(props) {
                 <div id='search_button_div' style={{textAlign: "center" }}>
                     <Row id='search_button_group'>
                         <Col lg={2}>
-                            <Link to="/popularsearch"><Button variant="light" id='search_popularsearch' onClick={GetClick}>인기순</Button></Link>
+                            <Link id="search_link" to="/popularsearch"><div variant="light" id='search_popularsearch' onClick={GetClick}>인기순</div></Link>
                         </Col>
                         <Col lg={2}>
-                            <Link to="/recentsearch"><Button variant="light" id='search_recentsearch' onClick={GetClick}>최신순</Button></Link>
+                            <Link id="search_link" to="/recentsearch"><div variant="light" id='search_recentsearch' onClick={GetClick}>최신순</div></Link>
                         </Col>
                         <Col lg={2}>
-                            <Link to="/locationsearch"><Button variant="light" id='search_locationsearch' onClick={GetClick}>장소</Button></Link>
+                            <Link id="search_link" to="/locationsearch"><div variant="light" id='search_locationsearch' onClick={GetClick}>장소</div></Link>
                         </Col>
-                        {/* <Col lg={2}>
-                            <Link to="/cafesearch"><Button variant="light" id='search_cafesearch' onClick={GetClick}>카페</Button></Link>
-                        </Col> */}
                         <Col lg={2}>
-                            <Link to="/accountsearch"><Button variant="light" id='search_accountsearch' onClick={GetClick}>계정</Button></Link>
+                            <Link id="search_link" to="/accountsearch"><div variant="light" id='search_accountsearch' onClick={GetClick}>계정</div></Link>
                         </Col>
                     </Row>  
                 </div>
@@ -75,7 +71,6 @@ export default function Mainfeed(props) {
                         <Route exact path="/popularsearch" component={PopularSearch} />
                         <Route path="/recentsearch" component={RecentSearch} />
                         <Route path="/locationsearch" component={LocationSearch} />
-                        {/* <Route path="/cafesearch" component={CafeSearch} /> */}
                         <Route path="/accountsearch" component={AccountSearch} />
                     </Switch>
                 </div>
@@ -85,4 +80,3 @@ export default function Mainfeed(props) {
        
     );
 }
-

@@ -1,3 +1,6 @@
+*{
+    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+}
 #search_button_form {
     margin-top: 3%;
     text-align-last: center;
@@ -8,6 +11,9 @@
 #search_button_div {
     text-align: -webkit-center;
     margin-bottom: 1%;
+    border-top:solid rgba(0, 0, 0, 0.5);
+    border-bottom:solid rgba(0, 0, 0, 0.5);
+    padding:10px;
 }
 
 #search_button_group {
@@ -16,30 +22,41 @@
     justify-content: center;
 }
 
+#search_link {
+    text-decoration: none;
+}
+
 #search_popularsearch {
     width: 100%;
-    border : 1px solid black;
+    font-size:2.5vmin;
+    color:#666;
+    display:inline;
+    /* border : 1px solid black; */
 }
 
 #search_recentsearch {
     width: 100%;
-    border : 1px solid black;
-    margin-right: 100%;
+    font-size:2.5vmin;
+    color:#666;
+    display:inline;
+    /* border : 1px solid black; */
+    /* margin-right: 100%; */
 }
 
 #search_locationsearch {
     width: 100%;
-    border : 1px solid black;
-}
-
-#search_cafesearch {
-    width: 100%;
-    border : 1px solid black;
+    font-size:2.5vmin;
+    color:#666;
+    display:inline;
+    /* border : 1px solid black; */
 }
 
 #search_accountsearch {
     width: 100%;
-    border : 1px solid black;
+    font-size:2.5vmin;
+    color:#666;
+    display:inline;
+    /* border : 1px solid black; */
 }
 
 @media screen and (max-width: 412px){

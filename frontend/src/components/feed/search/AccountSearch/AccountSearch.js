@@ -25,16 +25,19 @@ export default function AccountSearch() {
             <Search setKeyword={setKeyword}/>
             {
                 data.map((account,index)=>(
-                    <div style={{display:"flex",justifyContent:"center"}}>
-                        <hr/>
-                        {
-                            account.picture?
-                            <img src={account.picture}></img>:
-                            <img id ="fix_profile_pic" src={process.env.PUBLIC_URL + "/image/map.png"}></img>
-                        }
-                        <p>{account.userId}</p>
-                        <p>팔로워{account.followerCount}</p>
-                        <p>팔로잉{account.followingCount}</p>
+                    <div className='accountslist'>
+                        <div className='imagebox'>
+                            <div className='box'>
+                                {
+                                    account.picture?
+                                    <img className="account_image" src={account.picture}></img>:
+                                    <img className="account_image" id ="fix_profile_pic" src={process.env.PUBLIC_URL + "/image/map.png"}></img>
+                                }
+                            </div>
+                        </div>
+                        <p className='account_userId'>{account.userId}</p>
+                        <span className='account_follow'>팔로워{account.followerCount}</span>
+                        <span className='account_follow'>팔로잉{account.followingCount}</span>
                         <hr/>
                     </div>
                 ))
