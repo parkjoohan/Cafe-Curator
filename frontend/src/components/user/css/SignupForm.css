@@ -1,14 +1,24 @@
+#signup_paperStyle {
+  padding: 20px;
+  height: 880px;
+  width: 500px;
+  margin: 20px;
+}
+
 #signup_content {
   font-family: system-ui, serif;
   font-size: 1rem;
   padding: 3rem;
   border-radius: 1rem;
   align-items: initial;
+  text-align: -webkit-center;
 }
 
 #signup_profilePic {
   width: 150px;
   height: 150px;
+  margin-top: -3%;
+  margin-bottom: 3%;
 }
 
 #signup_emailbutton {
@@ -23,6 +33,11 @@
 
 #singup_content {
   margin-bottom: 3%;
+}
+
+#signup_cate_link {
+  margin-top: 3%;
+  margin-bottom: 5%;
 }
 
 #signup_cate {
@@ -61,15 +76,91 @@
   color:dimgrey;
 }
 
-#signup_oauthlist{
-  width:100%;
-  height:auto;
-  text-align: -webkit-center;
+#signup_oauthimage {
+  width: 80%;
 }
 
-#signup_oauthimage {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 60%;
+@media screen and (max-width: 412px){
+
+  #signup_paperStyle {
+    padding: 20px;
+    height: 880px;
+    width: 105%;
+  }
+  
+  #signup_content {
+    width: 100%;
+    font-family: system-ui, serif;
+    font-size: 1rem;
+    padding: 3rem;
+    border-radius: 1rem;
+    align-items: initial;
+    text-align: -webkit-center;
+    padding-left: 0.1%;
+  }
+  
+  #signup_profilePic {
+    width: 150px;
+    height: 150px;
+    margin-top: -10%;
+    margin-bottom: 10%;
+  }
+  
+  #signup_emailbutton {
+    border: 1px solid black;
+    font-size: 12px;
+    font-weight: bold;
+    width: 100px;
+    color: black;
+    margin-top: 1%;
+    margin-bottom: 1%;
+  }
+  
+  #singup_content {
+    margin-bottom: 3%;
+  }
+
+  #signup_cate {
+    border: 1px solid black;
+    font-size: 7px;
+    font-weight: bold;
+    width: 70px;
+    color: black;
+    margin-top: 1%;
+    margin-bottom: 1%;
+  }
+  
+  #signup_link_click {
+    font-size: 5px;
+  }
+
+  #signup_link {
+    border: 1px solid black;
+    font-size: 7px;
+    font-weight: bold;
+    width: 20px;
+    color: black;
+    margin-top: 1%;
+    margin-bottom: 1%;
+  }
+  
+  #signup_divider {
+    display: flex;
+    justify-content: center;
+  }
+  
+  #signup_line {
+    width:30%;
+  }
+  
+  #signup_sociallogin {
+    font-size:90%;
+    margin:auto;
+    font-weight: 700;
+    color:dimgrey;
+  }
+  
+  #signup_oauthimage {
+    width: 80%;
+  }
 }

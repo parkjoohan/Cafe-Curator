@@ -3,6 +3,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Likes from "./Likes";
 import { Container, Button, Col, Row } from 'react-bootstrap';
+import { useHistory } from 'react-router-dom'
 import WriteModal from '../article/WriteModal';
 import $ from "jquery";
 
@@ -59,24 +60,19 @@ function BookMarksPrint() {
 
   return (
     <div>
-        <Container>
-            <Row>
-            <WriteModal
-                show={WritemodalShow}
-                onHide={() => WritesetModalShow(false)}
-            />
-        
-            <div id='like'>
-                <Container>
-                    <div id="App">
-                        <ul id="like_contentWrapper">
-                        <Likes isLoading={isLoading} data={data} />
-                        </ul>
-                    </div>
-                </Container>
-            </div>
-            </Row>
-        </Container>
+      <WriteModal
+          show={WritemodalShow}
+          onHide={() => WritesetModalShow(false)}
+      />
+      <div id='like'>
+          <div>
+              <div id="App">
+                  <ul id="like_contentWrapper">
+                  <Likes isLoading={isLoading} data={data} />
+                  </ul>
+              </div>
+          </div>
+      </div>
     </div>
 );
 }

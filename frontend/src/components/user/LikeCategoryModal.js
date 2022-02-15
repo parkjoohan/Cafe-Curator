@@ -16,7 +16,6 @@ const LikeCategoryModal = ({ show, onHide,likearr, setLikearr }) => {
 
   let likename = ['커피','케이크','마카롱/쿠키','브런치','차'];
 
-
   useEffect(()=>{
     console.log(likearr)
   },[likearr])
@@ -73,7 +72,6 @@ const LikeCategoryModal = ({ show, onHide,likearr, setLikearr }) => {
   ))
 
   // 여기까지는 메뉴관심사코드
-
   const [like2,setlike2] = useState([
     [0,false],
     [1,false],
@@ -167,29 +165,29 @@ const LikeCategoryModal = ({ show, onHide,likearr, setLikearr }) => {
       </Modal.Header>
       
       <Modal.Body>  
-        <Row>
-          {/* 선택된 카테고리 */}
-          <Col md={3}>
-            <p id='selected_cate'>선택된 카테고리</p>
-          </Col>
-          <Col md={9}>
-            <Row>{selected}{selected2}</Row>
-            
-          </Col>
-        </Row>
-        <hr />
-        <Row id='cate_select'>
-          <Col id='cate_air' md={6}>
+        <div id='LikeCategory_cate'>
+          <div id='LikeCategory_cate_air_menu'>
+            {/* 선택된 카테고리 */}
+              <p id='LikeCategory_cate_air_menu_selected'>선택된 카테고리</p>
+              <Row style={{justifyContent: "left", width:"200%", marginLeft: "-12%"}}>{selected}{selected2}</Row>
+          </div>
+
+          <hr />
+
+          <div id='LikeCategory_cate_air'>
             {/* 분위기 카테고리 */}
-            <p style={{fontWeight: "bold"}}>분위기 카테고리</p>
-            <Row>{defaultlike2}</Row>
-          </Col>
-          <Col id='cate_menu' md={6}>
+            <h5 id='LikeCategory_cate_air_menu_p'>분위기 카테고리</h5>
+            <Row style={{justifyContent: "left", width:"60%"}}>{defaultlike2}</Row>
+          </div>
+          
+          <hr />
+
+          <div id='LikeCategory_cate_menu'>
             {/* 메뉴 카테고리 */}
-            <p style={{fontWeight: "bold"}}>메뉴 카테고리</p>
-            <Row>{defaultlike}</Row>
-          </Col>
-        </Row>
+            <h5 id='LikeCategory_cate_air_menu_p'>메뉴 카테고리</h5>
+            <Row style={{justifyContent: "left", width:"60%"}}>{defaultlike}</Row>
+          </div>
+        </div>
       </Modal.Body>
       <Modal.Footer style={{ height: "50px", alignContent: "center" }}>
       <Button id="NoBgButton" onClick={onHide}>뒤로가기</Button> {/*추후 구현*/}

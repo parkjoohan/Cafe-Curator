@@ -1,7 +1,43 @@
 #MainFeed_container {
-    margin-top: 3%;
+    margin-top: 5%;
+    width: 1000px;
+    float: right;
 }
 
 #MainFeed_Write_button {
     width: 120px;
+}
+
+#mainfeed_Write_button_font {
+    font-size: 15px;
+}
+
+#MainFeed_buttons {
+    text-align: -webkit-right;
+}
+
+
+
+@media screen and (max-width: 412px){
+    #MainFeed_container {
+        margin-top: 5%;
+        width: 1000px;
+        float: right;
+    }
+    
+    #MainFeed_Write_button {
+        width: 85px;
+    }
+
+    #mainfeed_Write_button_font {
+        font-size: 10px;
+    }
+    #MainFeed_buttons {
+        text-align: -webkit-right;
+    }
+
+    #MainFeed_toggle_font{
+        font-size: 10px;
+        margin-right: 10px;
+    }
 }

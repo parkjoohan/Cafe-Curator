@@ -50,9 +50,6 @@ export default function SignupForm (props) {
   setForm(newform)
   }
 
-
-
-
   const [email,setEmail] = useState("");
 
   const emailparams = useParams();
@@ -73,7 +70,7 @@ export default function SignupForm (props) {
       )
     }
       signupForm.append("userDto", new Blob([JSON.stringify(email)], { type: "application/json"}))
-      signupForm.append("file",{file});
+      signupForm.append("multipartFile",file);
       const signupurl = "http://i6c104.p.ssafy.io:8080/api/users/"
       axios ({
         method : "post",
@@ -89,18 +86,6 @@ export default function SignupForm (props) {
     }
   // 회원가입 성공-> 이전페이지로 돌아가서 -> 로그인페이지로 다시 가짐.
   // 로그인 성공하면? 이전페이지로, 결국 회원가입하고 이전페이지로 가질수있음
-  
-
-  
-
-
-
-  const paperStyle = {
-    padding: 20,
-    height: "930px",
-    width: 500,
-    margin: "20px auto",
-  }
 
   const avatarStyle = {
     background: "#1bbd7e",
@@ -120,14 +105,14 @@ export default function SignupForm (props) {
     <div>
       <Grid>
         <div id='signup_content'>
-          <Paper elevation={10} style={paperStyle}>
+          <Paper elevation={10} id='signup_paperStyle'>
             <Grid align="center">
               <Avatar style={avatarStyle}><LockOutlinedIcon /></Avatar>
               <h2>Sign Up</h2>
             </Grid><br />
             {!fileUrl ?
             <div>
-              <img style={Profileimage} src={process.env.PUBLIC_URL + "/image/Profileimage.png"} id="signup_profilePic" onClick={() => ProfilesetModalShow(true)}/>
+              <img src={process.env.PUBLIC_URL + "/image/Profileimage.png"} id="signup_profilePic" onClick={() => ProfilesetModalShow(true)}/>
               <Profile
                 fileUrl = {fileUrl} 
                 setFileUrl = {setFileUrl}
@@ -169,7 +154,7 @@ export default function SignupForm (props) {
             </div>
             
             
-            <div style={{marginTop: "3%", marginBottom: "5%"}}>
+            <div id='signup_cate_link'>
               <Row>
                 <Col sm={6}>
                   {/* 관심사선택 */}
@@ -181,7 +166,7 @@ export default function SignupForm (props) {
 
                 <Col sm={6}>
                   {/* 약관동의 */}
-                  <FormControlLabel control={ <Checkbox name="checkedB" color='primary'/> } label="약관동의"/>
+                  <FormControlLabel id='signup_link_click' control={ <Checkbox name="checkedB" color='primary'/> } label="약관동의"/>
                   <Button id="signup_link" variant="primary" onClick={() => TermssetModalShow(true)}>
                       약관 확인
                   </Button>
@@ -212,10 +197,8 @@ export default function SignupForm (props) {
               <p id="signup_sociallogin">소셜 회원가입</p>
               <hr id="signup_line" />
             </div>
-
-            <div id="signup_oauthlist">
-              <img id="signup_oauthimage" src={process.env.PUBLIC_URL + "/image/kakaooauthimage.png"}/>
-            </div>
+            
+            <img id="signup_oauthimage" src={process.env.PUBLIC_URL + "/image/kakaooauthimage.png"}/>
 
             <hr />
 

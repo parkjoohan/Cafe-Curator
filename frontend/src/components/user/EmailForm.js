@@ -12,14 +12,7 @@ const EmailForm = () => {
   const [doorLock, setDoorLock] = useState(false)
   const [sendText, setSendText] = useState('전송')
   let history = useHistory();
-  
 
-  const paperStyle = {
-    padding: 20,
-    height: "510px",
-    width: 500,
-    margin: "20px auto",
-  }
 
     // Email 보내는 부분
     const [email, setEmail] = useState(null);
@@ -78,38 +71,37 @@ const EmailForm = () => {
     
   return (
     <div>
-      <Grid>
+      <Grid style={{width: "100%"}}>
         <div id='email_content'>
-          <Paper elevation={10} style={paperStyle}>
+          <Paper elevation={10} id='email_paperStyle'>
             <Grid align="center">
               <Avatar id="email_avatarStyle"><LockOutlinedIcon /></Avatar>
-              <h2>이메일 인증</h2>
+              <h2 style={{fontSize: "20px", fontWeight:"bold"}}>이메일 인증</h2>
             </Grid><br />
 
             <Grid id="email_body" align="left">
               <div style={{marginTop: "5%"}}>
-                <h4>이메일 인증</h4>
-                <p> 이메일로 발송된 코드를 입력하세요.</p>
+                <p>이메일로 발송된 코드를 입력하세요.</p>
               </div>
 
               <Container id='email_input'>
                 <Row >
                   <Col>
                   <input id="input" type="email" onChange={onChangeEmail} name="email" placeholder="이메일을 입력하세요.." style={{ marginBottom: "3%" }} />
-                  <Button variant="primary" onClick={onClickSend} id="email_validate_submit">{sendText}</Button>
+                  <Button variant="primary" onClick={onClickSend} id="email_validate_submit"><p>{sendText}</p></Button>
                   </Col>
                 </Row>
                 
                 <Row>
                   <Col>
                     <input id="input" type="validate" onChange={onChangeCode} name="validate" placeholder="인증코드를 입력하세요.." style={{marginBottom: "8%", marginTop: "3%"}} />
-                    <Button onClick={onClickCheck} id="email_validate_submit" variant="primary">확인</Button>
+                    <Button onClick={onClickCheck} id="email_validate_submit" variant="primary"><p>확인</p></Button>
                   </Col>
                 </Row>
                 
               </Container>
 
-              <div style={{ marginBottom: "8%" }}>
+              <div id="email_body2" style={{ marginBottom: "8%" }}>
                 <a> 이메일이 발송되기까지 시간이 다소 소요될 수 있습니다.</a>
                 <p> 이메일이 오지 않았다면 <a href="#" onclick={() => onClickSend()}>재요청</a> 버튼을 눌러주세요.</p>
               </div>

@@ -13,17 +13,6 @@ function BlogPrint() {
   const [isLoading, setIsLoading] = useState(true);
   const [WritemodalShow, WritesetModalShow] = React.useState(false);
   // const [toggled, setToggled] = useState(false);
-  const history = useHistory();
-
-  const style = {
-    color : 'black',
-  }
-
-  let Writebutton = {
-    fontSize: 13,
-    width: 95,
-  }
-
 
   useEffect(() => {
     setIsLoading(true);
@@ -42,12 +31,9 @@ function BlogPrint() {
     })
   }, []);
 
-
-
   useEffect(()=>{
     window.addEventListener("scroll",moredata)
   },[data])
-
 
   const moredata = () => {
     // window.removeEventListener("scroll",moredata)
@@ -79,13 +65,13 @@ function BlogPrint() {
               onHide={() => WritesetModalShow(false)}
           />
           <div id='blog'>
-              <Container>
+              <div>
                   <div id="App">
                       <ul id="blog_contentWrapper">
                       <Blogs isLoading={isLoading} data={data} />
                       </ul>
                   </div>
-              </Container>
+              </div>
           </div>
         </div>
   )

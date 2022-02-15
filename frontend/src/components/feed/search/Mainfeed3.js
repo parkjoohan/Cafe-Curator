@@ -51,7 +51,7 @@ export default function Mainfeed(props) {
         
         <Container id='search_button_form'>
             <Router>
-                <div id='search_button_div' style={{textAlign: "-webkit-center" }}>
+                <div id='search_button_div' style={{textAlign: "center" }}>
                     <Row id='search_button_group'>
                         <Col lg={2}>
                             <Link to="/popularsearch"><Button variant="light" id='search_popularsearch' onClick={GetClick}>인기순</Button></Link>

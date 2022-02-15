@@ -24,20 +24,22 @@ export default function Mainfeed(props) {
   }
 
   return (
-  <Container id='MainFeed_container'>
+  <Container>
     <Row>
       <div id='MainFeed_buttons'>
-        <Container>
+        <Container id='MainFeed_container'>
           <Row style={{marginLeft: "20%"}}>
               <Col xs={10}>
+                <div style={{width: "80%"}}>
+                  <Toggle onChange={(e) => Changotogle(e)} />
+                </div>
               <div style={{textAlign: "-webkit-right"}}>
-                <Toggle onChange={(e)=>Changotogle(e)} />
-                <p style={style}>{toggled ? "피드형" : "블로그형"}</p>
+                <p id='MainFeed_toggle_font' style={style}>{toggled ? "피드형" : "블로그형"}</p>
               </div>
             </Col>
             <Col xs={2}>
-              <Button id="MainFeed_Write_button" style={{width: "120px"}} variant="outline-success" onClick={() => WritesetModalShow(true)}>
-                  <h6 style={{margin: "1px "}}>게시글 작성</h6>
+              <Button id="MainFeed_Write_button" variant="outline-success" onClick={() => WritesetModalShow(true)}>
+                  <h6 id="mainfeed_Write_button_font" style={{margin: "1px "}}>게시글 작성</h6>
               </Button> 
             </Col>
           </Row>

@@ -31,12 +31,6 @@ import { useHistory, useLocation } from "react-router-dom";
 export default function LoginForm({setUser}) {
   let location = useLocation();
   let history = useHistory();
-  const paperStyle = {
-    padding: 20,
-    height: "600px",
-    width: 500,
-    margin: "20px auto",
-  }
 
   const avatarStyle = {
     background: "#1bbd7e",
@@ -85,6 +79,7 @@ export default function LoginForm({setUser}) {
       localStorage.setItem('userNo', response.data.userNo);
       localStorage.setItem('userPic', response.data.picture);
       localStorage.setItem('userId', response.data.userId);
+      
 
       setUser(response.data.userNo)
       history.goBack();
@@ -154,9 +149,9 @@ export default function LoginForm({setUser}) {
     }
   return (
     <div>
-      <Grid>
+      <Grid style={{width: "100%"}}>
         <div id='login_content'>
-          <Paper elevation={10} style={paperStyle}>
+          <Paper elevation={10} id='login_paperStyle'>
             <Grid align="center">
               <Avatar style={avatarStyle}><LockOutlinedIcon /></Avatar>
               <h2>Login</h2>
@@ -181,22 +176,21 @@ export default function LoginForm({setUser}) {
               <hr id="login_line" />
             </div>
 
-            <div id="login_oauthlist">
-              <img id="login_oauthimage" src={process.env.PUBLIC_URL + "/image/kakaooauthimage.png"}/>
-            </div>
+            <img id="login_oauthimage" src={process.env.PUBLIC_URL + "/image/kakaooauthimage.png"}/>
 
             <hr />
 
-            <Typography> 회원가입하기 &nbsp;
-              <Link className="link"  to="/signup">
+              <Typography id='login_gosignup'> 회원가입하기 &nbsp;
+              <Link className="link" to="/email" id='login_gosignup2'>
                 Sign Up
               </Link>
             </Typography>
-            <Typography> 비밀번호가 생각나지 않으세요? &nbsp;
-              <Link className="link" onClick={handleShow}>
+            <Typography id='login_findpw'> 비밀번호가 생각나지 않으세요? &nbsp;
+              <Link className="link" onClick={handleShow} id='login_findpw2'>
                 비밀번호 변경
               </Link>
             </Typography><br/>
+            
           </Paper>
         </div>
       </Grid>

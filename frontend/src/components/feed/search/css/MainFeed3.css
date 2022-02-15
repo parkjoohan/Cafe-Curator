@@ -17,27 +17,73 @@
 }
 
 #search_popularsearch {
-    width: 110%;
+    width: 100%;
     border : 1px solid black;
 }
 
 #search_recentsearch {
-    width: 110%;
+    width: 100%;
     border : 1px solid black;
     margin-right: 100%;
 }
 
 #search_locationsearch {
-    width: 110%;
+    width: 100%;
     border : 1px solid black;
 }
 
 #search_cafesearch {
-    width: 110%;
+    width: 100%;
     border : 1px solid black;
 }
 
 #search_accountsearch {
-    width: 110%;
+    width: 100%;
     border : 1px solid black;
+}
+
+@media screen and (max-width: 412px){
+    #search_button_form {
+        margin-top: 3%;
+        text-align-last: center;
+        height: 100%;
+        width: 105%;
+    }
+    
+    #search_button_div {
+        text-align: -webkit-center;
+        margin-bottom: 1%;
+    }
+    
+    #search_button_group {
+        width: 100%;
+        text-align: -webkit-center;
+        justify-content: center;
+    }
+    
+    #search_popularsearch {
+        width: 100%;
+        border : 1px solid black;
+    }
+    
+    #search_recentsearch {
+        width: 100%;
+        border : 1px solid black;
+        margin-right: 100%;
+    }
+    
+    #search_locationsearch {
+        width: 100%;
+        border : 1px solid black;
+    }
+    
+    #search_cafesearch {
+        width: 100%;
+        border : 1px solid black;
+    }
+    
+    #search_accountsearch {
+        width: 100%;
+        border : 1px solid black;
+    }
 }

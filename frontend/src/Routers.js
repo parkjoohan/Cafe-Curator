@@ -34,7 +34,7 @@ export default function Routers(props) {
       <Route path="/bookmark" component={BookMarkPrint}></Route>
       <Route path="/like" component={LikePrint}></Route>
       <Route path="/article/:pk" component={Detail}></Route>
-      <Route path="/profile/:pk" component = {UserProfile}></Route>
+      <Route path="/profile/:id" component = {UserProfile}></Route>
       <Route path="/store/:pk" component = {StoreProfile}></Route>
       <Route path="/termmodal" component = {TermsModal}></Route>
       {/* searchtest용입니다. 테스트 끝나면 지울거임 */}
