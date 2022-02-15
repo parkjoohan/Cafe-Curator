@@ -14,8 +14,8 @@ const Likes = props => {
             : props.data.map(item => {
                 return (
                     <li key={item.id} id="likes_item">
-                        <Col style={{marginLeft: "3%", marginTop: "1%"}}>
-                            <div style={{marginBottom: "40%" }}>
+                        <Col style={{marginLeft: "3%", marginTop: "2%"}}>
+                            <div style={{marginBottom: "35%" }}>
                                 {
                                     item.userPicture != null ?
                                     <img id="likes_img2" src={item.userPicture} alt="" /> :
@@ -44,8 +44,8 @@ const Likes = props => {
                             </div>
                         </Col>
 
-                        <Col style={{ width: "80px", height: "100%" }}>
-                            <div style={{width: "300px", height: "265px", paddingTop: "3%", paddingBottom: "3%"}}>
+                        <Col style={{ width: "50px", height: "100%" }}>
+                            <div style={{width: "100%", height: "100%", paddingTop: "3%", paddingBottom: "3%"}}>
                                 <img id="likes_img3" src={item.file.filePath} />
                             </div>
                         </Col>

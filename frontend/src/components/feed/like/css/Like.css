@@ -94,7 +94,6 @@
 .likes_detail {
   margin-bottom: auto;
   margin-top: 1%;
-  margin-left: 250px;
   text-align: -webkit-right;
 }
 
@@ -142,7 +141,6 @@
   
   
   #like_item {
-    align-items: center;
     border-radius: 15px;
     border: 1px solid #ccc;
   }
@@ -187,9 +185,10 @@
   }
 
   #likes_img3 {
-    width: 30%;
-    height: 30%;
+    width: 95%;
+    height: 100%;
     padding-right: 5%;
+    padding-bottom: 5%;
   }
   
   #likes_info {

@@ -94,7 +94,6 @@
 .blogs_detail {
   margin-bottom: auto;
   margin-top: 1%;
-  margin-left: 250px;
   text-align: -webkit-right;
 }
 
@@ -139,7 +138,6 @@
       transform: translateX(1000px);
     }
   }
-  
   
   #blog_item {
     border-radius: 15px;
@@ -186,9 +184,10 @@
   }
 
   #blogs_img3 {
-    width: 30%;
-    height: 30%;
+    width: 95%;
+    height: 100%;
     padding-right: 5%;
+    padding-bottom: 5%;
   }
   
   #blogs_info {
