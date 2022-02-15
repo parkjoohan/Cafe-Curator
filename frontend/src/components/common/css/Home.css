@@ -1,19 +1,26 @@
 #home_home {
   font-weight: 500;
-  background-image: linear-gradient(
-    to bottom,
-    rgba(255,255,255,0),
-    rgba(255,255,255,1));
-  background-repeat: no-repeat;
-  background-size:120%;
 }
 
-#hone_video_bg {
-  width: 100%;
-  height: 500px;
-  overflow: hidden;
+#home_section1{
   position: relative;
+  /* background: linear-gradient(
+    to bottom,
+    rgba(255,255,255,1),
+    rgba(255,255,255,0)
+  ); */
+  /* opacity: 0.5; */
+  /* height:100vw; */
 }
+
+/* #hone_video_bg {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  display:flex;
+  align-content: flex-start;
+
+} */
 
 #home_video {
   /* position: absolute;
@@ -24,29 +31,42 @@
   overflow: hidden;
   background-size: cover; */
   width: 100%;
-  margin-top: -25%;
+  min-width: 300px;
+  /* height: calc( var(--scroll-length) * 100vh );; */
+  /* height:100vw; */
+  /* padding-top: -56.25%; */
+  /* margin-top: -56.25%; */
   overflow: hidden;
   background-size: cover;
   z-index: -1;
+  /* position: absolute; */
+  opacity: 0.9;
+}
+
+#home_text_wrapper {
   position: absolute;
+  left: 2%;
+  top: 5%;
+  margin-left: -2%;
 }
 
 #home_text_wrapper h1 {
   color: white;
-  margin-left: -2%;
-  font-size: 50px;
+  font-size: 6vmin;
   text-align: left;
+  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
 }
 
 #home_text_wrapper h3 {
   color: white;
-  margin-left: -1%;
-  margin-top: -5%;
-  font-size: 18px;
+  /* margin-top: %; */
+  font-size: 2.5vmin;
   text-align: left;
+  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
 }
 
 #home_hometitle {
+  white-space: nowrap;
   padding-top: 5%;
   margin-left: 3%;
   font-weight: 700;
@@ -91,7 +111,7 @@
 .likesearch1 {
   background-color:rgba(255,255,255,0.2),
 }
-
+/* 
 .content {
   width: 100%;
   height: 100%;
@@ -100,7 +120,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-}
+} */
 
 .row {
   display: flex;
@@ -180,12 +200,45 @@
   text-align: center;
 }
 
-.action {
-  width: 100%;
+.content-section{
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 15px;
-  box-sizing: border-box;
-  margin-top: 15px;
+  justify-content: center;
+}
+
+.figure {
+  width:80%;
+  position:relative;
+}
+
+.figure > img {
+  width:100%;
+  min-width: 450px;
+  opacity: 0.9;
+}
+
+.figure > .content {
+  position:absolute;
+  right:2%;
+  bottom:2%;
+  color:white;
+  display: inline;
+  line-height: 1.5;
+}
+
+.heading {
+  font-size:6vmin;
+  font-weight: 800;
+  line-height: 1.5;
+}
+
+.subheading {
+  font-size:3.5vmin;
+  font-weight: 700;
+  line-height: 1.5;
+}
+
+.link {
+  color:#06c;
+  cursor: pointer;
+  font-weight: 700;
 }

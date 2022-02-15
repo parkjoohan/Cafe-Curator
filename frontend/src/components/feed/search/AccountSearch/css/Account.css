@@ -1,0 +1,6 @@
+#fix_profile_pic {
+  width: 150px;
+  height: 150px;
+  border-radius: 70%;
+  overflow: hidden; 
+}
