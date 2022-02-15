@@ -28,7 +28,7 @@ function Header({user, setUser}) {
 
   const gotoProfile = () => {
     setAnchorEl(null);
-    history.push('/profile/0')
+    history.push(`/profile/${localStorage.getItem('userId')}`)
   }
 
   const logoutfunction = () => {
