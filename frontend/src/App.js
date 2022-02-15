@@ -8,7 +8,7 @@ import Footer from "./components/common/Footer";
 export default function App() {
 
   //git test
-  const [user,setUser] = useState(localStorage.getItem('userNo'))
+  const [user,setUser] = useState(localStorage.getItem('userId'))
   const [footershow,setFootershow] = useState(true)
   console.log(user)
 
