@@ -84,7 +84,7 @@ function Header({user, setUser}) {
               :
               <div id="header_profile">
                   <NavDropdown align="end" title={
-                    <img id="header_prof_img" src={localStorage.getItem('userPic')}/>
+                    <img id="header_prof_img" src={localStorage.getItem('userPic')==="null" ? "../image/Profileimage.png" : localStorage.getItem('userPic')}/>
                   } id="dropdown-menu-align-end">
                   <NavDropdown.Item onClick={gotoProfile}>Profile</NavDropdown.Item>
                   <NavDropdown.Item onClick={profileModal}>My account</NavDropdown.Item>
