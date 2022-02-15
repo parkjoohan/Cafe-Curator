@@ -16,7 +16,6 @@ export default function Home(props) {
   },[])
 
   return (
-
     <div id="home_home">
       <div id='home_section1'>
         <div id='home_video_bg'>
@@ -31,48 +30,48 @@ export default function Home(props) {
           {/* </div> */}
         </div>
       </div>               
+
       <div className='section2'>
-
-        <section class="content-section" data-aos="fade-right" data-aos-duration="2000">
-          <div class="figure">
+        <section id="content-section" data-aos="fade-right" data-aos-duration="2000">
+          <div id="figure">
             <img src={process.env.PUBLIC_URL + "/image/homeimage/mapsearch.jpg"} />
-            <div class="content">
-              <h1 class="subheading">지도 중심 찾기</h1>
-              <h2 class="heading">내 위치를 중심으로 찾아보세요.</h2>
-              <h2 class="subheading link">더 알아보기</h2>
+            <div id="content">
+              <h1 id="subheading">지도 중심 찾기</h1>
+              <h2 id="heading">내 위치를 중심으로 찾아보세요.</h2>
+              <h2 id="subheading link">더 알아보기</h2>
             </div>
           </div>
         </section>
 
-        <section class="content-section" data-aos="fade-right" data-aos-duration="2000">
-          <div class="figure">
+        <section id="content-section" data-aos="fade-right" data-aos-duration="2000">
+          <div id="figure">
             <img src={process.env.PUBLIC_URL + "/image/homeimage/coffeesearch.jpg"} />
-            <div class="content">
-              <h1 class="subheading">원두 중심 찾기</h1>
-              <h2 class="heading">원두를 중심으로 찾아보세요.</h2>
-              <h2 class="subheading link">더 알아보기</h2>
+            <div id="content">
+              <h1 id="subheading">원두 중심 찾기</h1>
+              <h2 id="heading">원두를 중심으로 찾아보세요.</h2>
+              <h2 id="subheading link">더 알아보기</h2>
             </div>
           </div>
         </section>
 
-        <section class="content-section" data-aos="fade-right" data-aos-duration="2000">
-          <div class="figure">
+        <section id="content-section" data-aos="fade-right" data-aos-duration="2000">
+          <div id="figure">
             <img src={process.env.PUBLIC_URL + "/image/homeimage/landscapesearch2.jpg"} />
-            <div class="content">
-              <h1 class="subheading">전망 중심 찾기</h1>
-              <h2 class="heading">전망 좋은 카페를 찾아보세요.</h2>
-              <h2 class="subheading link">더 알아보기</h2>
+            <div id="content">
+              <h1 id="subheading">전망 중심 찾기</h1>
+              <h2 id="heading">전망 좋은 카페를 찾아보세요.</h2>
+              <h2 id="subheading link">더 알아보기</h2>
             </div>
           </div>
         </section>
 
-        <section class="content-section" data-aos="fade-right" data-aos-duration="2000">
-          <div class="figure">
+        <section id="content-section" data-aos="fade-right" data-aos-duration="2000">
+          <div id="figure">
             <img src={process.env.PUBLIC_URL + "/image/homeimage/studysearch.jpg"} />
-            <div class="content">
-              <h1 class="subheading">스터디 카페 찾기</h1>
-              <h2 class="heading">공부하기 좋은 카페를 찾아보세요.</h2>
-              <h2 class="subheading link">더 알아보기</h2>
+            <div id="content">
+              <h1 id="subheading">스터디 카페 찾기</h1>
+              <h2 id="heading">공부하기 좋은 카페를 찾아보세요.</h2>
+              <h2 id="subheading link">더 알아보기</h2>
             </div>
           </div>
         </section>
