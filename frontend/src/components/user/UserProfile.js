@@ -57,7 +57,7 @@ export default function UserProfile(props) {
       <Container id="userfile_Container">
         <Row>
           {/* 프로필 사진 */}
-          <Col sm={4}>
+          <Col id="userfile_ImgPreview_frame" sm={4}>
             {
               data.picture != null ?
               <img id="userfile_ImgPreview" src={data.picture} /> :
@@ -66,7 +66,7 @@ export default function UserProfile(props) {
             {/* <img id="userfile_ImgPreview" src={process.env.PUBLIC_URL + "/image/map.png"}></img> */}
           </Col>
           {/* 개인 프로필 정보 */}
-          <Col sm={4}>
+          <Col id='userfile_content' sm={4}>
             <h2>{data.userId}</h2>
             <a>게시물 {data.feedCount}</a><a id="userfile_aMarginleft">팔로워 {data.followerCount}</a><a id="userfile_aMarginleft">팔로우 {data.followingCount}</a>
             <h5 id="userfile_explain">{data.introduction}</h5>

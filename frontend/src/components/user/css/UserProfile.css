@@ -39,3 +39,18 @@
   filter : drop-shadow(3px 3px 3px #484848);
   transition : all 0.5s;
 }
+
+@media screen and (max-width: 500px){
+
+  #userfile_ImgPreview_frame {
+    text-align: -webkit-center;
+  }
+
+  #userfile_content {
+    text-align: -webkit-center;
+  }
+
+  #userfile_content h2 {
+    margin-right: 61%;
+  }
+}

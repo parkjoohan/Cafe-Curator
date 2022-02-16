@@ -92,15 +92,15 @@ export default function Detail(props) {
   // console.log(pk);
   
   return (
-    <div style={{ height: "1500px" }}>
+    <>
       {/* 뒤로 가기 버튼 */}
-      <div style={{marginLeft: "2%"}}>
+      <div style={{float: "left", marginLeft: "13%", marginTop: "2%"}}>
         <FiCornerUpLeft size="30" onClick={() => { history.goBack() }} />
-      </div><br />
-
+      </div>
+      <div style={{ height: "1500px", marginTop: "4%", marginLeft: "12%" }}>
       {/* 게시물 컨테이너 */}
       <Row id='article_frame_row'>
-        <Col id='article_frame_col' lg={5}>
+        <Col id='article_frame_col' lg={4}>
           <div class="slider">
             {
               (data&&data.files)&&data.files.map((file,index)=>(
@@ -123,7 +123,7 @@ export default function Detail(props) {
             </div>
           </div>
         </Col>
-        <Col id='article_frame_col' lg={6}>
+        <Col id='article_frame_col2' lg={6}>
           <Row>
             {/* 유저프로필,작성일 */}
             <div id='article_profile_info'>
@@ -210,5 +210,7 @@ export default function Detail(props) {
         ref = {likeRef}
       />
     </div>
+    </>
+    
   )
 }

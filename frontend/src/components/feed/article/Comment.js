@@ -187,7 +187,7 @@ export default function Comment({user}) {
     return (
         <Container > 
             <div id='article_comment'>
-                <p style={{ marginLeft: "-12%" }}>총 <strong style={{fontSize:"20px"}}>{comments.length}</strong>개의 댓글이 있습니다.</p>
+                <p style={{ marginLeft: "-6%" }}>총 <strong style={{fontSize:"20px"}}>{comments.length}</strong>개의 댓글이 있습니다.</p>
                 <div id='article_comment_frame'>
                     {/* 댓글 */}
                     <div id='article_comments-frame'>
@@ -291,8 +291,8 @@ export default function Comment({user}) {
                     }
                     </div> 
                 </div>
-                <div style={{marginLeft: "-14%"}}>
-                    <Row style={{borderBottom: "1px solid black", width: "108%", marginLeft: "1.5%"}}>
+                <div style={{marginLeft: "-8%"}}>
+                    <Row style={{borderBottom: "1px solid black", width: "112%", marginLeft: "1.5%"}}>
                         <Col lg={2} style={{fontSize: "20px", marginTop: "1%"}}>
                             <strong>@{parentNo}</strong>
                         </Col>
@@ -309,7 +309,7 @@ export default function Comment({user}) {
                                         }
                                     }
                                 }}
-                                style={{width: "100%", height: "40px", border: "none"}}
+                                style={{width: "100%", height: "40px", border: "none", background: "lavender"}}
                             >
                             </input>
                         </Col>

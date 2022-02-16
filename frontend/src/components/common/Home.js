@@ -17,7 +17,7 @@ export default function Home(props) {
 
   return (
     <div id="home_home">
-      <div id='home_section1'>
+      {/* <div id='home_section1'>
         <div id='home_video_bg'>
           <video id='home_video' src='../image/black_cafe.mp4' autoPlay loop muted></video>
           <div id='home_text_wrapper'>
@@ -27,12 +27,21 @@ export default function Home(props) {
               {props.user[0]}님을 위한 카페를 추천해드립니다!<br/>
             </h3>
           </div>
-          {/* </div> */}
+        </div>
+      </div>*/}
+      <div id='home_section1'>
+        <video id='home_video' src='../image/black_cafe.mp4' autoPlay loop muted></video>
+        <div id='home_text_wrapper'>
+          <h1>나만의 카페를 찾아보세요!</h1>
+          <h3>
+            자신의 관심사를 선택하세요!<br/>
+            {props.user[0]}님을 위한 카페를 추천해드립니다!<br/>
+          </h3>
         </div>
       </div>               
 
       <div className='section2'>
-        <section id="content-section" data-aos="fade-right" data-aos-duration="2000">
+        <section id="content-section" data-aos="fade-up-right" data-aos-duration="2000">
           <div id="figure">
             <img src={process.env.PUBLIC_URL + "/image/homeimage/mapsearch.jpg"} />
             <div id="content">
@@ -43,7 +52,7 @@ export default function Home(props) {
           </div>
         </section>
 
-        <section id="content-section" data-aos="fade-right" data-aos-duration="2000">
+        <section id="content-section" data-aos="fade-up-right" data-aos-duration="2000">
           <div id="figure">
             <img src={process.env.PUBLIC_URL + "/image/homeimage/coffeesearch.jpg"} />
             <div id="content">
@@ -54,7 +63,7 @@ export default function Home(props) {
           </div>
         </section>
 
-        <section id="content-section" data-aos="fade-right" data-aos-duration="2000">
+        <section id="content-section" data-aos="fade-up-right" data-aos-duration="2000">
           <div id="figure">
             <img src={process.env.PUBLIC_URL + "/image/homeimage/landscapesearch2.jpg"} />
             <div id="content">
@@ -65,7 +74,7 @@ export default function Home(props) {
           </div>
         </section>
 
-        <section id="content-section" data-aos="fade-right" data-aos-duration="2000">
+        <section id="content-section" data-aos="fade-up-right" data-aos-duration="2000">
           <div id="figure">
             <img src={process.env.PUBLIC_URL + "/image/homeimage/studysearch.jpg"} />
             <div id="content">
