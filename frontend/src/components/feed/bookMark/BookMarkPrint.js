@@ -41,7 +41,7 @@ function BookMarksPrint(props) {
     if (Math.round( $(window).scrollTop()) == $(document).height() - $(window).height()) {
       window.removeEventListener("scroll",moredata)
       console.log('밑이다!')
-      let user = "a1"
+      let user = `${props.user[1]}`
       let lastNo = data[data.length-1].feedNo
       const url = `http://i6c104.p.ssafy.io:8080/feed/bookmarkList/${user}`
       axios.get(url,{

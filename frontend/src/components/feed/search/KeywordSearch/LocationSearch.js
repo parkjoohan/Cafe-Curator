@@ -12,6 +12,11 @@ export default function LocationSearch(props) {
     const [data,setData] = useState([]);
     const feedRef = useRef();
     const [selected, setSelected] = useState(null)
+    const [selectLocation,setSelectLocation] = useState([])
+
+    useEffect(()=>{
+        console.log(selectLocation)
+    },[selectLocation])
 
 
 
@@ -43,6 +48,7 @@ export default function LocationSearch(props) {
                 let beforey = res.data.results.juso[0].entY;
 
                 let newlocationarr = [Number(beforex),Number(beforey)]
+                setSelectLocation(newlocationarr)
                 feedRef.current.setLocationarr(newlocationarr)
             })
             })
@@ -55,7 +61,7 @@ export default function LocationSearch(props) {
         <Container>
             <Search setData={setData}/>
             <div>
-                <Map id="LocationSearch_map" ref={mapRef} setSelected={setSelected}/>
+                <Map id="LocationSearch_map" ref={mapRef} setSelected={setSelected}  selectLocation={selectLocation}/>
             </div>
             <div id='LocationSearch_blog'>
                 <LocationSearchfeed ref={feedRef}/>
