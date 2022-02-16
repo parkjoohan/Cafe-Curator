@@ -35,7 +35,7 @@ export default function Routers(props) {
       <Route path="/like" component={LikePrint}></Route>
       <Route path="/article/:pk"><Detail user={props.user}/></Route>
       <Route path="/profile/:id"><UserProfile user={props.user} setFootershow={props.setFootershow}/></Route>
-      <Route path="/store/:pk" component = {StoreProfile}></Route>
+      <Route path="/store/:pk/:id"><StoreProfile setFootershow={props.setFootershow} user={props.user}/></Route>
       <Route path="/termmodal" component = {TermsModal}></Route>
       {/* searchtest용입니다. 테스트 끝나면 지울거임 */}
       <Route path="/search" component = {Mainfeed3}></Route>
