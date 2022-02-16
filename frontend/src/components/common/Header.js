@@ -36,9 +36,7 @@ function Header({user, setUser}) {
   }
 
   const logoutfunction = () => {
-    localStorage.removeItem('userNo')
-    localStorage.removeItem('userPic')
-    localStorage.removeItem('userId')
+    localStorage.clear()
     setUser([null,null])
   }
   const style = {
