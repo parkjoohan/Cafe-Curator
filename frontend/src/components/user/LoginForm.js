@@ -164,7 +164,7 @@ export default function LoginForm({ setUser }) {
   };
 
   const googleLogin = async () => { 
-    axios.get(`http://localhost:8080/login/oauth/getGoogleAuthURL`).then(function (res) {
+    axios.get(`http://i6c104.p.ssafy.io:8080/login/oauth/getGoogleAuthURL`).then(function (res) {
       // console.log(res.data)
       window.location.href = res.data;
     })

@@ -11,7 +11,7 @@ const GoogleRedirect = ({setUser}) => {
 
    useEffect(() => {
       
-      axios.get('http://localhost:8080/login/oauth/google', {
+      axios.get('http://i6c104.p.ssafy.io:8080/login/oauth/google', {
          params: {code: code}
       }).then(function (response) {
          // console.log(response);
@@ -27,7 +27,6 @@ const GoogleRedirect = ({setUser}) => {
    
    return (
       <>
-         <img src="https://t1.daumcdn.net/cafeattach/Uzlo/82efeaa57253ad7a287515b6aaf8827d20976ce5" class="txc-image"/>
          구글 로그인 중
       </>
    )
