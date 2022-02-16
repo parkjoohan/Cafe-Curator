@@ -21,6 +21,7 @@ import RecentSearch from './components/feed/search/RecentSearch'
 import LocationSearch from './components/feed/search/KeywordSearch/LocationSearch'
 import CafeSearch from './components/feed/search/KeywordSearch/CafeSearch'
 import AccountSearch from './components/feed/search/AccountSearch/AccountSearch'
+import GoogleRedirect from './components/user/GoogleRedirect'
 
 export default function Routers(props) {
   return (
@@ -28,7 +29,7 @@ export default function Routers(props) {
       <Route exact path="/"><Home user={props.user}/></Route>
       <Route path="/login"><LoginForm setUser={props.setUser}/></Route>
       <Route path="/email" component={EmailForm}></Route>
-      <Route path="/signup/:email" component={SignupForm}><LoginForm setUser={props.setUser}/></Route>
+      <Route path="/signup/:email" component={SignupForm}><SignupForm setUser={props.setUser}/></Route>
       <Route path="/EditProfile/:pk" component={EditProfile}><EditProfile setUser={props.setUser}/></Route>
       <Route exact path="/feed"><Mainfeed setFootershow={props.setFootershow} user={props.user} /></Route>
       <Route exact path="/feed2"><Mainfeed2 setFootershow={props.setFootershow} user={props.user} /></Route>
@@ -45,7 +46,8 @@ export default function Routers(props) {
       <Route path="/recentsearch" component = {RecentSearch}></Route>
       <Route path="/locationsearch"><LocationSearch setFootershow={props.setFootershow}/></Route>
       <Route path="/cafesearch" component = {CafeSearch}></Route>
-      <Route path="/accountsearch" component = {AccountSearch}></Route>
+      <Route path="/accountsearch" component={AccountSearch}></Route>
+      <Route path="/oauth/callback/google" component={GoogleRedirect}><GoogleRedirect setUser={props.setUser}/></Route>
     </Switch>
   )
 }

@@ -59,31 +59,37 @@ export default function SignupForm (props) {
   },[])
   
   
-  const signup = async() => {
-    let signupForm = new FormData();
+  const signup = async () => {
+    const response = await axios.get(`http://i6c104.p.ssafy.io:8080/api/users/checkUserId/${form.id}`, {
+      //보내고자 하는 데이터 
+      userId: form.id
+    });
+    if (response.data === true) {
+      let signupForm = new FormData();
       {
-      signupForm.append("userDetailDto",new Blob([JSON.stringify({
-        pass : form.password,
-        userId: form.id,
-        categoryList : likearr
-      })], { type: "application/json"})
-      )
-    }
-      signupForm.append("userDto", new Blob([JSON.stringify(email)], { type: "application/json"}))
-      signupForm.append("multipartFile",file);
+        signupForm.append("userDetailDto", new Blob([JSON.stringify({
+          pass: form.password,
+          userId: form.id,
+          categoryList: likearr
+        })], { type: "application/json" })
+        )
+      }
+      signupForm.append("userDto", new Blob([JSON.stringify(email)], { type: "application/json" }))
+      signupForm.append("multipartFile", file);
       const signupurl = "http://i6c104.p.ssafy.io:8080/api/users/"
-      axios ({
-        method : "post",
-        url : signupurl,
-        data : signupForm,
-        headers: { "Content-Type" : "multipart/form-data"}
-    }).then(function(res){
-      console.log(res.data)
-      if (res.data = "success")
+      axios({
+        method: "post",
+        url: signupurl,
+        data: signupForm,
+        headers: { "Content-Type": "multipart/form-data" }
+      }).then(function (res) {
+        console.log(res.data)
+        if (res.data = "success")
       
-        history.push("/login");
-    })
-    }
+          history.push("/login");
+      })
+    }else{alert('same id has been discovered')}
+  }
   // 회원가입 성공-> 이전페이지로 돌아가서 -> 로그인페이지로 다시 가짐.
   // 로그인 성공하면? 이전페이지로, 결국 회원가입하고 이전페이지로 가질수있음
 

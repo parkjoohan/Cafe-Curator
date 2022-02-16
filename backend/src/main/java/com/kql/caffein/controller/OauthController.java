@@ -75,9 +75,11 @@ public class OauthController {
 
     //구글 로그인창 호출
     @GetMapping("/getGoogleAuthURL")
-    public String googleReqUrl() {
+    public ResponseEntity googleReqUrl() {
         String reqUrl = "https://accounts.google.com/o/oauth2/v2/auth?scope=https://www.googleapis.com/auth/userinfo.email&response_type=code&client_id=" + googleClientId + "&redirect_uri=" + googleRedirectURI;
-        return "redirect:"+reqUrl;
+//        return "redirect:"+reqUrl;
+//        System.out.println(reqUrl);
+        return new ResponseEntity<String>(reqUrl, HttpStatus.OK);
     }
 
     @GetMapping(value="/google")
