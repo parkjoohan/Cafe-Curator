@@ -13,6 +13,7 @@ import Mainfeed2 from './components/feed/main/MainFeed2';
 import Mainfeed3 from './components/feed/search/Mainfeed3';
 import UserProfile from './components/user/UserProfile';
 import StoreProfile from './components/store/StoreProfile';
+import EditProfile from "./components/user/EditProfile";
 //  searchtest용입니다. 테스트 끝나면 지울거임
 import Search from './components/feed/article/Search'
 import PopularSearch from './components/feed/search/PopularSearch'
@@ -20,6 +21,7 @@ import RecentSearch from './components/feed/search/RecentSearch'
 import LocationSearch from './components/feed/search/KeywordSearch/LocationSearch'
 import CafeSearch from './components/feed/search/KeywordSearch/CafeSearch'
 import AccountSearch from './components/feed/search/AccountSearch/AccountSearch'
+import GoogleRedirect from './components/user/GoogleRedirect'
 
 export default function Routers(props) {
   return (
