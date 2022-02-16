@@ -219,9 +219,15 @@ export default function EditProfile({setUser}) {
                   <Grid align="center">
                     <Avatar style={avatarStyle}><LockOutlinedIcon /></Avatar>
                     <h2>Edit Profile</h2>
+                    { localStorage.getItem('userEmail') ?
+                    <div>
                     <Button onClick={()=> setEditPw(false)}>회원정보 변경</Button>
                     <Button onClick={()=> setEditPw(true)}>비밀번호 변경</Button>
-                    
+                    </div>
+                    :
+                      null
+                    }
+
                   </Grid><br />
                   {!fileUrl ?
                   <div>
