@@ -163,6 +163,13 @@ export default function LoginForm({ setUser }) {
     }
   };
 
+  const googleLogin = async () => { 
+    axios.get(`http://localhost:8080/login/oauth/getGoogleAuthURL`).then(function (res) {
+      // console.log(res.data)
+      window.location.href = res.data;
+    })
+  }
+
   function gotoKaKaoLogin() {
     axios
       .get("http://i6c104.p.ssafy.io:8080/login/oauth/getKakaoAuthURL")
@@ -231,6 +238,11 @@ export default function LoginForm({ setUser }) {
               src={process.env.PUBLIC_URL + "/image/kakaooauthimage.png"}
               onClick={() => gotoKaKaoLogin()}
             />
+
+            <button onClick={googleLogin}>
+              {/* <a href={googleUrl}>구글 로그인</a> */}
+              구글 로그인
+            </button>
 
             <hr />
 
