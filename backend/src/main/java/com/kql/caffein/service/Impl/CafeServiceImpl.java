@@ -38,4 +38,9 @@ public class CafeServiceImpl implements CafeService {
         cafeRepository.save(cafeEntity);
         return cafeEntity.getCafeId();
     }
+
+    @Override
+    public Optional<Cafe> getCafeLngAndLat(String cafeName) {
+        return cafeRepository.getByCafeName(cafeName);
+    }
 }

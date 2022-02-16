@@ -11,4 +11,6 @@ public interface CafeRepository extends JpaRepository<Cafe, Integer> {
     Optional<Cafe> findByCafeLngAndCafeLat(String cafeLng, String cafeLat);
 
     List<String> findByCafeIdIn(List<String> cafeId);
+
+    Optional<Cafe> getByCafeName(String cafeName);
 }

@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
@@ -47,6 +48,28 @@ public class CafeController {
             if(cafe.isPresent())
                 return new ResponseEntity<>(cafe.get().getCafeId(), HttpStatus.OK);
             else
+                return new ResponseEntity<>("empty",HttpStatus.OK);
+        }catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @ApiOperation(value = "카페 이름으로 위,경도 조회")
+    @GetMapping("/{cafeName}")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "cafeName", value = "카페명", required = true,
+                    dataType = "String", paramType = "path")
+    })
+    public ResponseEntity getCafeLngAndLat (@PathVariable String cafeName) {
+        try {
+            Optional<Cafe> cafe = cafeService.getCafeLngAndLat(cafeName);
+            if(cafe.isPresent()) {
+                Map<String, Double> map = new HashMap<>();
+                map.put("cafeX", Double.valueOf(cafe.get().getCafeLng()));
+                map.put("cafeY", Double.valueOf(cafe.get().getCafeLat()));
+                return new ResponseEntity<>(map, HttpStatus.OK);
+            }else
                 return new ResponseEntity<>("empty",HttpStatus.OK);
         }catch (Exception e) {
             e.printStackTrace();
