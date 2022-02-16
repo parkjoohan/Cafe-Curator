@@ -1,9 +1,29 @@
-import React, {useState,useEffect} from 'react';
+import React, {useState,useEffect, useImperativeHandle, forwardRef} from 'react';
 import  { Modal, Button, Col, Row } from 'react-bootstrap';
 import './css/LikeCategory.css'
 
-const LikeCategoryModal = ({ show, onHide,likearr, setLikearr }) => {
-
+const LikeCategoryModal = forwardRef(({ show, onHide,likearr, setLikearr },ref) => {
+  const [defaultDetail, setdefaultDetail] = useState([])
+  useImperativeHandle(ref,()=>(
+    {setdefaultDetail,}
+  ))
+  useEffect(()=>{
+    let newlikearr = [...like]
+    for (let i = 0; i < likename.length; i++) {
+      if(defaultDetail.includes(likename[i])){
+        newlikearr[i] = [i,true];
+      }
+    }
+    let newlikearr2 = [...like2]
+    for (let i = 0; i < likename2.length; i++) {
+      if(defaultDetail.includes(likename2[i])){
+        newlikearr2[i] = [i,true];
+      }
+    }
+    setlike(newlikearr);
+    setlike2(newlikearr2)
+    setCnt(defaultDetail.length);
+  },[defaultDetail])
   const [cnt,setCnt] = useState(0);
   
   const [like,setlike] = useState([
@@ -195,6 +215,6 @@ const LikeCategoryModal = ({ show, onHide,likearr, setLikearr }) => {
       </Modal.Footer>
     </Modal>
   )
-}
+})
 
 export default LikeCategoryModal

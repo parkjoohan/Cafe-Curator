@@ -79,6 +79,8 @@ export default function LoginForm({setUser}) {
       localStorage.setItem('userNo', response.data.userNo);
       localStorage.setItem('userPic', response.data.picture);
       localStorage.setItem('userId', response.data.userId);
+      localStorage.setItem('userIntro', response.data.introduction);
+      localStorage.setItem('userEmail',loginEmail)
       
 
       setUser([response.data.userId, response.data.userNo])
