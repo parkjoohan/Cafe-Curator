@@ -96,7 +96,7 @@ function Header({user, setUser}) {
                   <NavDropdown.Item onClick={logoutfunction}>Logout</NavDropdown.Item>
                 </NavDropdown>
                 
-               
+              
               </div>
             }
           </Nav>
