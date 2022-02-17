@@ -38,7 +38,7 @@ public class FeedController {
             return new ResponseEntity<>("SUCCESS", HttpStatus.OK);
         }catch (Exception e){
             e.printStackTrace();
-            return new ResponseEntity<>("FAIL : " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>("FAIL : " + e.getMessage(), HttpStatus.OK);
         }
     }
 

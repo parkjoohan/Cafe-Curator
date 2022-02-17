@@ -261,6 +261,8 @@ const WriteModal = ( {show, onHide,user}) => {
       url: writeurl,
       data: newForm,
       headers: { "Content-Type": "multipart/form-data" }
+    }).then(res => {
+      console.log(res);
     });
     onHide()
   }

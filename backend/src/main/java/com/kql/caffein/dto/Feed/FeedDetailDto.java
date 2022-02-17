@@ -17,7 +17,7 @@ public class FeedDetailDto {
     @ApiModelProperty(value="피드 내용")
     private String content;
     @ApiModelProperty(value="피드 작성일")
-    private String regTime;
+    LocalDateTime regTime;
     @ApiModelProperty(value="카페 id")
     private Integer cafeId;
     @ApiModelProperty(value="카페 이름")
@@ -40,7 +40,7 @@ public class FeedDetailDto {
     private boolean marked;
 
     @Builder
-    public FeedDetailDto(int feedNo, String content, String regTime, Integer cafeId, String cafeName, List<String> categoryList,
+    public FeedDetailDto(int feedNo, String content, LocalDateTime  regTime, Integer cafeId, String cafeName, List<String> categoryList,
                          int likeCount, int commentCount, String userId, String userPicture, List<FileDto> files, boolean liked, boolean marked){
         this.feedNo = feedNo;
         this.content = content;
