@@ -18,10 +18,7 @@ import javax.transaction.Transactional;
 import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class GoogleLoginService {
@@ -169,6 +166,7 @@ public class GoogleLoginService {
                         .userNo(randomUserNo)
                         .userId(randomUserNo2)
                         .pass(passwordEncoder.encode(basePass))
+                        .categoryList(new ArrayList<>())
                         .build();
                 userDetailRepository.save(userDetail);
 
