@@ -49,7 +49,7 @@ export default function Routers(props) {
       <Route path="/cafesearch" component = {CafeSearch}></Route>
       <Route path="/accountsearch" component={AccountSearch}></Route>
       <Route path="/oauth/callback/google" component={GoogleRedirect}><GoogleRedirect setUser={props.setUser} /></Route>
-      <Route path="/oauth/callback/kakao" component={KakaoRedirect}><GoogleRedirect setUser={props.setUser}/></Route>
+      <Route path="/oauth/callback/kakao" component={KakaoRedirect}><KakaoRedirect setUser={props.setUser}/></Route>
     </Switch>
   )
 }
