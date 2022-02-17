@@ -154,31 +154,34 @@ export default function Detail(props) {
               </div>
             </Row>
           
-            <Row id="article_frame_row">
-              <div class="slider">
-                {data &&
-                  data.files &&
-                  data.files.map((file, index) => (
-                    <input type="radio" name="slide" id={`slide${index + 1}`} />
-                  ))
-                }
-                <ul id="article_picture_frame">
+          <Row id="article_frame_row">
+              <div id='article_slider_frame'>
+                <div class="slider">
                   {data &&
                     data.files &&
                     data.files.map((file, index) => (
-                      <li>
-                        <img id="article_picture" src={file.filePath} />
-                      </li>
-                    ))}
-                </ul>
-                <div class="bullets">
-                  {data &&
-                    data.files &&
-                    data.files.map((file, index) => (
-                      <label htmlFor={`slide${index + 1}`}>&nbsp;</label>
-                    ))}
+                      <input type="radio" name="slide" id={`slide${index + 1}`} />
+                    ))
+                  }
+                  <ul id="article_picture_frame" class="imgs">
+                    {data &&
+                      data.files &&
+                      data.files.map((file, index) => (
+                        <li>
+                          <img id="article_picture" src={file.filePath} />
+                        </li>
+                      ))}
+                  </ul>
+                  <div class="bullets">
+                    {data &&
+                      data.files &&
+                      data.files.map((file, index) => (
+                        <label htmlFor={`slide${index + 1}`}>&nbsp;</label>
+                      ))}
+                  </div>
                 </div>
-              </div>
+            </div>
+              
             </Row>
           
             <Row>
