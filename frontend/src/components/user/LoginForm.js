@@ -94,7 +94,7 @@ export default function LoginForm({ setUser }) {
       setUser([response.data.userId, response.data.userNo]);
       history.goBack();
     } catch (error) {
-      alert("사건발생");
+      alert("로그인에 실패 했습니다.");
     }
   };
 
@@ -159,7 +159,7 @@ export default function LoginForm({ setUser }) {
     if (response.data) {
       setPwshow(false);
     } else {
-      alert("뭔가 오류가있는듯합니다.");
+      alert("비밀번호 변경 실패");
     }
   };
 
