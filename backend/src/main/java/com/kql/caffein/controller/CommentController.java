@@ -34,16 +34,28 @@ public class CommentController {
         this.commentService = commentService;
     }
 
-    @PostMapping
-    @ApiOperation(value = "댓글 등록")
-    public ResponseEntity writeComment (@Validated @RequestBody CommentReqDto commentDto) {
+    @GetMapping("/{feedNo}/{userNo}")
+    @ApiOperation(value = "피드에 달린 댓글 전체 조회")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "feedNo", value = "피드 번호", required = true,
+                    dataType = "int", paramType = "path"),
+            @ApiImplicitParam(name = "userNo", value = "회원 고유 번호", required = true,
+                    dataType = "string", paramType = "path")
+    })
+    public ResponseEntity listComment(@PathVariable int feedNo, @PathVariable String userNo) {
         try {
-            commentService.insertComment(commentDto);
-            return new ResponseEntity<>(SUCCESS, HttpStatus.OK);
-        } catch (Exception e) {
+            List<CommentResDto> list = commentService.commentList(userNo, feedNo);
+            if(list.isEmpty())
+                return new ResponseEntity<>("댓글이 존재하지 않습니다.",HttpStatus.OK);
+            else
+                return new ResponseEntity<>(list,HttpStatus.OK);
+        }catch (Exception e) {
+            e.printStackTrace();
             return new ResponseEntity<>(FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+
 
     @GetMapping
     @ApiOperation(value = "피드에 달린 댓글 조회")
@@ -67,6 +79,17 @@ public class CommentController {
                 return new ResponseEntity<>(list,HttpStatus.OK);
         }catch (Exception e) {
             e.printStackTrace();
+            return new ResponseEntity<>(FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PostMapping
+    @ApiOperation(value = "댓글 등록")
+    public ResponseEntity writeComment (@Validated @RequestBody CommentReqDto commentDto) {
+        try {
+            commentService.insertComment(commentDto);
+            return new ResponseEntity<>(SUCCESS, HttpStatus.OK);
+        } catch (Exception e) {
             return new ResponseEntity<>(FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }

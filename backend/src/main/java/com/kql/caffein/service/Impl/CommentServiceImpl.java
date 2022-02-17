@@ -202,4 +202,38 @@ public class CommentServiceImpl implements CommentService {
         }
         return list;
     }
+
+    @Override
+    public List<CommentResDto> commentList(String userNo, int feedNo) {
+        List<Comment> comments = commentRepository.findByFeedNo(feedNo);
+
+        List<CommentResDto> list = new ArrayList<>();
+
+        String parentID = "";
+
+        for(Comment comment : comments) {
+            boolean checkLike = findCommentLikeByUserNo(new CommentLikeId(userNo,comment.getCommentNo()));
+
+            String commentUserID = userDetailRepository.findById(comment.getUserNo()).get().getUserId(); //회원 번호로 회원 아이디 찾기
+
+            if(comment.getParentNo()!=null) {
+                String parentCommentUserNo = commentRepository.findById(comment.getParentNo()).get().getUserNo();
+                parentID = userDetailRepository.findById(parentCommentUserNo).get().getUserId(); //회원 번호로 회원 아이디 찾기
+            }
+
+            CommentResDto commentDto = CommentResDto.builder()
+                    .commentNo(comment.getCommentNo())
+                    .userId(commentUserID)
+                    .content(comment.getContent())
+                    .regTime(comment.getRegTime())
+                    .commentGroup(comment.getCommentGroup())
+                    .parentId(parentID)
+                    .likeCount(comment.getLikeCount())
+                    .commentCount(comment.getCommentCount())
+                    .checkLike(checkLike).build();
+            list.add(commentDto);
+        }
+
+        return list;
+    }
 }

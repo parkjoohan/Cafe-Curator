@@ -23,4 +23,6 @@ public interface CommentRepository extends JpaRepository<Comment, Integer> {
     Page<Comment> findByFeedNoAndSequenceAndCommentNoLessThanOrderByCommentNoDesc(int feedNo, int sequence, int lastCommentNo, Pageable pageRequest);
 
     Page<Comment> findByFeedNoAndCommentGroupAndSequenceGreaterThanEqualAndCommentNoGreaterThanOrderByCommentNo(int feedNo, int group, int i, Integer lastCommentNo, Pageable pageRequest);
+
+    List<Comment> findByFeedNo(int feedNo);
 }

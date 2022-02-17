@@ -31,4 +31,6 @@ public interface CommentService {
     boolean findCommentLikeByUserNo(CommentLikeId commentLikeId);
 
     List<FollowDto> commentLikeUserList(String userNo, int commentNo, String lastUserNo, int size);
+
+    List<CommentResDto> commentList(String userNo, int feedNo);
 }
