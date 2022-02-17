@@ -137,7 +137,7 @@ export default function Detail(props) {
                   <div id="article_profile_frame">
                     <img
                       id="article_profile_prof_img"
-                      src={localStorage.getItem('userPic')==="null" ? process.env.PUBLIC_URL + "/image/Profileimage.png" : localStorage.getItem('userPic')}
+                      src={!data.userPicture ? process.env.PUBLIC_URL + "/image/Profileimage.png" : data.userPicture}
                     />
                   </div>
                   <div id="article_username">
