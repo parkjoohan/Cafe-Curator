@@ -1,12 +1,18 @@
 import React, { useEffect, useState } from 'react'
 import { Button, Container, Dropdown } from 'react-bootstrap'
 import CategorySearchfeed from './CategorySearchfeed'
+import { useParams } from 'react-router-dom'
 
 export default function CategorySearch(props) {
+  let propcategory = useParams();
   const [category,setCategory] = useState("커피")
   const [poporlast,setPoporlast] = useState("recent")
+
   useEffect(()=>{
     console.log(props.user)
+    if(propcategory){
+      setCategory(propcategory.category)
+    }
   },[])
 
   useEffect(()=>{

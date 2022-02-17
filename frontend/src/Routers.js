@@ -73,7 +73,7 @@ export default function Routers(props) {
       <Route path="/accountsearch" component={AccountSearch}></Route>
       <Route path="/oauth/callback/google" component={GoogleRedirect}><GoogleRedirect setUser={props.setUser} /></Route>
       <Route path="/oauth/callback/kakao" component={KakaoRedirect}><KakaoRedirect setUser={props.setUser}/></Route>
-      <Route path="/categorysearch"><CategorySearch user={props.user}/></Route>
+      <Route path="/categorysearch/:category"><CategorySearch user={props.user}/></Route>
     </Switch>
   );
 }
