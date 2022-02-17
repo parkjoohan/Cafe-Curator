@@ -88,6 +88,11 @@ export default function Detail(props) {
     history.push(`/profile/${userId}`);
   }
 
+  const gotoCategory = (category) => {
+    console.log("category : ",category);
+    history.push(`/categorysearch`);
+  }
+
   const gotoCafeprofile = (name) => {
     let pk = 0;
     const url = `http://i6c104.p.ssafy.io:8080/cafe/${name}`;
@@ -132,7 +137,7 @@ export default function Detail(props) {
                   <div id="article_profile_frame">
                     <img
                       id="article_profile_prof_img"
-                      src={process.env.PUBLIC_URL + "/image/hello.png"}
+                      src={localStorage.getItem('userPic')==="null" ? process.env.PUBLIC_URL + "/image/Profileimage.png" : localStorage.getItem('userPic')}
                     />
                   </div>
                   <div id="article_username">
@@ -251,7 +256,7 @@ export default function Detail(props) {
                     {data &&
                       data.categoryList &&
                       data.categoryList.map((category, index) => (
-                        <p key={index} id="article_category_content">{category}</p>
+                        <p key={index} id="article_category_content" onClick={() => gotoCategory(category)}>{category}</p>
                       ))}
                   </div>
                 </Col>
