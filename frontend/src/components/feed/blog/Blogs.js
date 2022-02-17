@@ -206,7 +206,7 @@ const Blogs = (props, ref) => {
                     style={{
                       marginBottom: "5%",
                       position: "relative",
-                      display: "flex",
+                      display: "flex",  
                     }}
                   >
                     {/* {likebookmarkarr[index][0] == true ? (

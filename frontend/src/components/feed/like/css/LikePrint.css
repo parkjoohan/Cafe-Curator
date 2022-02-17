@@ -4,6 +4,10 @@
   display: flex;
 }
 
+#likes_userId {
+  font-size: 10px;
+}
+
 #like_contentWrapper {
   list-style-type: none;
   width: 100%;

@@ -41,6 +41,10 @@
   text-align: center;
 }
 
+#writemodal_add_pic {
+  width: 50%;
+}
+
 #writemodal_pictureinput{
     margin-top: 1%;
     margin-bottom: 2%;
@@ -110,4 +114,218 @@
   padding: 1%;
   width: 100%;
   height: 200px;
+}
+
+#writemodal_cate2 {
+  height: 20px;
+  margin-bottom: 5%;
+}
+
+#writemodal_cate3 {
+  height: 20px;
+}
+
+#writemodal_cate4 {
+  height: 20px;
+}
+
+#writemodal_cate5 {
+  height: 20px; 
+}
+
+#writemodal_cate_air {
+  font-weight: bold; 
+  text-align: -webkit-left;
+  margin-bottom: 5%;
+}
+
+#writemodal_cate_air2 {
+  place-content: center;
+  text-align: -webkit-center;
+}
+
+#writemodal_cate_menu {
+  font-weight: bold; 
+  text-align: -webkit-left;
+  margin-bottom: 5%;
+}
+
+#writemodal_cate_menu2 {
+  place-content: center;
+  text-align: -webkit-center;
+}
+
+
+/* 모바일 */
+@media screen and (max-width: 412px){
+  #writemodal_all {
+    width: 600px;
+    height: 1800px;
+  }
+  
+  #writemodal_navcolor {
+    border: 0;
+    background: #4b6b79;
+    height: 35px;
+  }
+  
+  #writemodal_Margin_Underline {
+    margin-top: 0%;
+    margin-left : 20px;
+    text-decoration: underline;
+    text-underline-position:under;
+    margin-top: -2%;
+    margin-bottom: -2%;
+  } 
+  
+  #writemodal_cate {
+    margin-top: 3%;
+    width: 600px;
+    height: 300px;
+  }
+  
+  .writemodal_likebutton {
+      background-color: skyblue;
+      padding : 5px;
+      width: 80px;
+      /* margin-top: 10px; */
+      margin-bottom: 20px;
+      border-radius: 30px;
+      font-size: 5px;
+      font-weight: 700;
+      text-align: center;
+  }
+  
+  .writemodal_selected {
+    background-color: skyblue;
+    padding : 5px;
+    margin-top: 10px;
+    border-radius: 30px;
+    font-weight: 700;
+    text-align: center;
+  }
+
+  #writemodal_add_pic {
+    width: 30px;
+    height: 30px;
+    margin-top: 100%;
+  }
+
+  #writemodal_pictureinput{
+      margin-top: 1%;
+      margin-bottom: 1%;
+      margin-right: 60%;
+  }
+  
+  #writemodal_minipicture{
+      width: 70px;
+      height: 100px;
+      /* border-style: groove; */
+  }
+  
+  #writemodal_NoBgButton {
+      background-color : white;
+      border: none;
+      color : black;
+      font-weight:bold;
+      font-size: 20px;
+  }
+  
+  #writemodal_cafe_search{
+    width: 91%;
+    margin-left: 4.5%;
+    text-align: center;
+    text-align-last: center;
+    margin-top: -10%;
+  }
+  
+  #writemodal_content {
+    margin-left: 10%;
+    text-align: center;
+    text-align-last: center;
+    margin-top: -20%;
+  }
+  
+  #writemodal_cate {
+    margin-bottom: 2%;
+    border: 2px solid;
+    border-color: black;
+    height: 700px;
+    width: 90%;
+    padding: 3%;
+    border-radius: 3%;
+    margin-left: 4.5%;
+    margin-top: -5%;
+  }
+  
+  #writemodal_selected_cate {
+    text-align-last: center;
+    font-weight: bold;
+    font-size: 18px;
+    margin-bottom: 9%;
+  }
+  
+  #writemodal_cate_select {
+    margin-top: 5%;
+    margin-bottom: 5%;
+    height: 150px;
+  }
+  
+  #writemodal_cate_air {
+    text-align: -webkit-center;
+    padding: 1%;
+    width: 100%;
+    height: 300px;
+  }
+  
+  #writemodal_cate_menu {
+    text-align: -webkit-center;
+    padding: 1%;
+    width: 100%;
+    height: 180px;
+  }
+
+  #writemodal_cate2 {
+    height: 140px;
+    margin-bottom: 5%;
+  }
+  
+  #writemodal_cate3 {
+    height: 20px;
+  }
+  
+  #writemodal_cate4 {
+    height: 20px;
+  }
+  
+  #writemodal_cate5 {
+    height: 20px; 
+    margin-top: -15%;
+    margin-left: 30%;
+  }
+  
+  #writemodal_cate_air {
+    font-weight: bold; 
+    text-align: -webkit-left;
+    margin-bottom: 5%;
+    margin-top: -5%;
+    height: 230px;
+  }
+  
+  #writemodal_cate_air2 {
+    place-content: center;
+    text-align: -webkit-center;
+    margin-top: -5%;
+  }
+  
+  #writemodal_cate_menu {
+    font-weight: bold; 
+    text-align: -webkit-left;
+    margin-bottom: 5%;
+  }
+  
+  #writemodal_cate_menu2 {
+    place-content: center;
+    text-align: -webkit-center;
+  }
 }

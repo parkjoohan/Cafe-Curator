@@ -285,7 +285,7 @@ const WriteModal = ( {show, onHide,user}) => {
           <Row>
               <Col>
               <div style={{textAlign: "-webkit-right"}}>
-                <img style={{ width: "50%" }} src="/image/pic_upload.png" onClick={handleClick}></img>
+                <img id='writemodal_add_pic' src="/image/pic_upload.png" onClick={handleClick}></img>
                 <input type="file" style={{ display: "none" }} ref={photoInput} onChange={onLoadFile} ></input>
               </div>
               </Col>
@@ -321,13 +321,13 @@ const WriteModal = ( {show, onHide,user}) => {
         {/* 관심사 선택 */}
         <div id='writemodal_cate'>
           <div>
-            <Row style={{height: "20px", marginBottom: "5%"}}>
+            <Row id='writemodal_cate2'>
               {/* 선택된 카테고리 */}
-              <Col md={3} style={{height: "20px"}}>
+              <Col md={3} id='writemodal_cate3'>
                 <p id='writemodal_selected_cate'>선택된 카테고리</p>
               </Col>
-              <Col md={9} style={{height: "20px"}}>
-                <Row style={{height: "20px"}}>{selected}{selected2}</Row>
+              <Col md={9} id='writemodal_cate4'>
+                <Row id='writemodal_cate5'>{selected}{selected2}</Row>
               </Col>
             </Row>
 
@@ -335,16 +335,16 @@ const WriteModal = ( {show, onHide,user}) => {
 
               <div id='writemodal_cate_air'>
                 {/* 분위기 카테고리 */}
-                <p style={{fontWeight: "bold", textAlign: "-webkit-left", marginBottom: "5%"}}>분위기 카테고리</p>
-                <Row>{defaultlike2}</Row>
+                <p>분위기 카테고리</p>
+                <Row id='writemodal_cate_air2'>{defaultlike2}</Row>
             </div>
             
             <hr />
 
               <div id='writemodal_cate_menu'>
                 {/* 메뉴 카테고리 */}
-                <p style={{fontWeight: "bold", textAlign: "-webkit-left", marginBottom: "5%"}}>메뉴 카테고리</p>
-                <Row>{defaultlike}</Row>
+                <p>메뉴 카테고리</p>
+                <Row id='writemodal_cate_menu2'>{defaultlike}</Row>
               </div>
 
           </div>
