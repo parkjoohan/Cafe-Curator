@@ -64,18 +64,21 @@ public class FollowController {
     @GetMapping("/follower")
     @ApiOperation(value = "팔로워 목록")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "userNo", value = "회원 고유 번호", required = true,
+            @ApiImplicitParam(name = "loginUserNo", value = "로그인한 회원 고유 번호", required = true,
+                    dataType = "string", paramType = "query"),
+            @ApiImplicitParam(name = "userNo", value = "계정 고유 번호", required = true,
                     dataType = "string", paramType = "query"),
             @ApiImplicitParam(name = "lastUserNo", value = "마지막 회원 번호", required = false,
                     dataType = "string", paramType = "query"),
             @ApiImplicitParam(name = "size", value = "화면에 보여질 사이즈", required = true,
                     dataType = "int", paramType = "query")
     })
-    public ResponseEntity follower (@RequestParam(value = "userNo") String userNo,
+    public ResponseEntity follower (@RequestParam(value = "loginUserNo") String loginUserNo,
+                                    @RequestParam(value = "userNo") String userNo,
                                     @RequestParam(value = "lastUserNo", required = false) String lastUserNo,
                                     @RequestParam int size) {
         try {
-            return new ResponseEntity<>(followService.followerList(userNo, lastUserNo, size),HttpStatus.OK);
+            return new ResponseEntity<>(followService.followerList(loginUserNo, userNo, lastUserNo, size),HttpStatus.OK);
         }catch (Exception e) {
             return new ResponseEntity<>(FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
         }
@@ -84,18 +87,21 @@ public class FollowController {
     @GetMapping("/following")
     @ApiOperation(value = "팔로잉 목록")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "userNo", value = "회원 고유 번호", required = true,
+            @ApiImplicitParam(name = "loginUserNo", value = "로그인한 회원 고유 번호", required = true,
+                    dataType = "string", paramType = "query"),
+            @ApiImplicitParam(name = "userNo", value = "계정 고유 번호", required = true,
                     dataType = "string", paramType = "query"),
             @ApiImplicitParam(name = "lastUserNo", value = "마지막 회원 번호", required = false,
                     dataType = "string", paramType = "query"),
             @ApiImplicitParam(name = "size", value = "화면에 보여질 사이즈", required = true,
                     dataType = "int", paramType = "query")
     })
-    public ResponseEntity following (@RequestParam(value = "userNo") String userNo,
+    public ResponseEntity following (@RequestParam(value = "loginUserNo") String loginUserNo,
+                                     @RequestParam(value = "userNo") String userNo,
                                     @RequestParam(value = "lastUserNo", required = false) String lastUserNo,
                                     @RequestParam int size) {
         try {
-            return new ResponseEntity<>(followService.followingList(userNo, lastUserNo, size),HttpStatus.OK);
+            return new ResponseEntity<>(followService.followingList(loginUserNo, userNo, lastUserNo, size),HttpStatus.OK);
         }catch (Exception e) {
             return new ResponseEntity<>(FAIL, HttpStatus.INTERNAL_SERVER_ERROR);
         }
