@@ -83,7 +83,7 @@ export default function Detail(props) {
   };
   function deleteFeed(feedNo) {
     console.log(feedNo);
-    axios.delete(`http://i6c104.p.ssafy.io:8080/feed/${feedNo}/${props.user[1]}`).then(window.location.reload())
+    axios.delete(`http://i6c104.p.ssafy.io:8080/feed/${feedNo}/${props.user[1]}`).then(history.push(`/profile/${props.user[0]}`))
 }
   function gotoProfile(userId) {
     // console.log(localStorage);
