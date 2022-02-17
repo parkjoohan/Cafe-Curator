@@ -7,6 +7,7 @@ import RecentSearch from "./RecentSearch";
 import LocationSearch from "./KeywordSearch/LocationSearch";
 import AccountSearch from "./AccountSearch/AccountSearch";
 import './css/MainFeed3.css'
+import CategorySearch from './CategorySearch/CategorySearch';
 
 export default function Mainfeed(props) {
 
@@ -58,11 +59,14 @@ export default function Mainfeed(props) {
             <Router>
                 <div id='search_button_div' style={{textAlign: "center" }}>
                     <Row id='search_button_group'>
-                        <Col lg={2}>
+                        {/* <Col lg={2}>
                             <Link id="search_link" to="/popularsearch"><div variant="light" id='search_popularsearch' onClick={GetClick}>인기순</div></Link>
                         </Col>
                         <Col lg={2}>
                             <Link id="search_link" to="/recentsearch"><div variant="light" id='search_recentsearch' onClick={GetClick}>최신순</div></Link>
+                        </Col> */}
+                        <Col lg={2}>
+                            <Link id="search_link" to="/categorysearch"><div variant="light" id='search_locationsearch' onClick={GetClick}>카테고리</div></Link>
                         </Col>
                         <Col lg={2}>
                             <Link id="search_link" to="/locationsearch"><div variant="light" id='search_locationsearch' onClick={GetClick}>장소</div></Link>
@@ -78,6 +82,7 @@ export default function Mainfeed(props) {
                         <Route path="/recentsearch" component={RecentSearch} />
                         <Route path="/locationsearch" component={LocationSearch} />
                         <Route path="/accountsearch" component={AccountSearch} />
+                        <Route path="/categorysearch"><CategorySearch user={props.user} setFootershow={props.setFootershow}/></Route>
                     </Switch>
                 </div>
             </Router>

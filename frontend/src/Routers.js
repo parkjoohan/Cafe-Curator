@@ -23,6 +23,7 @@ import CafeSearch from './components/feed/search/KeywordSearch/CafeSearch'
 import AccountSearch from './components/feed/search/AccountSearch/AccountSearch'
 import GoogleRedirect from './components/user/GoogleRedirect'
 import KakaoRedirect from './components/user/KakaoRedirect'
+import CategorySearch from "./components/feed/search/CategorySearch/CategorySearch";
 
 export default function Routers(props) {
   return (
@@ -62,7 +63,7 @@ export default function Routers(props) {
       </Route>
       <Route path="/termmodal" component={TermsModal}></Route>
       {/* searchtest용입니다. 테스트 끝나면 지울거임 */}
-      <Route path="/search" component={Mainfeed3}></Route>
+      <Route path="/search"><Mainfeed3 user={props.user} setFootershow={props.setFootershow}/></Route>
       <Route path="/popularsearch" component={PopularSearch}></Route>
       <Route path="/recentsearch" component={RecentSearch}></Route>
       <Route path="/locationsearch">
@@ -72,6 +73,7 @@ export default function Routers(props) {
       <Route path="/accountsearch" component={AccountSearch}></Route>
       <Route path="/oauth/callback/google" component={GoogleRedirect}><GoogleRedirect setUser={props.setUser} /></Route>
       <Route path="/oauth/callback/kakao" component={KakaoRedirect}><KakaoRedirect setUser={props.setUser}/></Route>
+      <Route path="/categorysearch"><CategorySearch user={props.user}/></Route>
     </Switch>
   );
 }
