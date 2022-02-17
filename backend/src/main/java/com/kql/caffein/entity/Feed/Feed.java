@@ -26,8 +26,7 @@ public class Feed {
     @Column(columnDefinition = "TEXT")
     private String content;
 
-    @CreationTimestamp
-    private LocalDateTime regTime;
+    private String regTime;
 
     private Integer cafeId;
 
@@ -48,7 +47,7 @@ public class Feed {
     private List<File> files = new ArrayList<>();
 
     @Builder
-    public Feed(String content, LocalDateTime regTime, Integer cafeId, String cafeName, List<String> categoryList,
+    public Feed(String content, String regTime, Integer cafeId, String cafeName, List<String> categoryList,
                 int likeCount, int commentCount, String userNo){
         this.content = content;
         this.regTime = regTime;

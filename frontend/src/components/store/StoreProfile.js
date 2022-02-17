@@ -1,5 +1,5 @@
 import React , {useEffect, useState, useRef} from "react";
-import { useParams,useLocation } from "react-router-dom";
+import { useParams,useLocation,useHistory } from "react-router-dom";
 import {Container, Col, Row} from 'react-bootstrap'
 import './StoreProfile.css';
 import Chip from '@mui/material/Chip';
@@ -24,6 +24,7 @@ import StoreProfilefeed from "./StorePrifilefeed";
 import Storemodal from "./Storemodal";
 
 export const StoreProfile = (props) => {
+  const history = useHistory();
   let id = useParams();
   const location = useLocation();
   const cafename = location.state.name
@@ -44,6 +45,11 @@ export const StoreProfile = (props) => {
     })
   },[])
 
+  const gotoCategorysearch = e => {
+    let category = e.target.innerHTML.substring(0,e.target.innerHTML.length - 2)
+    console.log(category)
+    history.push(`/categorysearch/${category}`)
+  }
     
   return (
     <div>
@@ -61,43 +67,43 @@ export const StoreProfile = (props) => {
                 detail[1].map((category)=>{
                   if (category=="케이크"){
                     return (
-                      <Chip icon={<CakeIcon />} label="케이크 맛집" style={{backgroundColor:`${pink[100]}`}} />
+                      <Chip onClick={(e)=>gotoCategorysearch(e)} icon={<CakeIcon />} label="케이크 맛집" style={{backgroundColor:`${pink[100]}`}} />
                     )
                   } else if (category=="커피"){
                     return (
-                      <Chip icon={<CoffeeIcon />} label="커피 맛집" style={{backgroundColor:`${brown[100]}`}} />
+                      <Chip onClick={(e)=>gotoCategorysearch(e)} icon={<CoffeeIcon />} label="커피 맛집" style={{backgroundColor:`${brown[100]}`}} />
                     )
                   } else if (category=="마카롱/쿠키"){
                     return (
-                      <Chip icon={<CookieIcon />} label="마카롱/쿠키 맛집" style={{backgroundColor:`${brown[200]}`}} />
+                      <Chip onClick={(e)=>gotoCategorysearch(e)} icon={<CookieIcon />} label="마카롱/쿠키 맛집" style={{backgroundColor:`${brown[200]}`}} />
                     )
                   } else if (category=="브런치"){
                     return (
-                      <Chip icon={<BrunchDiningIcon />} label="브런치 맛집" style={{backgroundColor:`${yellow[100]}`}} />
+                      <Chip onClick={(e)=>gotoCategorysearch(e)} icon={<BrunchDiningIcon />} label="브런치 맛집" style={{backgroundColor:`${yellow[100]}`}} />
                     )
                   } else if (category=="차"){
                     return (
-                      <Chip icon={<FreeBreakfastIcon />} label="차 맛집" style={{backgroundColor:`${lime[100]}`}} />
+                      <Chip onClick={(e)=>gotoCategorysearch(e)} icon={<FreeBreakfastIcon />} label="차 맛집" style={{backgroundColor:`${lime[100]}`}} />
                     )
                   } else if (category=="사진찍기 좋은"){
                     return (
-                      <Chip icon={<CameraIcon />} label="사진찍기 좋은 장소" style={{backgroundColor:`${lightBlue[100]}`}} />
+                      <Chip onClick={(e)=>gotoCategorysearch(e)} icon={<CameraIcon />} label="사진찍기 좋은 장소" style={{backgroundColor:`${lightBlue[100]}`}} />
                     )
                   } else if (category=="아늑한"){
                     return (
-                      <Chip icon={<CottageIcon />} label="아늑한 장소" style={{backgroundColor:`${brown[300]}`}} />
+                      <Chip onClick={(e)=>gotoCategorysearch(e)} icon={<CottageIcon />} label="아늑한 장소" style={{backgroundColor:`${brown[300]}`}} />
                     )
                   } else if (category=="힙한"){
                     return (
-                      <Chip icon={<NightlifeIcon />} label="힙한 장소" style={{backgroundColor:`${deepPurple[200]}`}} />
+                      <Chip onClick={(e)=>gotoCategorysearch(e)} icon={<NightlifeIcon />} label="힙한 장소" style={{backgroundColor:`${deepPurple[200]}`}} />
                     )
                   } else if (category=="공부하기 좋은"){
                     return (
-                      <Chip icon={<MenuBookIcon />} label="공부하기 좋은 장소" style={{backgroundColor:`${grey[400]}`}} />
+                      <Chip onClick={(e)=>gotoCategorysearch(e)} icon={<MenuBookIcon />} label="공부하기 좋은 장소" style={{backgroundColor:`${grey[400]}`}} />
                     )
                   } else {
                     return (
-                      <Chip icon={<BedroomBabyIcon />} label="테마있는 장소" style={{backgroundColor:`${teal[400]}`}} />
+                      <Chip onClick={(e)=>gotoCategorysearch(e)} icon={<BedroomBabyIcon />} label="테마있는 장소" style={{backgroundColor:`${teal[400]}`}} />
                     )
                   }
                 })

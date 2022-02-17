@@ -116,6 +116,7 @@ export default function LoginForm({ setUser }) {
     } catch (error) {
       //응답 실패
       console.error(error);
+      alert("가입되지 않은 이메일입니다.");
     }
   };
 
@@ -205,10 +206,6 @@ export default function LoginForm({ setUser }) {
               type="password"
               fullWidth
               required
-            />
-            <FormControlLabel
-              control={<Checkbox name="checkedB" color="primary" />}
-              label="아이디 기억하기"
             />
             <br />
             <br />

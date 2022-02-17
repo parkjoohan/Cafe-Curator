@@ -4,11 +4,14 @@ import {TextField, Button} from '@material-ui/core';
 import { Row,Col } from 'react-bootstrap'
 import axios from 'axios'
 import $ from "jquery";
+import { useHistory } from 'react-router-dom';
 import "./css/Likelist.css";
 
 
 
-const Likelist = forwardRef(({show, onHide, data},ref) => {
+const Likelist = forwardRef(({ show, onHide, data }, ref) => {
+  
+  const history = useHistory();
 
   useImperativeHandle(ref,()=>({
     setDetaildata,
@@ -71,6 +74,11 @@ const Likelist = forwardRef(({show, onHide, data},ref) => {
     }
   }
 
+  const gotoProfile = (id) => {
+    history.push(`/profile/${id}`)
+    document.location.reload();
+  }
+
   return (
     <Modal
       size='xs'
@@ -97,7 +105,7 @@ const Likelist = forwardRef(({show, onHide, data},ref) => {
                 <img id="blogs_img2" src={ppl.picture} alt="" /> :
                 <img id="blogs_img2" src='../image/Profileimage.png'/>
               }
-              <strong id='likelist_people_userid'>{ppl.userId}</strong>
+              <strong id='likelist_people_userid' onClick={()=>gotoProfile(ppl.userId)}>{ppl.userId}</strong>
               {
                 !ppl.status&&<span id='likelist_people_follow'>팔로우</span>
               }

@@ -16,6 +16,7 @@ import BedroomBabyIcon from '@mui/icons-material/BedroomBaby';
 import CookieIcon from '@mui/icons-material/Cookie';
 import { pink, brown, lime, yellow, deepPurple, lightBlue, grey, teal } from '@mui/material/colors';
 
+
 export default function CategorySearch(props) {
   let propcategory = useParams();
   const [category,setCategory] = useState("커피")
