@@ -16,7 +16,7 @@ export default function Comment({user}) {
     const [heart, setHeart] = useState();
     const [like, setLike] = useState([]);
     const [mylike, setMyLike] = useState([]);
-    const [showMore, setShowMore] = useState([]);
+    const [showMore, setShowMore] = useState(true);
 
     let { pk } = useParams();
     
@@ -129,7 +129,7 @@ export default function Comment({user}) {
         }).then((data3) => {
             console.log(data3.data);
             setRecomments([...recomments, ...data3.data]);
-            
+            setShowMore(true);
         }).catch(() => {
             // console.log('불러오기 실패')
             setShowMore(false);
@@ -285,7 +285,7 @@ export default function Comment({user}) {
                                         // showMore[] == true ?
                                         // <h5 style={{ fontSize: "12px" }} id='article_commnets_more' onClick={() => showRecomment(comment.commentNo)}>더보기</h5>
                                         // : null
-                                        (comment.commentCount > 0) && (comment.commentCount != recomments.length) ?
+                                        (comment.commentCount > 0) && (comment.commentCount != recomments.length) && (showMore == true) ?
                                         <h5 style={{ fontSize: "12px" }} id='article_commnets_more' onClick={() => showRecomment(comment.commentNo)}>더보기</h5>
                                         : null
                                     }
