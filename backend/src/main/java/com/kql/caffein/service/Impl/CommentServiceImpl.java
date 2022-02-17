@@ -227,6 +227,7 @@ public class CommentServiceImpl implements CommentService {
                     .content(comment.getContent())
                     .regTime(comment.getRegTime())
                     .commentGroup(comment.getCommentGroup())
+                    .sequence(comment.getSequence())
                     .parentId(parentID)
                     .likeCount(comment.getLikeCount())
                     .commentCount(comment.getCommentCount())
