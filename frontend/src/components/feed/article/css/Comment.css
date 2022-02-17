@@ -1,56 +1,71 @@
-#article_comment {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    height: 550px;
+#comment_amount {
+    font-size: 100%;
     margin-top: 1%;
-    margin-bottom: 5%;
-    justify-content: flex-start;
 }
 
-#article_comment_frame {
+#comment_frame {
     border: 1px solid black;
-    height: 500px;
+    height: 300px;
     width: 100%;
-    padding-top: 3%;
-    padding-bottom: 3%;
+    padding: 2%;
     border-radius: 10px;
     overflow-y: scroll;
 }
 
-#article_comments-frame {
-    margin: 1%;
-    height: 100%;
-}
-
-
-#article_comments {
-    position: relative;
-    display: flex;
-}
-
-#article_comments_user {
+#comments_user {
     font-weight: bold;
     width: 10%;
+    font-size: 150%;
 }
 
-#article_comments_content {
-    font-size: 16px;
-    margin-left: 3%;
-    margin-right: 3%;
+#comments_content {
+    font-size: 100%;
     width: 100%;
 }
 
-#article_commnets_more {
-    text-align-last: center;
+#comment_reply {
+    font-size: 100%;
+    width: 120%;
 }
 
-#article_re_comments {
-    position: relative;
-    display: flex; 
-    left: 10%;
+#comment_delete {
+    font-size: 100%;
+    width: 140%;
 }
 
-#article_recomments-frame {
-    margin-left: 1%;
+#comments_heart {
+    width: 250%;
+}
+
+#comments_heart_count {
+    width: 100%;
+}
+
+/* 대댓글 */
+
+#recomments_frame {
+    margin-left: 2%;
+}
+
+#recomments_frame2 {
+    margin-left: 6.3%;
+}
+
+#recomments_parentId {
+    font-size: 100%;
+    width: 100%;
+    margin-left: -5%;
+}
+
+#recomments_content {
+    font-size: 100%;
+    width: 100%;
+    margin-left: -8%;
+}
+
+/* 입력창 */
+#comment_input_frame {
+    width: 100%;
+    margin-left: 0.3%;
+    border-bottom: groove;
 }

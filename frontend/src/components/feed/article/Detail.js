@@ -120,13 +120,8 @@ export default function Detail(props) {
   return (
     <>
       {/* 뒤로 가기 버튼 */}
-      <div style={{ float: "left", marginLeft: "13%", marginTop: "2%" }}>
-        <FiCornerUpLeft
-          size="30"
-          onClick={() => {
-            history.goBack();
-          }}
-        />
+      <div id='article_back_func'>
+        <FiCornerUpLeft id='article_back' onClick={() => { history.goBack(); }}/>
       </div>
       <div id='article_full_frame'>
           <div>
@@ -147,7 +142,7 @@ export default function Detail(props) {
                   </div>
                 </div>
                 <div id="article_profile_date">
-                  <h5>{data.regTime}</h5>
+                  <h5 id='article_profile_date_num'>{data.regTime}</h5>
                 </div>
               </div>
               
@@ -198,19 +193,17 @@ export default function Detail(props) {
             <Row id='article_heart_bookmark_cate'>
               <Col style={{alignSelf: "center"}}>
                   {/* 하트 & 북마크*/}
-                  <div id="article_heart_bookmark">
+                  <div id="article_heart_bookmark_frame">
                     {likearr[1] ? (
                       <img
                         src={`${process.env.PUBLIC_URL}/image/heart.png`}
-                        width="30px%"
-                        height="40px"
+                        id="article_heart"
                         onClick={likearticle}
                       />
                     ) : (
                       <img
                         src={`${process.env.PUBLIC_URL}/image/empty_heart.png`}
-                        width="30px%"
-                        height="40px"
+                        id="article_heart"
                         onClick={likearticle}
                       />
                     )}
@@ -222,7 +215,7 @@ export default function Detail(props) {
                       }}
                     >
                       <p
-                        style={{ marginLeft: "3%" }}
+                        id='article_heart_count'
                         onClick={() => setLikemodalshow(true)}
                       >
                         {likearr[[0]]}
@@ -231,23 +224,21 @@ export default function Detail(props) {
                     {isbookmark ? (
                       <img
                         src={`${process.env.PUBLIC_URL}/image/bookmark.png`}
-                        width="30px"
-                        height="40px"
+                        id="article_bookmark"
                         onClick={checkbookmark}
                       />
                     ) : (
                       <img
                         src={`${process.env.PUBLIC_URL}/image/empty_bookmark.png`}
-                        width="30px"
-                        height="40px"
+                        id="article_bookmark"
                         onClick={checkbookmark}
                       />
                     )}
-                    <div style={{ width: "70px" }}>
-                      <p style={{ marginRight: "3%", marginLeft: "8%" }}>북마크</p>
+                    <div id='article_bookmark_count_frame'>
+                      <p id='article_bookmark_count'>북마크</p>
                     </div>
                     {data.userId == props.user[0] && (
-                      <Button onClick={() => setModifymodalshow(true)}>수정</Button>
+                      <Button id='article_modify_button' onClick={() => setModifymodalshow(true)}>수정</Button>
                     )}
                   </div>
                 </Col>
@@ -257,7 +248,7 @@ export default function Detail(props) {
                     {data &&
                       data.categoryList &&
                       data.categoryList.map((category, index) => (
-                        <p key={index} id="article_category_content" style={{ backgroundColor: "skyblue" }}>{category}</p>
+                        <p key={index} id="article_category_content">{category}</p>
                       ))}
                   </div>
                 </Col>
