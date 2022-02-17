@@ -205,7 +205,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public List<CommentResDto> commentList(String userNo, int feedNo) {
-        List<Comment> comments = commentRepository.findByFeedNo(feedNo);
+        List<Comment> comments = commentRepository.findByFeedNoOrderByCommentGroup(feedNo);
 
         List<CommentResDto> list = new ArrayList<>();
 
