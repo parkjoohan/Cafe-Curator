@@ -38,4 +38,6 @@ public interface FeedRepository extends JpaRepository<Feed, Integer> {
 
   //해당 카페를 등록한 피드 목록
   Page<Feed> findByCafeIdInAndFeedNoLessThanOrderByFeedNoDesc(List<Integer> cafeId, Integer lastFeedNo, Pageable pageRequest);
+
+  int countByCafeId(int cafeId);
 }

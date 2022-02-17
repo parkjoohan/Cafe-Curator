@@ -83,6 +83,7 @@ public class SearchServiceImpl implements SearchService {
 
         CafeSearchResDto cafeSearchDto = CafeSearchResDto.builder()
                 .categoryList(category)
+                .feedCount(feedRepository.countByCafeId(cafeId))
                 .feedList(feedResDtoList).build();
         return cafeSearchDto;
     }
