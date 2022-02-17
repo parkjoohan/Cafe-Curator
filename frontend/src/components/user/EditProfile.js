@@ -94,7 +94,18 @@ export default function EditProfile({setUser}) {
   // const location = useLocation()
   // const email = location.state.email
   // console.log(email)
-  
+  const [IdCheck, setIdCheck] = useState(true)
+  const [IdPwCheck, setIdPwCheck] = useState(true)
+  let checkPw = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,15}$/;
+  function CheckPass(str){
+    var reg1 = /^[A-Za-z0-9-_.\/]{4,10}$/; 
+    var reg2 = /[a-z]/g;    
+    var reg3 = /[0-9]/g;
+    var reg4 = /[-_.]/g;
+    var reg5 = /[A-Z]/g;
+    return(reg1.test(str) &&  (reg2.test(str) || reg3.test(str) ||  reg4.test(str) || reg5.test(str)));
+};
+
   const [form, setForm] = useState({
     id: localStorage.getItem('userId'),
     intro: intro,
@@ -113,6 +124,11 @@ export default function EditProfile({setUser}) {
   let newform = {...form}
   newform.password = e.target.value
   setForm(newform)
+  if (checkPw.test(e.target.value)) {
+    setIdPwCheck(true)
+  }else{
+    setIdPwCheck(false)
+  }
   }
   const onChangeRePw = e => {  
   let newform = {...form}
@@ -298,7 +314,7 @@ export default function EditProfile({setUser}) {
                   {/* 회원정보 변경 버튼 */}
                   { !editPw ?
                   <Button type="submit" color="primary" onClick={Editing} variant='contained' style={btnStyle} fullWidth>Edit</Button>
-                  : (form.password === form.repassword && form.password && form.id) ?
+                  : (form.password === form.repassword && form.password && form.repassword && IdPwCheck) ?
                     <div>
                     <Button type="submit" color="primary" onClick={EditingPw} variant='contained' style={btnStyle} fullWidth>Edit</Button>
                     <br />
@@ -306,6 +322,7 @@ export default function EditProfile({setUser}) {
                     </div>
                     : 
                     <div>
+                      <a style={{fontSize : 'small'}}>비밀번호는 영어+숫자+특수문자의 조합으로 8~16자리로 해야합니다.</a>
                     <Button type="submit" color="primary" onClick={EditingPw} variant='contained' style={btnStyle} fullWidth disabled>Edit</Button>
                     <br />
                     <br />

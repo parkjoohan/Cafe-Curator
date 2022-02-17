@@ -92,7 +92,7 @@ export default function LoginForm({ setUser }) {
       localStorage.setItem("userEmail", loginEmail);
 
       setUser([response.data.userId, response.data.userNo]);
-      history.goBack();
+      history.push('/');
     } catch (error) {
       alert("로그인에 실패 했습니다.");
     }

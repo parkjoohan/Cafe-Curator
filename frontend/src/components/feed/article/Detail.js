@@ -81,11 +81,19 @@ export default function Detail(props) {
       setlikearr(newlikearr);
     });
   };
-
+  function deleteFeed(feedNo) {
+    console.log(feedNo);
+    axios.delete(`http://i6c104.p.ssafy.io:8080/feed/${feedNo}/${props.user[1]}`).then(window.location.reload())
+}
   function gotoProfile(userId) {
     // console.log(localStorage);
     console.log(userId + "의 프로필로 갑시다");
     history.push(`/profile/${userId}`);
+  }
+
+  const gotoCategory = (category) => {
+    console.log("category : ",category);
+    history.push(`/categorysearch`);
   }
 
   const gotoCafeprofile = (name) => {
@@ -132,7 +140,7 @@ export default function Detail(props) {
                   <div id="article_profile_frame">
                     <img
                       id="article_profile_prof_img"
-                      src={process.env.PUBLIC_URL + "/image/hello.png"}
+                      src={!data.userPicture ? process.env.PUBLIC_URL + "/image/Profileimage.png" : data.userPicture}
                     />
                   </div>
                   <div id="article_username">
@@ -241,7 +249,8 @@ export default function Detail(props) {
                       <p id='article_bookmark_count'>북마크</p>
                     </div>
                     {data.userId == props.user[0] && (
-                      <Button id='article_modify_button' onClick={() => setModifymodalshow(true)}>수정</Button>
+                      <><Button id='article_modify_button' onClick={() => setModifymodalshow(true)}>수정</Button>
+                      <Button id='article_delete_button' onClick={() => deleteFeed(data.feedNo)}>삭제</Button></>
                     )}
                   </div>
                 </Col>
@@ -251,7 +260,7 @@ export default function Detail(props) {
                     {data &&
                       data.categoryList &&
                       data.categoryList.map((category, index) => (
-                        <p key={index} id="article_category_content">{category}</p>
+                        <p key={index} id="article_category_content" onClick={() => gotoCategory(category)}>{category}</p>
                       ))}
                   </div>
                 </Col>

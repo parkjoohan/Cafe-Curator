@@ -22,6 +22,22 @@ export default function SignupForm (props) {
   const [likearr, setLikearr] = useState([]);
   const [fileUrl, setFileUrl] = useState(null);
   const [file, setFile] = useState(null);
+
+  const [IdCheck, setIdCheck] = useState(true)
+  const [IdPwCheck, setIdPwCheck] = useState(true)
+
+  let checkPw = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[$@$!%*#?&])[A-Za-z\d$@$!%*#?&]{8,15}$/;
+  function CheckPass(str){
+    var reg1 = /^[A-Za-z0-9-_.\/]{4,10}$/; 
+    var reg2 = /[a-z]/g;    
+    var reg3 = /[0-9]/g;
+    var reg4 = /[-_.]/g;
+    var reg5 = /[A-Z]/g;
+    return(reg1.test(str) &&  (reg2.test(str) || reg3.test(str) ||  reg4.test(str) || reg5.test(str)));
+};
+
+
+
   // 회원가입 정보부분
     // 이메일 받아오기
   // const location = useLocation()
@@ -38,16 +54,38 @@ export default function SignupForm (props) {
   let newform = {...form}
   newform.id = e.target.value
   setForm(newform)
+  // if (check_kor.test(e.target.value) || (!(check_num.test(e.target.value) || check_eng.test(e.targe.value)))){
+  //   setIdCheck(false)
+  //   console.log(e.target.value)
+  // }
+  // else if (!check_kor.test(e.target.value) && (check_num.test(e.target.value) || check_eng.test(e.targe.value))) {
+  //   setIdCheck(true)
+  // }
+  // if (!check_kor.test(e.target.value) && check_id.test(e.target.value)) {
+    if (CheckPass(e.target.value)) {
+    setIdCheck(true)
+  }else{
+    setIdCheck(false)
   }
+  }
+
   const onChangePw = e => {  
     let newform = {...form}
   newform.password = e.target.value
   setForm(newform)
+  if (checkPw.test(e.target.value)) {
+    setIdPwCheck(true)
+  }else{
+    setIdPwCheck(false)
   }
+  }
+  
+  
   const onChangeRePw = e => {  
     let newform = {...form}
   newform.repassword = e.target.value
   setForm(newform)
+  
   }
 
   const [email,setEmail] = useState("");
@@ -153,13 +191,24 @@ export default function SignupForm (props) {
             <div id="singup_content">
             <TextField  label="Password"  onChange={onChangePw} placeholder='Enter password' type="password" fullWidth required/>
             </div>
+            { !IdPwCheck ? 
+            <a style={{fontSize : 'small'}}>비밀번호는 영어+숫자+특수문자의 조합으로 8~15자리로 해야합니다.</a>
+            : null
+            }
             <div id="singup_content">
             <TextField label="Re-Password"   onChange={onChangeRePw} placeholder='Enter password' type="password" fullWidth required />
             </div>
+            
             <div id="singup_content">
               <TextField label="Username"   onChange={onChangeId} placeholder='Enter username' type="text" fullWidth required />
             </div>
-            
+            { !IdCheck ? 
+            <div>
+            <a style={{fontSize : 'small'}}>아이디는 영어나숫자를 포함한 4~10자리로 해야합니다.</a>
+            <p style={{fontSize : 'small'}}>(특수문자는 -,_,.만 사용가능)</p>
+            </div>
+            : null
+            }
             
             <div id='signup_cate_link'>
               <Row>
@@ -181,9 +230,8 @@ export default function SignupForm (props) {
                 </Col>
               </Row>
             </div>
-
             {/* 회원가입 버튼 */}
-            { (form.password === form.repassword && form.password && form.id) ?
+            { (form.password === form.repassword && form.password && form.id && IdCheck && IdPwCheck) ?
             <div>
             <Button type="submit" color="primary" onClick={signup} variant='contained' style={btnStyle} fullWidth>Sign Up</Button>
             <br />
