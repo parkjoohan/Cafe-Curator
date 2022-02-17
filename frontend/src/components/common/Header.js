@@ -62,8 +62,13 @@ function Header({user, setUser}) {
           <Nav style={{ width: "125%", marginLeft: "3%" }} navbarScroll>
             <Nav.Link><Link to="/" id="header_link">Home</Link></Nav.Link>
             <Nav.Link><Link to="/feed" id="header_link">Feed & Blog</Link></Nav.Link>
-            <Nav.Link><Link to="/feed2" id="header_link">BookMark & Like</Link></Nav.Link>
-            <Nav.Link><Link to="/feed3" id="header_link">Search</Link></Nav.Link>
+            {
+              !localStorage.getItem('userPic') ?
+              null 
+              :
+              <><Nav.Link><Link to="/feed2" id="header_link">BookMark & Like</Link></Nav.Link>
+              <Nav.Link><Link to="/feed3" id="header_link">Search</Link></Nav.Link></>
+            }
           </Nav>
           <Nav style={{ width: "100%", justifyContent: "right", marginRight: "2%", placeItems: "center" }}>
             { !user[0] ?
