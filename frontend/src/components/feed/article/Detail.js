@@ -128,39 +128,12 @@ export default function Detail(props) {
           }}
         />
       </div>
-      <div style={{ height: "1500px", marginTop: "4%", marginLeft: "12%" }}>
-        {/* 게시물 컨테이너 */}
-        <Row id="article_frame_row">
-          <Col id="article_frame_col" lg={4}>
-            <div class="slider">
-              {data &&
-                data.files &&
-                data.files.map((file, index) => (
-                  <input type="radio" name="slide" id={`slide${index + 1}`} />
-                ))}
-              <ul id="article_picture_frame">
-                {data &&
-                  data.files &&
-                  data.files.map((file, index) => (
-                    <li>
-                      <img id="article_picture" src={file.filePath} />
-                    </li>
-                  ))}
-              </ul>
-              <div class="bullets">
-                {data &&
-                  data.files &&
-                  data.files.map((file, index) => (
-                    <label htmlFor={`slide${index + 1}`}>&nbsp;</label>
-                  ))}
-              </div>
-            </div>
-          </Col>
-          <Col id="article_frame_col2" lg={6}>
+      <div id='article_full_frame'>
+          <div>
             <Row>
-              {/* 유저프로필,작성일 */}
+            {/* 유저프로필,작성일 */}
               <div id="article_profile_info">
-                <div style={{ display: "flex", alignItems: "center" }}>
+                <div style={{ display: "flex", alignItems: "center", marginLeft: "5%" }}>
                   <div id="article_profile_frame">
                     <img
                       id="article_profile_prof_img"
@@ -177,7 +150,7 @@ export default function Detail(props) {
                   <h5>{data.regTime}</h5>
                 </div>
               </div>
-
+              
               {/* 카페이름 */}
               <div id="article_cafe_name">
                 <a href="#" onClick={() => gotoCafeprofile(data.cafeName)}>
@@ -185,90 +158,119 @@ export default function Detail(props) {
                 </a>
               </div>
             </Row>
+          
+            <Row id="article_frame_row">
+              <div class="slider">
+                {data &&
+                  data.files &&
+                  data.files.map((file, index) => (
+                    <input type="radio" name="slide" id={`slide${index + 1}`} />
+                  ))
+                }
+                <ul id="article_picture_frame">
+                  {data &&
+                    data.files &&
+                    data.files.map((file, index) => (
+                      <li>
+                        <img id="article_picture" src={file.filePath} />
+                      </li>
+                    ))}
+                </ul>
+                <div class="bullets">
+                  {data &&
+                    data.files &&
+                    data.files.map((file, index) => (
+                      <label htmlFor={`slide${index + 1}`}>&nbsp;</label>
+                    ))}
+                </div>
+              </div>
+            </Row>
+          
             <Row>
               {/* 본문내용, 카페관심사태그 */}
               <div id="article_body">
                 {/* 본문 내용  */}
                 <div id="article_content_frame">
-                  <div di="article_content">{data.content}</div>
+                  <div>{data.content}</div>
                 </div>
-                {/* 관심사 카테고리 표시 폼 */}
-                <div id="article_category">
-                  {data &&
-                    data.categoryList &&
-                    data.categoryList.map((category, index) => (
+              </div>
+            </Row>
+            <Row id='article_heart_bookmark_cate'>
+              <Col style={{alignSelf: "center"}}>
+                  {/* 하트 & 북마크*/}
+                  <div id="article_heart_bookmark">
+                    {likearr[1] ? (
+                      <img
+                        src={`${process.env.PUBLIC_URL}/image/heart.png`}
+                        width="30px%"
+                        height="40px"
+                        onClick={likearticle}
+                      />
+                    ) : (
+                      <img
+                        src={`${process.env.PUBLIC_URL}/image/empty_heart.png`}
+                        width="30px%"
+                        height="40px"
+                        onClick={likearticle}
+                      />
+                    )}
+                    <div
+                      style={{
+                        width: "50px",
+                        textAlignLast: "center",
+                        textAlignLast: "center",
+                      }}
+                    >
                       <p
-                        key={index}
-                        id="article_category_content"
-                        style={{ backgroundColor: "skyblue" }}
+                        style={{ marginLeft: "3%" }}
+                        onClick={() => setLikemodalshow(true)}
                       >
-                        {category}
+                        {likearr[[0]]}
                       </p>
-                    ))}
-                </div>
-              </div>
-
-              {/* 하트 & 북마크*/}
-              <div id="article_heart_bookmark">
-                {likearr[1] ? (
-                  <img
-                    src={`${process.env.PUBLIC_URL}/image/heart.png`}
-                    width="30px%"
-                    height="40px"
-                    onClick={likearticle}
-                  />
-                ) : (
-                  <img
-                    src={`${process.env.PUBLIC_URL}/image/empty_heart.png`}
-                    width="30px%"
-                    height="40px"
-                    onClick={likearticle}
-                  />
-                )}
-                <div
-                  style={{
-                    width: "50px",
-                    textAlignLast: "center",
-                    textAlignLast: "center",
-                  }}
-                >
-                  <p
-                    style={{ marginLeft: "3%" }}
-                    onClick={() => setLikemodalshow(true)}
-                  >
-                    {likearr[[0]]}
-                  </p>
-                </div>
-                {isbookmark ? (
-                  <img
-                    src={`${process.env.PUBLIC_URL}/image/bookmark.png`}
-                    width="30px"
-                    height="40px"
-                    onClick={checkbookmark}
-                  />
-                ) : (
-                  <img
-                    src={`${process.env.PUBLIC_URL}/image/empty_bookmark.png`}
-                    width="30px"
-                    height="40px"
-                    onClick={checkbookmark}
-                  />
-                )}
-                <div style={{ width: "70px" }}>
-                  <p style={{ marginRight: "3%", marginLeft: "8%" }}>북마크</p>
-                </div>
-                {data.userId == props.user[0] && (
-                  <Button onClick={() => setModifymodalshow(true)}>수정</Button>
-                )}
-              </div>
+                    </div>
+                    {isbookmark ? (
+                      <img
+                        src={`${process.env.PUBLIC_URL}/image/bookmark.png`}
+                        width="30px"
+                        height="40px"
+                        onClick={checkbookmark}
+                      />
+                    ) : (
+                      <img
+                        src={`${process.env.PUBLIC_URL}/image/empty_bookmark.png`}
+                        width="30px"
+                        height="40px"
+                        onClick={checkbookmark}
+                      />
+                    )}
+                    <div style={{ width: "70px" }}>
+                      <p style={{ marginRight: "3%", marginLeft: "8%" }}>북마크</p>
+                    </div>
+                    {data.userId == props.user[0] && (
+                      <Button onClick={() => setModifymodalshow(true)}>수정</Button>
+                    )}
+                  </div>
+                </Col>
+                <Col>
+                  {/* 관심사 카테고리 표시 폼 */}
+                  <div id="article_category">
+                    {data &&
+                      data.categoryList &&
+                      data.categoryList.map((category, index) => (
+                        <p key={index} id="article_category_content" style={{ backgroundColor: "skyblue" }}>{category}</p>
+                      ))}
+                  </div>
+                </Col>
             </Row>
-            <Row>
-              <div id="article_comment">
-                <Comment user={props.user} />
-              </div>
+            <Row  id='article_comment_con' >
+              <Col>
+                <div>
+                  <Comment user={props.user} />
+                </div>
+              </Col>
             </Row>
-          </Col>
-        </Row>
+            
+          </div>
         <Modifyarticle
           show={modifymodalshow}
           onHide={() => setModifymodalshow(false)}

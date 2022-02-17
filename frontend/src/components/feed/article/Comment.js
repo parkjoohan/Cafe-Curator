@@ -82,6 +82,7 @@ export default function Comment({ user }) {
                     }).then((data1) => {
                         console.log(data1.data);
                         setComments(data1.data);
+                        window.location.reload(); 
                     })
                 }
         })
@@ -115,6 +116,7 @@ export default function Comment({ user }) {
                     }).then((data1) => {
                         console.log(data1.data);
                         setComments(data1.data);
+                        window.location.reload(); 
                     })
                 }
         })
@@ -151,9 +153,9 @@ export default function Comment({ user }) {
     }
 
     return (
-        <Container > 
+
             <div id='article_comment'>
-                <p style={{ marginLeft: "-6%" }}>총 <strong style={{fontSize:"20px"}}>{comments.length}</strong>개의 댓글이 있습니다.</p>
+                <p>총 <strong style={{fontSize:"20px"}}>{comments.length}</strong>개의 댓글이 있습니다.</p>
                 <div id='article_comment_frame'>
                     {/* 댓글 */}
                     <div>
@@ -258,8 +260,8 @@ export default function Comment({ user }) {
                     }
                     </div> 
                 </div>
-                <div style={{marginLeft: "-8%"}}>
-                    <Row style={{borderBottom: "1px solid black", width: "112%", marginLeft: "1.5%"}}>
+                <div>
+                    <Row style={{borderBottom: "1px solid black", width: "100%", marginLeft: "0.3%"}}>
                         <Col lg={2} style={{fontSize: "20px", marginTop: "1%"}}>
                             <strong>@{parentNo}</strong>
                         </Col>
@@ -283,6 +285,5 @@ export default function Comment({ user }) {
                     </Row>
                 </div>
             </div>
-        </Container>
     )
 }
