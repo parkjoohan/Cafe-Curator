@@ -45,7 +45,7 @@ export default function Detail(props) {
     }
     const url = `http://i6c104.p.ssafy.io:8080/feed/detail/${pk}/${props.user[1]}`;
     axios.get(url).then((res) => {
-      console.log(res.data);
+      // console.log(res.data);
       setData(res.data);
       let likearr = [res.data.likeCount, res.data.liked];
       setlikearr(likearr);
@@ -56,7 +56,7 @@ export default function Detail(props) {
   const checkbookmark = () => {
     const url = `http://i6c104.p.ssafy.io:8080/feed/bookmark/${pk}/${props.user[1]}`;
     axios.get(url).then((res) => {
-      console.log(res.data);
+      // console.log(res.data);
       if (res.data == "SUCCESS : ADD BOOKMARK") {
         setIsbookmark(true);
       } else {
@@ -66,10 +66,10 @@ export default function Detail(props) {
   };
 
   const likearticle = () => {
-    console.log(props.user[1]);
+    // console.log(props.user[1]);
     const url = `http://i6c104.p.ssafy.io:8080/feed/like/${pk}/${props.user[1]}`;
     axios.get(url).then((res) => {
-      console.log(res.data);
+      // console.log(res.data);
       let newlikearr = [...likearr];
       if (res.data == "SUCCESS : ADD LIKE") {
         newlikearr[0]++;
@@ -82,17 +82,17 @@ export default function Detail(props) {
     });
   };
   function deleteFeed(feedNo) {
-    console.log(feedNo);
+    // console.log(feedNo);
     axios.delete(`http://i6c104.p.ssafy.io:8080/feed/${feedNo}/${props.user[1]}`).then(history.push(`/profile/${props.user[0]}`));
 }
   function gotoProfile(userId) {
     // console.log(localStorage);
-    console.log(userId + "의 프로필로 갑시다");
+    // console.log(userId + "의 프로필로 갑시다");
     history.push(`/profile/${userId}`);
   }
 
   const gotoCategory = (category) => {
-    console.log("category : ",category);
+    // console.log("category : ",category);
     history.push(`/categorysearch`);
   }
 
@@ -100,7 +100,7 @@ export default function Detail(props) {
     let pk = 0;
     const url = `http://i6c104.p.ssafy.io:8080/cafe/${name}`;
     axios.get(url).then((res) => {
-      console.log(res.data);
+      // console.log(res.data);
       const url2 = `http://i6c104.p.ssafy.io:8080/cafe`;
       axios
         .get(url2, {
@@ -129,7 +129,7 @@ export default function Detail(props) {
     <>
       {/* 뒤로 가기 버튼 */}
       <div id='article_back_func'>
-        <FiCornerUpLeft id='article_back' onClick={() => { history.goBack(); }}/>
+        <FiCornerUpLeft id='article_back' onClick={() => { history.goBack();document.location.reload(); }}/>
       </div>
       <div id='article_full_frame'>
           <div>

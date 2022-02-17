@@ -32,7 +32,7 @@ function BlogPrint(props) {
         setIsLoading(false);
       })
       .catch(function (err) {
-        console.log("블로그형", err);
+        // console.log("블로그형", err);
       });
   }, []);
 
@@ -48,7 +48,7 @@ function BlogPrint(props) {
       $(document).height() - $(window).height()
     ) {
       window.removeEventListener("scroll", moredata);
-      console.log("밑이다!");
+      // console.log("밑이다!");
       let user = "a1";
       let lastNo = data[data.length - 1].feedNo;
       const url = `http://i6c104.p.ssafy.io:8080/feed/mainFeedList/${user}`;
@@ -61,12 +61,14 @@ function BlogPrint(props) {
           },
         })
         .then(function (res) {
-          console.log(res.data);
+          // console.log(res.data);
           let newdata = [...data];
           let concatdata = newdata.concat(res.data);
           setData(concatdata);
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {
+          // console.log(err)
+        });
     }
   };
 

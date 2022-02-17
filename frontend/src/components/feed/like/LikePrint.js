@@ -26,7 +26,7 @@ function BookMarksPrint(props) {
       setData(res.data)
       setIsLoading(false);
     }).catch(function(err){
-      console.log('블로그형',err)
+      // console.log('블로그형',err)
     })
   }, []);
 
@@ -40,7 +40,7 @@ function BookMarksPrint(props) {
     // console.log(data)
     if (Math.round( $(window).scrollTop()) == $(document).height() - $(window).height()) {
       window.removeEventListener("scroll",moredata)
-      console.log('밑이다!')
+      // console.log('밑이다!')
       let user = `${props.user[1]}`
       let lastNo = data[data.length-1].feedNo
       const url = `http://i6c104.p.ssafy.io:8080/feed/likeList/${user}`
@@ -50,11 +50,13 @@ function BookMarksPrint(props) {
         type:"blog",
         lastFeedNo:lastNo,
       }}).then(function(res){
-        console.log(res.data)
+        // console.log(res.data)
         let newdata = [...data];
         let concatdata = newdata.concat(res.data);
         setData(concatdata)
-      }).catch(err=>console.log(err))
+      }).catch(err=>{
+        // console.log(err)
+      })
     }
   }
 

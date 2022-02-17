@@ -274,7 +274,7 @@ const Modifyarticle = forwardRef(({show, onHide, data, user,pk},ref) => {
     setFileImage(newfileImage)
 
     }catch{
-      console.log('errorㅜㅜ')
+      // console.log('errorㅜㅜ')
     }
   },[detaildata])
 
@@ -320,8 +320,8 @@ const Modifyarticle = forwardRef(({show, onHide, data, user,pk},ref) => {
       modifyDto.cafeY = cafeinfo.cafeY;
       modifyDto.cafeAddress = cafeinfo.cafeAddress;
     }
-    console.log('수정 dto',modifyDto)
-    console.log(files)
+    // console.log('수정 dto',modifyDto)
+    // console.log(files)
     const newForm = new FormData();
     newForm.append("feedDto", new Blob([JSON.stringify(modifyDto)], { type: "application/json" }))
     for (let i = 0; i < files.length; i++) {
@@ -335,11 +335,11 @@ const Modifyarticle = forwardRef(({show, onHide, data, user,pk},ref) => {
       headers: { "Content-Type": "multipart/form-data" }
     }).then(
       res=>
-      {console.log('응답받았다',res)
+      {
       document.location.reload();
       }
       ).catch(
-        err=>console.log('실패했다',err)
+        // err=>console.log('실패했다',err)
         )
     onHide()
   }

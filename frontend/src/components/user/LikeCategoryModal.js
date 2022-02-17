@@ -37,7 +37,7 @@ const LikeCategoryModal = forwardRef(({ show, onHide,likearr, setLikearr },ref) 
   let likename = ['커피','케이크','마카롱/쿠키','브런치','차'];
 
   useEffect(()=>{
-    console.log(likearr)
+    // console.log(likearr)
   },[likearr])
 
   const selectlike = (n) => {

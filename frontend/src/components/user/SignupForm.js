@@ -114,7 +114,7 @@ export default function SignupForm (props) {
       }
       signupForm.append("userDto", new Blob([JSON.stringify(email)], { type: "application/json" }))
       signupForm.append("multipartFile", file);
-      console.log('여기까지감?')
+      // console.log('여기까지감?')
       const signupurl = "http://i6c104.p.ssafy.io:8080/api/users/"
       axios({
         method: "post",
@@ -122,7 +122,7 @@ export default function SignupForm (props) {
         data: signupForm,
         headers: { "Content-Type": "multipart/form-data" }
       }).then(function (res) {
-        console.log(res.data)
+        // console.log(res.data)
         if (res.data = "success")
       
           history.push("/login");

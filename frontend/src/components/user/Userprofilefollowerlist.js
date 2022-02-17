@@ -34,14 +34,14 @@ const Userprofilefollowerlist = forwardRef(({show, onHide, data},ref) => {
             loginUserNo:detaildata[1],
         }}
         ).then(res=>{
-          console.log('팔로워리스트',res.data)
+          // console.log('팔로워리스트',res.data)
           setFollowerperson(res.data)
     })
     }
   },[detaildata])
 
   useEffect(()=>{
-    console.log(followerperson)
+    // console.log(followerperson)
     let container = document.getElementById('likelist_container');
     if(container){
       container.addEventListener('scroll',morelike)
@@ -52,7 +52,7 @@ const Userprofilefollowerlist = forwardRef(({show, onHide, data},ref) => {
     if(e.target.scrollTop === e.target.scrollHeight - e.target.clientHeight){
       let container = document.getElementById('likelist_container');
       container.removeEventListener('scroll',morelike)
-      console.log('맨 밑이다!')
+      // console.log('맨 밑이다!')
       if(followerperson){
         let lastuserNo = followerperson[followerperson.length-1].userNo
         const url = `http://i6c104.p.ssafy.io:8080/follower/`
@@ -66,7 +66,7 @@ const Userprofilefollowerlist = forwardRef(({show, onHide, data},ref) => {
           newfollowerpersonarr = newfollowerpersonarr.concat(res.data)
           setFollowerperson(newfollowerpersonarr)
         }).catch(err=>{
-          console.log(err)
+          // console.log(err)
         })
       }
     }

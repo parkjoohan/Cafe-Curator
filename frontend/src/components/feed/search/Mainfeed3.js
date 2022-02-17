@@ -21,7 +21,7 @@ export default function Mainfeed(props) {
     };
 
     useEffect(()=>{
-        console.log(props.user)
+        // console.log(props.user)
         if(props.user[0]==null){
             alert('로그인이 필요합니다!')
             history.goBack();  
@@ -37,7 +37,7 @@ export default function Mainfeed(props) {
         (e) => {
         if (currentClick !== null) {
             let current = document.getElementById(currentClick);
-            console.log(current);
+            // console.log(current);
             current.style.color = "#06c";
             // current.style.textDecoration="underline"
             

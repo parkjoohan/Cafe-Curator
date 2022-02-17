@@ -39,7 +39,7 @@ const Map = forwardRef((props,ref)=>{
 
   useEffect(()=>{
     if(markerdata.length>0){
-      console.log(markerdata)
+      // console.log(markerdata)
 
       var mapContainer = document.getElementById('map')
 

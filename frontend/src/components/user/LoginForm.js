@@ -75,8 +75,8 @@ export default function LoginForm({ setUser }) {
 
   const onClickLogin = async () => {
     try {
-      console.log(loginEmail);
-      console.log(loginPw);
+      // console.log(loginEmail);
+      // console.log(loginPw);
       const response = await axios.post(
         "http://i6c104.p.ssafy.io:8080/api/users/login",
         {
@@ -84,7 +84,7 @@ export default function LoginForm({ setUser }) {
           pass: loginPw,
         }
       );
-      console.log(response.data);
+      // console.log(response.data);
       localStorage.setItem("userNo", response.data.userNo);
       localStorage.setItem("userPic", response.data.picture);
       localStorage.setItem("userId", response.data.userId);
@@ -110,12 +110,12 @@ export default function LoginForm({ setUser }) {
           email: emailforfind,
         }
       );
-      console.log(response);
-      console.log(response.email);
+      // console.log(response);
+      // console.log(response.email);
       setHideInput(true);
     } catch (error) {
       //응답 실패
-      console.error(error);
+      // console.error(error);
       alert("가입되지 않은 이메일입니다.");
     }
   };
@@ -129,8 +129,8 @@ export default function LoginForm({ setUser }) {
   const onClickCheck = async () => {
     try {
       //응답 성공
-      console.log(emailforfind);
-      console.log(validate);
+      // console.log(emailforfind);
+      // console.log(validate);
       const response = await axios.post(
         "http://i6c104.p.ssafy.io:8080/api/users/verifyCode",
         {
@@ -144,12 +144,12 @@ export default function LoginForm({ setUser }) {
       setDoorLock(response.data);
     } catch (error) {
       //응답 실패
-      console.error(error);
+      // console.error(error);
     }
   };
   const passwordChange = async () => {
-    console.log(emailforfind);
-    console.log(pw);
+    // console.log(emailforfind);
+    // console.log(pw);
     const response = await axios.post(
       "http://i6c104.p.ssafy.io:8080/api/users/updatePass",
       {
@@ -173,7 +173,7 @@ export default function LoginForm({ setUser }) {
 
   const gotoKakaoLogin = async () => { 
     axios.get(`http://i6c104.p.ssafy.io:8080/login/oauth/getKakaoAuthURL`).then(function (res) {
-      console.log(res.data)
+      // console.log(res.data)
       window.location.href = res.data;
     })
   }

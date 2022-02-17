@@ -36,7 +36,7 @@ export const StoreProfile = (props) => {
 
   useEffect(()=>{
     props.setFootershow(false)
-    console.log(id)
+    // console.log(id)
     if(feedRef.current){
       feedRef.current.setCafeid(Number(id.pk));
     }
@@ -47,7 +47,7 @@ export const StoreProfile = (props) => {
 
   const gotoCategorysearch = e => {
     let category = e.target.innerHTML.substring(0,e.target.innerHTML.length - 2)
-    console.log(category)
+    // console.log(category)
     history.push(`/categorysearch/${category}`)
   }
     

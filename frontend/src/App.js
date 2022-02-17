@@ -10,7 +10,7 @@ export default function App() {
   //git test
   const [user,setUser] = useState([localStorage.getItem('userId'),localStorage.getItem('userNo')])
   const [footershow,setFootershow] = useState(true)
-  console.log(user)
+  // console.log(user)
 
   return (
     <div className="App">

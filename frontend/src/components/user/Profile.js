@@ -9,8 +9,8 @@ const Profile = ({ show, onHide, fileUrl, setFileUrl, file, setFile }) => {
     const imageUrl = URL.createObjectURL(imageFile);
     setFileUrl(imageUrl)
     setFile(imageFile)
-    console.log(imageUrl)
-    console.log(imageFile)
+    // console.log(imageUrl)
+    // console.log(imageFile)
   }
   // //파일 미리볼 url을 저장해줄 state const 
   // [fileImage, setFileImage] = useState("");

@@ -27,12 +27,12 @@ export default function UserProfile(props) {
     props.setFootershow(false);
     axios.get(`http://i6c104.p.ssafy.io:8080/api/users/account/${id}`)
       .then((data2) => {
-        console.log(data2.data);
+        // console.log(data2.data);
         setData(data2.data);
         const checkfollowurl = `http://i6c104.p.ssafy.io:8080/checkFollow/${props.user[1]}/${data2.data.userNo}`
         axios.get(checkfollowurl).then(res=>{
           setIsfollow(res.data)
-          console.log(res.data)
+          // console.log(res.data)
         })
         if(followerRef.current){
           followerRef.current.setDetaildata([data2.data.userNo,props.user[1]])
@@ -73,10 +73,10 @@ export default function UserProfile(props) {
 
   const follow = (userNo) => {
     const followurl = `http://i6c104.p.ssafy.io:8080/follow/${props.user[1]}/${userNo}`
-    console.log(followurl)
+    // console.log(followurl)
     axios.get(followurl).then(res=>
       {
-        console.log(res.data)
+        // console.log(res.data)
         if(isfollow==true){
           setIsfollow(false);
           setFollowercnt(prev=>prev-1)

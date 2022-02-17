@@ -30,22 +30,22 @@ export default function EditProfile({setUser}) {
 
   useEffect( () => {
     const onClickLogin = async () => {
-        console.log(localStorage.getItem('userNo'))
+        // console.log(localStorage.getItem('userNo'))
         let userNumber = localStorage.getItem('userNo')
         // const response = await axios.get(`http://i6c104.p.ssafy.io:8080/api/users/${userNumber}`,{
         //   userNo : localStorage.getItem('userNo')
         const response = await axios.get(`http://i6c104.p.ssafy.io:8080/api/users/${userNumber}`)
         if(categoryRef.current){
-            console.log(response.data.categoryList)
+            // console.log(response.data.categoryList)
             categoryRef.current.setdefaultDetail(response.data.categoryList)}
-        console.log(response.data)
+        // console.log(response.data)
         setUserinfo(response.data)
-        console.log(userinfo)
+        // console.log(userinfo)
         setIntro(response.data.introduction)
         setLikearr(response.data.categoryList)
         setTempArr(response.data.categoryList)
         setFileUrl(response.data.picture)
-        console.log(intro)
+        // console.log(intro)
         
     };
       
@@ -120,7 +120,7 @@ export default function EditProfile({setUser}) {
   let newform = {...form}
   newform.id = e.target.value
   setForm(newform)
-  console.log(form)
+  // console.log(form)
   }
   const onChangePw = e => {  
   let newform = {...form}
@@ -159,7 +159,7 @@ export default function EditProfile({setUser}) {
         email : localStorage.getItem('userEmail'),
         pass : form.password
     });
-    console.log(response.data)
+    // console.log(response.data)
     history.push("/")
   }
 
@@ -169,8 +169,8 @@ export default function EditProfile({setUser}) {
           //보내고자 하는 데이터 
           userId : form.id
       });
-    console.log(form.id)
-    console.log(response.data)
+    // console.log(form.id)
+    // console.log(response.data)
 
     if (response.data === true || localStorage.getItem('userId') === form.id){
     let editForm = new FormData();
@@ -191,11 +191,11 @@ export default function EditProfile({setUser}) {
         data : editForm,
         headers: { "Content-Type" : "multipart/form-data"}
     }).then(function(res){
-      console.log(res.data)
+      // console.log(res.data)
       if (res.data = "success")
         localStorage.setItem('userPic',fileUrl)
         localStorage.setItem('userId', form.id)
-        console.log('성공!')
+        // console.log('성공!')
         setUser([localStorage.getItem('userId'), localStorage.getItem('userNo')])
         history.push("/");
         

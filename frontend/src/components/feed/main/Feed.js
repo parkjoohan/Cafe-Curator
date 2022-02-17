@@ -97,7 +97,7 @@ export default function Feed(props) {
         // console.log('응답',res.data)
         update(res.data)
       }).catch(function(err){
-        console.log(err)
+        // console.log(err)
       })
   }
 
@@ -148,7 +148,7 @@ export default function Feed(props) {
     if (props.user[1]!==null){
       user = props.user[1]
     }
-    console.log(user,props.user,'!!')
+    // console.log(user,props.user,'!!')
     const url = `http://i6c104.p.ssafy.io:8080/feed/mainFeedList/${user}`
 
     axios.get(url,{
@@ -162,7 +162,9 @@ export default function Feed(props) {
       // console.log('첫 데이터 받기 전 url_arr(빈 어레이여야함)',url_arr)
       setUrl(newUrl)
       lastNo = newUrl[newUrl.length-1].feedNo
-    }).catch(console.log("DD"))
+    }).catch({
+      // console.log("DD")
+    })
 
     return ()=>{
       window.removeEventListener('resize',handleResize);
@@ -261,7 +263,9 @@ export default function Feed(props) {
         heart2.style.display="none";
       }
       setLike(newLike)
-    }).catch(err=>console.log(err))
+    }).catch(err=>{
+      // console.log(err)
+    })
   }
 
   //쌓는함수
@@ -284,11 +288,11 @@ export default function Feed(props) {
     let container = document.getElementById("feedcontainer");
     // console.log('현재 스크롤 위치',window.scrollY);
     let nowscroll = window.scrollY
-    console.log('이전 스크롤 위치',nowscroll)
+    // console.log('이전 스크롤 위치',nowscroll)
     while (division.hasChildNodes()) {
       division.removeChild(division.firstChild);
     }
-    console.log('여기서 스크롤이 바뀌네',window.scrollY)
+    // console.log('여기서 스크롤이 바뀌네',window.scrollY)
     // console.log('현재 스크롤 위치',window.scrollY);
     // console.log(images)
     //이제 이미지 차곡차곡 쌓을거임.
@@ -362,7 +366,7 @@ export default function Feed(props) {
       division.appendChild(box);
       heightArr[min_idx] += imageHeight+20;
     })
-    console.log('다 쌓았다!')
+    // console.log('다 쌓았다!')
     // console.log('현재 스크롤 위치',window.scrollY,'이동해야할 스크롤 위치',nowscroll,'height',document.body.scrollHeight)
     go(nowscroll)
     // console.log('block함수 끝')
@@ -370,8 +374,8 @@ export default function Feed(props) {
   }
 
   const go = scroll => {
-    console.log('콜백함수 실행')
-    console.log(scroll)
+    // console.log('콜백함수 실행')
+    // console.log(scroll)
     setTimeout(()=>{
       window.scrollTo({top:scroll,left:0,behavior:"instant"})
     },0.1)

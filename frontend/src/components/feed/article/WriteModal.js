@@ -213,7 +213,7 @@ const WriteModal = ( {show, onHide,user}) => {
   },[fileImage])
 
   useEffect(()=>{
-    console.log(user)
+    // console.log(user)
   },[])
 
   useEffect(()=>{
@@ -249,7 +249,7 @@ const WriteModal = ( {show, onHide,user}) => {
   // },[form])
 
   const write = () => {
-    console.log(feeddto)
+    // console.log(feeddto)
     const newForm = new FormData();
     newForm.append("feedDto", new Blob([JSON.stringify(feeddto)], { type: "application/json" }))
     for (let i = 0; i < files.length; i++) {
@@ -262,7 +262,7 @@ const WriteModal = ( {show, onHide,user}) => {
       data: newForm,
       headers: { "Content-Type": "multipart/form-data" }
     }).then(res => {
-      console.log(res);
+      // console.log(res);
     });
     onHide()
   }

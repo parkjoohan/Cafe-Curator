@@ -32,12 +32,12 @@ const EmailForm = () => {
             //보내고자 하는 데이터 
             email : email
         });
-        console.log(response);
-        console.log(response.email)
+        // console.log(response);
+        // console.log(response.email)
         setSendText('전송완료')
       } catch (error) {
         //응답 실패
-        console.error(error);
+        // console.error(error);
       }
     } 
   
@@ -53,8 +53,8 @@ const EmailForm = () => {
     const onClickCheck = async () => {
       try {
         //응답 성공
-        console.log(email)
-        console.log(validate) 
+        // console.log(email)
+        // console.log(validate) 
         const response = await axios.post('http://i6c104.p.ssafy.io:8080/api/users/verifyCode',{
             //보내고자 하는 데이터
             code : validate,
@@ -65,7 +65,7 @@ const EmailForm = () => {
         setDoorLock(response.data)
       } catch (error) {
         //응답 실패
-        console.error(error);
+        // console.error(error);
       }
     } 
     

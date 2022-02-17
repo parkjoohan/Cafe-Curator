@@ -49,9 +49,9 @@ const Blogs = (props, ref) => {
   };
 
   const likearticle = (i) => {
-    console.log(i, props.data[i]);
+    // console.log(i, props.data[i]);
     const url = `http://i6c104.p.ssafy.io:8080/feed/like/${props.data[i].feedNo}/${props.user[1]}`;
-    console.log(url);
+    // console.log(url);
 
     axios.get(url).then((res) => {
       let heart = document.getElementById(`heart${i}`);
@@ -89,7 +89,7 @@ const Blogs = (props, ref) => {
   };
 
   useEffect(() => {
-    console.log(likebookmarkarr);
+    // console.log(likebookmarkarr);
     for (let i = 0; i < likebookmarkarr.length; i++) {
       let likebox = document.getElementById(`blogs_likebox${i}`);
       if (likebox.hasChildNodes()) {
@@ -153,7 +153,7 @@ const Blogs = (props, ref) => {
     let pk = 0;
     const url = `http://i6c104.p.ssafy.io:8080/cafe/${name}`;
     axios.get(url).then((res) => {
-      console.log(res.data);
+      // console.log(res.data);
       const url2 = `http://i6c104.p.ssafy.io:8080/cafe`;
       axios
         .get(url2, {

@@ -3,7 +3,7 @@ import { Container,Grid,Col,Row } from 'react-bootstrap'
 import './css/Home.css'
 import styles from './css/Home.module.css'
 import Card from './Card';
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import AOS from 'aos';
 import "aos/dist/aos.css";
 
@@ -11,9 +11,19 @@ import axios from 'axios';
 
 export default function Home(props) {
 
+  const history = useHistory();
+
   useEffect(()=>{
     AOS.init();
   },[])
+
+  const gotoCategorySearch = (category) => {
+    history.push(`/categorysearch/${category}`)
+  }
+
+  const gotoFeed = () => {
+    history.push(`/feed`)
+  }
 
   return (
     <div id="home_home">
@@ -47,7 +57,7 @@ export default function Home(props) {
             <div id="content">
               <h1 id="subheading">지도 중심 찾기</h1>
               <h2 id="heading">내 위치를 중심으로 찾아보세요.</h2>
-              <h2 id="link">더 알아보기 &gt;</h2>
+              <h2 id="link" onClick={()=>gotoFeed()}>더 알아보기 &gt;</h2>
             </div>
           </div>
         </section>
@@ -58,7 +68,7 @@ export default function Home(props) {
             <div id="content">
               <h1 id="subheading">원두 중심 찾기</h1>
               <h2 id="heading">원두를 중심으로 찾아보세요.</h2>
-              <h2 id="link">더 알아보기 &gt;</h2>
+              <h2 id="link" onClick={()=>gotoCategorySearch("커피")}>더 알아보기 &gt;</h2>
             </div>
           </div>
         </section>
@@ -69,7 +79,7 @@ export default function Home(props) {
             <div id="content">
               <h1 id="subheading">전망 중심 찾기</h1>
               <h2 id="heading">전망 좋은 카페를 찾아보세요.</h2>
-              <h2 id="link">더 알아보기 &gt;</h2>
+              <h2 id="link" onClick={()=>gotoCategorySearch("사진찍기 좋은")}>더 알아보기 &gt;</h2>
             </div>
           </div>
         </section>
@@ -80,7 +90,7 @@ export default function Home(props) {
             <div id="content">
               <h1 id="subheading">스터디 카페 찾기</h1>
               <h2 id="heading">공부하기 좋은 카페를 찾아보세요.</h2>
-              <h2 id="link">더 알아보기 &gt;</h2>
+              <h2 id="link" onClick={()=>gotoCategorySearch("공부하기 좋은")}>더 알아보기 &gt;</h2>
             </div>
           </div>
         </section>

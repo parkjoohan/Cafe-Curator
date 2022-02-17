@@ -35,9 +35,9 @@ const Likelist = forwardRef(({ show, onHide, data }, ref) => {
         userNo:detaildata.userNo,
       }}).then(res=>{
         setLikeperson(res.data)
-        console.log(likeperson)
+        // console.log(likeperson)
       }).catch(err=>{
-        console.log(err)
+        // console.log(err)
       })
     }
   },[detaildata])
@@ -53,8 +53,8 @@ const Likelist = forwardRef(({ show, onHide, data }, ref) => {
     if(e.target.scrollTop === e.target.scrollHeight - e.target.clientHeight){
       let container = document.getElementById('likelist_container');
       container.removeEventListener('scroll',morelike)
-      console.log('맨 밑이다!')
-      console.log(likeperson)
+      // console.log('맨 밑이다!')
+      // console.log(likeperson)
       if(likeperson){
         let lastuserNo = likeperson[likeperson.length-1].userNo
         const url = `http://i6c104.p.ssafy.io:8080/feed/likeUserList/`
@@ -68,7 +68,7 @@ const Likelist = forwardRef(({ show, onHide, data }, ref) => {
           newlikepersonarr = newlikepersonarr.concat(res.data)
           setLikeperson(newlikepersonarr)
         }).catch(err=>{
-          console.log(err)
+          // console.log(err)
         })
       }
     }

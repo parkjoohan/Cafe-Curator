@@ -85,14 +85,16 @@ export default function Search(props) {
         let beforex = res.data.results.juso[0].entX;
         let beforey = res.data.results.juso[0].entY;
         let newForm = {...form}
-        console.log(select)
+        // console.log(select)
         newForm.cafeName = select.place_name
         newForm.cafeAddress = select.address_name
         newForm.cafeX = beforex
         newForm.cafeY = beforey
         setForm(newForm)
       })
-    }).catch(err=>console.log('카페 위치가 등록돼있지 않아요 ㅜㅜ'))
+    }).catch(err=>
+      {}// console.log('카페 위치가 등록돼있지 않아요 ㅜㅜ')
+      )
   },[select])
 
   return (

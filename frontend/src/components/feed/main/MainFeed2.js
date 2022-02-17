@@ -12,7 +12,7 @@ export default function Mainfeed2(props) {
   //1. useEffect찾는다. 그중 맨뒤 [] 있는로
 
   useEffect(()=>{
-    console.log(props.user)
+    // console.log(props.user)
     if(props.user[0]==null){
       alert('로그인이 필요합니다!')
       history.goBack();  

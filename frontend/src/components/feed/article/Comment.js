@@ -26,7 +26,7 @@ export default function Comment({ user }) {
     useEffect(() => {
         axios.get(url + `/${pk}/${user[1]}`)
             .then((data1) => {
-            console.log(data1.data);
+            // console.log(data1.data);
             if (data1.data != "댓글이 존재하지 않습니다.")
                 setComments(data1.data);
             let newArray = new Array(data1.data.length)
@@ -59,7 +59,7 @@ export default function Comment({ user }) {
     
     // //댓글 쓰기
     function writeComment(props) {
-        console.log(props);
+        // console.log(props);
         axios.post(url, {
             "content": props,
             "feedNo": `${pk}`,
@@ -72,7 +72,7 @@ export default function Comment({ user }) {
             }
             }).then((data2) => {
                 if (data2.data == "success") {
-                    console.log(data2.data);
+                    // console.log(data2.data);
                     axios.get(url, {
                         params: {
                             "feedNo": `${pk}`,
@@ -80,7 +80,7 @@ export default function Comment({ user }) {
                             "userNo": `${user[1]}`
                         }
                     }).then((data1) => {
-                        console.log(data1.data);
+                        // console.log(data1.data);
                         setComments(data1.data);
                         window.location.reload(); 
                     })
@@ -90,8 +90,8 @@ export default function Comment({ user }) {
 
     // 대댓글 쓰기
     function writeRecomment(props) {
-        console.log(props);
-        console.log("parentNo " + parentNo);
+        // console.log(props);
+        // console.log("parentNo " + parentNo);
 
         axios.post(url, {
             "content": props,
@@ -104,9 +104,9 @@ export default function Comment({ user }) {
                 'Content-Type': 'application/json'
             }
             }).then((data2) => {
-                console.log(data2);
+                // console.log(data2);
                 if (data2.data == "success") {
-                    console.log(data2.data);
+                    // console.log(data2.data);
                     axios.get(url, {
                         params: {
                             "feedNo": `${pk}`,
@@ -114,7 +114,7 @@ export default function Comment({ user }) {
                             "userNo": `${user[1]}`
                         }
                     }).then((data1) => {
-                        console.log(data1.data);
+                        // console.log(data1.data);
                         setComments(data1.data);
                         window.location.reload(); 
                     })
@@ -124,13 +124,13 @@ export default function Comment({ user }) {
 
     // 댓글 삭제
     function deleteComment(props) {
-        console.log(props);
+        // console.log(props);
         axios.delete(url + `/${user[1]}/${props}`).then(window.location.reload())
     }
 
     // 좋아요
     function likeArticle(props, index) {
-        console.log(props);
+        // console.log(props);
         axios.get(url + `/like/${user[1]}/${props}`)
             .then((data) => {
                 if (mylike[index] == true) {
@@ -148,7 +148,7 @@ export default function Comment({ user }) {
                     newArray6[index]++;
                     setLike(newArray6);
                 }
-                console.log(data.data);
+                // console.log(data.data);
             })
     }
 

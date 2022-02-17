@@ -9,7 +9,6 @@ import { Row, Col } from 'react-bootstrap';
 
 function Footer(props) {
   useEffect(()=>{
-    console.log(props)
   })
   return (
       <div id="footer_container">

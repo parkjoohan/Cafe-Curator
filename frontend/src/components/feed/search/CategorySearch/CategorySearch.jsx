@@ -23,7 +23,7 @@ export default function CategorySearch(props) {
   const [poporlast,setPoporlast] = useState("recent")
 
   useEffect(()=>{
-    console.log(props.user)
+    // console.log(props.user)
     if(propcategory){
       setCategory(propcategory.category)
     }

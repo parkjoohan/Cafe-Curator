@@ -15,7 +15,7 @@ export default function LocationSearch(props) {
     const [selectLocation,setSelectLocation] = useState([])
 
     useEffect(()=>{
-        console.log(selectLocation)
+        // console.log(selectLocation)
     },[selectLocation])
 
 
@@ -28,9 +28,9 @@ export default function LocationSearch(props) {
     },[data])
 
     useEffect(()=>{
-        console.log(data[selected])
+        // console.log(data[selected])
         if(selected!==null){
-            console.log('선택했다!',selected)
+            // console.log('선택했다!',selected)
             const url = `https://www.juso.go.kr/addrlink/addrLinkApi.do?confmKey=devU01TX0FVVEgyMDIyMDEyNzE0MTY1MTExMjE4Nzg=
             &keyword=${data[selected].address_name}&resultType=json`
             let rnMgtSn = "" //도로명코드

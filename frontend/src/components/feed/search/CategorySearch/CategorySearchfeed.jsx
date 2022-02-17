@@ -39,7 +39,7 @@ const CategorySearchfeed = (props) => {
     window.addEventListener('scroll',scroll)
 
     if(url_arr.length != 0){
-      console.log('url_arr가 바뀌었다!',url_arr)
+      // console.log('url_arr가 바뀌었다!',url_arr)
       let newLikearr = new Array(url_arr.length)
 
       for (let i = 0; i < newLikearr.length; i++) {
@@ -95,7 +95,7 @@ const CategorySearchfeed = (props) => {
         // console.log('응답',res.data)
         update(res.data)
       }).catch(function(err){
-        console.log(err)
+        // console.log(err)
       })
   }
 
@@ -130,7 +130,7 @@ const CategorySearchfeed = (props) => {
 
   //리사이즈 될때 이벤트 추가.
   useEffect(()=>{
-    console.log(props.user)
+    // console.log(props.user)
     let container = document.getElementById("feedcontainer")
     let lastNo = 0
     setContainerWidth(container.offsetWidth);
@@ -143,10 +143,10 @@ const CategorySearchfeed = (props) => {
 
   useEffect(()=>{
     if(props.category&&props.poporlast&&props.user){
-      console.log('카테고리나,선택이나,유저가 바뀌었다!')
+      // console.log('카테고리나,선택이나,유저가 바뀌었다!')
       const division = document.getElementById("container");
       while (division.hasChildNodes()) {
-            console.log('비워야하는데?')
+            // console.log('비워야하는데?')
             division.removeChild(division.firstChild);
       }
       console.log(props.category,props.poporlast,props.user)
@@ -173,11 +173,11 @@ const CategorySearchfeed = (props) => {
         form = data
       }
       
-      console.log(form)
+      // console.log(form)
       // const newForm = new FormData();
       // newForm.append("cafeSearchReqDto",data)
       axios.get(url,form).then(function(res){
-        console.log(res.data)
+        // console.log(res.data)
         if(res.data.length == 0) {
           const division = document.getElementById("container");
           while (division.hasChildNodes()) {
@@ -189,11 +189,11 @@ const CategorySearchfeed = (props) => {
           let newUrl = res.data
           setUrl(newUrl)
         }
-      }).catch(err=>{console.log(err);console.log(form)})
+      }).catch(err=>{})
     }else{
       const division = document.getElementById("container");
       while (division.hasChildNodes()) {
-            console.log('비워야하는데?')
+            // console.log('비워야하는데?')
             division.removeChild(division.firstChild);
       }
     }
@@ -256,7 +256,9 @@ const CategorySearchfeed = (props) => {
         heart2.style.display="none";
       }
       setLike(newLike)
-    }).catch(err=>console.log(err))
+    }).catch(err=>{
+      // console.log(err)
+    })
   }
 
   //쌓는함수
@@ -279,12 +281,12 @@ const CategorySearchfeed = (props) => {
     let container = document.getElementById("feedcontainer");
     // console.log('현재 스크롤 위치',window.scrollY);
     let nowscroll = window.scrollY
-    console.log('이전 스크롤 위치',nowscroll)
+    // console.log('이전 스크롤 위치',nowscroll)
     while (division.hasChildNodes()) {
-      console.log('비워야하는데?')
+      // console.log('비워야하는데?')
       division.removeChild(division.firstChild);
     }
-    console.log('여기서 스크롤이 바뀌네',window.scrollY)
+    // console.log('여기서 스크롤이 바뀌네',window.scrollY)
     // console.log('현재 스크롤 위치',window.scrollY);
     // console.log(images)
     //이제 이미지 차곡차곡 쌓을거임.
@@ -358,7 +360,7 @@ const CategorySearchfeed = (props) => {
       division.appendChild(box);
       heightArr[min_idx] += imageHeight+20;
     })
-    console.log('다 쌓았다!')
+    // console.log('다 쌓았다!')
     // console.log('현재 스크롤 위치',window.scrollY,'이동해야할 스크롤 위치',nowscroll,'height',document.body.scrollHeight)
     go(nowscroll)
     // console.log('block함수 끝')
@@ -366,8 +368,8 @@ const CategorySearchfeed = (props) => {
   }
 
   const go = scroll => {
-    console.log('콜백함수 실행')
-    console.log(scroll)
+    // console.log('콜백함수 실행')
+    // console.log(scroll)
     setTimeout(()=>{
       window.scrollTo({top:scroll,left:0,behavior:"instant"})
     },0.1)

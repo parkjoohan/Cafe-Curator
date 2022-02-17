@@ -43,7 +43,7 @@ const UserProfileFeed = forwardRef((props,ref) => {
   useEffect(() => {
 
     window.addEventListener('scroll',scroll)
-    console.log(url_arr)
+    // console.log(url_arr)
 
     if(url_arr.length != 0){
       // console.log('url_arr가 바뀌었다!',url_arr)
@@ -80,7 +80,7 @@ const UserProfileFeed = forwardRef((props,ref) => {
     // console.log(getScrollTop() == getDocumentHeight() - window.innerHeight)
     if (Math.round( $(window).scrollTop()) == $(document).height() - $(window).height()) {
       window.removeEventListener('scroll',scroll)
-      console.log('스크롤이 맨 밑이다!')
+      // console.log('스크롤이 맨 밑이다!')
       // console.log('현재 스크롤 위치',window.scrollY);
       nextLoading()
     }
@@ -93,7 +93,7 @@ const UserProfileFeed = forwardRef((props,ref) => {
     if(youme[1]!==null){
       url += `/${youme[1]}`
     }
-    console.log(url_arr[url_arr.length-1].feedNo,'마지막 피드 넘버')
+    // console.log(url_arr[url_arr.length-1].feedNo,'마지막 피드 넘버')
       axios.get(url,{
         params:{
           "size":5,
@@ -104,7 +104,7 @@ const UserProfileFeed = forwardRef((props,ref) => {
         // console.log('응답',res.data)
         update(res.data)
       }).catch(function(err){
-        console.log(err)
+        // console.log(err)
       })
   }
 
@@ -153,7 +153,7 @@ const UserProfileFeed = forwardRef((props,ref) => {
       if(youme[1]!==null){
         url += `/${youme[1]}`
       }
-      console.log(url)
+      // console.log(url)
       axios.get(url,{
         params:{
           "size":5,
@@ -161,12 +161,12 @@ const UserProfileFeed = forwardRef((props,ref) => {
           "lastFeedNo": null,
         }
       }).then(function(res){
-        console.log(res.data)
+        // console.log(res.data)
         let newUrl = res.data
         // console.log('첫 데이터 받기 전 url_arr(빈 어레이여야함)',url_arr)
         setUrl(newUrl)
         lastNo = newUrl[newUrl.length-1].feedNo
-      }).catch(console.log("DD"))
+      }).catch()
 
     }
     
@@ -267,7 +267,9 @@ const UserProfileFeed = forwardRef((props,ref) => {
         heart2.style.display="none";
       }
       setLike(newLike)
-    }).catch(err=>console.log(err))
+    }).catch(err=>{
+      // console.log(err)
+    })
   }
 
   //쌓는함수
@@ -290,7 +292,7 @@ const UserProfileFeed = forwardRef((props,ref) => {
     let container = document.getElementById("feedcontainer");
     // console.log('현재 스크롤 위치',window.scrollY);
     let nowscroll = window.scrollY
-    console.log('이전 스크롤 위치',nowscroll)
+    // console.log('이전 스크롤 위치',nowscroll)
     while (division.hasChildNodes()) {
       division.removeChild(division.firstChild);
     }
@@ -368,7 +370,7 @@ const UserProfileFeed = forwardRef((props,ref) => {
       division.appendChild(box);
       heightArr[min_idx] += imageHeight+20;
     })
-    console.log('다 쌓았다!')
+    // console.log('다 쌓았다!')
     // console.log('현재 스크롤 위치',window.scrollY,'이동해야할 스크롤 위치',nowscroll,'height',document.body.scrollHeight)
     go(nowscroll)
     // console.log('block함수 끝')
@@ -376,8 +378,8 @@ const UserProfileFeed = forwardRef((props,ref) => {
   }
 
   const go = scroll => {
-    console.log('콜백함수 실행')
-    console.log(scroll)
+    // console.log('콜백함수 실행')
+    // console.log(scroll)
     setTimeout(()=>{
       window.scrollTo({top:scroll,left:0,behavior:"instant"})
     },0.1)
