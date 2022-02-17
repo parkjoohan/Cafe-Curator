@@ -51,7 +51,14 @@ const BookMarks = props => {
             }
           }
         }
-      };
+  };
+  
+  const gotoUserprofile = (id) => {
+  history.push(`profile/${id}`);
+  };
+  const gotoDetail = (pk) => {
+  history.push(`article/${pk}`);
+  };
 
       const likearticle = (i) => {
         console.log(i, props.data[i]);
@@ -185,7 +192,7 @@ const BookMarks = props => {
                                     <img id="bookmarks_img2" src={item.userPicture} alt="" /> :
                                     <img id="bookmarks_img2" src='../image/Profileimage.png'/>
                                 }
-                                <strong id="bookmarks_userId">{item.userId}</strong>
+                                <strong id="bookmarks_userId" onClick={()=>gotoUserprofile(item.userId)}>{item.userId}</strong>
                                 <strong id="bookmarks_follow_button">팔로우</strong>
                             </div>
                             <div
@@ -207,7 +214,7 @@ const BookMarks = props => {
 
                         <Col style={{ width: "50px", height: "100%" }}>
                             <div style={{width: "100%", height: "100%", paddingTop: "3%", paddingBottom: "3%"}}>
-                                <img id="bookmarks_img3" src={item.file.filePath}/>
+                                <img id="bookmarks_img3" src={item.file.filePath} onClick={()=>{gotoDetail(item.feedNo)}}/>
                             </div>
                         </Col>
                     </li>
