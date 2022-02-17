@@ -247,3 +247,16 @@ ul.imgs li{
   margin-left: auto;
   margin-right: auto;
 }
+
+@media screen and (max-width: 1650px){
+  #article_bookmark_count{
+    margin-right: 3%;
+    margin-left: 8%;
+    font-size: 80%;
+  }
+  
+  #article_modify_button{
+    font-size: 60%;
+    height: 40%;
+  }
+}
