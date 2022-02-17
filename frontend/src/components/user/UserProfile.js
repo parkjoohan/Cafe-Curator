@@ -118,7 +118,9 @@ export default function UserProfile(props) {
             <a id="userfile_aMarginleft" onClick={()=>{setFollowermodalshow(true)}}>팔로워 {followercnt}</a>
             <a id="userfile_aMarginleft" onClick={()=>{setFollowmodalshow(true)}}>팔로우 {data.followingCount}</a>
             <h5 id="userfile_explain">{data.introduction}</h5>
+            <p>{data.categoryList}</p>
           </Col>
+
         </Row>
 
       <hr id="userfile_HrStyle"></hr>
