@@ -37,7 +37,8 @@ function Header({user, setUser}) {
 
   const logoutfunction = () => {
     localStorage.clear()
-    setUser([null,null])
+    setUser([null, null])
+    history.push('/')
   }
   const style = {
     position: 'absolute',
