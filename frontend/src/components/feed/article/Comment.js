@@ -43,19 +43,19 @@ export default function Comment({ user }) {
     }, []);
 
     
-    // 대댓글 불러오기
-    useEffect(() => {
-        axios.get(url + '/nested', {
-            params: {
-                "parentNo": parentNo2,
-                "size": 100,
-                "userNo": `${user[1]}`,
-            }
-        }).then((data3) => {
-            console.log(data3.data);
-            setRecomments([...recomments, ...data3.data]);
-        })
-    }, []);
+    // // 대댓글 불러오기
+    // useEffect(() => {
+    //     axios.get(url + '/nested', {
+    //         params: {
+    //             "parentNo": parentNo2,
+    //             "size": 100,
+    //             "userNo": `${user[1]}`,
+    //         }
+    //     }).then((data3) => {
+    //         console.log(data3.data);
+    //         setRecomments([...recomments, ...data3.data]);
+    //     })
+    // }, []);
     
     // //댓글 쓰기
     function writeComment(props) {
