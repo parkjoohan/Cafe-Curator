@@ -78,7 +78,6 @@ public class OauthController {
     public ResponseEntity googleReqUrl() {
         String reqUrl = "https://accounts.google.com/o/oauth2/v2/auth?scope=https://www.googleapis.com/auth/userinfo.email&response_type=code&client_id=" + googleClientId + "&redirect_uri=" + googleRedirectURI;
 //        return "redirect:"+reqUrl;
-//        System.out.println(reqUrl);
         return new ResponseEntity<String>(reqUrl, HttpStatus.OK);
     }
 
@@ -146,9 +145,10 @@ public class OauthController {
 
     // 카카오 로그인창 호출
     @GetMapping("/getKakaoAuthURL")
-    public String kakaoReqUrl() {
+    public ResponseEntity kakaoReqUrl() {
         String reqUrl = "https://kauth.kakao.com/oauth/authorize?client_id=" + kakaoApiKey + "&redirect_uri="+ kakaoRedirectURI + "&response_type=code";
-        return "redirect:"+reqUrl;
+//        return "redirect:"+reqUrl;
+        return new ResponseEntity<String>(reqUrl, HttpStatus.OK);
     }
 
     @GetMapping("/kakao")

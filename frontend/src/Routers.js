@@ -22,6 +22,7 @@ import LocationSearch from './components/feed/search/KeywordSearch/LocationSearc
 import CafeSearch from './components/feed/search/KeywordSearch/CafeSearch'
 import AccountSearch from './components/feed/search/AccountSearch/AccountSearch'
 import GoogleRedirect from './components/user/GoogleRedirect'
+import KakaoRedirect from './components/user/KakaoRedirect'
 
 export default function Routers(props) {
   return (
@@ -47,7 +48,8 @@ export default function Routers(props) {
       <Route path="/locationsearch"><LocationSearch setFootershow={props.setFootershow}/></Route>
       <Route path="/cafesearch" component = {CafeSearch}></Route>
       <Route path="/accountsearch" component={AccountSearch}></Route>
-      <Route path="/oauth/callback/google" component={GoogleRedirect}><GoogleRedirect setUser={props.setUser}/></Route>
+      <Route path="/oauth/callback/google" component={GoogleRedirect}><GoogleRedirect setUser={props.setUser} /></Route>
+      <Route path="/oauth/callback/kakao" component={KakaoRedirect}><GoogleRedirect setUser={props.setUser}/></Route>
     </Switch>
   )
 }
