@@ -161,6 +161,8 @@ const StoreProfilefeed = forwardRef((props,ref) => {
       // newForm.append("cafeSearchReqDto",data)
       axios.get(url,data).then(function(res){
         console.log(res.data)
+        let newarr = [res.data.feedCount,res.data.categoryList];
+        props.setDetail(newarr)
         if(res.data.length == 0) {
           const division = document.getElementById("container");
           while (division.hasChildNodes()) {

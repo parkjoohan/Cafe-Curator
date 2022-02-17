@@ -6,6 +6,15 @@ import Chip from '@mui/material/Chip';
 import Stack from '@mui/material/Stack';
 import CakeIcon from '@mui/icons-material/Cake';
 import CameraIcon from '@mui/icons-material/Camera';
+import CoffeeIcon from '@mui/icons-material/Coffee';
+import BrunchDiningIcon from '@mui/icons-material/BrunchDining';
+import FreeBreakfastIcon from '@mui/icons-material/FreeBreakfast';
+import NightlifeIcon from '@mui/icons-material/Nightlife';
+import MenuBookIcon from '@mui/icons-material/MenuBook';
+import CottageIcon from '@mui/icons-material/Cottage';
+import BedroomBabyIcon from '@mui/icons-material/BedroomBaby';
+import CookieIcon from '@mui/icons-material/Cookie';
+import { pink, brown, lime, yellow, deepPurple, lightBlue,grey,teal } from '@mui/material/colors';
 // 모달부분
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
@@ -22,6 +31,7 @@ export const StoreProfile = (props) => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const feedRef = useRef();
+  const [detail,setDetail] = useState([0,[]]);
 
   useEffect(()=>{
     props.setFootershow(false)
@@ -34,52 +44,6 @@ export const StoreProfile = (props) => {
     })
   },[])
 
-  // const GetClick = (e) => {
-  //   if (currentClick !== e){
-  //   setCurrentClick(e);
-  //   console.log(e);
-  //   }
-  // };
-  
-  // const modalstyle = {
-  //   position: 'absolute',
-  //   top: '50%',
-  //   left: '50%',
-  //   transform: 'translate(-50%, -50%)',
-  //   width: 800,
-  //   bgcolor: 'background.paper',
-  //   boxShadow: 24,
-  //   p: 4,
-  // };
-  
-  // React.useEffect(
-  //     () => {
-  //       if (currentClick === 0) {
-  //         let current = document.getElementById('btnplus');
-  //         let previous = document.getElementById('case2');
-  //         console.log(current);
-  //         current.style.color = "white";
-  //         current.style.backgroundColor = "#484848";
-  //         previous.style.color = "black";
-  //         previous.style.backgroundColor = "white";
-  //         // ViewContent = 'true'
-  //       }
-
-  //       else if (currentClick === 1) {
-  //         let current = document.getElementById('case2');
-  //         let previous = document.getElementById('btnplus');
-  //         console.log(current);
-  //         current.style.color = "white";
-  //         current.style.backgroundColor = '#484848';
-  //         previous.style.color = "black";
-  //         previous.style.backgroundColor = "white";
-  //         // ViewContent = 'false'
-          
-  //       }
-  //     },
-  //     [currentClick]
-      
-  //   );
     
   return (
     <div>
@@ -88,19 +52,62 @@ export const StoreProfile = (props) => {
           <Col sm={5}><img id ="storeprofile_ImgPreview" src={process.env.PUBLIC_URL + "/image/map.png"}></img></Col>
           <Col sm={4}>
             <p style={{fontSize : "2rem"}}>{cafename}</p>
-            <p>게시물 42</p>
+            <p>게시물 {detail[0]}</p>
             <br></br>
             <Button style={{color: "blue" }}onClick={handleOpen}>메뉴보기</Button>
 
-            <Stack direction="row" spacing={1}>
-              <Chip icon={<CakeIcon />} label="너무 맛있는집" color="error" />
-              <Chip icon={<CameraIcon />} label="인스타 사진 맛집" color="warning" />
+            <Stack direction="row" spacing={1} id="chipbox">
+              {
+                detail[1].map((category)=>{
+                  if (category=="케이크"){
+                    return (
+                      <Chip icon={<CakeIcon />} label="케이크 맛집" style={{backgroundColor:`${pink[100]}`}} />
+                    )
+                  } else if (category=="커피"){
+                    return (
+                      <Chip icon={<CoffeeIcon />} label="커피 맛집" style={{backgroundColor:`${brown[100]}`}} />
+                    )
+                  } else if (category=="마카롱/쿠키"){
+                    return (
+                      <Chip icon={<CookieIcon />} label="마카롱/쿠키 맛집" style={{backgroundColor:`${brown[200]}`}} />
+                    )
+                  } else if (category=="브런치"){
+                    return (
+                      <Chip icon={<BrunchDiningIcon />} label="브런치 맛집" style={{backgroundColor:`${yellow[100]}`}} />
+                    )
+                  } else if (category=="차"){
+                    return (
+                      <Chip icon={<FreeBreakfastIcon />} label="차 맛집" style={{backgroundColor:`${lime[100]}`}} />
+                    )
+                  } else if (category=="사진찍기 좋은"){
+                    return (
+                      <Chip icon={<CameraIcon />} label="사진찍기 좋은 장소" style={{backgroundColor:`${lightBlue[100]}`}} />
+                    )
+                  } else if (category=="아늑한"){
+                    return (
+                      <Chip icon={<CottageIcon />} label="아늑한 장소" style={{backgroundColor:`${brown[300]}`}} />
+                    )
+                  } else if (category=="힙한"){
+                    return (
+                      <Chip icon={<NightlifeIcon />} label="힙한 장소" style={{backgroundColor:`${deepPurple[200]}`}} />
+                    )
+                  } else if (category=="공부하기 좋은"){
+                    return (
+                      <Chip icon={<MenuBookIcon />} label="공부하기 좋은 장소" style={{backgroundColor:`${grey[400]}`}} />
+                    )
+                  } else {
+                    return (
+                      <Chip icon={<BedroomBabyIcon />} label="테마있는 장소" style={{backgroundColor:`${teal[400]}`}} />
+                    )
+                  }
+                })
+              }
             </Stack>
           </Col>
         </Row>
       </Container>
       <hr id="storeprofile_HrStyle"></hr>
-      <StoreProfilefeed ref={feedRef} user={props.user}/>
+      <StoreProfilefeed ref={feedRef} user={props.user} setDetail={setDetail}/>
       <Storemodal open={open} onClose={handleClose} id={id.id}/>
     </div>
   )
