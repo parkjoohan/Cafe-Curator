@@ -4,7 +4,7 @@ import CategorySearchfeed from './CategorySearchfeed'
 
 export default function CategorySearch(props) {
   const [category,setCategory] = useState("커피")
-  const [poporlast,setPoporlast] = useState("top")
+  const [poporlast,setPoporlast] = useState("recent")
   useEffect(()=>{
     console.log(props.user)
   },[])
@@ -39,15 +39,15 @@ export default function CategorySearch(props) {
           <Dropdown.Toggle variant="success" id="dropdown-basic">
 
             {poporlast=="top"?
-              <strong>최신순</strong>:
-              <strong>인기순</strong>
+              <strong>인기순</strong>:
+              <strong>최신순</strong>
             }
 
           </Dropdown.Toggle>
 
           <Dropdown.Menu>
-            <Dropdown.Item onClick={()=>{setPoporlast("top")}}>최신순</Dropdown.Item>
-            <Dropdown.Item onClick={()=>{setPoporlast("recent")}}>인기순</Dropdown.Item>
+            <Dropdown.Item onClick={()=>{setPoporlast("recent")}}>최신순</Dropdown.Item>
+            <Dropdown.Item onClick={()=>{setPoporlast("top")}}>인기순</Dropdown.Item>
           </Dropdown.Menu>
         </Dropdown>
         </Container>

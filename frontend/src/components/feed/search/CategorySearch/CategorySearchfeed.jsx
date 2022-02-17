@@ -153,16 +153,30 @@ const CategorySearchfeed = (props) => {
       setImages([])
       setCnt(0)
       const url = `http://i6c104.p.ssafy.io:8080/search/category/${props.poporlast}`
-      const data = {params:{
-        "category":props.category,
-        "lastFeedNo":null,
-        "size": 5,
-        "userNo": props.user[1]
-      }}
-      console.log(data)
+      let form = {}
+      if(props.poporlast=="top"){
+        const data = {params:{
+          "category":props.category,
+          "lastFeedNo":null,
+          "size": 5,
+          "userNo": props.user[1],
+          "lastLikeCount":null
+        }}
+        form = data
+      }else{
+        const data = {params:{
+          "category":props.category,
+          "lastFeedNo":null,
+          "size": 5,
+          "userNo": props.user[1]
+        }}
+        form = data
+      }
+      
+      console.log(form)
       // const newForm = new FormData();
       // newForm.append("cafeSearchReqDto",data)
-      axios.get(url,data).then(function(res){
+      axios.get(url,form).then(function(res){
         console.log(res.data)
         if(res.data.length == 0) {
           const division = document.getElementById("container");
@@ -175,7 +189,7 @@ const CategorySearchfeed = (props) => {
           let newUrl = res.data
           setUrl(newUrl)
         }
-      }).catch(err=>console.log(err))
+      }).catch(err=>{console.log(err);console.log(form)})
     }else{
       const division = document.getElementById("container");
       while (division.hasChildNodes()) {
@@ -226,7 +240,7 @@ const CategorySearchfeed = (props) => {
 
   function likeArticle(index){
     // console.log(url_arr)
-    const likeUrl = `http://i6c104.p.ssafy.io:8080/feed/like/${url_arr[index].feedNo}/a1`
+    const likeUrl = `http://i6c104.p.ssafy.io:8080/feed/like/${url_arr[index].feedNo}/${props.user[1]}`
     let heart = document.getElementById(`heart${index}`);
     let heart2 = document.getElementById(`heart2${index}`);
     axios.get(likeUrl).then(function(res){
