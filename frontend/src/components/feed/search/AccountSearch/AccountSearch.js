@@ -31,7 +31,7 @@ export default function AccountSearch() {
             <Search setKeyword={setKeyword}/>
             {
                 data.map((account,index)=>(
-                    <div className='accountslist'>
+                    <div className='accountslist' onClick={()=>onClick(account.userId)}>
                         <div className='imagebox'>
                             <div className='box'>
                                 {
@@ -41,7 +41,7 @@ export default function AccountSearch() {
                                 }
                             </div>
                         </div>
-                        <p className='account_userId' onClick={()=>onClick(account.userId)}>{account.userId}</p>
+                        <p className='account_userId'>{account.userId}</p>
                         <span className='account_follow'>팔로워{account.followerCount}</span>
                         <span className='account_follow'>팔로잉{account.followingCount}</span>
                         <hr/>

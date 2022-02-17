@@ -54,31 +54,33 @@ public class FollowServiceImpl implements FollowService {
     }
 
     @Override
-    public List<FollowDto> followerList(String userNo, String lastUserNo, int size) {
+    public List<FollowDto> followerList(String loginUserNo, String userNo, String lastUserNo, int size) {
         if(lastUserNo == null) lastUserNo = "z";
         PageRequest pageRequest = PageRequest.of(0,size);
+        //userNo의 팔로워 목록
         Page<Follow> follower = followRepository.findByGetUserNoAndUserNoLessThanOrderByUserNoDesc(userNo, lastUserNo, pageRequest);
 
         List<FollowDto> list = new ArrayList<>();
         for(Follow follow : follower) {
             String followNo = follow.getUserNo();
             UserDetail user = userDetailRepository.findById(followNo).get();
-            list.add(new FollowDto(followNo, user.getUserId(), user.getPicture(), checkFollow(userNo,followNo)));
+            list.add(new FollowDto(followNo, user.getUserId(), user.getPicture(), checkFollow(loginUserNo,followNo)));
         }
         return list;
     }
 
     @Override
-    public List<FollowDto> followingList(String userNo, String lastUserNo, int size) {
+    public List<FollowDto> followingList(String loginUserNo, String userNo, String lastUserNo, int size) {
         if(lastUserNo == null) lastUserNo = "z";
         PageRequest pageRequest = PageRequest.of(0,size);
-        Page<Follow> following = followRepository.findByUserNoAndGetUserNoLessThanOrderByGetUserNoDesc(userNo,lastUserNo, pageRequest);
+        //userNo의 팔로잉 목록
+        Page<Follow> following = followRepository.findByUserNoAndGetUserNoLessThanOrderByGetUserNoDesc(userNo, lastUserNo, pageRequest);
 
         List<FollowDto> list = new ArrayList<>();
         for(Follow follow : following) {
             String followNo = follow.getGetUserNo();
             UserDetail user = userDetailRepository.findById(followNo).get();
-            list.add(new FollowDto(followNo, user.getUserId(), user.getPicture(), true));
+            list.add(new FollowDto(followNo, user.getUserId(), user.getPicture(), checkFollow(loginUserNo,followNo)));
         }
         return list;
     }

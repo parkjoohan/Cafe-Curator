@@ -15,13 +15,14 @@ import UserProfile from "./components/user/UserProfile";
 import StoreProfile from "./components/store/StoreProfile";
 import EditProfile from "./components/user/EditProfile";
 //  searchtest용입니다. 테스트 끝나면 지울거임
-import Search from "./components/feed/article/Search";
-import PopularSearch from "./components/feed/search/PopularSearch";
-import RecentSearch from "./components/feed/search/RecentSearch";
-import LocationSearch from "./components/feed/search/KeywordSearch/LocationSearch";
-import CafeSearch from "./components/feed/search/KeywordSearch/CafeSearch";
-import AccountSearch from "./components/feed/search/AccountSearch/AccountSearch";
-import GoogleRedirect from "./components/user/GoogleRedirect";
+import Search from './components/feed/article/Search'
+import PopularSearch from './components/feed/search/PopularSearch'
+import RecentSearch from './components/feed/search/RecentSearch'
+import LocationSearch from './components/feed/search/KeywordSearch/LocationSearch'
+import CafeSearch from './components/feed/search/KeywordSearch/CafeSearch'
+import AccountSearch from './components/feed/search/AccountSearch/AccountSearch'
+import GoogleRedirect from './components/user/GoogleRedirect'
+import KakaoRedirect from './components/user/KakaoRedirect'
 
 export default function Routers(props) {
   return (
@@ -69,9 +70,8 @@ export default function Routers(props) {
       </Route>
       <Route path="/cafesearch" component={CafeSearch}></Route>
       <Route path="/accountsearch" component={AccountSearch}></Route>
-      <Route path="/oauth/callback/google" component={GoogleRedirect}>
-        <GoogleRedirect setUser={props.setUser} />
-      </Route>
+      <Route path="/oauth/callback/google" component={GoogleRedirect}><GoogleRedirect setUser={props.setUser} /></Route>
+      <Route path="/oauth/callback/kakao" component={KakaoRedirect}><KakaoRedirect setUser={props.setUser}/></Route>
     </Switch>
   );
 }
