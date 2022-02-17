@@ -60,7 +60,7 @@ export default function Comment({ user }) {
     // //댓글 쓰기
     function writeComment(props) {
         console.log(props);
-        axios.post("/comment", {
+        axios.post(url, {
             "content": props,
             "feedNo": `${pk}`,
             "userNo": `${user[1]}`
@@ -92,7 +92,7 @@ export default function Comment({ user }) {
         console.log(props);
         console.log("parentNo " + parentNo);
 
-        axios.post("/comment", {
+        axios.post(url, {
             "content": props,
             "feedNo": `${pk}`,
             "parentNo": parentNo,
@@ -269,11 +269,11 @@ export default function Comment({ user }) {
                                 onKeyPress={(e) => {
                                     if (e.key === 'Enter') {
                                         console.log(parentNo);
-                                        // if (parentNo != "") {
-                                        //     writeRecomment(e.target.value);
-                                        // } else {
+                                        if (parentNo != "") {
+                                            writeRecomment(e.target.value);
+                                        } else {
                                             writeComment(e.target.value);
-                                        // }
+                                        }
                                     }
                                 }}
                                 style={{width: "100%", height: "40px", border: "none", background: "lavender"}}
