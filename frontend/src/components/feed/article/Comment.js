@@ -191,7 +191,7 @@ export default function Comment({user}) {
                                         <Col lg={3}>
                                             <Row>
                                                 <Col lg={5} style={{ alignSelf: "center" }}>
-                                                    <h5 style={{ fontSize: "11px", width: "50px" }} onClick={() => showRecomment(comment.commentNo)}>답글달기 </h5>
+                                                    <h5 style={{ fontSize: "11px", width: "50px" }} onClick={() => setParentNo(comment.commentNo)}>답글달기 </h5>
                                                 </Col>
 
                                                 <Col lg={3} style={{ alignSelf: "center" }}>
@@ -285,7 +285,7 @@ export default function Comment({user}) {
                                         // showMore[] == true ?
                                         // <h5 style={{ fontSize: "12px" }} id='article_commnets_more' onClick={() => showRecomment(comment.commentNo)}>더보기</h5>
                                         // : null
-                                        (comment.commentCount > 0)  ?
+                                        (comment.commentCount > 0) && (comment.commentCount != recomments.length) ?
                                         <h5 style={{ fontSize: "12px" }} id='article_commnets_more' onClick={() => showRecomment(comment.commentNo)}>더보기</h5>
                                         : null
                                     }
