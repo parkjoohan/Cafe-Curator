@@ -285,7 +285,7 @@ export default function Comment({user}) {
                                         // showMore[] == true ?
                                         // <h5 style={{ fontSize: "12px" }} id='article_commnets_more' onClick={() => showRecomment(comment.commentNo)}>더보기</h5>
                                         // : null
-                                        (comment.commentCount > 0) && (comment.commentCount != recomments.length) ?
+                                        (comment.commentCount > 0)  ?
                                         <h5 style={{ fontSize: "12px" }} id='article_commnets_more' onClick={() => showRecomment(comment.commentNo)}>더보기</h5>
                                         : null
                                     }
