@@ -60,7 +60,7 @@ public class SearchServiceImpl implements SearchService {
         if (lastFeedNo == null) lastFeedNo = Integer.MAX_VALUE;
 
         PageRequest pageRequest  = PageRequest.of(0, size);
-        Page<Feed> feedList = feedRepository.findByCategoryListOrderByRegTime(lastFeedNo, category, pageRequest);
+        Page<Feed> feedList = feedRepository.findByCategoryListOrderByFeedNoDesc(lastFeedNo, category, pageRequest);
 
         return feedService.makeFeedDtoList(feedList.getContent(), userNo);
     }
