@@ -202,68 +202,66 @@ export default function Detail(props) {
               </div>
             </Row>
             <Row id='article_heart_bookmark_cate'>
-              <Col style={{alignSelf: "center"}}>
-                  {/* 하트 & 북마크*/}
-                  <div id="article_heart_bookmark_frame">
-                    {likearr[1] ? (
-                      <img
-                        src={`${process.env.PUBLIC_URL}/image/heart.png`}
-                        id="article_heart"
-                        onClick={likearticle}
-                      />
-                    ) : (
-                      <img
-                        src={`${process.env.PUBLIC_URL}/image/empty_heart.png`}
-                        id="article_heart"
-                        onClick={likearticle}
-                      />
-                    )}
-                    <div
-                      style={{
-                        width: "50px",
-                        textAlignLast: "center",
-                        textAlignLast: "center",
-                      }}
-                    >
-                      <p
-                        id='article_heart_count'
-                        onClick={() => setLikemodalshow(true)}
-                      >
-                        {likearr[[0]]}
-                      </p>
-                    </div>
-                    {isbookmark ? (
-                      <img
-                        src={`${process.env.PUBLIC_URL}/image/bookmark.png`}
-                        id="article_bookmark"
-                        onClick={checkbookmark}
-                      />
-                    ) : (
-                      <img
-                        src={`${process.env.PUBLIC_URL}/image/empty_bookmark.png`}
-                        id="article_bookmark"
-                        onClick={checkbookmark}
-                      />
-                    )}
-                    <div id='article_bookmark_count_frame'>
-                      <p id='article_bookmark_count'>북마크</p>
-                    </div>
-                    {data.userId == props.user[0] && (
-                      <><Button id='article_modify_button' onClick={() => setModifymodalshow(true)}>수정</Button>
-                      <Button id='article_delete_button' onClick={() => deleteFeed(data.feedNo)}>삭제</Button></>
-                    )}
-                  </div>
-                </Col>
-                <Col>
-                  {/* 관심사 카테고리 표시 폼 */}
-                  <div id="article_category">
-                    {data &&
-                      data.categoryList &&
-                      data.categoryList.map((category, index) => (
-                        <p key={index} id="article_category_content" onClick={() => gotoCategory(category)}>{category}</p>
-                      ))}
-                  </div>
-                </Col>
+              {/* 하트 & 북마크*/}
+              <div id="article_heart_bookmark_frame">
+                {likearr[1] ? (
+                  <img
+                    src={`${process.env.PUBLIC_URL}/image/heart.png`}
+                    id="article_heart"
+                    onClick={likearticle}
+                  />
+                ) : (
+                  <img
+                    src={`${process.env.PUBLIC_URL}/image/empty_heart.png`}
+                    id="article_heart"
+                    onClick={likearticle}
+                  />
+                )}
+                <div
+                  style={{
+                    width: "50px",
+                    textAlignLast: "center",
+                    textAlignLast: "center",
+                  }}
+                >
+                  <p
+                    id='article_heart_count'
+                    onClick={() => setLikemodalshow(true)}
+                  >
+                    {likearr[[0]]}
+                  </p>
+                </div>
+                {isbookmark ? (
+                  <img
+                    src={`${process.env.PUBLIC_URL}/image/bookmark.png`}
+                    id="article_bookmark"
+                    onClick={checkbookmark}
+                  />
+                ) : (
+                  <img
+                    src={`${process.env.PUBLIC_URL}/image/empty_bookmark.png`}
+                    id="article_bookmark"
+                    onClick={checkbookmark}
+                  />
+                )}
+                <div id='article_bookmark_count_frame'>
+                  <p id='article_bookmark_count'>북마크</p>
+                </div>
+                {data.userId == props.user[0] && (
+                  <><Button id='article_modify_delete_button' onClick={() => setModifymodalshow(true)}>수정</Button>
+                  <Button id='article_modify_delete_button' onClick={() => deleteFeed(data.feedNo)}>삭제</Button></>
+                )}
+                </div>
+            </Row>
+            <Row id='article_heart_bookmark_cate'>
+              {/* 관심사 카테고리 표시 폼 */}
+              <div id="article_category">
+                {data &&
+                  data.categoryList &&
+                  data.categoryList.map((category, index) => (
+                    <p key={index} id="article_category_content" onClick={() => gotoCategory(category)}>{category}</p>
+                  ))}
+              </div>
             </Row>
             <Row  id='article_comment_con' >
               <Col>
