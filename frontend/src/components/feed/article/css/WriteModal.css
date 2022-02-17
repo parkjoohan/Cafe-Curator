@@ -39,6 +39,7 @@
   border-radius: 30px;
   font-weight: 700;
   text-align: center;
+  width: 120px;
 }
 
 #writemodal_add_pic {
@@ -131,6 +132,7 @@
 
 #writemodal_cate5 {
   height: 20px; 
+  width: 800px
 }
 
 #writemodal_cate_air {
@@ -191,7 +193,7 @@
       /* margin-top: 10px; */
       margin-bottom: 20px;
       border-radius: 30px;
-      font-size: 5px;
+      font-size: 10px;
       font-weight: 700;
       text-align: center;
   }
