@@ -166,126 +166,33 @@ export default function Comment({ user }) {
                                 <div>
                                     {
                                         comment.sequence == 0 ? 
-                                        // (<Row>
-                                        //         <Col lg={9}>
-                                        //             <Row>
-                                        //                 <Col lg={2} style={{placeSelf: "center"}} >
-                                        //                     <h5 id='comments_user'>{comment.userId}</h5>
-                                        //                 </Col>
-                                        //                 <Col lg={10} style={{placeSelf: "center"}} >
-                                        //                     <h5 id='comments_content'>{comment.content}</h5>
-                                        //                 </Col>
-                                        //             </Row>
-                                        //         </Col>        
-                                        //         <Col lg={3}>
-                                        //             <Row>
-                                        //                 <Col lg={5}  style={{placeSelf: "center"}} >
-                                        //                     <h5 id='comment_reply' onClick={() => setParentNo(comment.commentNo)}>답글달기 </h5>
-                                        //                 </Col>
-
-                                        //                 {
-                                        //                     comment.userId == `${user[0]}` ?
-                                        //                     (<Col lg={3} style={{placeSelf: "center"}} >
-                                        //                         <h5 id='comment_delete' onClick={() => deleteComment(comment.commentNo)}>삭제</h5>
-                                        //                     </Col>) : null
-                                                                
-                                                        
-                                        //                 }
-                                                        
-                                        //                 <Col lg={2} style={{placeSelf: "center"}}  >
-                                        //                     {/* <h5 style={{ fontSize: "12px" }} onClick={() => likeArticle(recomment.commentNo)}> */}
-                                        //                     <h5>
-                                        //                         {mylike[index] == true ? <img
-                                        //                             id='comments_heart'
-                                        //                             onClick={() => likeArticle(comment.commentNo, index)}
-                                        //                             src="/image/heart.png"
-                                        //                         /> : <img
-                                        //                             id='comments_heart'
-                                        //                             onClick={() => likeArticle(comment.commentNo, index)}
-                                        //                             src="/image/empty_heart.png"
-                                        //                         />}
-                                        //                     </h5>
-                                        //                 </Col>
-                                        //                 <Col lg={2} style={{placeSelf: "center"}} >
-                                        //                     <h4 id='comments_heart_count'>{like[index]}</h4>
-                                        //                 </Col>
-                                        //             </Row>
-                                        //         </Col>
-                                        // </Row>) :  
-                                        // (<Row>
-                                        //     <Col lg={8} id='recomments_frame'>
-                                        //         <Row>
-                                        //             <Col lg={2} style={{placeSelf: "center"}} >
-                                        //                 <h5 id='comments_user'>{comment.userId}</h5>
-                                        //             </Col>
-                                        //             <Col lg={2} style={{placeSelf: "center"}} >
-                                        //                 <h5 id='recomments_parentId'>@{comment.parentId}</h5>
-                                        //             </Col>
-                                        //             <Col lg={8} style={{placeSelf: "center"}} >
-                                        //                 <h5 id='recomments_content'>{comment.content}</h5>
-                                        //             </Col>
-                                        //         </Row>
-                                        //     </Col>        
-                                        //     <Col lg={3} id='recomments_frame2'>
-                                        //         <Row>
-                                        //             <Col lg={5} style={{placeSelf: "center"}} >
-                                        //                 <h5 id='comment_reply' onClick={() => setParentNo(comment.commentNo)}>답글달기 </h5>
-                                        //             </Col>
-
-                                        //             {
-                                        //                 comment.userId == `${user[0]}` ?
-                                        //                 (<Col lg={3} style={{placeSelf: "center"}} >
-                                        //                     <h5 id='comment_delete' onClick={() => deleteComment(comment.commentNo)}>삭제</h5>
-                                        //                 </Col>) : null
-                                        //             }
-                                                    
-                                        //             <Col lg={2} style={{placeSelf: "center"}}>
-                                        //                 {/* <h5 style={{ fontSize: "12px" }} onClick={() => likeArticle(recomment.commentNo)}> */}
-                                        //                 <h5>
-                                        //                     {mylike[index] == true ? <img
-                                        //                         id='comments_heart'
-                                        //                         onClick={() => likeArticle(comment.commentNo, index)}
-                                        //                         src="/image/heart.png"
-                                        //                     /> : <img
-                                        //                         id='comments_heart'
-                                        //                         onClick={() => likeArticle(comment.commentNo, index)}
-                                        //                         src="/image/empty_heart.png"
-                                        //                     />}
-                                        //                 </h5>
-                                        //             </Col>
-                                        //             <Col lg={2}  style={{placeSelf: "center"}} >
-                                        //                 <h4 id='comments_heart_count'>{like[index]}</h4>
-                                        //             </Col>
-                                        //         </Row>
-                                        //     </Col>
-                                        // </Row>)   
                                         (<Row>
-                                                <Col>
+                                                <Col lg={9}>
                                                     <Row>
-                                                        <Col style={{placeSelf: "center"}} >
+                                                        <Col lg={2} style={{placeSelf: "center"}} >
                                                             <h5 id='comments_user'>{comment.userId}</h5>
                                                         </Col>
-                                                        <Col style={{placeSelf: "center"}} >
+                                                        <Col lg={10} style={{placeSelf: "center"}} >
                                                             <h5 id='comments_content'>{comment.content}</h5>
                                                         </Col>
                                                     </Row>
                                                 </Col>        
                                                 <Col lg={3}>
                                                     <Row>
-                                                        <Col style={{placeSelf: "center"}} >
+                                                        <Col lg={5}  style={{placeSelf: "center"}} >
                                                             <h5 id='comment_reply' onClick={() => setParentNo(comment.commentNo)}>답글달기 </h5>
                                                         </Col>
 
                                                         {
                                                             comment.userId == `${user[0]}` ?
-                                                            (<Col style={{placeSelf: "center"}} >
+                                                            (<Col lg={3} style={{placeSelf: "center"}} >
                                                                 <h5 id='comment_delete' onClick={() => deleteComment(comment.commentNo)}>삭제</h5>
                                                             </Col>) : null
                                                                 
                                                         
                                                         }
                                                         
-                                                        <Col style={{placeSelf: "center"}}  >
+                                                        <Col lg={2} style={{placeSelf: "center"}}  >
                                                             {/* <h5 style={{ fontSize: "12px" }} onClick={() => likeArticle(recomment.commentNo)}> */}
                                                             <h5>
                                                                 {mylike[index] == true ? <img
@@ -299,40 +206,40 @@ export default function Comment({ user }) {
                                                                 />}
                                                             </h5>
                                                         </Col>
-                                                        <Col style={{placeSelf: "center"}} >
+                                                        <Col lg={2} style={{placeSelf: "center"}} >
                                                             <h4 id='comments_heart_count'>{like[index]}</h4>
                                                         </Col>
                                                     </Row>
                                                 </Col>
                                         </Row>) :  
                                         (<Row>
-                                            <Col id='recomments_frame'>
+                                            <Col lg={8} id='recomments_frame'>
                                                 <Row>
-                                                    <Col style={{placeSelf: "center"}} >
+                                                    <Col lg={2} style={{placeSelf: "center"}} >
                                                         <h5 id='comments_user'>{comment.userId}</h5>
                                                     </Col>
-                                                    <Col style={{placeSelf: "center"}} >
+                                                    <Col lg={2} style={{placeSelf: "center"}} >
                                                         <h5 id='recomments_parentId'>@{comment.parentId}</h5>
                                                     </Col>
-                                                    <Col  style={{placeSelf: "center"}} >
+                                                    <Col lg={8} style={{placeSelf: "center"}} >
                                                         <h5 id='recomments_content'>{comment.content}</h5>
                                                     </Col>
                                                 </Row>
                                             </Col>        
-                                            <Col  id='recomments_frame2'>
+                                            <Col lg={3} id='recomments_frame2'>
                                                 <Row>
-                                                    <Col style={{placeSelf: "center"}} >
+                                                    <Col lg={5} style={{placeSelf: "center"}} >
                                                         <h5 id='comment_reply' onClick={() => setParentNo(comment.commentNo)}>답글달기 </h5>
                                                     </Col>
 
                                                     {
                                                         comment.userId == `${user[0]}` ?
-                                                        (<Col  style={{placeSelf: "center"}} >
+                                                        (<Col lg={3} style={{placeSelf: "center"}} >
                                                             <h5 id='comment_delete' onClick={() => deleteComment(comment.commentNo)}>삭제</h5>
                                                         </Col>) : null
                                                     }
                                                     
-                                                    <Col style={{placeSelf: "center"}}>
+                                                    <Col lg={2} style={{placeSelf: "center"}}>
                                                         {/* <h5 style={{ fontSize: "12px" }} onClick={() => likeArticle(recomment.commentNo)}> */}
                                                         <h5>
                                                             {mylike[index] == true ? <img
@@ -346,7 +253,7 @@ export default function Comment({ user }) {
                                                             />}
                                                         </h5>
                                                     </Col>
-                                                    <Col  style={{placeSelf: "center"}} >
+                                                    <Col lg={2}  style={{placeSelf: "center"}} >
                                                         <h4 id='comments_heart_count'>{like[index]}</h4>
                                                     </Col>
                                                 </Row>

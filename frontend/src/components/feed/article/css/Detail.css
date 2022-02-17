@@ -243,7 +243,7 @@ ul.imgs li{
 }
 
 #article_comment_con {
-  width: 850px;
+  width: 90%;
   margin-left: auto;
   margin-right: auto;
 }
@@ -275,11 +275,10 @@ ul.imgs li{
   
   #article_full_frame {
     height: 1200px; 
-    width: 90%;
+    width: 380px;
     margin-top: 1%; 
     margin-bottom: 1%; 
-    margin-left: auto;
-    margin-right: auto;
+    margin-left: 2%;
     border: 2px solid black;
     background: lavender;
     border-radius: 2%;
