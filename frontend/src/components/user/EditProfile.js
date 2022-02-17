@@ -43,6 +43,7 @@ export default function EditProfile({setUser}) {
         console.log(userinfo)
         setIntro(response.data.introduction)
         setLikearr(response.data.categoryList)
+        setTempArr(response.data.categoryList)
         setFileUrl(response.data.picture)
         console.log(intro)
         
@@ -89,6 +90,7 @@ export default function EditProfile({setUser}) {
   const [likearr, setLikearr] = useState([]);
   const [fileUrl, setFileUrl] = useState(null);
   const [file, setFile] = useState(null);
+  const [temparr,setTempArr] = useState([]);
   // 회원가입 정보부분
     // 이메일 받아오기
   // const location = useLocation()
@@ -290,7 +292,8 @@ export default function EditProfile({setUser}) {
                         <Button id="signup_cate" variant="secondary" size="sm" onClick={() => LikeCategoryModalShow(true)}>
                           관심사 선택
                         </Button>
-                        <LikeCategoryModal ref={categoryRef} likearr={likearr} setLikearr={setLikearr} show={LikeCategorymodalShow} onHide={() => LikeCategoryModalShow(false)}/>
+                        <LikeCategoryModal ref={categoryRef} likearr={likearr === [] ? temparr : likearr} 
+                        setLikearr={setLikearr} show={LikeCategorymodalShow} onHide={() => LikeCategoryModalShow(false)}/>
                       </Col>
       
                       
@@ -304,6 +307,20 @@ export default function EditProfile({setUser}) {
                   </div>
                   <div id="singup_content">
                   <TextField label="Re-Password"   onChange={onChangeRePw} placeholder='Enter password' type="password" fullWidth required />
+                  </div>
+                  <div style={{marginTop: "3%", marginBottom: "5%"}}>
+                    <Row>
+                      <Col>
+                        {/* 관심사선택 */}
+                        <Button id="signup_cate2" variant="secondary" size="sm" onClick={() => LikeCategoryModalShow(true)}>
+                          
+                        </Button>
+                        <LikeCategoryModal ref={categoryRef} likearr={likearr === [] ? temparr : likearr} 
+                        setLikearr={setLikearr} show={LikeCategorymodalShow} onHide={() => LikeCategoryModalShow(false)}/>
+                      </Col>
+      
+                      
+                    </Row>
                   </div>
                   </div>
                 } 
