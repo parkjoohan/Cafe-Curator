@@ -1,3 +1,4 @@
+/*global kakao*/
 import "./css/Blog.css";
 import React, {
   useState,
@@ -147,6 +148,36 @@ const Blogs = (props, ref) => {
       likebox.appendChild(emptybookmark);
     }
   }, [likebookmarkarr]);
+
+  const gotoCafeprofile = (name) => {
+    let pk = 0;
+    const url = `http://i6c104.p.ssafy.io:8080/cafe/${name}`;
+    axios.get(url).then((res) => {
+      console.log(res.data);
+      const url2 = `http://i6c104.p.ssafy.io:8080/cafe`;
+      axios
+        .get(url2, {
+          params: { cafeX: res.data.cafeX, cafeY: res.data.cafeY },
+        })
+        .then((res) => (pk = res.data));
+    });
+
+    var ps = new kakao.maps.services.Places();
+    ps.keywordSearch(name, placesSearchCB);
+    function placesSearchCB(data, status, pagination) {
+      if (status === kakao.maps.services.Status.OK) {
+        for (let i = 0; i < data.length; i++) {
+          if (data[i].place_name == name) {
+            history.push({
+              pathname: `/store/${pk}/${Number(data[i].id)}`,
+              state: { name: name },
+            });
+          }
+        }
+      }
+    }
+  };
+
   return (
     <div>
       {props.isLoading
@@ -192,7 +223,7 @@ const Blogs = (props, ref) => {
 
                 <Col className="blogs_detail">
                   <div id="blogs_detail_form">
-                    <strong id="blogs_cafeName">{item.cafeName}</strong>
+                    <strong id="blogs_cafeName" onClick={()=>gotoCafeprofile(item.cafeName)}>{item.cafeName}</strong>
                   </div>
                 </Col>
 

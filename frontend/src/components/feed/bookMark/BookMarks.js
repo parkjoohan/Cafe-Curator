@@ -1,9 +1,173 @@
+/*global kakao*/
 import "./css/BookMark.css";
-import React from "react";
+import React,{useState, useEffect} from "react";
 import BookMark from "./BookMark";
 import  { Modal, Button, Container, Row, Col, Form } from 'react-bootstrap';
+import { useHistory } from "react-router-dom";
+import axios from 'axios'
 
 const BookMarks = props => {
+
+    const history = useHistory();
+
+    const [likebookmarkarr,setLikebookmarkarr] = useState([]);
+
+    useEffect(()=>{
+        let newlikebookmarkarr = new Array(props.data.length);
+        for (let i = 0; i < props.data.length; i++) {
+        newlikebookmarkarr[i] = [
+            props.data[i].liked,
+            props.data[i].likeCount,
+            props.data[i].marked,
+        ];
+        }
+        setLikebookmarkarr(newlikebookmarkarr);
+    },[props.data])
+
+    const gotoCafeprofile = (name) => {
+        let pk = 0;
+        const url = `http://i6c104.p.ssafy.io:8080/cafe/${name}`;
+        axios.get(url).then((res) => {
+          console.log(res.data);
+          const url2 = `http://i6c104.p.ssafy.io:8080/cafe`;
+          axios
+            .get(url2, {
+              params: { cafeX: res.data.cafeX, cafeY: res.data.cafeY },
+            })
+            .then((res) => (pk = res.data));
+        });
+    
+        var ps = new kakao.maps.services.Places();
+        ps.keywordSearch(name, placesSearchCB);
+        function placesSearchCB(data, status, pagination) {
+          if (status === kakao.maps.services.Status.OK) {
+            for (let i = 0; i < data.length; i++) {
+              if (data[i].place_name == name) {
+                history.push({
+                  pathname: `/store/${pk}/${Number(data[i].id)}`,
+                  state: { name: name },
+                });
+              }
+            }
+          }
+        }
+      };
+
+      const likearticle = (i) => {
+        console.log(i, props.data[i]);
+        const url = `http://i6c104.p.ssafy.io:8080/feed/like/${props.data[i].feedNo}/${props.user[1]}`;
+        console.log(url);
+    
+        axios.get(url).then((res) => {
+          let heart = document.getElementById(`heart${i}`);
+          let emptyheart = document.getElementById(`emptyheart${i}`);
+          let likecountbox = document.getElementById(`likecount${i}`);
+          let newarr = [...likebookmarkarr];
+          let newarr2 = [...likebookmarkarr[i]];
+          if (likebookmarkarr[i][0] == false) {
+            if (res.data == "SUCCESS : ADD LIKE") {
+              heart.style.display = "block";
+              emptyheart.style.display = "none";
+              newarr2[1] = newarr2[1] + 1;
+              likecountbox.innerHTML = `${newarr2[1]}`;
+            } else {
+              heart.style.display = "none";
+              emptyheart.style.display = "block";
+              likecountbox.innerHTML = `${newarr2[1]}`;
+            }
+          } else {
+            if (res.data == "SUCCESS : ADD LIKE") {
+              heart.style.display = "block";
+              emptyheart.style.display = "none";
+              likecountbox.innerHTML = `${newarr2[1]}`;
+            } else {
+              heart.style.display = "none";
+              emptyheart.style.display = "block";
+              newarr2[1] = newarr2[1] - 1;
+              likecountbox.innerHTML = `${newarr2[1]}`;
+            }
+          }
+    
+          newarr[i] = newarr2;
+          setLikebookmarkarr(newarr);
+        });
+      };
+
+      const bookmarkarticle = (i) => {
+        const url = `http://i6c104.p.ssafy.io:8080/feed/bookmark/${props.data[i].feedNo}/${props.user[1]}`;
+        axios.get(url).then((res) => {
+          let bookmark = document.getElementById(`bookmark${i}`);
+          let emptybookmark = document.getElementById(`emptybookmark${i}`);
+          if (res.data == "SUCCESS : ADD BOOKMARK") {
+            bookmark.style.display = "block";
+            emptybookmark.style.display = "none";
+          } else {
+            bookmark.style.display = "none";
+            emptybookmark.style.display = "block";
+          }
+        });
+      };
+
+      useEffect(() => {
+        console.log(likebookmarkarr);
+        for (let i = 0; i < likebookmarkarr.length; i++) {
+          let likebox = document.getElementById(`bookmarks_likebox${i}`);
+          if (likebox.hasChildNodes()) {
+            continue;
+          }
+          var heart = new Image();
+          heart.src = `${process.env.PUBLIC_URL}/image/heart.png`;
+          heart.id = `heart${i}`;
+          heart.style.width = "15%";
+          heart.addEventListener("click", () => likearticle(i));
+    
+          var emptyheart = new Image();
+          emptyheart.src = `${process.env.PUBLIC_URL}/image/empty_heart.png`;
+          emptyheart.id = `emptyheart${i}`;
+          emptyheart.style.width = "15%";
+          emptyheart.addEventListener("click", () => likearticle(i));
+    
+          var bookmark = new Image();
+          bookmark.src = `${process.env.PUBLIC_URL}/image/bookmark.png`;
+          bookmark.id = `bookmark${i}`;
+          bookmark.style.width = "15%";
+          bookmark.addEventListener("click", () => bookmarkarticle(i));
+    
+          var emptybookmark = new Image();
+          emptybookmark.src = `${process.env.PUBLIC_URL}/image/empty_bookmark.png`;
+          emptybookmark.id = `emptybookmark${i}`;
+          emptybookmark.style.width = "15%";
+          emptybookmark.addEventListener("click", () => bookmarkarticle(i));
+    
+          var likecountdiv = document.createElement(`div`);
+          likecountdiv.id = `likecount${i}`;
+          likecountdiv.innerHTML = `${likebookmarkarr[i][1]}`;
+          likecountdiv.style.verticalAlign = "middle";
+          likecountdiv.style.display = "inline";
+    
+          if (likebookmarkarr[i][0] == true) {
+            heart.style.display = "block";
+            emptyheart.style.display = "none";
+          } else {
+            heart.style.display = "none";
+            emptyheart.style.display = "block";
+          }
+    
+          if (likebookmarkarr[i][2] == true) {
+            bookmark.style.display = "block";
+            emptybookmark.style.display = "none";
+          } else {
+            bookmark.style.display = "none";
+            emptybookmark.style.display = "block";
+          }
+    
+          likebox.appendChild(heart);
+          likebox.appendChild(emptyheart);
+          likebox.appendChild(likecountdiv);
+          likebox.appendChild(bookmark);
+          likebox.appendChild(emptybookmark);
+        }
+      }, [likebookmarkarr]);
 
     return (
         <div>
@@ -11,7 +175,7 @@ const BookMarks = props => {
                 ? new Array(10).fill(1).map((_, i) => {
                     return <BookMark key={i} />;
             })
-            : props.data.map(item => {
+            : props.data.map((item,index) => {
                 return (
                     <li key={item.id} id="bookmarks_item">
                         <Col style={{marginLeft: "3%", marginTop: "2%"}}>
@@ -24,23 +188,20 @@ const BookMarks = props => {
                                 <strong id="bookmarks_userId">{item.userId}</strong>
                                 <strong id="bookmarks_follow_button">팔로우</strong>
                             </div>
-                            <div style={{marginBottom: "5%" }}>{
-                                    item.liked == true ?
-                                    <img src='../image/heart.png' id='bookmarks_heart'></img> :
-                                    <img src='../image/empty_heart.png' id='bookmarks_heart'></img>
-                                }
-                                <strong id='blogs_heart_count'>{item.likeCount}</strong>
+                            <div
+                                id={`bookmarks_likebox${index}`}
+                                style={{
+                                marginBottom: "5%",
+                                position: "relative",
+                                display: "flex",
+                                }}
+                            >
                             </div>
                         </Col>
 
                         <Col className='bookmarks_detail'>
                             <div id='bookmarks_detail_form'>
-                                <strong id="bookmarks_cafeName" >{item.cafeName}</strong>
-                                {
-                                    item.marked == true ?
-                                    <img id="bookmarks_bookmark" src='../image/bookmark.png'/> :
-                                    <img id="bookmarks_bookmark" src='../image/empty_bookmark.png'/>
-                                }
+                                <strong id="bookmarks_cafeName" onClick={()=>gotoCafeprofile(item.cafeName)}>{item.cafeName}</strong>
                             </div>
                         </Col>
 

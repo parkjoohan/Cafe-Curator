@@ -68,7 +68,7 @@ function BookMarksPrint(props) {
             <div>
                 <div id="App">
                     <ul id="bookmark_contentWrapper">
-                    <BookMarks isLoading={isLoading} data={data} />
+                    <BookMarks isLoading={isLoading} data={data} user={props.user}/>
                     </ul>
                 </div>
             </div>

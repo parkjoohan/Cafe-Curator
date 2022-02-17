@@ -68,7 +68,7 @@ function BookMarksPrint(props) {
           <div>
               <div id="App">
                   <ul id="like_contentWrapper">
-                  <Likes isLoading={isLoading} data={data} />
+                  <Likes isLoading={isLoading} data={data} user={props.user}/>
                   </ul>
               </div>
           </div>
