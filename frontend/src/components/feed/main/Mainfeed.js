@@ -39,6 +39,7 @@ export default function Mainfeed(props) {
       <Row>
         <div id="MainFeed_buttons">
           <Container id="MainFeed_container">
+            {props.user[0] && (
             <Row style={{ marginLeft: "20%" }}>
               <Col xs={10}>
                 <div style={{ width: "80%" }}>
@@ -51,7 +52,7 @@ export default function Mainfeed(props) {
                 </div>
               </Col>
               <Col xs={2}>
-                {props.user[0] && (
+                
                   <Button
                     id="MainFeed_Write_button"
                     variant="outline-success"
@@ -64,9 +65,9 @@ export default function Mainfeed(props) {
                       게시글 작성
                     </h6>
                   </Button>
-                )}
               </Col>
             </Row>
+            )}
           </Container>
         </div>
 
