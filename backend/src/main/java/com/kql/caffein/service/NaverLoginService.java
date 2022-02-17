@@ -21,10 +21,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 public class NaverLoginService {
@@ -186,6 +183,7 @@ public class NaverLoginService {
                         .userNo(randomUserNo)
                         .userId(randomUserNo2)
                         .pass(passwordEncoder.encode(basePass))
+                        .categoryList(new ArrayList<>())
                         .build();
                 userDetailRepository.save(userDetail);
 
