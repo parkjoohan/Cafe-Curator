@@ -238,9 +238,9 @@ export default function LoginForm({ setUser }) {
               onClick={gotoKakaoLogin}
             />
 
-            <button onClick={gotoGoogleLogin}>
+            {/* <button onClick={gotoGoogleLogin}>
               구글 로그인
-            </button>
+            </button> */}
 
             <hr />
 
