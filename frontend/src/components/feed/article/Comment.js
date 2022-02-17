@@ -6,12 +6,13 @@ import './css/Comment.css'
 import axios from 'axios';
 import $ from "jquery";
 
-export default function Comment({user}) {
+export default function Comment({ user }) {
     const history = useHistory();
     const [comments, setComments] = useState([]);
-    const [recomments, setRecomments] = useState([]); 
+    const [recomments, setRecomments] = useState([]);
     const url = "http://i6c104.p.ssafy.io:8080/comment"
     const [parentNo, setParentNo] = useState([]);
+    const [parentNo2, setParentNo2] = useState([]);
     const [commentNo, setCommentNo] = useState([]);
     const [heart, setHeart] = useState();
     const [like, setLike] = useState([]);
@@ -23,26 +24,36 @@ export default function Comment({user}) {
 
     // 댓글 불러오기
     useEffect(() => {
-        axios.get(url, {
-        params: {
-            "feedNo": `${pk}`,
-            "size": 100,
-            "userNo": `${user[1]}`
-        }
-        }).then((data1) => {
+        axios.get(url + `/${pk}/${user[1]}`)
+            .then((data1) => {
             console.log(data1.data);
-            if(data1.data != "댓글이 존재하지 않습니다.")
+            if (data1.data != "댓글이 존재하지 않습니다.")
                 setComments(data1.data);
-                let newArray = new Array(data1.data.length)
-                let newArray2 = new Array(data1.data.length)
-                for (let i = 0; i < newArray.length; i++) {
-                    newArray[i] = data1.data[i].likeCount;
-                    newArray2[i] = data1.data[i].checkLike;
-                }
-                setLike(newArray);
-                setMyLike(newArray2);
-        }).catch((error) => {
+            let newArray = new Array(data1.data.length)
+            let newArray2 = new Array(data1.data.length)
+            for (let i = 0; i < newArray.length; i++) {
+                newArray[i] = data1.data[i].likeCount;
+                newArray2[i] = data1.data[i].checkLike;
+            }
+            setLike(newArray);
+            setMyLike(newArray2);
+        }).then((error) => {
             // console.error(error) 댓글 없을 떄 수행되는 코드 작성하기
+        })
+    }, []);
+
+    
+    // 대댓글 불러오기
+    useEffect(() => {
+        axios.get(url + '/nested', {
+            params: {
+                "parentNo": parentNo2,
+                "size": 100,
+                "userNo": `${user[1]}`,
+            }
+        }).then((data3) => {
+            console.log(data3.data);
+            setRecomments([...recomments, ...data3.data]);
         })
     }, []);
     
@@ -115,30 +126,6 @@ export default function Comment({user}) {
         axios.delete(url + `/${user[1]}/${props}`).then(window.location.reload())
     }
 
-    // 대댓글 불러오기
-    function showRecomment(props) {
-        console.log(props);
-        
-        axios.get(url + '/nested', {
-            params: {
-                "parentNo": props, 
-                "size": 100,
-                "userNo": `${user[1]}`,
-                // "lastCommentNo": 
-            }
-        }).then((data3) => {
-            console.log(data3.data);
-            setRecomments([...recomments, ...data3.data]);
-            setShowMore(true);
-        }).catch(() => {
-            // console.log('불러오기 실패')
-            setShowMore(false);
-            // window.location.replace("/article/0")
-        })
-    };
-    
-
-
     // 좋아요
     function likeArticle(props, index) {
         console.log(props);
@@ -172,126 +159,102 @@ export default function Comment({user}) {
                     <div>
                     {    
                         <div>   
-                                {comments.map((comment, index) => (
-                                
+                            {comments.map((comment, index) => (
+
                                 <Container>
-                                    <Row id='article_comments'>
-                                        <Col lg={9}>
-                                            <Row>
-                                                <Col lg={3} style={{ alignSelf: "center" }}>
-                                                    <h5 style={{ fontSize: "20px", width: "100px" }} id='article_comments_user'>{comment.userId}</h5>
-                                                </Col>
-
-                                                <Col lg={9} style={{ alignSelf: "center" }}>
-                                                    <h5 id='article_comments_content'>{comment.content}</h5>
-                                                </Col>
-                                            </Row>
-                                        </Col>
-
-                                        <Col lg={3}>
-                                            <Row>
-                                                <Col lg={5} style={{ alignSelf: "center" }}>
-                                                    <h5 style={{ fontSize: "11px", width: "50px" }} onClick={() => setParentNo(comment.commentNo)}>답글달기 </h5>
-                                                </Col>
-
-                                                <Col lg={3} style={{ alignSelf: "center" }}>
-                                                    <h5 style={{ fontSize: "11px", width: "50px" }} onClick={() => deleteComment(comment.commentNo)}>삭제</h5>
-                                                </Col>
-                                                
-                                                <Col lg={2} style={{ alignSelf: "center" }}>
-                                                    {/* <h5 style={{ fontSize: "12px" }} onClick={() => likeArticle(recomment.commentNo)}> */}
-                                                    <h5 style={{ fontSize: "12px" }} >
-                                                        {mylike[index] == true ? <img
-                                                            style={{ width: "20px" }}
-                                                            onClick={() => likeArticle(comment.commentNo, index)}
-                                                            src="/image/heart.png"
-                                                        /> : <img
-                                                            style={{ width: "20px" }}
-                                                            onClick={() => likeArticle(comment.commentNo, index)}
-                                                            src="/image/empty_heart.png"
-                                                        />}
-                                                    </h5>
-                                                </Col>
-                                                <Col lg={2} style={{ alignSelf: "center" }}>
-                                                    <p style={{ fontSize: "12px" }} >{like[index]}</p>
-                                                </Col>
-                                            </Row>
-                                        </Col>
-                                        {/* {
-                                            showMore == true ?
-                                                <h5 style={{ fontSize: "12px" }} id='article_commnets_more' onClick={() => showRecomment(comment.commentNo)}>더보기</h5>
-                                                : null
-                                        } */}
-                                    </Row>
-                                    <Row>
-                                        
                                     {
-                                        // showMore == true ?
-                                        // <h5 style={{ fontSize: "12px" }} id='article_commnets_more' onClick={() => showRecomment(comment.commentNo)}>더보기</h5>
-                                        // : null
-                                        // comment.commentCount > 0 ?
-                                        //     <h5 style={{ fontSize: "12px" }} id='article_commnets_more' onClick={() => showRecomment(comment.commentNo)}>더보기</h5>
-                                        //     : null
-                                    }
-                                    </Row>
-
-                                    {/* 대댓글 */}
-                                    <div>
-                                    {
-                                        recomments.map((recomment) =>
-                                        comment.commentGroup == recomment.commentGroup && (
-                                        // <div id='article_comments'>
-                                        <>
-                                            <Row id='article_recomments-frame'> 
-                                                <Col>
+                                        comment.sequence == 0 ? 
+                                        (<Row id='article_comments'>
+                                                <Col lg={10} style={{ width: "500px" }}>
                                                     <Row>
-                                                        <Col lg={2} style={{ alignSelf: "center" }}>
-                                                            <h5 style={{ fontSize: "20px", width: "100px" }} id='article_comments_user'>{recomment.userId}</h5>
+                                                        <Col lg={2} style={{ alignSelf: "center", width: "110px" }}>
+                                                            <h5 style={{ fontSize: "20px"}} id='article_comments_user'>{comment.userId}</h5>
                                                         </Col>
-                                                        <Col lg={6} style={{ alignSelf: "center" }}>
-                                                            <h5 id='article_comments_content'>@{recomment.parentId}&nbsp;&nbsp;{recomment.content}</h5>
+
+                                                        <Col lg={10} style={{ alignSelf: "center", width: "390px" }}>
+                                                            <h5 id='article_comments_content'>{comment.content}</h5>
                                                         </Col>
-                                                        <Col lg={1} style={{ alignSelf: "center" }}>
-                                                            <h5 style={{ fontSize: "11px", width: "50px" }}  onClick={() => setParentNo(recomment.commentNo)}>답글달기 </h5>
+                                                    </Row>
+                                                </Col>        
+                                                <Col lg={2} style={{ width: "200px" }}>
+                                                    <Row>
+                                                        <Col lg={5} style={{ width: "84px" }}>
+                                                            <h5 style={{ fontSize: "15px"}} onClick={() => setParentNo(comment.commentNo)}>답글달기 </h5>
                                                         </Col>
-                                                        <Col lg={1} style={{ alignSelf: "center" }}>
-                                                            <h5 style={{ fontSize: "11px", width: "50px" }}  onClick={() => deleteComment(recomment.commentNo)}>삭제</h5>
+
+                                                        <Col lg={3} style={{ width: "54px" }}>
+                                                            <h5 style={{ fontSize: "15px"}} onClick={() => deleteComment(comment.commentNo)}>삭제</h5>
                                                         </Col>
-                                                        <Col lg={1} style={{ alignSelf: "center" }}>
+                                                        
+                                                        <Col lg={2} style={{ width: "10px" }}>
                                                             {/* <h5 style={{ fontSize: "12px" }} onClick={() => likeArticle(recomment.commentNo)}> */}
-                                                            <h5 style={{ fontSize: "12px" }} >
-                                                                { comment.checkLike==true ? <img
-                                                                    style={{ width: "20px" }}
-                                                                    onClick={() => likeArticle(recomment.commentNo)}
+                                                            <h5 style={{ fontSize: "15px"}} >
+                                                                {mylike[index] == true ? <img
+                                                                    style={{ width: "15px" }}
+                                                                    onClick={() => likeArticle(comment.commentNo, index)}
                                                                     src="/image/heart.png"
                                                                 /> : <img
-                                                                style={{ width: "20px" }}
-                                                                onClick={() => likeArticle(recomment.commentNo)}
-                                                                src="/image/empty_heart.png"
+                                                                    style={{ width: "15px" }}
+                                                                    onClick={() => likeArticle(comment.commentNo, index)}
+                                                                    src="/image/empty_heart.png"
                                                                 />}
                                                             </h5>
                                                         </Col>
-                                                        <Col lg={1}>
-                                                            <p  style={{ fontSize: "11px", width: "50px" }}  >{ recomment.likeCount }</p>
+                                                        <Col lg={2}>
+                                                            <p style={{ fontSize: "15px"}} >{like[index]}</p>
                                                         </Col>
                                                     </Row>
-                                                </Col>     
-                                            </Row>                
-                                        </>
-                                        ))/* </div>  */
+                                                </Col>
+                                        </Row>) :  
+                                        (<Row id='article_comments'>
+                                                <Col lg={10} style={{ width: "465px", marginLeft: "5%" }}>
+                                                    <Row>
+                                                        <Col lg={2} style={{ alignSelf: "center", width: "110px" }}>
+                                                            <h5 style={{ fontSize: "20px"}} id='article_comments_user'>{comment.userId}</h5>
+                                                        </Col>
+
+                                                        <Col lg={10} style={{ alignSelf: "center", width: "300px" }}>
+                                                            <h5 id='article_comments_content'>{comment.content}</h5>
+                                                        </Col>
+                                                    </Row>
+                                                </Col>        
+                                                <Col lg={2} style={{ width: "200px" }}>
+                                                    <Row>
+                                                        <Col lg={5} style={{ width: "84px" }}>
+                                                            <h5 style={{ fontSize: "15px"}} onClick={() => setParentNo(comment.commentNo)}>답글달기 </h5>
+                                                        </Col>
+
+                                                        <Col lg={3} style={{ width: "54px" }}>
+                                                            <h5 style={{ fontSize: "15px"}} onClick={() => deleteComment(comment.commentNo)}>삭제</h5>
+                                                        </Col>
+                                                        
+                                                        <Col lg={2} style={{ width: "10px" }}>
+                                                            {/* <h5 style={{ fontSize: "12px" }} onClick={() => likeArticle(recomment.commentNo)}> */}
+                                                            <h5 style={{ fontSize: "15px"}} >
+                                                                {mylike[index] == true ? <img
+                                                                    style={{ width: "15px" }}
+                                                                    onClick={() => likeArticle(comment.commentNo, index)}
+                                                                    src="/image/heart.png"
+                                                                /> : <img
+                                                                    style={{ width: "15px" }}
+                                                                    onClick={() => likeArticle(comment.commentNo, index)}
+                                                                    src="/image/empty_heart.png"
+                                                                />}
+                                                            </h5>
+                                                        </Col>
+                                                        <Col lg={2}>
+                                                            <p style={{ fontSize: "15px"}} >{like[index]}</p>
+                                                        </Col>
+                                                    </Row>
+                                                </Col>
+                                        </Row>)    
                                     }
-                                    </div>
-                                    {
-                                        // showMore[] == true ?
-                                        // <h5 style={{ fontSize: "12px" }} id='article_commnets_more' onClick={() => showRecomment(comment.commentNo)}>더보기</h5>
-                                        // : null
-                                        (comment.commentCount > 0) && (comment.commentCount != recomments.length) && (showMore == true) ?
-                                        <h5 style={{ fontSize: "12px" }} id='article_commnets_more' onClick={() => showRecomment(comment.commentNo)}>더보기</h5>
-                                        : null
-                                    }
+                                        
+                                    
                                 </Container>
-                    ))}
-                    </div>  
+                                
+                            ))}
+                        </div>  
                     }
                     </div> 
                 </div>
