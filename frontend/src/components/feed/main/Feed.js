@@ -89,7 +89,7 @@ export default function Feed(props) {
     const url = `http://i6c104.p.ssafy.io:8080/feed/mainFeedList/${user}`
       axios.get(url,{
         params:{
-          "size":5,
+          "size":10,
           "type":"feed",
           "lastFeedNo": url_arr[url_arr.length-1].feedNo
         }
@@ -153,7 +153,7 @@ export default function Feed(props) {
 
     axios.get(url,{
       params:{
-        "size":5,
+        "size":10,
         "type":"feed",
         "lastFeedNo": null,
       }

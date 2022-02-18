@@ -22,7 +22,7 @@ function BlogPrint(props) {
     axios
       .get(url, {
         params: {
-          size: 5,
+          size: 10,
           type: "blog",
           lastFeedNo: null,
         },
@@ -49,13 +49,13 @@ function BlogPrint(props) {
     ) {
       window.removeEventListener("scroll", moredata);
       // console.log("밑이다!");
-      let user = "a1";
+      let user = `${props.user[1]}`;
       let lastNo = data[data.length - 1].feedNo;
       const url = `http://i6c104.p.ssafy.io:8080/feed/mainFeedList/${user}`;
       axios
         .get(url, {
           params: {
-            size: 5,
+            size: 10,
             type: "blog",
             lastFeedNo: lastNo,
           },

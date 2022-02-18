@@ -31,7 +31,7 @@ const Likelist = forwardRef(({ show, onHide, data }, ref) => {
       const url = `http://i6c104.p.ssafy.io:8080/feed/likeUserList/`
       axios.get(url,{params:{
         feedNo:detaildata.feedNo,
-        size:5,
+        size:10,
         userNo:detaildata.userNo,
       }}).then(res=>{
         setLikeperson(res.data)
@@ -60,7 +60,7 @@ const Likelist = forwardRef(({ show, onHide, data }, ref) => {
         const url = `http://i6c104.p.ssafy.io:8080/feed/likeUserList/`
         axios.get(url,{params:{
           feedNo:detaildata.feedNo,
-          size:5,
+          size:10,
           lastUserNo:lastuserNo,
           userNo:detaildata.userNo,
         }}).then(res=>{

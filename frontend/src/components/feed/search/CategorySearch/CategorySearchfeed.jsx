@@ -83,13 +83,26 @@ const CategorySearchfeed = (props) => {
   function nextLoading(){
     // console.log('@@@',url_arr[url_arr.length-1].feedNo)
     const url = `http://i6c104.p.ssafy.io:8080/search/category/${props.poporlast}`
-    const data = {params:{
-      "category":props.category,
-      "laseFeedNo": url_arr[url_arr.length-1].feedNo,
-      "size": 5,
-      "userNo": props.user[1]
-    }}
-    axios.post(url,data,{
+    let form = {}
+      if(props.poporlast=="top"){
+        const data = {params:{
+          "category":props.category,
+          "lastFeedNo":url_arr[url_arr.length-1].feedNo,
+          "size": 10,
+          "userNo": props.user[1],
+          "lastLikeCount":null
+        }}
+        form = data
+      }else{
+        const data = {params:{
+          "category":props.category,
+          "lastFeedNo":url_arr[url_arr.length-1].feedNo,
+          "size": 10,
+          "userNo": props.user[1]
+        }}
+        form = data
+      }
+    axios.post(url,form,{
       headers: { "Content-Type" : "application/json" }
     }).then(function(res){
         // console.log('응답',res.data)
@@ -158,7 +171,7 @@ const CategorySearchfeed = (props) => {
         const data = {params:{
           "category":props.category,
           "lastFeedNo":null,
-          "size": 5,
+          "size": 10,
           "userNo": props.user[1],
           "lastLikeCount":null
         }}
@@ -167,7 +180,7 @@ const CategorySearchfeed = (props) => {
         const data = {params:{
           "category":props.category,
           "lastFeedNo":null,
-          "size": 5,
+          "size": 10,
           "userNo": props.user[1]
         }}
         form = data

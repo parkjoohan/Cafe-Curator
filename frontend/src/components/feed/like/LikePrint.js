@@ -19,7 +19,7 @@ function BookMarksPrint(props) {
     const url = `http://i6c104.p.ssafy.io:8080/feed/likeList/${user}`
     axios.get(url,{
       params:{
-      size:5,
+      size:10,
       type:"blog",
       lastFeedNo:null,
     }}).then(function(res){
@@ -46,7 +46,7 @@ function BookMarksPrint(props) {
       const url = `http://i6c104.p.ssafy.io:8080/feed/likeList/${user}`
       axios.get(url,{
         params:{
-        size:5,
+        size:10,
         type:"blog",
         lastFeedNo:lastNo,
       }}).then(function(res){

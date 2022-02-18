@@ -94,7 +94,7 @@ const LocationSearchfeed = forwardRef((props,ref) => {
     const data = {
       "cafeLngAndLat": [locationarr],
       "feedNo": url_arr[url_arr.length-1].feedNo,
-      "size": 5,
+      "size": 10,
       "userNo": "a1"
     }
     axios.post(url,data,{
@@ -156,7 +156,7 @@ const LocationSearchfeed = forwardRef((props,ref) => {
       const data = {
         "cafeLngAndLat": [locationarr],
         "feedNo": null,
-        "size": 5,
+        "size": 10,
         "userNo": "a1"
       }
       // console.log(data)

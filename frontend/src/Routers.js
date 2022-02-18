@@ -29,7 +29,7 @@ export default function Routers(props) {
   return (
     <Switch>
       <Route exact path="/">
-        <Home user={props.user} />
+        <Home user={props.user}  setFootershow={props.setFootershow}/>
       </Route>
       <Route path="/login">
         <LoginForm setUser={props.setUser} />

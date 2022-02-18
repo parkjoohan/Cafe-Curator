@@ -15,6 +15,10 @@ export default function Home(props) {
 
   useEffect(()=>{
     AOS.init();
+    props.setFootershow(true);
+    return (()=>{
+      props.setFootershow(false);
+    })
   },[])
 
   const gotoCategorySearch = (category) => {
